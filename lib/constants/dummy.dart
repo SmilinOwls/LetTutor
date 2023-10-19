@@ -1,6 +1,7 @@
 import 'package:lettutor/models/courses/course.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/models/courses/ebook.dart';
+import 'package:lettutor/models/tutor/tutor_feedback.dart';
 
 const tutorNationalities = [
   'Foreign Tutor',
@@ -100,20 +101,45 @@ const courseHours = [
   '17:00 - 17:25',
   '17:30 - 17:55',
   '18:00 - 18:25',
-  '18:30 - 18:55'
+  '18:30 - 18:55',
+  '19:00 - 19:25',
+  '19:30 - 19:55',
+  '20:00 - 20:25',
+  '20:30 - 20:55',
+  '21:00 - 21:25',
+  '21:30 - 21:55',
+  '22:00 - 22:25',
+  '22:30 - 22:55',
+  '23:00 - 23:25',
+  '23:30 - 23:55',
 ];
 
-// const reviews = [
-//   Review('thanhnga266', 'This tutor is great', 5),
-//   Review('bichthuy', 'He is very kind', 4),
-//   Review('ngocnhu', 'This tutor always come late', 2),
-//   Review('sontungnguyen151', 'He does not know how to teach apparently', 1),
-//   Review('vunguyen', 'I am out of idea for review', 3),
-//   Review('htho379', 'No idea what to say either', 4),
-//   Review('ngocnhi', 'Neither do I', 2),
-//   Review('QueenMarika', 'The Great Elden Ring was shattered', 5),
-//   Review('Radagon', 'I am of the Golden Order', 2),
-// ];
+const tutorFeedback = [
+  TutorFeedback(
+    '1',
+    'Phhai123', 
+    'Tutor teaches very great lessons',
+    5
+  ),
+  TutorFeedback(
+    '2',
+    'Nameless User', 
+    '5 stars for amazing endeavors!',
+    5
+  ),
+  TutorFeedback(
+    '3',
+    'Phhai321', 
+    'Very impressive',
+    5
+  ),
+  TutorFeedback(
+    '4',
+    'hailepham212', 
+    'Cool lessons. Hope to see you again..',
+    4
+  ),
+];
 
 const courses = [
   Course(
@@ -140,8 +166,7 @@ const courses = [
       "Movies and Television",
       "assets/course/traveling/traveling_course_04.jpeg",
       "Let's discuss our preferences and habits surrounding movies and television shows",
-      "Beginner"
-  ),
+      "Beginner"),
   Course(
     "5",
     "Raising Children",
@@ -197,21 +222,17 @@ const teachers = [
           'I love teaching because I know each student has something to bring on. '
           'Molding them to become an individual is a great success.',
       'Earth, Vegeta planet',
-      [
-        'English',
-        'Japanese'
-      ],
+      ['English', 'Japanese'],
       [
         'English for Business',
         'IELTS',
         'PET',
-        'KET', 
+        'KET',
       ],
       'FIghting',
       '7 years of English tutor',
       4.0,
-      23
-    ),
+      23),
   Tutor(
       '3',
       'Jill Leano',
@@ -225,67 +246,63 @@ const teachers = [
           "excitement meeting different learners around the world. "
           "In my class I worked with wonderful enthusiasm and positivity, "
           "and I'm happy to focus on my learner's goal.",
-       'Earth, Vegeta planet',
-      [
-        'English'
-      ],
-      [
-        'English for kids',
-        'English for Business',
-        'TOEFL',
-        'TOEIC'
-      ],
+      'Earth, Vegeta planet',
+      ['English'],
+      ['English for kids', 'English for Business', 'TOEFL', 'TOEIC'],
       'English, Japansese',
       '5 years in education',
       4,
-      9
-    ),
+      9),
 ];
 
 const ebooks = [
   EBook(
-      '1',
-      'Family and Friends 1',
-      'assets/ebook/family_and_friends_ebook.jpeg',
-      "For kids who can read pretty well, get ready for compound sentences and...",
-      'Upper-Beginner',
+    '1',
+    'Family and Friends 1',
+    'assets/ebook/family_and_friends_ebook.jpeg',
+    "For kids who can read pretty well, get ready for compound sentences and...",
+    'Upper-Beginner',
   ),
   EBook(
-      '2',
-      'Family and Friends 2',
-      'assets/ebook/family_and_friends_ebook.jpeg',
-      "For kids who can read pretty well, get ready for compound sentences and...",
-      'Upper-Beginner',
+    '2',
+    'Family and Friends 2',
+    'assets/ebook/family_and_friends_ebook.jpeg',
+    "For kids who can read pretty well, get ready for compound sentences and...",
+    'Upper-Beginner',
   ),
   EBook(
-      '3',
-      'Family and Friends 3',
-      'assets/ebook/family_and_friends_ebook.jpeg',
-      "For kids who can read pretty well, get ready for compound sentences and...",
-      'Upper-Beginner',
-    ),
-  EBook(
-      '4',
-      'assets/ebook/everybody_up_ebook.jpg',
-      'Everybody Up',
-      "For: kids who want to learn English through pictures, pick up simple...",
-      'Beginner',
-    ),
-  EBook(
-      '5',
-      'Cambridge Storyfun For Starter',
-      'assets/ebook/storyfun.jpg',
-      "For kids who can handle single words and simple sentences with assistance.",
-      'Beginner',
+    '3',
+    'Family and Friends 3',
+    'assets/ebook/family_and_friends_ebook.jpeg',
+    "For kids who can read pretty well, get ready for compound sentences and...",
+    'Upper-Beginner',
   ),
   EBook(
-      'New Headway Elementary',
-      "For teenagers who want to form a grammatical background as well as...",
-      'Beginner',
-      'assets/new-headway.jpg'),
+    '4',
+    'Everybody Up',
+    'assets/ebook/everybody_up_ebook.jpeg',
+    "For: kids who want to learn English through pictures, pick up simple...",
+    'Beginner',
+  ),
   EBook(
-      'English World ',
-      "For kids who are able to pick up simple sounds, letters, words and learn new...",
-      'Beginner',
-      'assets/english-world.jpg'),
+    '5',
+    'Cambridge Storyfun For Starter',
+    'assets/ebook/storyfun_ebook.jpeg',
+    "For kids who can handle single words and simple sentences with assistance.",
+    'Beginner',
+  ),
+  EBook(
+    '6',
+    'assets/ebook/new_headway_ebook.jpeg',
+    'New Headway Elementary',
+    "For teenagers who want to form a grammatical background as well as...",
+    'Beginner',
+  ),
+  EBook(
+    '7',
+    'English World ',
+    'assets/english_world_ebook.jpg',
+    "For kids who are able to pick up simple sounds, letters, words and learn new...",
+    'Beginner',
+  ),
 ];
