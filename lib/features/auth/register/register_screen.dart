@@ -11,10 +11,51 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   bool _passwordVisible = false;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _rePasswordController = TextEditingController();
+
+  String? _emailErrorText;
+  String? _passwordErrorText;
+  String? _rePasswordErrorText;
+
+  String? _handleEmailValidate(value) {
+    final emailRegExp = RegExp(
+        r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
+    if (value.isEmpty) {
+      return 'Please input your email!';
+    } else if (!emailRegExp.hasMatch(value)) {
+      return 'The input is not valid E-mail!';
+    } else {
+      return null;
+    }
+  }
+
+  String? _handlePasswordValidate(value) {
+    if (value.isEmpty) {
+      return 'Please input your password!';
+    } else if (value.length < 8) {
+      return 'Password too short!';
+    } else {
+      return null;
+    }
+  }
+
+  String? _handleRePasswordValidate(value) {
+    if (value.isEmpty) {
+      return 'Please input your re-password!';
+    } else if (value.length < 8) {
+      return 'Re-password too short!';
+    } else {
+      if (value != _passwordController.text) {
+        return 'Re-password not match with password!';
+      } else {
+        return null;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +98,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               autocorrect: false,
+              onChanged: (value) {
+                setState(() {
+                  _emailErrorText = _handleEmailValidate(value);
+                });
+              },
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.grey[400]),
                 hintText: 'mail@example.com',
+                errorText: _emailErrorText,
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                       width: 1, color: Color.fromARGB(255, 64, 169, 255)),
@@ -82,6 +133,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               keyboardType: TextInputType.text,
               obscureText: !_passwordVisible,
               autocorrect: false,
+              onChanged: (value) {
+                setState(() {
+                  _passwordErrorText = _handlePasswordValidate(value);
+                });
+              },
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -94,6 +150,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     });
                   },
                 ),
+                errorText: _passwordErrorText,
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                       width: 1, color: Color.fromARGB(255, 64, 169, 255)),
@@ -105,6 +166,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             const SizedBox(height: 14),
+            const Text(
+              'CONFIRM PASSWORD',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _rePasswordController,
+              keyboardType: TextInputType.text,
+              obscureText: !_passwordVisible,
+              autocorrect: false,
+              onChanged: (value) {
+                setState(() {
+                  _rePasswordErrorText = _handleRePasswordValidate(value);
+                });
+              },
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                ),
+                errorText: _rePasswordErrorText,
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: 1, color: Color.fromARGB(255, 64, 169, 255)),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide(width: 1, color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+              ),
+            ),
+            const SizedBox(height: 18),
             TextButton(
               onPressed: () {},
               style: TextButton.styleFrom(

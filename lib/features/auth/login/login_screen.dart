@@ -12,13 +12,40 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  String? _emailErrorText;
+  String? _passwordErrorText;
+
+  String? _handleEmailValidate(value) {
+    final emailRegExp = RegExp(
+        r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
+    if (value.isEmpty) {
+      return 'Please input your email!';
+    } else if (!emailRegExp.hasMatch(value)) {
+      return 'The input is not valid E-mail!';
+    } else {
+      return null;
+    }
+  }
+
+  String? _handlePasswordValidate(value) {
+    if (value.isEmpty) {
+      return 'Please input your password!';
+    } else if (value.length < 8) {
+      return 'Password too short!';
+    } else {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),body: SingleChildScrollView(
+      appBar: const CustomAppBar(),
+      body: SingleChildScrollView(
         padding:
             EdgeInsets.fromLTRB(14, MediaQuery.of(context).padding.top, 14, 14),
         child: Column(
@@ -55,9 +82,19 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               autocorrect: false,
+              onChanged: (value) {
+                setState(() {
+                  _emailErrorText = _handleEmailValidate(value);
+                });
+              },
               decoration: InputDecoration(
                 hintStyle: TextStyle(color: Colors.grey[400]),
                 hintText: 'mail@example.com',
+                errorText: _emailErrorText,
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                       width: 1, color: Color.fromARGB(255, 64, 169, 255)),
@@ -80,6 +117,11 @@ class _LoginScreenState extends State<LoginScreen> {
               keyboardType: TextInputType.text,
               obscureText: !_passwordVisible,
               autocorrect: false,
+              onChanged: (value) {
+                setState(() {
+                  _passwordErrorText = _handlePasswordValidate(value);
+                });
+              },
               decoration: InputDecoration(
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -91,6 +133,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       _passwordVisible = !_passwordVisible;
                     });
                   },
+                ),
+                errorText: _passwordErrorText,
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1, color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
