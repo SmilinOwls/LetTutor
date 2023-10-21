@@ -15,7 +15,9 @@ class LetTutor extends StatelessWidget {
     return MaterialApp(
         title: 'LetTutor',
         theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            appBarTheme: const AppBarTheme(
+              color: Colors.white,
+            ),
             useMaterial3: true,
             scaffoldBackgroundColor: Colors.white,
             primaryColor: Colors.blue,
@@ -49,4 +51,3 @@ class LetTutor extends StatelessWidget {
         });
   }
 }
-
