@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/features/auth/login_screen/login_screen.dart';
+import 'package:lettutor/features/auth/login/login_screen.dart';
+import 'package:lettutor/features/auth/register/register_screen.dart';
 
 void main() {
   runApp(const LetTutor());
@@ -48,6 +49,7 @@ class LetTutor extends StatelessWidget {
         home: const LoginScreen(),
         routes: {
           Routes.login: (context) => const LoginScreen(),
+          Routes.register: (context) => const RegisterScreen(),
         });
   }
 }

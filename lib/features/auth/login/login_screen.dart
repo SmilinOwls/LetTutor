@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:lettutor/models/language/language.dart';
+import 'package:lettutor/widgets/app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String _appLanguage = 'English';
   bool _passwordVisible = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -21,73 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.home);
-            },
-            icon: SvgPicture.asset(
-              'assets/logo/lettutor_logo.svg',
-            )),
-        leadingWidth: 180,
-        elevation: 18,
-        actions: <Widget>[
-          Container(
-              width: 180,
-              padding: const EdgeInsets.all(8),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  customButton: Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.grey[400],
-                      ),
-                      child: SvgPicture.asset(
-                        'assets/language/${_appLanguage.toLowerCase()}.svg',
-                        width: 30,
-                        height: 30,
-                      ),
-                    ),
-                  ),
-                  value: _appLanguage,
-                  items: [
-                    ...languageList.map<DropdownMenuItem<String>>(
-                      (Language lang) => DropdownMenuItem<String>(
-                        value: lang.name,
-                        child: SizedBox(
-                            child: Row(children: [
-                          SvgPicture.asset(
-                            lang.flag!,
-                            width: 30,
-                            height: 30,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            lang.name!,
-                            style: TextStyle(
-                                fontWeight: _appLanguage == lang.name
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
-                          )
-                        ])),
-                      ),
-                    )
-                  ],
-                  onChanged: (String? language) {
-                    setState(() {
-                      _appLanguage = language ?? "English";
-                    });
-                  },
-                ),
-              ))
-        ],
-      ),
-      body: SingleChildScrollView(
+      appBar: const CustomAppBar(),body: SingleChildScrollView(
         padding:
-            EdgeInsets.fromLTRB(16, MediaQuery.of(context).padding.top, 16, 16),
+            EdgeInsets.fromLTRB(14, MediaQuery.of(context).padding.top, 14, 14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -219,8 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {},
                       icon: SvgPicture.asset(
                         'assets/logo/facebook_logo.svg',
-                        width: 46,
-                        height: 46,
+                        width: 36,
+                        height: 36,
                       ),
                     ),
                   ),
@@ -234,8 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {},
                       icon: SvgPicture.asset(
                         'assets/logo/google_logo.svg',
-                        width: 46,
-                        height: 46,
+                        width: 36,
+                        height: 36,
                       ),
                     ),
                   ),
