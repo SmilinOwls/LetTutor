@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:lettutor/models/language/language.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +15,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String _appLanguage = 'English';
   bool _passwordVisible = false;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.grey[400],
                       ),
                       child: SvgPicture.asset(
-                        'assets/language/english.svg',
+                        'assets/language/${_appLanguage.toLowerCase()}.svg',
                         width: 30,
                         height: 30,
                       ),
@@ -50,28 +54,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   value: _appLanguage,
                   items: [
-                    DropdownMenuItem<String>(
-                      value: 'English',
-                      child: SizedBox(
-                          child: Row(children: [
-                        SvgPicture.asset(
-                          'assets/language/english.svg',
-                          width: 30,
-                          height: 30,
-                        ),
-                        const SizedBox(width: 10),
-                        const Text('English')
-                      ])),
-                    ),
-                    DropdownMenuItem<String>(
-                      value: 'Vietnamese',
-                      child: Row(children: [
-                        SvgPicture.asset('assets/language/vietnamese.svg',
-                            width: 30, height: 30),
-                        const SizedBox(width: 10),
-                        const Text('Vietnamese')
-                      ]),
-                    ),
+                    ...languageList.map<DropdownMenuItem<String>>(
+                      (Language lang) => DropdownMenuItem<String>(
+                        value: lang.name,
+                        child: SizedBox(
+                            child: Row(children: [
+                          SvgPicture.asset(
+                            lang.flag!,
+                            width: 30,
+                            height: 30,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            lang.name!,
+                            style: TextStyle(
+                                fontWeight: _appLanguage == lang.name
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          )
+                        ])),
+                      ),
+                    )
                   ],
                   onChanged: (String? language) {
                     setState(() {
@@ -116,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 10),
             TextField(
+              controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               autocorrect: false,
               decoration: InputDecoration(
@@ -139,8 +143,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 10),
             TextField(
+              controller: _passwordController,
               keyboardType: TextInputType.text,
-              obscureText: true,
+              obscureText: !_passwordVisible,
               autocorrect: false,
               decoration: InputDecoration(
                 suffixIcon: IconButton(
@@ -170,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushNamed(context, Routes.forgotPassword);
               },
               child: const Text(
-                'Forgot Password',
+                'Forgot Password?',
                 style: TextStyle(fontSize: 16, color: Colors.blue),
                 textAlign: TextAlign.left,
               ),
@@ -196,28 +201,42 @@ class _LoginScreenState extends State<LoginScreen> {
             const Text(
               textAlign: TextAlign.center,
               'Or continue with',
-              style: TextStyle(fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      'assets/logo/facebook_logo.svg',
-                      width: 46,
-                      height: 46,
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blue),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        'assets/logo/facebook_logo.svg',
+                        width: 46,
+                        height: 46,
+                      ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: SvgPicture.asset(
-                      'assets/logo/google_logo.svg',
-                      width: 46,
-                      height: 46,
+                  const SizedBox(width: 18),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blue),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        'assets/logo/google_logo.svg',
+                        width: 46,
+                        height: 46,
+                      ),
                     ),
                   ),
                 ],

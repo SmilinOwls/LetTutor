@@ -1,4 +1,5 @@
 import 'package:lettutor/models/courses/course.dart';
+import 'package:lettutor/models/language/language.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/models/courses/ebook.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
@@ -114,31 +115,17 @@ const courseHours = [
   '23:30 - 23:55',
 ];
 
+const languageList = [
+  Language('1', 'English', 'assets/language/english.svg'),
+  Language('2', 'Vietnamese', 'assets/language/vietnamese.svg')
+];
+
 const tutorFeedback = [
+  TutorFeedback('1', 'Phhai123', 'Tutor teaches very great lessons', 5),
+  TutorFeedback('2', 'Nameless User', '5 stars for amazing endeavors!', 5),
+  TutorFeedback('3', 'Phhai321', 'Very impressive', 5),
   TutorFeedback(
-    '1',
-    'Phhai123', 
-    'Tutor teaches very great lessons',
-    5
-  ),
-  TutorFeedback(
-    '2',
-    'Nameless User', 
-    '5 stars for amazing endeavors!',
-    5
-  ),
-  TutorFeedback(
-    '3',
-    'Phhai321', 
-    'Very impressive',
-    5
-  ),
-  TutorFeedback(
-    '4',
-    'hailepham212', 
-    'Cool lessons. Hope to see you again..',
-    4
-  ),
+      '4', 'hailepham212', 'Cool lessons. Hope to see you again..', 4),
 ];
 
 const courses = [
