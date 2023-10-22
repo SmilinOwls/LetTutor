@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/features/auth/forgot/forgot_password_screen.dart';
 import 'package:lettutor/features/auth/login/login_screen.dart';
 import 'package:lettutor/features/auth/register/register_screen.dart';
 
@@ -50,6 +51,7 @@ class LetTutor extends StatelessWidget {
         routes: {
           Routes.login: (context) => const LoginScreen(),
           Routes.register: (context) => const RegisterScreen(),
+          Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
         });
   }
 }
