@@ -222,8 +222,8 @@ const teachers = [
       23),
   Tutor(
       '3',
-      'Jill Leano',
       'assets/avatar/tutor/jill_leano_tutor_avatar.jpeg',
+      'Jill Leano',
       'Philippines',
       "Hi, My name is Jill I am an experienced English Teacher from Philippine. "
           "I would like to share my enthusiasm with the learners in this platform. "

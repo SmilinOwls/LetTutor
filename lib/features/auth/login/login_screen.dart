@@ -162,7 +162,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 14),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.home);
+              },
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(56),
                 backgroundColor: Colors.blue[700],
