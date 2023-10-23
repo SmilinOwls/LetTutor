@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
-import 'package:lettutor/widgets/start_rating.dart';
+import 'package:lettutor/widgets/star_rating.dart';
 import 'package:lettutor/widgets/tag_chip.dart';
 
 class TutorCard extends StatefulWidget {
@@ -106,8 +106,8 @@ class _TutorCardState extends State<TutorCard> {
                             TextStyle(color: Theme.of(context).primaryColor)),
                   ]),
                 ),
-              )
-            ],
+              ),
+            ],           
           ),
         ));
   }
