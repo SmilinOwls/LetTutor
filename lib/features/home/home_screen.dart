@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
-import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/home/widgets/home_header.dart';
 import 'package:lettutor/features/home/widgets/tutor_card.dart';
 
@@ -14,13 +13,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Scaffold(
+        body: SingleChildScrollView(
       child: Column(
         children: [
           const HomeHeader(),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+            padding: const EdgeInsets.fromLTRB(15, 10, 0, 15),
             child: Text('Recommend Tutors',
                 style: Theme.of(context).textTheme.displaySmall),
           ),
@@ -32,6 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-    );
+    ));
   }
 }

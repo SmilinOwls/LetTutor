@@ -8,18 +8,20 @@ class TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
+      alignment: WrapAlignment.start,
       spacing: 6,
-      runSpacing: 4,
+      runSpacing: 8,
       children: List<Widget>.generate(
         specialties.length,
         (index) => Chip(
-          backgroundColor: const Color.fromARGB(255,0, 113, 240),
+          backgroundColor: const Color.fromARGB(255, 221, 234, 255),
           label: Text(
             specialties[index] ?? "",
-            style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
+            style: const TextStyle(
+                fontSize: 14, color: Color.fromARGB(255, 0, 113, 240)),
           ),
         ),
-      ),
+      ).toList(),
     );
   }
 }
