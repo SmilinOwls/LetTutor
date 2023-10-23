@@ -32,15 +32,14 @@ class _TutorCardState extends State<TutorCard> {
                           Navigator.of(context).pushNamed(Routes.login),
                       child: Container(
                           width: 82,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage(widget.tutor.avatar!),
-                                fit: BoxFit.contain),
                           ),
                           child: CircleAvatar(
                             radius: 45,
                             backgroundImage: AssetImage(widget.tutor.avatar!),
+                            onBackgroundImageError: (exception, stackTrace) =>
+                                const Icon(Icons.person_outline_rounded, size: 62),
                           ))),
                   const SizedBox(width: 18),
                   Flexible(
@@ -107,7 +106,7 @@ class _TutorCardState extends State<TutorCard> {
                   ]),
                 ),
               ),
-            ],           
+            ],
           ),
         ));
   }
