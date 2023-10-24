@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String? _selectedNationality;
-  String _selectedTag = '';
+  String _selectedTag = filteredTags[0];
 
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _nationalityEditingController =
@@ -35,11 +35,20 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _handleFilterReset() {
+    setState(() {
+      _selectedNationality = null;
+      _selectedTag = filteredTags[0];
+      _nameEditingController.text = '';
+      _nationalityEditingController.text = '';
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
     _nameEditingController.dispose();
-    _nameEditingController.dispose();
+    _nationalityEditingController.dispose();
   }
 
   @override
@@ -63,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onNameChange: _handleNameChange,
             onNationalityChange: _handleNationalityChange,
             onTagChange: _handleTagChange,
+            onFilterReset: _handleFilterReset,
           ),
           Container(
             width: double.infinity,

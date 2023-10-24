@@ -69,7 +69,7 @@ class _TutorCardState extends State<TutorCard> {
                   )),
                   IconButton(
                       onPressed: () {},
-                      icon: ([true, false]..shuffle()).first
+                      icon: ([true, false]).first
                           ? const Icon(
                               Icons.favorite_rounded,
                               color: Colors.red,
