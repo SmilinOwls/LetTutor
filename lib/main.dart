@@ -24,6 +24,7 @@ class LetTutor extends StatelessWidget {
             useMaterial3: true,
             scaffoldBackgroundColor: Colors.white,
             primaryColor: Colors.blue,
+            hintColor: Colors.grey,
             textTheme: TextTheme(
                 displayLarge: TextStyle(
                     fontSize: 32,

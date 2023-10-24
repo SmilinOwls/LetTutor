@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/home/widgets/home_header.dart';
 import 'package:lettutor/features/home/widgets/tutor_card.dart';
+import 'package:lettutor/features/home/widgets/tutor_search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +12,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? _selectedNationality;
+  String _selectedTag = '';
+
+  final TextEditingController _nameEditingController = TextEditingController();
+  final TextEditingController _nationalityEditingController =
+      TextEditingController();
+
+  void _handleNameChange(String value) {
+    setState(() {});
+  }
+
+  void _handleNationalityChange(String? value) {
+    setState(() {
+      _selectedNationality = value;
+    });
+  }
+
+  void _handleTagChange(String value) {
+    setState(() {
+      _selectedTag = value;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameEditingController.dispose();
+    _nameEditingController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,6 +49,21 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           const HomeHeader(),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.fromLTRB(15, 10, 0, 15),
+            child: Text('Find a tutor',
+                style: Theme.of(context).textTheme.displaySmall),
+          ),
+          TuTorSearch(
+            nameEditingController: _nameEditingController,
+            nationalityEditingController: _nationalityEditingController,
+            selectedNationality: _selectedNationality,
+            selectedTag: _selectedTag,
+            onNameChange: _handleNameChange,
+            onNationalityChange: _handleNationalityChange,
+            onTagChange: _handleTagChange,
+          ),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(15, 10, 0, 15),

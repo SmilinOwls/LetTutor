@@ -115,6 +115,12 @@ const courseHours = [
   '23:30 - 23:55',
 ];
 
+const tutorNationalies = [
+  'Foreign Tutor',
+  'Vietnamese Tutor',
+  'Native English Tutor'
+];
+
 const languageList = [
   Language('1', 'English', 'assets/language/english.svg'),
   Language('2', 'Vietnamese', 'assets/language/vietnamese.svg')
