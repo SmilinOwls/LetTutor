@@ -3,7 +3,7 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/auth/forgot/forgot_password_screen.dart';
 import 'package:lettutor/features/auth/login/login_screen.dart';
 import 'package:lettutor/features/auth/register/register_screen.dart';
-import 'package:lettutor/features/home/home_screen.dart';
+import 'package:lettutor/features/navigation/tab_bar.dart';
 
 void main() {
   runApp(const LetTutor());
@@ -54,7 +54,7 @@ class LetTutor extends StatelessWidget {
           Routes.login: (context) => const LoginScreen(),
           Routes.register: (context) => const RegisterScreen(),
           Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
-          Routes.home: (context) => const HomeScreen(),
+          Routes.home: (context) => const TabBarNavigator(),
         });
   }
 }

@@ -6,28 +6,40 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/language/language.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
-  
+  const CustomAppBar({super.key, this.textLeading});
+
+  final String? textLeading;
+
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
-  
-   @override
+
+  @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
   String _appLanguage = 'English';
-  
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, Routes.home);
-          },
-          icon: SvgPicture.asset(
-            'assets/logo/lettutor_logo.svg',
-          )),
+      leading: widget.textLeading != null
+          ? Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            alignment: Alignment.centerLeft,
+            child:  Text(
+              widget.textLeading!,
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
+          )
+          : IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.home);
+              },
+              icon: SvgPicture.asset(
+                'assets/logo/lettutor_logo.svg',
+              )),
+      backgroundColor: Colors.white,
       leadingWidth: 180,
       elevation: 18,
       actions: <Widget>[
