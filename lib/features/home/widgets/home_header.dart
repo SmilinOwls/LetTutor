@@ -14,6 +14,7 @@ class _HomeHeaderState extends State<HomeHeader> {
       color: Colors.blue[800],
       width: double.infinity,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        const SizedBox(height: 18),
         const Text(
           'Upcomming Lesson',
           style: TextStyle(fontSize: 24, color: Colors.white),
