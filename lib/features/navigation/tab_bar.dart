@@ -9,26 +9,42 @@ class TabBarNavigator extends StatefulWidget {
   State<TabBarNavigator> createState() => _TabBarNavigatorState();
 }
 
-class _TabBarNavigatorState extends State<TabBarNavigator> {
-  List<Widget> screens = [
-    const HomeScreen(),
+class _TabBarNavigatorState extends State<TabBarNavigator> {  
+  final List<Map<String, dynamic>> _tabList = [
+    {
+      'label': 'Home', 
+      'icon': Icons.home, 
+      'screen': const HomeScreen()
+    },
+    {
+      'label': 'Tutor', 
+      'icon': Icons.people, 
+      'screen': const HomeScreen()
+    },
+    {
+      'label': 'Schedule', 
+      'icon': Icons.schedule_outlined, 
+      'screen': const HomeScreen()
+    },
+    {
+      'label': 'Courses', 
+      'icon': Icons.school, 
+      'screen': const HomeScreen()
+    },
+    {
+      'label': 'Settings', 
+      'icon': Icons.settings, 
+      'screen': const HomeScreen()
+    },
   ];
-
-  final Map<String, IconData> _tabList = {
-    'Home': Icons.home,
-    'Tutor': Icons.people,
-    'Schedule': Icons.schedule_outlined,
-    'Courses': Icons.school,
-    'Setting': Icons.settings,
-  };
 
   int _activeTab = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(textLeading: _tabList.keys.elementAt(_activeTab)),
-      body: screens[_activeTab],
+      appBar: CustomAppBar(textLeading: _tabList[_activeTab]['label']),
+      body: _tabList[_activeTab]['screen'],
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedLabelStyle: TextStyle(
@@ -43,9 +59,10 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
           },
           elevation: 18,
           currentIndex: _activeTab,
-          items: _tabList.entries
-              .map<BottomNavigationBarItem>((MapEntry entry) =>
-                  BottomNavigationBarItem(label: entry.key, icon: Icon(entry.value)))
+          items: _tabList
+              .map<BottomNavigationBarItem>((Map tab) =>
+                  BottomNavigationBarItem(
+                      label: tab['label'], icon: Icon(tab['icon'])))
               .toList()),
     );
   }
