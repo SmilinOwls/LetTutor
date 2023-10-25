@@ -163,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 14),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.home);
+                Navigator.of(context).pushReplacementNamed(Routes.home);
               },
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(56),

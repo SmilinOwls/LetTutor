@@ -6,9 +6,10 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/language/language.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, this.textLeading});
+  const CustomAppBar({super.key, this.appBarLeading, this.appBarTitle});
 
-  final String? textLeading;
+  final bool? appBarLeading;
+  final String? appBarTitle;
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -23,24 +24,29 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: widget.textLeading != null
-          ? Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            alignment: Alignment.centerLeft,
-            child:  Text(
-              widget.textLeading!,
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-          )
-          : IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.home);
-              },
-              icon: SvgPicture.asset(
-                'assets/logo/lettutor_logo.svg',
-              )),
+      leading: widget.appBarLeading != null
+          ? BackButton(
+              color: Colors.blue[600],
+            )
+          : null,
       backgroundColor: Colors.white,
-      leadingWidth: 180,
+      title: Container(
+        alignment: Alignment.centerLeft,
+        child: widget.appBarTitle != null
+            ? Text(
+                widget.appBarTitle!,
+                style: Theme.of(context).textTheme.displaySmall,
+              )
+            : IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.home);
+                },
+                icon: SvgPicture.asset(
+                  'assets/logo/lettutor_logo.svg',
+                  height: 42,
+                ),
+              ),
+      ),
       elevation: 18,
       actions: <Widget>[
         Container(

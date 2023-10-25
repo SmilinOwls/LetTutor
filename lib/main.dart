@@ -34,10 +34,10 @@ class LetTutor extends StatelessWidget {
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
                     color: Colors.blue[600]),
-                displaySmall: const TextStyle(
+                displaySmall: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
-                    color: Colors.black),
+                    color: Colors.blue[600]),
                 headlineLarge: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,

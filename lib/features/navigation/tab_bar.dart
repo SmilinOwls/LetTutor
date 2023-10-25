@@ -43,7 +43,7 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(textLeading: _tabList[_activeTab]['label']),
+      appBar: CustomAppBar(appBarTitle: _tabList[_activeTab]['label']),
       body: _tabList[_activeTab]['screen'],
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
