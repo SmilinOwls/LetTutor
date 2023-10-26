@@ -4,6 +4,7 @@ import 'package:lettutor/features/auth/forgot/forgot_password_screen.dart';
 import 'package:lettutor/features/auth/login/login_screen.dart';
 import 'package:lettutor/features/auth/register/register_screen.dart';
 import 'package:lettutor/features/navigation/tab_bar.dart';
+import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
 
 void main() {
   runApp(const LetTutor());
@@ -38,11 +39,11 @@ class LetTutor extends StatelessWidget {
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     color: Colors.blue[600]),
-                headlineLarge: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                bodyLarge: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
                     color: Colors.black),
-                bodyLarge:
+                bodyMedium:
                     const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                 bodySmall: TextStyle(
                   fontSize: 14,
@@ -55,6 +56,7 @@ class LetTutor extends StatelessWidget {
           Routes.register: (context) => const RegisterScreen(),
           Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
           Routes.home: (context) => const TabBarNavigator(),
+          Routes.tutorDetail: (context) => const TutorDetailScreen(),
         });
   }
 }

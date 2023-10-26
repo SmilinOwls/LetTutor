@@ -82,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: teachers.length,
-            itemBuilder: (content, index) => TutorCard(tutor: teachers[index]),
+            itemCount: tutors.length,
+            itemBuilder: (content, index) => TutorCard(tutor: tutors[index]),
           )
         ],
       ),

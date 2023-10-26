@@ -5,5 +5,5 @@ class Routes {
   static const forgotPassword = '/forgot';
   static const register = '/register';
 
-  static const tutor = '/tutor';
+  static const tutorDetail = '/tutor';
 }

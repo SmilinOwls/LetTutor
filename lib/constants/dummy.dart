@@ -176,7 +176,7 @@ const courses = [
   ),
 ];
 
-const teachers = [
+const tutors = [
   Tutor(
     '1',
     'assets/avatar/tutor/keegan_tutor_avatar.jpeg',

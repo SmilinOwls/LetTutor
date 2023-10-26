@@ -29,7 +29,7 @@ class _TutorCardState extends State<TutorCard> {
                 children: [
                   InkWell(
                       onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.login),
+                          Navigator.of(context).pushNamed(Routes.tutorDetail),
                       child: Container(
                           width: 82,
                           decoration: const BoxDecoration(
@@ -48,7 +48,7 @@ class _TutorCardState extends State<TutorCard> {
                     children: [
                       InkWell(
                         onTap: () =>
-                            Navigator.of(context).pushNamed(Routes.login),
+                            Navigator.of(context).pushNamed(Routes.tutorDetail),
                         child: Text(widget.tutor.name ?? 'null name',
                             style: Theme.of(context).textTheme.displaySmall),
                       ),
@@ -81,7 +81,7 @@ class _TutorCardState extends State<TutorCard> {
                 ],
               ),
               const SizedBox(height: 10),
-              TagChip(specialties: widget.tutor.specialties),
+              TagChip(tags: widget.tutor.specialties),
               const SizedBox(height: 10),
               Text(
                 widget.tutor.bio ?? 'null',
