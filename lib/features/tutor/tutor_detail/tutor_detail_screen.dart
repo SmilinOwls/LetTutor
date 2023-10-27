@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
+import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 import 'package:lettutor/widgets/tag_chip.dart';
@@ -13,6 +14,40 @@ class TutorDetailScreen extends StatefulWidget {
 
 class _TutorDetailScreenState extends State<TutorDetailScreen> {
   final tutor = tutors[0];
+
+  Future<void> _showReportDialog() async {
+    await showDialog(
+            context: context, builder: (context) => const TutorReportDiaglog())
+        .then((response) async {
+      if (response) {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
+              title: const Text('Report Successfully!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                      backgroundColor: Colors.blue[700]),
+                  child: const Text(
+                    'OK',
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +91,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                 const SizedBox(width: 4),
                                 Text('(${tutor.ratingNo})',
                                     style: const TextStyle(
+                                      fontStyle: FontStyle.italic,
                                       fontSize: 16,
                                     )),
                               ],
@@ -113,7 +149,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                 Flexible(
                   fit: FlexFit.tight,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: _showReportDialog,
                     child: const Column(
                       children: [
                         Icon(Icons.report_outlined, color: Colors.blue),
@@ -149,8 +185,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
               child: TagChip(tags: tutor.languages),
             ),
             const SizedBox(height: 8),
-            Text('Specialties',
-                style: Theme.of(context).textTheme.bodyLarge),
+            Text('Specialties', style: Theme.of(context).textTheme.bodyLarge),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: TagChip(tags: tutor.specialties),
