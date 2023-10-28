@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
+import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/star_rating.dart';
@@ -155,6 +156,24 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         Icon(Icons.report_outlined, color: Colors.blue),
                         SizedBox(height: 4),
                         Text('Report', style: TextStyle(color: Colors.blue))
+                      ],
+                    ),
+                  ),
+                ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        Routes.tutorReview,
+                        arguments: tutorFeedback,
+                      );
+                    },
+                    child: const Column(
+                      children: [
+                        Icon(Icons.reviews_outlined, color: Colors.blue),
+                        SizedBox(height: 4),
+                        Text('Reviews', style: TextStyle(color: Colors.blue))
                       ],
                     ),
                   ),
