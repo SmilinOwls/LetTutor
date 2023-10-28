@@ -15,6 +15,9 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
   Widget build(BuildContext context) {
     final reviews =
         ModalRoute.of(context)?.settings.arguments as List<TutorFeedback>;
+    reviews.sort((TutorFeedback late, TutorFeedback old) {
+      return old.createdAt.toString().compareTo(late.createdAt.toString());
+    });
 
     return Scaffold(
         appBar: const CustomAppBar(
