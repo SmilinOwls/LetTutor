@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
-import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_book_dialog.dart';
 import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog.dart';
+import 'package:lettutor/features/tutor/tutor_review/tutor_review_screen.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 import 'package:lettutor/widgets/tag_chip.dart';
@@ -177,10 +177,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                   fit: FlexFit.tight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(
-                        Routes.tutorReview,
-                        arguments: tutorFeedback,
-                      );
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const TutorReviewScreen(feedbacks: tutorFeedback)));
                     },
                     child: const Column(
                       children: [
@@ -266,7 +264,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
               alignment: Alignment.center,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   backgroundColor: Colors.blue,
                 ),
                 onPressed: _showTutorBookingDialog,

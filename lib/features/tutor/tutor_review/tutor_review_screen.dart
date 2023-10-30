@@ -4,7 +4,9 @@ import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class TutorReviewScreen extends StatefulWidget {
-  const TutorReviewScreen({super.key});
+  const TutorReviewScreen({super.key, required this.feedbacks});
+
+  final List<TutorFeedback> feedbacks;
 
   @override
   State<TutorReviewScreen> createState() => _TutorReviewScreenState();
@@ -13,8 +15,8 @@ class TutorReviewScreen extends StatefulWidget {
 class _TutorReviewScreenState extends State<TutorReviewScreen> {
   @override
   Widget build(BuildContext context) {
-    final reviews =
-        ModalRoute.of(context)?.settings.arguments as List<TutorFeedback>;
+    final reviews = widget.feedbacks;
+    
     reviews.toList().sort((TutorFeedback late, TutorFeedback old) {
       return old.createdAt.toString().compareTo(late.createdAt.toString());
     });

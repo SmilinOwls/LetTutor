@@ -5,7 +5,6 @@ import 'package:lettutor/features/auth/login/login_screen.dart';
 import 'package:lettutor/features/auth/register/register_screen.dart';
 import 'package:lettutor/features/navigation/tab_bar.dart';
 import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
-import 'package:lettutor/features/tutor/tutor_review/tutor_review_screen.dart';
 
 void main() {
   runApp(const LetTutor());
@@ -58,7 +57,6 @@ class LetTutor extends StatelessWidget {
           Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
           Routes.home: (context) => const TabBarNavigator(),
           Routes.tutorDetail: (context) => const TutorDetailScreen(),
-          Routes.tutorReview: (context) => const TutorReviewScreen(),
         });
   }
 }
