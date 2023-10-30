@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_book_dialog.dart';
 import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/star_rating.dart';
@@ -48,6 +49,18 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
         );
       }
     });
+  }
+
+  Future<void> _showTutorBookingDialog() async {
+    await showModalBottomSheet(
+      elevation: 3,
+      context: context,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      builder: (context) => const TutorBookDialog(),
+    );
   }
 
   @override
@@ -247,6 +260,21 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
               child: Text(
                 tutor.experience ?? 'No teaching experiences',
                 style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                style: TextButton.styleFrom(
+                  minimumSize: const Size.fromHeight(0),
+                  padding: const EdgeInsets.all(8),
+                  backgroundColor: Colors.blue,
+                ),
+                onPressed: _showTutorBookingDialog,
+                child: const Text(
+                  'Book Now',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
             ),
           ]),
