@@ -54,11 +54,11 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
   Future<void> _showTutorBookingDialog() async {
     await showModalBottomSheet(
       elevation: 3,
-      context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+      context: context,
       builder: (context) => const TutorBookDialog(),
     );
   }
@@ -262,12 +262,11 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
-            Align(
+            Container(
               alignment: Alignment.center,
               child: ElevatedButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size.fromHeight(0),
-                  padding: const EdgeInsets.all(8),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   backgroundColor: Colors.blue,
                 ),
                 onPressed: _showTutorBookingDialog,
