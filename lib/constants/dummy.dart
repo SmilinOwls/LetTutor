@@ -64,7 +64,7 @@ const courseTopics = [
   'Remote Work - A Dream Job?',
 ];
 
-const courseHours = [
+const tutorBookingHours = [
   '00:00 - 00:25',
   '00:30 - 00:55',
   '01:00 - 01:25',
