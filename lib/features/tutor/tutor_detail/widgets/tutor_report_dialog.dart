@@ -16,22 +16,30 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
   };
 
   @override
+  void dispose() {
+    super.dispose();
+    _reportTextEditingController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       backgroundColor: Colors.white,
-      title: Text(
-        'Report tutor',
-        style: Theme.of(context).textTheme.bodyLarge,
+      title: Column(
+        children: [
+          Text(
+            'Report tutor',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(height: 6),
+          const Divider(height: 1),
+        ],
       ),
       titlePadding: const EdgeInsets.fromLTRB(24, 12, 0, 0),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Divider(height: 1),
-          const SizedBox(height: 16),
           Row(
             children: [
               Icon(Icons.report_rounded, color: Colors.blue[700]),
@@ -81,7 +89,7 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
               ),
               decoration: const InputDecoration(
                 isCollapsed: true,
-                contentPadding: EdgeInsets.all(8),
+                contentPadding: EdgeInsets.all(12),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(width: 0.5, color: Colors.grey),
                 ),
@@ -118,7 +126,7 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
         ),
         TextButton(
           onPressed: () {
-             Navigator.pop(context, true);
+            Navigator.pop(context, true);
           },
           style: TextButton.styleFrom(
               fixedSize: const Size(100, 38),

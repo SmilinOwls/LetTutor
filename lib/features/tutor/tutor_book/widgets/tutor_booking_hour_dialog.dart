@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/dummy.dart';
+import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_confirm_dialog.dart';
 
 class TutorBookingHourDialog extends StatefulWidget {
   const TutorBookingHourDialog({super.key, required this.date});
@@ -12,6 +13,18 @@ class TutorBookingHourDialog extends StatefulWidget {
 }
 
 class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
+  Future<void> _showTutorBookingConfirmDialog(String hour) async {
+    final Map<String, dynamic> schedule = {
+      'date': widget.date,
+      'hour': hour,
+    };
+
+    await showDialog(
+      context: context,
+      builder: (context) => TutorBookingConfirmDialog(schedule: schedule),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +39,10 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
             const SizedBox(height: 6),
             Text(
               'On ${DateFormat('yyyy-MM-dd').format(widget.date)}',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue),
             ),
             const SizedBox(height: 12),
             Flexible(
@@ -44,7 +60,10 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue[300],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          _showTutorBookingConfirmDialog(
+                              tutorBookingHours[index]);
+                        },
                         child: Text(
                           tutorBookingHours[index],
                           style: const TextStyle(
