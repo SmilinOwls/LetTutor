@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/home/home_screen.dart';
+import 'package:lettutor/features/schedule/schedule_screen.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class TabBarNavigator extends StatefulWidget {
@@ -14,27 +15,27 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
     {
       'label': 'Home', 
       'icon': Icons.home, 
-      'screen': const HomeScreen()
-    },
-    {
-      'label': 'Tutor', 
-      'icon': Icons.people, 
-      'screen': const HomeScreen()
+      'screen': const HomeScreen(),
     },
     {
       'label': 'Schedule', 
-      'icon': Icons.schedule_outlined, 
-      'screen': const HomeScreen()
+      'icon': Icons.calendar_month_rounded, 
+      'screen': const ScheduleScreen(),
+    },
+    {
+      'label': 'History', 
+      'icon': Icons.history_outlined, 
+      'screen': const HomeScreen(),
     },
     {
       'label': 'Courses', 
       'icon': Icons.school, 
-      'screen': const HomeScreen()
+      'screen': const HomeScreen(),
     },
     {
       'label': 'Settings', 
       'icon': Icons.settings, 
-      'screen': const HomeScreen()
+      'screen': const HomeScreen(),
     },
   ];
 

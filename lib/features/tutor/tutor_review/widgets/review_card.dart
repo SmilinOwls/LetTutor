@@ -16,56 +16,59 @@ class ReviewCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       child: Padding(
         padding: const EdgeInsets.all(15),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          InkWell(
-              onTap: () {},
-              child: Container(
-                  width: 62,
-                  height: 62,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+                onTap: () {},
+                child: Container(
+                    width: 62,
+                    height: 62,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/avatar/user/user_avatar.jpeg',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.person_outline_rounded, size: 62),
+                      ),
+                    ))),
+            const SizedBox(width: 18),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        review.username ?? 'null name',
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        TimeDiff.timeAgo(review.createdAt!),
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey),
+                      ),
+                    ],
                   ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/avatar/user/user_avatar.jpeg',
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.person_outline_rounded, size: 62),
-                    ),
-                  ))),
-          const SizedBox(width: 18),
-          Flexible(
-            fit: FlexFit.tight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      review.username ?? 'null name',
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      TimeDiff.timeAgo(review.createdAt!),
-                      style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                StarRating(rating: review.rating ?? 0),
-                const SizedBox(height: 4),
-                Text(review.content ?? 'null content')
-              ],
+                  const SizedBox(height: 4),
+                  StarRating(rating: review.rating ?? 0),
+                  const SizedBox(height: 4),
+                  Text(review.content ?? 'null content')
+                ],
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }

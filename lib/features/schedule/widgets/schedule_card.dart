@@ -1,0 +1,156 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class ScheduleCard extends StatelessWidget {
+  const ScheduleCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      surfaceTintColor: Colors.white,
+      color: const Color.fromARGB(255, 241, 241, 241),
+      elevation: 0,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              DateFormat.yMMMEd().format(DateTime.now()),
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 4),
+            const Text('1 lesson'),
+            const SizedBox(height: 16),
+            Container(
+              padding: const EdgeInsets.all(12),
+              color: Colors.white,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  InkWell(
+                      onTap: () {},
+                      child: Container(
+                          width: 62,
+                          height: 62,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/avatar/user/user_avatar.jpeg',
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(Icons.person_outline_rounded,
+                                      size: 62),
+                            ),
+                          ))),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Keegan',
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'French',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(12),
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const Text(
+                    '18:30 - 18:55',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 12),
+                  ExpansionTile(
+                    title: const Text(
+                      'Request for lesson',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                    trailing: InkWell(
+                      onTap: () {},
+                      child: const Text('Edit request',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue,
+                          )),
+                    ),
+                    initiallyExpanded: true,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(width: 0.5, color: Colors.grey),
+                    ),
+                    collapsedShape: const RoundedRectangleBorder(
+                      side: BorderSide(width: 0.5, color: Colors.grey),
+                    ),
+                    collapsedBackgroundColor:
+                        const Color.fromARGB(255, 250, 250, 250),
+                    children: const [
+                      ListTile(
+                          title: Text(
+                        'Currently there are no requests for this class. Please write down any requests for the teacher.',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey),
+                      ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.cancel_presentation_outlined),
+                  label: const Text(
+                    'Cancel',
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.red,
+                    side: const BorderSide(color: Colors.red),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue[700],
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                  ),
+                  child: const Text(
+                    'Go to meeting',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
