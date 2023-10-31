@@ -58,7 +58,41 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
               style: TextStyle(fontSize: 18, color: Colors.blue[700]),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Balance',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const Text(
+                  'You have 1 lesson left',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.blue
+                  )
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Price',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const Text(
+                  '1 lesson',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.blue
+                  )
+                ),
+              ],
+            ),
+            const SizedBox(height: 6),
             Text(
               'Note',
               style: Theme.of(context).textTheme.bodyLarge,
@@ -71,6 +105,8 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                 expands: true,
                 keyboardType: TextInputType.multiline,
                 controller: _requestTextEditingController,
+                onChanged: (value) {},
+                style: const TextStyle(fontWeight: FontWeight.w500),
                 decoration: const InputDecoration(
                   isCollapsed: true,
                   contentPadding: EdgeInsets.all(12),
@@ -116,6 +152,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                 Navigator.pop(context, true);
               }
             },
+            
             style: TextButton.styleFrom(
                 fixedSize: const Size(100, 38),
                 shape: RoundedRectangleBorder(
