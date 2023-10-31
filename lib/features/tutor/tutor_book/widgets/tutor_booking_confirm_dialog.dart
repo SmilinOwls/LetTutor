@@ -115,7 +115,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                 decoration: const InputDecoration(
                   isCollapsed: true,
                   contentPadding: EdgeInsets.all(12),
-                  hintText: 'Your requests for the tutor',
+                  hintText: 'Notes',
                   hintStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -150,15 +150,16 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                 color: Colors.blue[700]),
           ),
         ),
-        TextButton(
+        TextButton.icon(
+          icon: const Icon(Icons.keyboard_double_arrow_right),
             onPressed: _showTutorBookingStatusDialog,
             style: TextButton.styleFrom(
                 fixedSize: const Size(100, 38),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 backgroundColor: Colors.blue[700]),
-            child: const Text(
-              'BOOK',
+            label: const Text(
+              'Book',
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
