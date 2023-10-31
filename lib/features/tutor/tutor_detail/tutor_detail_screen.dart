@@ -4,6 +4,7 @@ import 'package:lettutor/features/tutor/tutor_book/tutor_booking_screen.dart';
 import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog.dart';
 import 'package:lettutor/features/tutor/tutor_review/tutor_review_screen.dart';
 import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/message_dialog.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 import 'package:lettutor/widgets/tag_chip.dart';
 
@@ -25,26 +26,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
         await showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8)),
-              title: const Text('Report Successfully!'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)),
-                      backgroundColor: Colors.blue[700]),
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              ],
-            );
+            return const MessageDialog(message: 'Report Successfully!');
           },
         );
       }
@@ -166,7 +148,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                   child: TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const TutorReviewScreen(feedbacks: tutorFeedback)));
+                          builder: (context) => const TutorReviewScreen(
+                              feedbacks: tutorFeedback)));
                     },
                     child: const Column(
                       children: [
@@ -256,9 +239,9 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   backgroundColor: Colors.blue,
                 ),
-                onPressed: (){ 
+                onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const TutorBookingScreen()));
+                      builder: (context) => const TutorBookingScreen()));
                 },
                 child: const Text(
                   'Book Now',

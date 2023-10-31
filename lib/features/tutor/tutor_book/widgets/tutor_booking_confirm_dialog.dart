@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/widgets/message_dialog.dart';
 
 class TutorBookingConfirmDialog extends StatefulWidget {
   const TutorBookingConfirmDialog({super.key, required this.schedule});
@@ -14,6 +15,20 @@ class TutorBookingConfirmDialog extends StatefulWidget {
 class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
   final TextEditingController _requestTextEditingController =
       TextEditingController();
+
+  Future<void> _showTutorBookingStatusDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return const MessageDialog(message: 'Book Successfully!');
+      },
+    ).then((response) async {
+      if (response) {
+        Navigator.pop(context, true);
+        Navigator.pop(context, true);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -66,13 +81,8 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                   'Balance',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                const Text(
-                  'You have 1 lesson left',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blue
-                  )
-                ),
+                const Text('You have 1 lesson left',
+                    style: TextStyle(fontSize: 16, color: Colors.blue)),
               ],
             ),
             const SizedBox(height: 6),
@@ -83,13 +93,8 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                   'Price',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                const Text(
-                  '1 lesson',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.blue
-                  )
-                ),
+                const Text('1 lesson',
+                    style: TextStyle(fontSize: 16, color: Colors.blue)),
               ],
             ),
             const SizedBox(height: 6),
@@ -146,13 +151,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
           ),
         ),
         TextButton(
-            onPressed: () async {
-              if (mounted) {
-                Navigator.pop(context, true);
-                Navigator.pop(context, true);
-              }
-            },
-            
+            onPressed: _showTutorBookingStatusDialog,
             style: TextButton.styleFrom(
                 fixedSize: const Size(100, 38),
                 shape: RoundedRectangleBorder(
