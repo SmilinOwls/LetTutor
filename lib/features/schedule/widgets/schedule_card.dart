@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
 
 class ScheduleCard extends StatelessWidget {
   const ScheduleCard({super.key});
+
+  Future<void> _showScheduleCancelingDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return const ScheduleCancelingDialog();
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,13 +112,14 @@ class ScheduleCard extends StatelessWidget {
                         const Color.fromARGB(255, 250, 250, 250),
                     children: const [
                       ListTile(
-                          title: Text(
-                        'Currently there are no requests for this class. Please write down any requests for the teacher.',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey),
-                      ))
+                        title: Text(
+                          'Currently there are no requests for this class. Please write down any requests for the teacher.',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey),
+                        ),
+                      ),
                     ],
                   )
                 ],
@@ -120,7 +130,9 @@ class ScheduleCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    _showScheduleCancelingDialog(context);
+                  },
                   icon: const Icon(Icons.cancel_presentation_outlined),
                   label: const Text(
                     'Cancel',
@@ -132,7 +144,7 @@ class ScheduleCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5)),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 8),
                 TextButton(
                   onPressed: () {},
                   style: TextButton.styleFrom(

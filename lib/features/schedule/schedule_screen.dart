@@ -22,7 +22,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 8),
-          const Text('Here is a list of the sessions you have booked'
+          const Text('Here is a list of the sessions you have booked\n'
               'You can track when the meeting starts, join the meeting with one click or can cancel the meeting before 2 hours'),
           const SizedBox(height: 4),
           const Divider(height: 1),

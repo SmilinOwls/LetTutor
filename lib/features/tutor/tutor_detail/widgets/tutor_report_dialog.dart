@@ -90,7 +90,7 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
               decoration: const InputDecoration(
                 isCollapsed: true,
                 contentPadding: EdgeInsets.all(12),
-                border: OutlineInputBorder(
+                enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(width: 0.5, color: Colors.grey),
                 ),
                 hintText: 'Please let us know details about your problems',
