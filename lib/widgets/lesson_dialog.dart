@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/widgets/message_dialog.dart';
 
 class LessonDialog extends StatelessWidget {
   const LessonDialog({super.key, this.child, this.onSubmit});
 
   final Widget? child;
-  final void Function()? onSubmit;
+  final String? Function()? onSubmit;
+
+  Future<void> _showSuccessfulMessageDialog(BuildContext context) async {
+    final String? message = onSubmit!();
+
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return MessageDialog(message: message);
+        }).then((value) {
+      Navigator.of(context).pop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +80,7 @@ class LessonDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            onSubmit;
+            _showSuccessfulMessageDialog(context);
           },
           style: TextButton.styleFrom(
             foregroundColor: Colors.white,

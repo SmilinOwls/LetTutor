@@ -1,7 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/widgets/lesson_dialog.dart';
-import 'package:lettutor/widgets/message_dialog.dart';
 
 class ScheduleCancelingDialog extends StatefulWidget {
   const ScheduleCancelingDialog({super.key});
@@ -21,17 +20,6 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
     'Other'
   ];
   String? _selectedValue;
-
-  Future<void> _showSuccessfulCancelingMessageDialog() async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return const MessageDialog(
-              message: 'You deleted booking successfully!');
-        }).then((value) {
-      Navigator.of(context).pop();
-    });
-  }
 
   @override
   void dispose() {
@@ -130,7 +118,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
         ),
       ),
       onSubmit: () {
-        _showSuccessfulCancelingMessageDialog;
+        return 'You deleted booking successfully!';
       },
     );
   }
