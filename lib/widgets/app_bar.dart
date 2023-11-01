@@ -35,7 +35,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         child: widget.appBarTitle != null
             ? Text(
                 widget.appBarTitle!,
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context).textTheme.displayMedium,
               )
             : IconButton(
                 onPressed: () {

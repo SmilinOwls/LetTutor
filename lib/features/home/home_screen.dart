@@ -60,8 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(15, 10, 0, 15),
-            child: Text('Find a tutor',
-                style: Theme.of(context).textTheme.displaySmall),
+            child: Text(
+              'Find a tutor',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
           ),
           TuTorSearch(
             nameEditingController: _nameEditingController,
@@ -76,14 +78,18 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(15, 10, 0, 15),
-            child: Text('Recommend Tutors',
-                style: Theme.of(context).textTheme.displaySmall),
+            child: Text(
+              'Recommend Tutors',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
           ),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: tutors.length,
-            itemBuilder: (content, index) => TutorCard(tutor: tutors[index],),
+            itemBuilder: (content, index) => TutorCard(
+              tutor: tutors[index],
+            ),
           )
         ],
       ),

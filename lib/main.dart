@@ -19,37 +19,41 @@ class LetTutor extends StatelessWidget {
     return MaterialApp(
         title: 'LetTutor',
         theme: ThemeData(
-            appBarTheme: const AppBarTheme(
-              color: Colors.white,
+          appBarTheme: const AppBarTheme(
+            color: Colors.white,
+          ),
+          useMaterial3: true,
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: Colors.blue,
+          hintColor: Colors.grey,
+          textTheme: TextTheme(
+            displayLarge: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w700,
+              color: Colors.blue[600],
             ),
-            useMaterial3: true,
-            scaffoldBackgroundColor: Colors.white,
-            primaryColor: Colors.blue,
-            hintColor: Colors.grey,
-            textTheme: TextTheme(
-                displayLarge: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.blue[600]),
-                displayMedium: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.blue[600]),
-                displaySmall: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.blue[600]),
-                bodyLarge: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black),
-                bodyMedium:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                bodySmall: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey[800],
-                ))),
+            displayMedium: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w700,
+              color: Colors.blue[600],
+            ),
+            displaySmall: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+            ),
+            bodyLarge: const TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
+            bodyMedium: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+            bodySmall: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[800],
+            ),
+          ),
+        ),
         home: const LoginScreen(),
         routes: {
           Routes.login: (context) => const LoginScreen(),
