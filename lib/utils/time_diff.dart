@@ -1,7 +1,7 @@
 class TimeDiff {
   static String timeAgo(String createdTime) {
     final DateTime dt = DateTime.tryParse(createdTime) ?? DateTime.now();
-
+    
     Duration diff = DateTime.now().difference(dt);
     if (diff.inDays > 365) {
       return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
@@ -24,3 +24,4 @@ class TimeDiff {
     return "just now";
   }
 }
+ 

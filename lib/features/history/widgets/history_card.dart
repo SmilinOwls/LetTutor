@@ -2,9 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
+import 'package:lettutor/utils/time_diff.dart';
+import 'package:lettutor/widgets/star_rating.dart';
 
-class ScheduleCard extends StatelessWidget {
-  const ScheduleCard({super.key});
+class HistoryCard extends StatelessWidget {
+  const HistoryCard(
+      {super.key,
+      this.skillRating = const [
+        'Behavior',
+        'Listening',
+        'Speaking',
+        'Vocabulary'
+      ]});
+  final List<String> skillRating;
 
   Future<void> _showScheduleCancelingDialog(BuildContext context) async {
     await showDialog(
@@ -22,6 +32,18 @@ class ScheduleCard extends StatelessWidget {
         });
   }
 
+  Widget buildSkillRating(BuildContext context, int index) {
+    return Row(
+      children: [
+        Text(skillRating[index]),
+        const Text(' ('),
+        const StarRating(rating: 5),
+        const Text('): '),
+        const Text('Great')
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,14 +54,16 @@ class ScheduleCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(14),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
               DateFormat.yMMMEd().format(DateTime.now()),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
-            const Text('1 lesson'),
+            Text(
+              TimeDiff.timeAgo('2023-10-30 00:00'),
+            ),
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
@@ -83,48 +107,32 @@ class ScheduleCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
+              color: Colors.white,
+              child: const Text(
+                'Lesson Time: 19:30-19:55',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+            ),
+            const SizedBox(height: 14),
+            Container(
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Text(
-                    '18:30 - 18:55',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(height: 12),
-                  ExpansionTile(
-                    title: const Text(
+                  const ExpansionTile(
+                    title: Text(
                       'Request for lesson',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
-                    trailing: InkWell(
-                      onTap: () {
-                        _showScheduleRequestingDialog(context);
-                      },
-                      child: const Text('Edit request',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue,
-                          )),
-                    ),
-                    initiallyExpanded: true,
-                    controlAffinity: ListTileControlAffinity.leading,
-                    shape: const RoundedRectangleBorder(
-                      side: BorderSide(width: 0.5, color: Colors.grey),
-                    ),
-                    collapsedShape: const RoundedRectangleBorder(
-                      side: BorderSide(width: 0.5, color: Colors.grey),
-                    ),
-                    collapsedBackgroundColor:
-                        const Color.fromARGB(255, 250, 250, 250),
-                    children: const [
+                    shape: RoundedRectangleBorder(),
+                    children: [
                       ListTile(
                         title: Text(
-                          'Currently there are no requests for this class. Please write down any requests for the teacher.',
+                          'Need to have more exercises',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -132,44 +140,60 @@ class ScheduleCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  const Divider(height: 1),
+                  ExpansionTile(
+                    expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+                    childrenPadding:
+                        const EdgeInsets.only(left: 14, bottom: 10),
+                    title: const Text(
+                      'Review from tutor',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                    ),
+                    shape: const RoundedRectangleBorder(),
+                    children: [
+                      const Text(
+                        'Session 1: 00:00 - 00:25',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const Text('Level status: Completed'),
+                      ...List<Widget>.generate(
+                        skillRating.length,
+                        (index) => buildSkillRating(context, index),
+                      ),
+                      const Text('Overall comment: Good'),
+                    ],
+                  ),
+                  const Divider(height: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 14),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: const Text(
+                            'Add a rating',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: const Text(
+                            'Report',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                OutlinedButton.icon(
-                  onPressed: () {
-                    _showScheduleCancelingDialog(context);
-                  },
-                  icon: const Icon(Icons.cancel_presentation_outlined),
-                  label: const Text(
-                    'Cancel',
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.red,
-                    side: const BorderSide(color: Colors.red),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue[700],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                  child: const Text(
-                    'Go to meeting',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
             ),
           ],
         ),
