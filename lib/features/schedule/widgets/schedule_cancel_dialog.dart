@@ -124,7 +124,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                       color: Colors.red,
                     ),
                   ),
-                  hintText: 'Additional Note',
+                  hintText: 'Additional Notes',
                   hintStyle: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
