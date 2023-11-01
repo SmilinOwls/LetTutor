@@ -13,6 +13,9 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
   bool _validate = false;
 
   void _handleRequestSubmit() {
+    setState(() {
+      _validate = _requestTextEditingController.text.isEmpty;
+    });
     if (!_validate) Navigator.of(context).pop(true);
   }
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
+import 'package:lettutor/features/history/widgets/history_report_dialog.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
 import 'package:lettutor/utils/time_diff.dart';
 import 'package:lettutor/widgets/star_rating.dart';
@@ -16,11 +16,11 @@ class HistoryCard extends StatelessWidget {
       ]});
   final List<String> skillRating;
 
-  Future<void> _showScheduleCancelingDialog(BuildContext context) async {
+  Future<void> _showScheduleReportDialog(BuildContext context) async {
     await showDialog(
         context: context,
         builder: (context) {
-          return const ScheduleCancelingDialog();
+          return const HistoryReportDialog();
         });
   }
 
@@ -198,7 +198,9 @@ class HistoryCard extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            _showScheduleReportDialog(context);
+                          },
                           child: const Text(
                             'Report',
                             style: TextStyle(color: Colors.blue),

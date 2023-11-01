@@ -10,17 +10,17 @@ class ScheduleCancelingDialog extends StatefulWidget {
       _ScheduleCancelingDialogState();
 }
 
+const List<String> reasons = [
+  'Reschedule at another time',
+  'Busy at that time',
+  'Asked by the tutor',
+  'Other'
+];
+
 class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
   final TextEditingController _noteTextEditingController =
       TextEditingController();
-  final List<String> items = [
-    'Reschedule at another time',
-    'Busy at that time',
-    'Asked by the tutor',
-    'Other'
-  ];
-  String? _selectedValue;
-  bool _validate = false;
+  String _selectedValue = reasons.first;
 
   @override
   void dispose() {
@@ -59,7 +59,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                       color: Theme.of(context).hintColor,
                     ),
                   ),
-                  items: items
+                  items: reasons
                       .map(
                         (String item) => DropdownMenuItem<String>(
                           value: item,
@@ -75,7 +75,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                   value: _selectedValue,
                   onChanged: (String? value) {
                     setState(() {
-                      _selectedValue = value;
+                      _selectedValue = value!;
                     });
                   },
                   buttonStyleData: const ButtonStyleData(
@@ -100,43 +100,34 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                 keyboardType: TextInputType.multiline,
                 controller: _noteTextEditingController,
                 onChanged: (value) {
-                  setState(() {
-                    _validate = value.isEmpty;
-                  });
+                  
                 },
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   isCollapsed: true,
-                  contentPadding: const EdgeInsets.all(12),
-                  enabledBorder: const OutlineInputBorder(
+                  contentPadding: EdgeInsets.all(12),
+                  enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 0.5,
                       color: Colors.grey,
                     ),
                   ),
-                  errorText: _validate ? "The reason cannot be empty!" : null,
-                  errorBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.red,
-                    ),
-                  ),
                   hintText: 'Additional Notes',
-                  hintStyle: const TextStyle(
+                  hintStyle: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
                   ),
-                  border: const OutlineInputBorder(
+                  border: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 0.5,
                       color: Colors.grey,
                     ),
                   ),
-                  focusedBorder: const OutlineInputBorder(
+                  focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,
                       color: Colors.blue,
@@ -149,11 +140,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
         ),
       ),
       onSubmit: () {
-        setState(() {
-          _validate = _noteTextEditingController.text.isEmpty;
-        });
-        if (!_validate) return 'You deleted booking successfully!';
-        return null;
+        return 'You deleted booking successfully!';
       },
     );
   }
