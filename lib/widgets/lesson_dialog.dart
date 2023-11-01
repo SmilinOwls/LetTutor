@@ -10,14 +10,17 @@ class LessonDialog extends StatelessWidget {
 
   Future<void> _showSuccessfulMessageDialog(BuildContext context) async {
     final String? message = onSubmit!();
-
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return MessageDialog(message: message);
-        }).then((value) {
-      Navigator.of(context).pop();
-    });
+    if (message != null) {
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return MessageDialog(message: message);
+          }).then((value) {
+        Navigator.of(context).pop();
+      });
+    } else {
+      return;
+    }
   }
 
   @override

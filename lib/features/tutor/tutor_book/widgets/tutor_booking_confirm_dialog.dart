@@ -123,6 +123,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                   border: OutlineInputBorder(
                     borderSide: BorderSide(width: 0.5, color: Colors.grey),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(width: 1, color: Colors.blue),
                   ),

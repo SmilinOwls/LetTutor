@@ -20,6 +20,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
     'Other'
   ];
   String? _selectedValue;
+  bool _validate = false;
 
   @override
   void dispose() {
@@ -92,33 +93,48 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                 expands: true,
                 keyboardType: TextInputType.multiline,
                 controller: _noteTextEditingController,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    _validate = value.isEmpty;
+                  });
+                },
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   isCollapsed: true,
-                  contentPadding: EdgeInsets.all(12),
-                  enabledBorder: OutlineInputBorder(
+                  contentPadding: const EdgeInsets.all(12),
+                  enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(width: 0.5, color: Colors.grey),
                   ),
+                  errorText: _validate ?  "The reason cannot be empty!" : null,
+                  errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(width: 1, color: Colors.red),
+                  ),
                   hintText: 'Additional Note',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey),
-                  focusedBorder: OutlineInputBorder(
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(width: 1, color: Colors.blue),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
       onSubmit: () {
-        return 'You deleted booking successfully!';
+        setState(() {
+          _validate = _noteTextEditingController.text.isEmpty;
+        });
+        if (!_validate) return 'You deleted booking successfully!';
+        return null;
       },
     );
   }

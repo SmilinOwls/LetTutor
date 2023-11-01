@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
+import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
 
 class ScheduleCard extends StatelessWidget {
   const ScheduleCard({super.key});
@@ -10,6 +11,14 @@ class ScheduleCard extends StatelessWidget {
         context: context,
         builder: (context) {
           return const ScheduleCancelingDialog();
+        });
+  }
+
+  Future<void> _showScheduleRequestingDialog(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return const SchduleRequestDialog();
         });
   }
 
@@ -93,7 +102,9 @@ class ScheduleCard extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                     ),
                     trailing: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        _showScheduleRequestingDialog(context);
+                      },
                       child: const Text('Edit request',
                           style: TextStyle(
                             fontSize: 16,
