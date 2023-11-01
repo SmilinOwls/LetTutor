@@ -13,7 +13,7 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
   bool _validate = false;
 
   void _handleRequestSubmit() {
-    if(!_validate) Navigator.of(context).pop(true);
+    if (!_validate) Navigator.of(context).pop(true);
   }
 
   @override
@@ -39,24 +39,22 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
           children: <Widget>[
             const Divider(height: 1),
             const SizedBox(height: 16),
-            const Text(
-              'Note',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Colors.black
-              )
-            ),
+            const Text('Note',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black)),
             const SizedBox(height: 16),
             SizedBox(
               height: 200,
               child: TextField(
+                maxLength: 200,
                 maxLines: null,
                 expands: true,
                 keyboardType: TextInputType.multiline,
                 controller: _requestTextEditingController,
                 onChanged: (value) {
-                   setState(() {
+                  setState(() {
                     _validate = value.isEmpty;
                   });
                 },
@@ -73,9 +71,7 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                   enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(width: 0.5, color: Colors.grey),
                   ),
-                  errorText: _validate
-                      ? "The reason cannot be empty!"
-                      : null,
+                  errorText: _validate ? "The reason cannot be empty!" : null,
                   errorBorder: const OutlineInputBorder(
                     borderSide: BorderSide(width: 1, color: Colors.red),
                   ),
@@ -89,6 +85,14 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                   ),
                 ),
               ),
+            ),
+            const SizedBox(height: 4),
+            const Text(
+              'You can write in English or Vietnamese (Maximum 200 letters)',
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey),
             ),
           ],
         ),

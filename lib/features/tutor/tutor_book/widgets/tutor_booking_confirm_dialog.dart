@@ -154,7 +154,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
           ),
         ),
         TextButton.icon(
-          icon: const Icon(Icons.keyboard_double_arrow_right),
+            icon: const Icon(Icons.keyboard_double_arrow_right),
             onPressed: _showTutorBookingStatusDialog,
             style: TextButton.styleFrom(
                 fixedSize: const Size(100, 38),
