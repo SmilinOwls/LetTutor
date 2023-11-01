@@ -19,7 +19,7 @@ class LessonDialog extends StatelessWidget {
         Navigator.of(context).pop();
       });
     } else {
-      return;
+       Navigator.of(context).pop();
     }
   }
 
@@ -29,38 +29,43 @@ class LessonDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       content: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        child: Column(
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          runSpacing: 20,
           children: <Widget>[
-            InkWell(
-              onTap: () {},
-              child: Container(
-                width: 62,
-                height: 62,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/avatar/user/user_avatar.jpeg',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.person_outline_rounded, size: 62),
+            Column( 
+              children: <Widget>[
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: 62,
+                    height: 62,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/avatar/user/user_avatar.jpeg',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.person_outline_rounded, size: 62),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Text(
+                  'Keegan',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 8),
+                const Text('Lesson Time', style: TextStyle(fontSize: 16)),
+                const SizedBox(height: 2),
+                Text(
+                  '${DateFormat.yMMMEd().format(DateTime.now())}, 18:30 - 18:55',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
             ),
-            Text(
-              'Keegan',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 8),
-            const Text('Lesson Time', style: TextStyle(fontSize: 16)),
-            const SizedBox(height: 2),
-            Text(
-              '${DateFormat.yMMMEd().format(DateTime.now())}, 18:30 - 18:55',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 14),
             const Divider(height: 1),
             child!
           ],

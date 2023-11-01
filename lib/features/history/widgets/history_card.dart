@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/features/history/widgets/history_rating_dialog.dart';
 import 'package:lettutor/features/history/widgets/history_report_dialog.dart';
-import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
 import 'package:lettutor/utils/time_diff.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
@@ -16,7 +16,7 @@ class HistoryCard extends StatelessWidget {
       ]});
   final List<String> skillRating;
 
-  Future<void> _showScheduleReportDialog(BuildContext context) async {
+  Future<void> _showHistoryReportDialog(BuildContext context) async {
     await showDialog(
         context: context,
         builder: (context) {
@@ -24,11 +24,11 @@ class HistoryCard extends StatelessWidget {
         });
   }
 
-  Future<void> _showScheduleRequestingDialog(BuildContext context) async {
+  Future<void> _showHistoryRatingDialog(BuildContext context) async {
     await showDialog(
         context: context,
         builder: (context) {
-          return const SchduleRequestDialog();
+          return const HistoryRatingDialog();
         });
   }
 
@@ -191,7 +191,9 @@ class HistoryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            _showHistoryRatingDialog(context);
+                          },
                           child: const Text(
                             'Add a rating',
                             style: TextStyle(color: Colors.blue),
@@ -199,7 +201,7 @@ class HistoryCard extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            _showScheduleReportDialog(context);
+                            _showHistoryReportDialog(context);
                           },
                           child: const Text(
                             'Report',
