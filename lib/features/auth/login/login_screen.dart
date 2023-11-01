@@ -92,28 +92,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'mail@example.com',
                 errorText: _emailErrorText,
                 errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.red),
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: Colors.red,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                      width: 1, color: Color.fromARGB(255, 64, 169, 255)),
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                    width: 1,
+                    color: Color.fromARGB(255, 64, 169, 255),
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
                 ),
                 border: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromARGB(255, 217, 217, 217)),
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                  borderSide: BorderSide(
+                    width: 0.5,
+                    color: Color.fromARGB(255, 217, 217, 217),
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
                 enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                  borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
               ),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 28),
             const Text(
               'PASSWORD',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
             ),
             const SizedBox(height: 10),
             TextField(
@@ -140,31 +160,58 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 errorText: _passwordErrorText,
                 errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.red),
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: Colors.red,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                      width: 1, color: Color.fromARGB(255, 64, 169, 255)),
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                    width: 1,
+                    color: Color.fromARGB(255, 64, 169, 255),
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
                 ),
                 enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                  borderSide: BorderSide(
+                    width: 0.5,
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
                 border: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                  borderSide: BorderSide(
+                    width: 0.5,
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
               ),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 28),
             InkWell(
               onTap: () {
-                Navigator.pushNamed(context, Routes.forgotPassword);
+                Navigator.pushNamed(
+                  context,
+                  Routes.forgotPassword,
+                );
               },
               child: const Text(
                 'Forgot Password?',
-                style: TextStyle(fontSize: 16, color: Colors.blue),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.blue,
+                ),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -177,7 +224,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 minimumSize: const Size.fromHeight(56),
                 backgroundColor: Colors.blue[700],
                 shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
               ),
               child: const Text(
                 'LOG IN',
@@ -246,11 +296,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: const Text(
                     'Sign up',
-                    style: TextStyle(fontSize: 16, color: Colors.blue),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

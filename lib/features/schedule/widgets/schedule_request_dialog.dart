@@ -30,7 +30,10 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
         'Special Request',
         style: Theme.of(context).textTheme.bodyLarge,
       ),
-      titlePadding: const EdgeInsets.only(top: 12, left: 24),
+      titlePadding: const EdgeInsets.only(
+        top: 12,
+        left: 24,
+      ),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.75,
         height: MediaQuery.of(context).size.height * 0.5,
@@ -39,11 +42,14 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
           children: <Widget>[
             const Divider(height: 1),
             const SizedBox(height: 16),
-            const Text('Note',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black)),
+            const Text(
+              'Note',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
             const SizedBox(height: 16),
             SizedBox(
               height: 200,
@@ -66,14 +72,23 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                   isCollapsed: true,
                   contentPadding: const EdgeInsets.all(12),
                   border: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderSide: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
                   ),
                   enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderSide: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
                   ),
                   errorText: _validate ? "The reason cannot be empty!" : null,
                   errorBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.red),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.red,
+                    ),
                   ),
                   hintText: 'Wish topic (optional)',
                   hintStyle: const TextStyle(
@@ -81,7 +96,10 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                       fontWeight: FontWeight.w400,
                       color: Colors.grey),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.blue),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ),
@@ -105,8 +123,9 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
           style: OutlinedButton.styleFrom(
             foregroundColor: Colors.blue,
             side: const BorderSide(color: Colors.blue),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
           ),
           child: const Text(
             'Cancel',
@@ -117,8 +136,9 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
           style: TextButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor: Colors.blue[700],
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
           ),
           child: const Text(
             'Submit',

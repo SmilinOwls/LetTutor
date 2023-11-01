@@ -17,33 +17,34 @@ class _TutorCardState extends State<TutorCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-        surfaceTintColor: Colors.white,
-        elevation: 6,
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  InkWell(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(Routes.tutorDetail),
-                      child: Container(
-                          width: 82,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: CircleAvatar(
-                            radius: 45,
-                            backgroundImage: AssetImage(widget.tutor.avatar!),
-                            onBackgroundImageError: (exception, stackTrace) =>
-                                const Icon(Icons.person_outline_rounded, size: 62),
-                          ))),
-                  const SizedBox(width: 18),
-                  Flexible(
-                      child: Column(
+      surfaceTintColor: Colors.white,
+      elevation: 6,
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                InkWell(
+                    onTap: () =>
+                        Navigator.of(context).pushNamed(Routes.tutorDetail),
+                    child: Container(
+                        width: 82,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: CircleAvatar(
+                          radius: 45,
+                          backgroundImage: AssetImage(widget.tutor.avatar!),
+                          onBackgroundImageError: (exception, stackTrace) =>
+                              const Icon(Icons.person_outline_rounded,
+                                  size: 62),
+                        ))),
+                const SizedBox(width: 18),
+                Flexible(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InkWell(
@@ -66,48 +67,54 @@ class _TutorCardState extends State<TutorCard> {
                               ),
                             )
                     ],
-                  )),
-                  IconButton(
-                      onPressed: () {},
-                      icon: ([true, false]).first
-                          ? const Icon(
-                              Icons.favorite_rounded,
-                              color: Colors.red,
-                            )
-                          : const Icon(
-                              Icons.favorite_border_rounded,
-                              color: Colors.blue,
-                            ))
-                ],
-              ),
-              const SizedBox(height: 10),
-              TagChip(tags: widget.tutor.specialties),
-              const SizedBox(height: 10),
-              Text(
-                widget.tutor.bio ?? 'null',
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 14),
-              Align(
-                alignment: Alignment.centerRight,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Theme.of(context).primaryColor),
                   ),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: [
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: ([true, false]).first
+                        ? const Icon(
+                            Icons.favorite_rounded,
+                            color: Colors.red,
+                          )
+                        : const Icon(
+                            Icons.favorite_border_rounded,
+                            color: Colors.blue,
+                          ))
+              ],
+            ),
+            const SizedBox(height: 10),
+            TagChip(tags: widget.tutor.specialties),
+            const SizedBox(height: 10),
+            Text(
+              widget.tutor.bio ?? 'null',
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 14),
+            Align(
+              alignment: Alignment.centerRight,
+              child: OutlinedButton(
+                onPressed: () {},
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Theme.of(context).primaryColor),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     Icon(Icons.edit_calendar,
                         color: Theme.of(context).primaryColor),
                     const SizedBox(width: 6),
-                    Text('Book',
-                        style:
-                            TextStyle(color: Theme.of(context).primaryColor)),
-                  ]),
+                    Text(
+                      'Book',
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

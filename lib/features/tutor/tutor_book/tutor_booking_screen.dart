@@ -29,49 +29,52 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
-          appBarLeading: true,
-          appBarTitle: 'Tutor Booking',
+      appBar: const CustomAppBar(
+        appBarLeading: true,
+        appBarTitle: 'Tutor Booking',
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 20,
         ),
-        body: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-            child: Column(
-              children: [
-                Text(
-                  'Choose Learning Date',
-                  style: Theme.of(context).textTheme.bodyLarge,
+        child: Column(
+          children: [
+            Text(
+              'Choose Learning Date',
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 10),
+            Flexible(
+              fit: FlexFit.tight,
+              child: GridView.builder(
+                itemCount: scheduledStartingDate.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 18,
+                  crossAxisSpacing: 28,
+                  childAspectRatio: 4,
                 ),
-                const SizedBox(height: 10),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: GridView.builder(
-                      itemCount: scheduledStartingDate.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 18,
-                        crossAxisSpacing: 28,
-                        childAspectRatio: 4,
-                      ),
-                      itemBuilder: (BuildContext context, int index) =>
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[300],
-                            ),
-                            onPressed: () {
-                              _showTutorBookingTimeDialog(
-                                  scheduledStartingDate[index]);
-                            },
-                            child: Text(
-                              DateFormat('yyyy-MM-dd')
-                                  .format(scheduledStartingDate[index]),
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white),
-                            ),
-                          )),
+                itemBuilder: (BuildContext context, int index) =>
+                    ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue[300],
+                  ),
+                  onPressed: () {
+                    _showTutorBookingTimeDialog(scheduledStartingDate[index]);
+                  },
+                  child: Text(
+                    DateFormat('yyyy-MM-dd')
+                        .format(scheduledStartingDate[index]),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
-              ],
-            )));
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

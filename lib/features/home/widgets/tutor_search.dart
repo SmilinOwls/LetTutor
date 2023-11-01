@@ -46,16 +46,18 @@ class TuTorSearch extends StatelessWidget {
                     style: const TextStyle(fontSize: 14),
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 12,
-                          horizontal: 20,
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        hintText: 'Enter tutor name',
-                        filled: true,
-                        fillColor: Colors.white70,
-                        hintStyle: const TextStyle(color: Colors.grey)),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 20,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      hintText: 'Enter tutor name',
+                      filled: true,
+                      fillColor: Colors.white70,
+                      hintStyle: const TextStyle(color: Colors.grey),
+                    ),
                   ),
                 ),
                 Container(
@@ -123,10 +125,9 @@ class TuTorSearch extends StatelessWidget {
                           ),
                         ),
                         searchMatchFn: (item, searchValue) {
-                          return item.value
-                              .toString()
-                              .toLowerCase()
-                              .contains(searchValue.toLowerCase());
+                          return item.value.toString().toLowerCase().contains(
+                                searchValue.toLowerCase(),
+                              );
                         },
                       ),
                       onMenuStateChange: (isOpen) {
@@ -149,7 +150,10 @@ class TuTorSearch extends StatelessWidget {
                     onSelected: (_) {
                       onTagChange(tag);
                     },
-                    side: const BorderSide(width: 0, color: Colors.white),
+                    side: const BorderSide(
+                      width: 0,
+                      color: Colors.white,
+                    ),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     backgroundColor: selectedTag == tag
@@ -179,7 +183,7 @@ class TuTorSearch extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
           ),
-        )
+        ),
       ],
     );
   }

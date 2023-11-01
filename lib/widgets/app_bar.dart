@@ -50,56 +50,57 @@ class _CustomAppBarState extends State<CustomAppBar> {
       elevation: 18,
       actions: <Widget>[
         Container(
-            width: 180,
-            padding: const EdgeInsets.all(8),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton2(
-                customButton: Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.grey[400],
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/language/${_appLanguage.toLowerCase()}.svg',
-                      width: 30,
-                      height: 30,
-                    ),
+          width: 180,
+          padding: const EdgeInsets.all(8),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2(
+              customButton: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[400],
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/language/${_appLanguage.toLowerCase()}.svg',
+                    width: 30,
+                    height: 30,
                   ),
                 ),
-                value: _appLanguage,
-                items: [
-                  ...languageList.map<DropdownMenuItem<String>>(
-                    (Language lang) => DropdownMenuItem<String>(
-                      value: lang.name,
-                      child: SizedBox(
-                          child: Row(children: [
-                        SvgPicture.asset(
-                          lang.flag!,
-                          width: 30,
-                          height: 30,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          lang.name!,
-                          style: TextStyle(
-                              fontWeight: _appLanguage == lang.name
-                                  ? FontWeight.bold
-                                  : FontWeight.normal),
-                        )
-                      ])),
-                    ),
-                  )
-                ],
-                onChanged: (String? language) {
-                  setState(() {
-                    _appLanguage = language ?? "English";
-                  });
-                },
               ),
-            ))
+              value: _appLanguage,
+              items: [
+                ...languageList.map<DropdownMenuItem<String>>(
+                  (Language lang) => DropdownMenuItem<String>(
+                    value: lang.name,
+                    child: SizedBox(
+                        child: Row(children: [
+                      SvgPicture.asset(
+                        lang.flag!,
+                        width: 30,
+                        height: 30,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        lang.name!,
+                        style: TextStyle(
+                            fontWeight: _appLanguage == lang.name
+                                ? FontWeight.bold
+                                : FontWeight.normal),
+                      )
+                    ])),
+                  ),
+                )
+              ],
+              onChanged: (String? language) {
+                setState(() {
+                  _appLanguage = language ?? "English";
+                });
+              },
+            ),
+          ),
+        ),
       ],
     );
   }

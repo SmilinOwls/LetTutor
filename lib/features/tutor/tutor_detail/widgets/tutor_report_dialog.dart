@@ -44,17 +44,19 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
             children: [
               Icon(Icons.report_rounded, color: Colors.blue[700]),
               const SizedBox(width: 4),
-              const Text("Help us understand what's happening",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  )),
+              const Text(
+                "Help us understand what's happening",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
           Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                  children: List<Widget>.generate(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: List<Widget>.generate(
                 _reports.length,
                 (index) => CheckboxListTile(
                     title: Text(
@@ -74,7 +76,9 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
                     side: const BorderSide(width: 0.5),
                     activeColor: Colors.blue[500],
                     controlAffinity: ListTileControlAffinity.leading),
-              ))),
+              ),
+            ),
+          ),
           SizedBox(
             height: 120,
             child: TextField(
@@ -91,7 +95,10 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
                 isCollapsed: true,
                 contentPadding: EdgeInsets.all(12),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                  borderSide: BorderSide(
+                    width: 0.5,
+                    color: Colors.grey,
+                  ),
                 ),
                 hintText: 'Please let us know details about your problems',
                 hintStyle: TextStyle(
@@ -99,7 +106,10 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
                     fontWeight: FontWeight.w400,
                     color: Colors.grey),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.blue),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: Colors.blue,
+                  ),
                 ),
               ),
             ),
@@ -112,16 +122,21 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
             Navigator.pop(context, false);
           },
           style: OutlinedButton.styleFrom(
-              fixedSize: const Size(100, 38),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              side: BorderSide(width: 1.5, color: Colors.blue[700]!)),
+            fixedSize: const Size(100, 38),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            side: BorderSide(
+              width: 1.5,
+              color: Colors.blue[700]!,
+            ),
+          ),
           child: Text(
             'Cancel',
             style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.blue[700]),
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.blue[700],
+            ),
           ),
         ),
         TextButton(
@@ -129,14 +144,19 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
             Navigator.pop(context, true);
           },
           style: TextButton.styleFrom(
-              fixedSize: const Size(100, 38),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5)),
-              backgroundColor: Colors.blue[700]),
+            fixedSize: const Size(100, 38),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            backgroundColor: Colors.blue[700],
+          ),
           child: const Text(
             'Submit',
             style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
           ),
         ),
       ],

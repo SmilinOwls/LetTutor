@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: tutors.length,
-            itemBuilder: (content, index) => TutorCard(tutor: tutors[index]),
+            itemBuilder: (content, index) => TutorCard(tutor: tutors[index],),
           )
         ],
       ),

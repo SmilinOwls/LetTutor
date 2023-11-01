@@ -50,7 +50,9 @@ class HistoryCard extends StatelessWidget {
       surfaceTintColor: Colors.white,
       color: const Color.fromARGB(255, 241, 241, 241),
       elevation: 0,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(
+        vertical: 8,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(14),
         child: Column(
@@ -72,22 +74,24 @@ class HistoryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   InkWell(
-                      onTap: () {},
-                      child: Container(
-                          width: 62,
-                          height: 62,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/avatar/user/user_avatar.jpeg',
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.person_outline_rounded,
-                                      size: 62),
-                            ),
-                          ))),
+                    onTap: () {},
+                    child: Container(
+                      width: 62,
+                      height: 62,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/avatar/user/user_avatar.jpeg',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.person_outline_rounded,
+                                  size: 62),
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -113,7 +117,10 @@ class HistoryCard extends StatelessWidget {
               color: Colors.white,
               child: const Text(
                 'Lesson Time: 19:30-19:55',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
             const SizedBox(height: 14),
@@ -125,8 +132,10 @@ class HistoryCard extends StatelessWidget {
                   const ExpansionTile(
                     title: Text(
                       'Request for lesson',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     shape: RoundedRectangleBorder(),
                     children: [
@@ -134,8 +143,8 @@ class HistoryCard extends StatelessWidget {
                         title: Text(
                           'Need to have more exercises',
                           style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -144,12 +153,16 @@ class HistoryCard extends StatelessWidget {
                   const Divider(height: 1),
                   ExpansionTile(
                     expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-                    childrenPadding:
-                        const EdgeInsets.only(left: 14, bottom: 10),
+                    childrenPadding: const EdgeInsets.only(
+                      left: 14,
+                      bottom: 10,
+                    ),
                     title: const Text(
                       'Review from tutor',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     shape: const RoundedRectangleBorder(),
                     children: [
@@ -171,7 +184,9 @@ class HistoryCard extends StatelessWidget {
                   const Divider(height: 1),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 14),
+                      vertical: 12,
+                      horizontal: 14,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

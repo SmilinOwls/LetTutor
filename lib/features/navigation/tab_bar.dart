@@ -64,7 +64,7 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
           items: _tabList
               .map<BottomNavigationBarItem>((Map tab) =>
                   BottomNavigationBarItem(
-                      label: tab['label'], icon: Icon(tab['icon'])))
+                      label: tab['label'], icon: Icon(tab['icon'],),),)
               .toList()),
     );
   }

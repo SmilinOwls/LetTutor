@@ -65,12 +65,18 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             const SizedBox(height: 6),
             Text(
               widget.schedule['hour'],
-              style: TextStyle(fontSize: 18, color: Colors.blue[700]),
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.blue[700],
+              ),
               textAlign: TextAlign.center,
             ),
             Text(
               DateFormat('yyyy-MM-dd').format(widget.schedule['date']),
-              style: TextStyle(fontSize: 18, color: Colors.blue[700]),
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.blue[700],
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 6),
@@ -81,8 +87,10 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                   'Balance',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                const Text('You have 1 lesson left',
-                    style: TextStyle(fontSize: 16, color: Colors.blue)),
+                const Text(
+                  'You have 1 lesson left',
+                  style: TextStyle(fontSize: 16, color: Colors.blue),
+                ),
               ],
             ),
             const SizedBox(height: 6),
@@ -93,8 +101,10 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                   'Price',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                const Text('1 lesson',
-                    style: TextStyle(fontSize: 16, color: Colors.blue)),
+                const Text(
+                  '1 lesson',
+                  style: TextStyle(fontSize: 16, color: Colors.blue),
+                ),
               ],
             ),
             const SizedBox(height: 6),
@@ -121,13 +131,22 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                       fontWeight: FontWeight.w400,
                       color: Colors.grey),
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderSide: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderSide: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.blue),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ),
@@ -148,26 +167,30 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
           child: Text(
             'Cancel',
             style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.blue[700]),
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.blue[700],
+            ),
           ),
         ),
         TextButton.icon(
-            icon: const Icon(Icons.keyboard_double_arrow_right),
-            onPressed: _showTutorBookingStatusDialog,
-            style: TextButton.styleFrom(
-                fixedSize: const Size(100, 38),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                backgroundColor: Colors.blue[700]),
-            label: const Text(
-              'Book',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
-            )),
+          icon: const Icon(Icons.keyboard_double_arrow_right),
+          onPressed: _showTutorBookingStatusDialog,
+          style: TextButton.styleFrom(
+              fixedSize: const Size(100, 38),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              backgroundColor: Colors.blue[700]),
+          label: const Text(
+            'Book',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ],
     );
   }

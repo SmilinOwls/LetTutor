@@ -45,7 +45,9 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
               height: 50,
               decoration: BoxDecoration(
                 border: Border.all(width: 0.5, color: Colors.grey),
-                borderRadius: const BorderRadius.all(Radius.circular(5)),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(5),
+                ),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton2<String>(
@@ -58,15 +60,17 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                     ),
                   ),
                   items: items
-                      .map((String item) => DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(
-                              item,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              ),
+                      .map(
+                        (String item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: const TextStyle(
+                              fontSize: 14,
                             ),
-                          ))
+                          ),
+                        ),
+                      )
                       .toList(),
                   value: _selectedValue,
                   onChanged: (String? value) {
@@ -75,7 +79,9 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                     });
                   },
                   buttonStyleData: const ButtonStyleData(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
                     height: 40,
                     width: 140,
                   ),
@@ -106,22 +112,35 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                   isCollapsed: true,
                   contentPadding: const EdgeInsets.all(12),
                   enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderSide: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
                   ),
-                  errorText: _validate ?  "The reason cannot be empty!" : null,
+                  errorText: _validate ? "The reason cannot be empty!" : null,
                   errorBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.red),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.red,
+                    ),
                   ),
                   hintText: 'Additional Note',
                   hintStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
                   border: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderSide: BorderSide(
+                      width: 0.5,
+                      color: Colors.grey,
+                    ),
                   ),
                   focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.blue),
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ),

@@ -126,8 +126,8 @@ class ScheduleCard extends StatelessWidget {
                         title: Text(
                           'Currently there are no requests for this class. Please write down any requests for the teacher.',
                           style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
