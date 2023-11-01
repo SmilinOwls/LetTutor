@@ -118,9 +118,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 border: const OutlineInputBorder(
                     borderSide: BorderSide(
-                        width: 1, color: Color.fromARGB(255, 217, 217, 217)),
+                        width: 0.5, color: Color.fromARGB(255, 217, 217, 217)),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 0.5, color: Color.fromARGB(255, 217, 217, 217)),
                     borderRadius: BorderRadius.all(Radius.circular(5))),
               ),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 28),
             const Text(
@@ -161,9 +166,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 border: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.grey),
+                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 0.5, color: Color.fromARGB(255, 217, 217, 217)),
                     borderRadius: BorderRadius.all(Radius.circular(5))),
               ),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 14),
             const Text(
@@ -204,9 +214,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 border: const OutlineInputBorder(
-                    borderSide: BorderSide(width: 1, color: Colors.grey),
+                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(width: 0.5, color: Colors.grey),
                     borderRadius: BorderRadius.all(Radius.circular(5))),
               ),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 18),
             TextButton(

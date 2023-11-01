@@ -48,7 +48,7 @@ class LetTutor extends StatelessWidget {
                 bodySmall: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey[700],
+                  color: Colors.grey[800],
                 ))),
         home: const LoginScreen(),
         routes: {
