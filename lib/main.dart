@@ -59,7 +59,7 @@ class LetTutor extends StatelessWidget {
           Routes.login: (context) => const LoginScreen(),
           Routes.register: (context) => const RegisterScreen(),
           Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
-          Routes.home: (context) => const TabBarNavigator(),
+          Routes.main: (context) => const TabBarNavigator(),
           Routes.tutorDetail: (context) => const TutorDetailScreen(),
         });
   }

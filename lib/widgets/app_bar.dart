@@ -39,7 +39,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               )
             : IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.home);
+                  Navigator.pushNamed(context, Routes.main);
                 },
                 icon: SvgPicture.asset(
                   'assets/logo/lettutor_logo.svg',
