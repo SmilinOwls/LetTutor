@@ -28,20 +28,21 @@ class _TutorCardState extends State<TutorCard> {
             Row(
               children: [
                 InkWell(
-                    onTap: () =>
-                        Navigator.of(context).pushNamed(Routes.tutorDetail),
-                    child: Container(
-                        width: 82,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: CircleAvatar(
-                          radius: 45,
-                          backgroundImage: AssetImage(widget.tutor.avatar!),
-                          onBackgroundImageError: (exception, stackTrace) =>
-                              const Icon(Icons.person_outline_rounded,
-                                  size: 62),
-                        ))),
+                  onTap: () =>
+                      Navigator.of(context).pushNamed(Routes.tutorDetail),
+                  child: Container(
+                    width: 82,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: CircleAvatar(
+                      radius: 45,
+                      backgroundImage: AssetImage(widget.tutor.avatar!),
+                      onBackgroundImageError: (exception, stackTrace) =>
+                          const Icon(Icons.person_outline_rounded, size: 62),
+                    ),
+                  ),
+                ),
                 const SizedBox(width: 18),
                 Flexible(
                   child: Column(
@@ -70,16 +71,17 @@ class _TutorCardState extends State<TutorCard> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
-                    icon: ([true, false]).first
-                        ? const Icon(
-                            Icons.favorite_rounded,
-                            color: Colors.red,
-                          )
-                        : const Icon(
-                            Icons.favorite_border_rounded,
-                            color: Colors.blue,
-                          ))
+                  onPressed: () {},
+                  icon: ([true, false]).first
+                      ? const Icon(
+                          Icons.favorite_rounded,
+                          color: Colors.red,
+                        )
+                      : const Icon(
+                          Icons.favorite_border_rounded,
+                          color: Colors.blue,
+                        ),
+                )
               ],
             ),
             const SizedBox(height: 10),
