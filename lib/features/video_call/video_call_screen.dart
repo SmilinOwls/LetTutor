@@ -148,7 +148,27 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
+              Positioned(
+                bottom: 65,
+                right: 25,
+                child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: 62,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: CircleAvatar(
+                      radius: 45,
+                      backgroundImage: const AssetImage(
+                          'assets/avatar/tutor/keegan_tutor_avatar.jpeg'),
+                      onBackgroundImageError: (exception, stackTrace) =>
+                          const Icon(Icons.person_outline_rounded, size: 62),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
