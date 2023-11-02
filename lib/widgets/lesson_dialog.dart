@@ -77,7 +77,7 @@ class LessonDialog extends StatelessWidget {
       actions: <Widget>[
         OutlinedButton(
           onPressed: () {
-            Navigator.of(context).pop(false);
+            Navigator.of(context).pop();
           },
           style: OutlinedButton.styleFrom(
             foregroundColor: Colors.blue,

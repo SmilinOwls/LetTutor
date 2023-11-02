@@ -36,9 +36,11 @@ class _HistoryCardState extends State<HistoryCard> {
         builder: (context) {
           return const HistoryRatingDialog();
         }).then((value) {
-      setState(() {
-        _rating = value;
-      });
+      if (value != null) {
+        setState(() {
+          _rating = value;
+        });
+      }
     });
   }
 
