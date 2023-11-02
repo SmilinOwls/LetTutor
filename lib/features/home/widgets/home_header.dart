@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/routes.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -26,7 +27,7 @@ class _HomeHeaderState extends State<HomeHeader> {
           ),
           const SizedBox(height: 18),
           const Text(
-            '2023-10-23  18:30-18:55',
+            '2023-12-01 18:30-18:55',
             style: TextStyle(
               fontSize: 18,
               color: Colors.white,
@@ -34,7 +35,9 @@ class _HomeHeaderState extends State<HomeHeader> {
           ),
           const SizedBox(height: 18),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(Routes.videoCall);
+            },
             style: TextButton.styleFrom(
               backgroundColor: Colors.white,
             ),

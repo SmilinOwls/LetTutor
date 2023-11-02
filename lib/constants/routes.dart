@@ -6,4 +6,6 @@ class Routes {
   static const register = '/register';
 
   static const tutorDetail = '/tutor';
+
+  static const videoCall = '/call';
 }
