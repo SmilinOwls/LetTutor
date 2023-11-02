@@ -12,6 +12,7 @@ class VideoCallScreen extends StatefulWidget {
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
   final DateTime _timeStamp = DateTime(2023, 12, 1, 18, 30);
+  bool _isHover = false;
   late Timer _timer;
   late Duration _currentTime;
 
@@ -63,87 +64,93 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 94, 93, 93),
-        body: Stack(
-          children: [
-            Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(16),
-                  color: Colors.black,
-                ),
-                child: Text(
-                  '$_getRemainingTimer until lesson start (${DateFormat('E, dd MMM yy H:m').format(_timeStamp)})',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 20, color: Colors.white),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              bottom: 20,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(     
-                  width: MediaQuery.of(context).size.width * 0.8,    
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+        backgroundColor: const Color.fromARGB(255, 67, 66, 66),
+        body: MouseRegion(
+          onEnter: (PointerEvent e) => setState(() => _isHover = true),
+          onExit: (PointerEvent e) => setState(() {
+            _isHover = false;
+          }),
+          child: Stack(
+            children: [
+              Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(16),
                     color: Colors.black,
                   ),
-                  child: const Row(
-                    children: [
-                      Expanded(
-                          child: Icon(
-                        Icons.mic_none_outlined,
-                        color: Colors.white,
-                      )),
-                      Expanded(
-                          child: Icon(
-                        Icons.video_camera_back_outlined,
-                        color: Colors.white,
-                      )),
-                      Expanded(
-                          child: Icon(
-                        Icons.screen_share_outlined,
-                        color: Colors.white,
-                      )),
-                       Expanded(
-                          child: Icon(
-                        Icons.comment_bank_outlined,
-                        color: Colors.white,
-                      )),
-                      Expanded(
-                          child: Icon(
-                        Icons.front_hand_outlined,
-                        color: Colors.white,
-                      )),
-                      Expanded(
-                          child: Icon(
-                        Icons.fullscreen_outlined,
-                        color: Colors.white,
-                      )),
-                      Expanded(
-                          child: Icon(
-                        Icons.more_horiz_outlined,
-                        color: Colors.white,
-                      )),
-                      Expanded(
-                          child: Icon(
-                        Icons.phone,
-                        color: Colors.red,
-                      )),
-                    ],
+                  child: Text(
+                    '$_getRemainingTimer until lesson start (${DateFormat('E, dd MMM yy H:m').format(_timeStamp)})',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
               ),
-            )
-          ],
+              Positioned.fill(
+                bottom: _isHover ? 20 : -50,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.black,
+                    ),
+                    child: const Row(
+                      children: [
+                        Expanded(
+                            child: Icon(
+                          Icons.mic_none_outlined,
+                          color: Colors.white,
+                        )),
+                        Expanded(
+                            child: Icon(
+                          Icons.video_camera_back_outlined,
+                          color: Colors.white,
+                        )),
+                        Expanded(
+                            child: Icon(
+                          Icons.screen_share_outlined,
+                          color: Colors.white,
+                        )),
+                        Expanded(
+                            child: Icon(
+                          Icons.comment_bank_outlined,
+                          color: Colors.white,
+                        )),
+                        Expanded(
+                            child: Icon(
+                          Icons.front_hand_outlined,
+                          color: Colors.white,
+                        )),
+                        Expanded(
+                            child: Icon(
+                          Icons.fullscreen_outlined,
+                          color: Colors.white,
+                        )),
+                        Expanded(
+                            child: Icon(
+                          Icons.more_horiz_outlined,
+                          color: Colors.white,
+                        )),
+                        Expanded(
+                            child: Icon(
+                          Icons.phone,
+                          color: Colors.red,
+                        )),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
