@@ -5,16 +5,22 @@ import 'package:lettutor/features/history/widgets/history_report_dialog.dart';
 import 'package:lettutor/utils/time_diff.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
-class HistoryCard extends StatelessWidget {
-  const HistoryCard(
-      {super.key,
-      this.skillRating = const [
-        'Behavior',
-        'Listening',
-        'Speaking',
-        'Vocabulary'
-      ]});
-  final List<String> skillRating;
+class HistoryCard extends StatefulWidget {
+  const HistoryCard({super.key});
+
+  @override
+  State<HistoryCard> createState() => _HistoryCardState();
+}
+
+class _HistoryCardState extends State<HistoryCard> {
+  final List<String> _skillRating = <String>[
+    'Behavior',
+    'Listening',
+    'Speaking',
+    'Vocabulary'
+  ];
+
+  double? _rating;
 
   Future<void> _showHistoryReportDialog(BuildContext context) async {
     await showDialog(
@@ -29,13 +35,17 @@ class HistoryCard extends StatelessWidget {
         context: context,
         builder: (context) {
           return const HistoryRatingDialog();
-        });
+        }).then((value) {
+      setState(() {
+        _rating = value;
+      });
+    });
   }
 
   Widget buildSkillRating(BuildContext context, int index) {
     return Row(
       children: [
-        Text(skillRating[index]),
+        Text(_skillRating[index]),
         const Text(' ('),
         const StarRating(rating: 5),
         const Text('): '),
@@ -175,7 +185,7 @@ class HistoryCard extends StatelessWidget {
                       ),
                       const Text('Level status: Completed'),
                       ...List<Widget>.generate(
-                        skillRating.length,
+                        _skillRating.length,
                         (index) => buildSkillRating(context, index),
                       ),
                       const Text('Overall comment: Good'),
@@ -189,16 +199,30 @@ class HistoryCard extends StatelessWidget {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                      children: <Widget>[
+                        Expanded(
+                          child: _rating != null
+                              ? Row(
+                                  children: <Widget>[
+                                    const Text('Rating: '),
+                                    StarRating(
+                                      rating: _rating!,
+                                      onRatingChanged: (value) {},
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                        ),
                         InkWell(
                           onTap: () {
                             _showHistoryRatingDialog(context);
                           },
-                          child: const Text(
-                            'Add a rating',
-                            style: TextStyle(color: Colors.blue),
+                          child: Text(
+                            _rating != null ? 'Edit' : 'Add a rating',
+                            style: const TextStyle(color: Colors.blue),
                           ),
                         ),
+                        const SizedBox(width: 10),
                         InkWell(
                           onTap: () {
                             _showHistoryReportDialog(context);

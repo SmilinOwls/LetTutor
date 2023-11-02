@@ -13,7 +13,7 @@ class MessageDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(message);
           },
           style: TextButton.styleFrom(
               shape: RoundedRectangleBorder(

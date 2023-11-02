@@ -83,7 +83,7 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
         ],
       ),
       onSubmit: () {
-        return null;
+        return _rating.toString();
       },
     );
   }

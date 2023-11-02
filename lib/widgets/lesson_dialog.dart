@@ -11,15 +11,18 @@ class LessonDialog extends StatelessWidget {
   Future<void> _showSuccessfulMessageDialog(BuildContext context) async {
     final String? message = onSubmit!();
     if (message != null) {
-      await showDialog(
-          context: context,
-          builder: (context) {
-            return MessageDialog(message: message);
-          }).then((value) {
-        Navigator.of(context).pop();
-      });
+      double? value = double.tryParse(message);
+      if (value != null) {
+        Navigator.of(context).pop(value);
+      } else {
+        await showDialog(
+            context: context,
+            builder: (context) {
+              return MessageDialog(message: message);
+            });
+      }
     } else {
-       Navigator.of(context).pop();
+      Navigator.of(context).pop();
     }
   }
 
@@ -33,7 +36,7 @@ class LessonDialog extends StatelessWidget {
           alignment: WrapAlignment.center,
           runSpacing: 20,
           children: <Widget>[
-            Column( 
+            Column(
               children: <Widget>[
                 InkWell(
                   onTap: () {},
