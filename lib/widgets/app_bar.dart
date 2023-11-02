@@ -34,7 +34,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         alignment: Alignment.centerLeft,
         child: widget.appBarTitle != null
             ? Text(
-                widget.appBarTitle!,
+                widget.appBarTitle!.toUpperCase(),
                 style: Theme.of(context).textTheme.displayMedium,
               )
             : IconButton(
