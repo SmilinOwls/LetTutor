@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
 import 'package:lettutor/models/courses/course_topic.dart';
 
 class CourseTopicCard extends StatelessWidget {
@@ -13,7 +14,12 @@ class CourseTopicCard extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 6),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  CourseTopicScreen(courseTopic: courseTopic[index]),
+            ));
+          },
           child: Card(
             shape: RoundedRectangleBorder(
               side: const BorderSide(

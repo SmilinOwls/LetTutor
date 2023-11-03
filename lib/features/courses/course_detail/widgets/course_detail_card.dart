@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
 import 'package:lettutor/models/courses/course.dart';
 
 class CourseDetailCard extends StatelessWidget {
@@ -60,7 +60,10 @@ class CourseDetailCard extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          CourseTopicScreen(courseTopic: course.topics![0]),
+                    ));
                   },
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
