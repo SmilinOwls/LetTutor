@@ -110,7 +110,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 courseDetail.topics?.length ?? 0,
                 (index) => CourseTopicCard(
                   index: index,
-                  courseTopic: courseDetail.topics!,
+                  course: courseDetail,
                 ),
               ),
               const CustomHeadline(textHeadline: 'Suggested Tutors'),

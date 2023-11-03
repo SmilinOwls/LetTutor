@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
-import 'package:lettutor/models/courses/course_topic.dart';
+import 'package:lettutor/models/courses/course.dart';
 
 class CourseTopicCard extends StatelessWidget {
   const CourseTopicCard(
-      {super.key, required this.index, required this.courseTopic});
+      {super.key, required this.index, required this.course});
 
   final int index;
-  final List<CourseTopic> courseTopic;
+  final Course course;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +16,10 @@ class CourseTopicCard extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  CourseTopicScreen(courseTopic: courseTopic[index]),
+              builder: (context) => CourseTopicScreen(
+                index: index,
+                course: course,
+              ),
             ));
           },
           child: Card(
@@ -37,7 +39,7 @@ class CourseTopicCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               alignment: Alignment.centerLeft,
               child: Text(
-                '${index + 1}.\n${courseTopic[index].name}',
+                '${index + 1}.\n${course.topics![index].name}',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),

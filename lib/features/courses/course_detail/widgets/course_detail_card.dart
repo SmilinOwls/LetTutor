@@ -61,8 +61,10 @@ class CourseDetailCard extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          CourseTopicScreen(courseTopic: course.topics![0]),
+                      builder: (context) => CourseTopicScreen(
+                        index: 0,
+                        course: course,
+                      ),
                     ));
                   },
                   style: ElevatedButton.styleFrom(
