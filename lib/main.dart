@@ -44,7 +44,9 @@ class LetTutor extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
             bodyLarge: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w800, color: Colors.black),
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+            ),
             bodyMedium: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,

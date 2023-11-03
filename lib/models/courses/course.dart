@@ -1,3 +1,5 @@
+import 'package:lettutor/models/courses/course_topic.dart';
+
 class Course {
   const Course(
     this.id,
@@ -6,6 +8,8 @@ class Course {
     this.description,
     this.level,
     this.topics,
+    this.reason,
+    this.purpose,
   );
 
   final String? id;
@@ -13,5 +17,7 @@ class Course {
   final String? imageUrl;
   final String? description;
   final String? level;
-  final List<String>? topics;
+  final List<CourseTopic>? topics;
+  final String? reason;
+  final String? purpose;
 }

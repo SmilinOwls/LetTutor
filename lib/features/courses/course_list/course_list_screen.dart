@@ -57,7 +57,10 @@ class _CourseListScreenState extends State<CourseListScreen>
                     ),
                     hintStyle: TextStyle(color: Colors.grey[400]),
                     hintText: 'Search',
-                    suffixIcon: const Icon(Icons.search),
+                    suffixIcon: InkWell(
+                      onTap: () {},
+                      child: const Icon(Icons.search),
+                    ),
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0.5,
