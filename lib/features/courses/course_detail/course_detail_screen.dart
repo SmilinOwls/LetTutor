@@ -21,7 +21,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     return Scaffold(
       appBar: const CustomAppBar(
         appBarLeading: true,
-        appBarTitle: 'Tutor Details',
+        appBarTitle: 'Course Details',
       ),
       body: SingleChildScrollView(
         child: Container(
