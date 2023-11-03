@@ -80,7 +80,8 @@ class _CourseScreenState extends State<CourseScreen>
                     ),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(height: 16),
             ],
           ),
         )),
@@ -117,12 +118,12 @@ class _CourseScreenState extends State<CourseScreen>
         child: TabBarView(
           controller: _tabController,
           children: [
-            // Here goes the first tab
+            // first tab
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(),
             ),
-            // Here goes the second tab
+            // second tab
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
