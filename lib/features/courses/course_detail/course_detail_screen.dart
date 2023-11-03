@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/features/courses/course_detail/widgets/course_detail_card.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/custom_headline.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/topic_card.dart';
 import 'package:lettutor/widgets/app_bar.dart';
@@ -31,6 +32,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           ),
           child: Column(
             children: <Widget>[
+              CourseDetailCard(course: courseDetail),
+              const SizedBox(height: 20),
               const CustomHeadline(textHeadline: 'Overview'),
               const SizedBox(height: 14),
               Row(
