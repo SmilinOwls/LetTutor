@@ -3,6 +3,7 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/auth/forgot/forgot_password_screen.dart';
 import 'package:lettutor/features/auth/login/login_screen.dart';
 import 'package:lettutor/features/auth/register/register_screen.dart';
+import 'package:lettutor/features/courses/course_detail/course_detail_screen.dart';
 import 'package:lettutor/features/navigation/navigation_bar.dart';
 import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
 import 'package:lettutor/features/video_call/video_call_screen.dart';
@@ -62,6 +63,7 @@ class LetTutor extends StatelessWidget {
           Routes.forgotPassword: (context) => const ForgotPasswordScreen(),
           Routes.main: (context) => const TabBarNavigator(),
           Routes.tutorDetail: (context) => const TutorDetailScreen(),
+          Routes.courseDetail: (context) => const CourseDetailScreen(),
           Routes.videoCall: (context) => const VideoCallScreen(),
         });
   }

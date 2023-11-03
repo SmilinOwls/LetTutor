@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/courses/course.dart';
 
 class CourseCard extends StatelessWidget {
@@ -9,7 +10,12 @@ class CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          Routes.courseDetail,
+          arguments: course.id ?? 'null id',
+        );
+      },
       child: Align(
         alignment: Alignment.center,
         child: SizedBox(

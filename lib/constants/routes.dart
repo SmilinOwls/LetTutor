@@ -7,5 +7,7 @@ class Routes {
 
   static const tutorDetail = '/tutor';
 
+  static const courseDetail = '/course';
+
   static const videoCall = '/call';
 }

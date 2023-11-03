@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const HomeHeader(),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(15, 10, 0, 15),
+            padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
             child: Text(
               'Find a tutor',
               style: Theme.of(context).textTheme.displaySmall,
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(15, 10, 0, 15),
+            padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
             child: Text(
               'Recommend Tutors',
               style: Theme.of(context).textTheme.displaySmall,
