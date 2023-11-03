@@ -43,7 +43,8 @@ class TuTorSearch extends StatelessWidget {
                   child: TextField(
                     onChanged: onNameChange,
                     controller: nameEditingController,
-                    style: const TextStyle(fontSize: 14),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w400),
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
@@ -54,9 +55,9 @@ class TuTorSearch extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       hintText: 'Enter tutor name',
-                      filled: true,
-                      fillColor: Colors.white70,
-                      hintStyle: const TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),

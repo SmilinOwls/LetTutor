@@ -7,28 +7,130 @@ class CourseScreen extends StatefulWidget {
   State<CourseScreen> createState() => _CourseScreenState();
 }
 
-class _CourseScreenState extends State<CourseScreen> {
+class _CourseScreenState extends State<CourseScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      initialIndex: 0,
+      length: 2,
+      vsync: this,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          const Icon(Icons.school_rounded, size: 62),
-          const SizedBox(height: 8),
-          Text(
-            'Discover Courses',
-            style: Theme.of(context).textTheme.displaySmall,
+    return NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
+        SliverToBoxAdapter(
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: <Widget>[
+              const Icon(Icons.school_rounded, size: 62),
+              const SizedBox(height: 8),
+              Text(
+                'Discover Courses',
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'LiveTutor has built the most quality, methodical and scientific courses'
+                'in the fields of life for those who are in need of improving their knowledge of the fields.',
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: TextField(
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    hintStyle: TextStyle(color: Colors.grey[400]),
+                    hintText: 'Search',
+                    suffixIcon: const Icon(Icons.search),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.blue,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'LiveTutor has built the most quality, methodical and scientific courses'
-            'in the fields of life for those who are in need of improving their knowledge of the fields.',
+        )),
+        SliverToBoxAdapter(
+          child: TabBar(
+            controller: _tabController,
+            labelColor: Colors.blue,
+            indicatorColor: Colors.blue[500],
+            tabs: const <Widget>[
+              Tab(
+                child: Text(
+                  'Course',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'E-Book',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          const Divider(height: 1),
-          const SizedBox(height: 16),
-        ],
+        )
+      ],
+      body: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            // Here goes the first tab
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(),
+            ),
+            // Here goes the second tab
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
