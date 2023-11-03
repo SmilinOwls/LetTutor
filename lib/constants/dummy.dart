@@ -127,45 +127,55 @@ const languageList = [
 ];
 
 const tutorFeedback = [
-  TutorFeedback('1', 'Phhai123', 'Tutor teaches very great lessons', 5, '2023-10-28'),
-  TutorFeedback('2', 'Nameless User', '5 stars for amazing endeavors!', 5,  '2023-10-28'),
-  TutorFeedback('3', 'Phhai321', 'Very impressive', 5,  '2023-10-28'),
   TutorFeedback(
-      '4', 'hailepham212', 'Cool lessons. Hope to see you again..', 4,  '2023-10-28'),
+      '1', 'Phhai123', 'Tutor teaches very great lessons', 5, '2023-10-28'),
+  TutorFeedback(
+      '2', 'Nameless User', '5 stars for amazing endeavors!', 5, '2023-10-28'),
+  TutorFeedback('3', 'Phhai321', 'Very impressive', 5, '2023-10-28'),
+  TutorFeedback('4', 'hailepham212', 'Cool lessons. Hope to see you again..', 4,
+      '2023-10-28'),
 ];
 
 const courses = [
   Course(
-      "1",
-      "Life in the Internet Age",
-      "assets/course//traveling/traveling_course_01.jpeg",
-      "Let's discuss how technology is changing the way we live",
-      "Intermediate"),
+    "1",
+    "Life in the Internet Age",
+    "assets/course/traveling/traveling_course_01.jpeg",
+    "Let's discuss how technology is changing the way we live",
+    "Intermediate",
+    courseTopics,
+  ),
   Course(
-      "2",
-      "Caring for Our Planet",
-      "assets/course/traveling/traveling_course_02.jpeg",
-      "Let's discuss our relationship as humans with our planet, Earth",
-      "Intermediate"),
+    "2",
+    "Caring for Our Planet",
+    "assets/course/traveling/traveling_course_02.jpeg",
+    "Let's discuss our relationship as humans with our planet, Earth",
+    "Intermediate",
+    courseTopics,
+  ),
   Course(
     "3",
     "Healthy Mind, Healthy Body",
     "assets/course/traveling/traveling_course_03.jpeg",
     "Let's discuss the many aspects of living a long, happy life",
     "Intermediate",
+    courseTopics,
   ),
   Course(
-      "4",
-      "Movies and Television",
-      "assets/course/traveling/traveling_course_04.jpeg",
-      "Let's discuss our preferences and habits surrounding movies and television shows",
-      "Beginner"),
+    "4",
+    "Movies and Television",
+    "assets/course/traveling/traveling_course_04.jpeg",
+    "Let's discuss our preferences and habits surrounding movies and television shows",
+    "Beginner",
+    courseTopics,
+  ),
   Course(
     "5",
     "Raising Children",
     "assets/course/traveling/traveling_course_05.jpeg",
     "Let's discuss raising children and practice using English for common parenting situations",
     "Intermediate",
+    courseTopics,
   ),
   Course(
     "6",
@@ -173,6 +183,7 @@ const courses = [
     "assets/course/traveling/traveling_course_06.jpeg",
     "Let’s practice talking about the Olympics, the biggest sports festival on earth!",
     "Advanced",
+    courseTopics,
   ),
 ];
 

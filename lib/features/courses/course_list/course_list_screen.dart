@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/features/courses/course_list/widgets/course.dart';
 
 class CourseListScreen extends StatefulWidget {
   const CourseListScreen({super.key});
@@ -117,19 +118,11 @@ class _CourseListScreenState extends State<CourseListScreen>
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: TabBarView(
           controller: _tabController,
-          children: [
+          children: const [
             // first tab
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(),
-            ),
+            Course(),
             // second tab
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [],
-              ),
-            ),
+            Course(),
           ],
         ),
       ),
