@@ -38,6 +38,7 @@ dependencies:
   dropdown_button2: ^2.3.9
   flutter_svg: ^2.0.7
   intl: ^0.18.1
+  syncfusion_flutter_pdfviewer: ^23.1.43
 
 dev_dependencies:
   flutter_test:
