@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/features/courses/course_list/courses_screen.dart';
-
+import 'package:lettutor/features/courses/course_list/course_list_screen.dart';
 import 'package:lettutor/features/history/history_screen.dart';
 import 'package:lettutor/features/home/home_screen.dart';
 import 'package:lettutor/features/schedule/schedule_screen.dart';
@@ -33,7 +32,7 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
     {
       'label': 'Courses', 
       'icon': Icons.school, 
-      'screen': const CourseScreen(),
+      'screen': const CourseListScreen(),
     },
     {
       'label': 'Settings', 

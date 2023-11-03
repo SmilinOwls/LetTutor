@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CourseScreen extends StatefulWidget {
-  const CourseScreen({super.key});
+class CourseListScreen extends StatefulWidget {
+  const CourseListScreen({super.key});
 
   @override
-  State<CourseScreen> createState() => _CourseScreenState();
+  State<CourseListScreen> createState() => _CourseListScreenState();
 }
 
-class _CourseScreenState extends State<CourseScreen>
+class _CourseListScreenState extends State<CourseListScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
