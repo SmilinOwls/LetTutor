@@ -12,31 +12,31 @@ class TabBarNavigator extends StatefulWidget {
   State<TabBarNavigator> createState() => _TabBarNavigatorState();
 }
 
-class _TabBarNavigatorState extends State<TabBarNavigator> {  
+class _TabBarNavigatorState extends State<TabBarNavigator> {
   final List<Map<String, dynamic>> _tabList = [
     {
-      'label': 'Home', 
-      'icon': Icons.home, 
+      'label': 'Home',
+      'icon': Icons.home,
       'screen': const HomeScreen(),
     },
     {
-      'label': 'Schedule', 
-      'icon': Icons.calendar_month_rounded, 
+      'label': 'Schedule',
+      'icon': Icons.calendar_month_rounded,
       'screen': const ScheduleScreen(),
     },
     {
-      'label': 'History', 
-      'icon': Icons.history_outlined, 
+      'label': 'History',
+      'icon': Icons.history_outlined,
       'screen': const HistoryScreen(),
     },
     {
-      'label': 'Courses', 
-      'icon': Icons.school, 
+      'label': 'Courses',
+      'icon': Icons.school,
       'screen': const CourseListScreen(),
     },
     {
-      'label': 'Settings', 
-      'icon': Icons.settings, 
+      'label': 'Settings',
+      'icon': Icons.settings,
       'screen': const HomeScreen(),
     },
   ];
@@ -63,9 +63,14 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
           elevation: 18,
           currentIndex: _activeTab,
           items: _tabList
-              .map<BottomNavigationBarItem>((Map tab) =>
-                  BottomNavigationBarItem(
-                      label: tab['label'], icon: Icon(tab['icon'],),),)
+              .map<BottomNavigationBarItem>(
+                (Map tab) => BottomNavigationBarItem(
+                  label: tab['label'],
+                  icon: Icon(
+                    tab['icon'],
+                  ),
+                ),
+              )
               .toList()),
     );
   }
