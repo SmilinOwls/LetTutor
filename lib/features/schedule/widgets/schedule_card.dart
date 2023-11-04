@@ -68,7 +68,7 @@ class ScheduleCard extends StatelessWidget {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           'Keegan',
                           style: Theme.of(context).textTheme.bodyLarge,
@@ -121,7 +121,7 @@ class ScheduleCard extends StatelessWidget {
                     ),
                     collapsedBackgroundColor:
                         const Color.fromARGB(255, 250, 250, 250),
-                    children: const [
+                    children: const <Widget>[
                       ListTile(
                         title: Text(
                           'Currently there are no requests for this class. Please write down any requests for the teacher.',
@@ -139,7 +139,7 @@ class ScheduleCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
+              children: <Widget>[
                 OutlinedButton.icon(
                   onPressed: () {
                     _showScheduleCancelingDialog(context);

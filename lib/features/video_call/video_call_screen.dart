@@ -71,7 +71,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             _isHover = false;
           }),
           child: Stack(
-            children: [
+            children: <Widget>[
               Center(
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -103,7 +103,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                       color: Colors.black,
                     ),
                     child: const Row(
-                      children: [
+                      children: <Widget>[
                         Expanded(
                             child: Icon(
                           Icons.mic_none_outlined,

@@ -34,7 +34,7 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
         horizontal: 20,
       ),
       child: Column(
-        children: [
+        children: <Widget>[
           Text(
             'Choose Learning Hour',
             style: Theme.of(context).textTheme.bodyLarge,

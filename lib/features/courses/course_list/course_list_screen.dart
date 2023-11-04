@@ -121,7 +121,7 @@ class _CourseListScreenState extends State<CourseListScreen>
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: TabBarView(
           controller: _tabController,
-          children: const [
+          children: const <Widget>[
             // first tab
             Course(),
             // second tab

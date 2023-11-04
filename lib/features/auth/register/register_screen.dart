@@ -66,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             EdgeInsets.fromLTRB(14, MediaQuery.of(context).padding.top, 14, 14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
             Image.asset('assets/background/login_background.png'),
             const SizedBox(height: 18),
             const Text(
@@ -320,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: <Widget>[
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.blue),
@@ -356,7 +356,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 const Text(
                   'Already have an account?',
                   style: TextStyle(fontSize: 16),

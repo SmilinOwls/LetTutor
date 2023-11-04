@@ -14,7 +14,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
-        children: [
+        children: <Widget>[
           const Icon(Icons.calendar_month_rounded, size: 62),
           const SizedBox(height: 8),
           Text(

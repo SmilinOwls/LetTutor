@@ -16,7 +16,7 @@ class _HomeHeaderState extends State<HomeHeader> {
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           const SizedBox(height: 18),
           const Text(
             'Upcomming Lesson',
@@ -43,7 +43,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Icon(
                   Icons.ondemand_video_rounded,
                   color: Colors.blue[500],

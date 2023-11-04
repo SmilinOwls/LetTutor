@@ -24,9 +24,9 @@ class _TutorCardState extends State<TutorCard> {
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Row(
-              children: [
+              children: <Widget>[
                 InkWell(
                   onTap: () =>
                       Navigator.of(context).pushNamed(Routes.tutorDetail),
@@ -47,7 +47,7 @@ class _TutorCardState extends State<TutorCard> {
                 Flexible(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       InkWell(
                         onTap: () =>
                             Navigator.of(context).pushNamed(Routes.tutorDetail),
@@ -102,7 +102,7 @@ class _TutorCardState extends State<TutorCard> {
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: <Widget>[
                     Icon(Icons.edit_calendar,
                         color: Theme.of(context).primaryColor),
                     const SizedBox(width: 6),

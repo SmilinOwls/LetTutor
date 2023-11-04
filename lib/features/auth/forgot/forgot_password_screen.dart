@@ -34,7 +34,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             EdgeInsets.fromLTRB(14, MediaQuery.of(context).padding.top, 14, 14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
             const SizedBox(height: 18),
             const Text(
               'Reset Password',
