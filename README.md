@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+# Milestone 1. Mock-up UI
+
+Diagram link: [LetTutor Widget Tree](https://drive.google.com/file/d/1eZiXDW1jwxk_VSbtxTRXb-g5SGeuFaiR/view?usp=sharing)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

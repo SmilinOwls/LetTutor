@@ -72,7 +72,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   horizontal: 8,
                 ),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     Icon(
                       Icons.group_add_outlined,
                       color: Colors.blue[700],
@@ -92,7 +92,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   horizontal: 8,
                 ),
                 child: Row(
-                  children: [
+                  children: <Widget>[
                     Icon(
                       Icons.book_outlined,
                       color: Colors.blue[700],

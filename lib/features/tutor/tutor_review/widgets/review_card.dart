@@ -18,7 +18,7 @@ class ReviewCard extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             InkWell(
               onTap: () {},
               child: Container(
@@ -44,9 +44,9 @@ class ReviewCard extends StatelessWidget {
               fit: FlexFit.tight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Row(
-                    children: [
+                    children: <Widget>[
                       Text(
                         review.username ?? 'null name',
                         style: const TextStyle(

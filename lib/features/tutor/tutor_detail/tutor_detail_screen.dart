@@ -48,9 +48,9 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   Container(
                     width: 92,
                     decoration: const BoxDecoration(
@@ -70,7 +70,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                   Flexible(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         tutor.name ?? 'null name',
                         style: Theme.of(context).textTheme.bodyLarge,
@@ -80,7 +80,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 2),
                         child: tutor.rating != null
                             ? Row(
-                                children: [
+                                children: <Widget>[
                                   StarRating(rating: tutor.rating!),
                                   const SizedBox(width: 4),
                                   Text(
@@ -116,13 +116,13 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
               ),
               const SizedBox(height: 12),
               Row(
-                children: [
+                children: <Widget>[
                   Flexible(
                     fit: FlexFit.tight,
                     child: TextButton(
                       onPressed: () {},
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           [true, false].first
                               ? const Icon(
                                   Icons.favorite_rounded,
@@ -150,7 +150,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                     child: TextButton(
                       onPressed: _showReportDialog,
                       child: const Column(
-                        children: [
+                        children: <Widget>[
                           Icon(Icons.report_outlined, color: Colors.blue),
                           SizedBox(height: 4),
                           Text('Report', style: TextStyle(color: Colors.blue))
@@ -170,7 +170,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         );
                       },
                       child: const Column(
-                        children: [
+                        children: <Widget>[
                           Icon(Icons.reviews_outlined, color: Colors.blue),
                           SizedBox(height: 4),
                           Text(
@@ -242,7 +242,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                     (index) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(
-                        children: [
+                        children: <Widget>[
                           Text('${courses[index].name}',
                               style: Theme.of(context).textTheme.bodyLarge),
                           const SizedBox(width: 6),

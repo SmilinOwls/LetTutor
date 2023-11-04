@@ -14,7 +14,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
-        children: [
+        children: <Widget>[
           const Icon(Icons.phone_callback_outlined, size: 62),
           const SizedBox(height: 8),
           Text(

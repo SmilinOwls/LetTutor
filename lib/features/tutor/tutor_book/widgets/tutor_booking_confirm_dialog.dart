@@ -40,7 +40,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Column(
-        children: [
+        children: <Widget>[
           Text(
             'Book This Tutor',
             style: Theme.of(context).textTheme.displaySmall,
@@ -57,7 +57,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+          children: <Widget>[
             Text(
               'Booking time',
               style: Theme.of(context).textTheme.bodyLarge,
@@ -82,7 +82,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   'Balance',
                   style: Theme.of(context).textTheme.bodyLarge,
@@ -96,7 +96,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             const SizedBox(height: 6),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: <Widget>[
                 Text(
                   'Price',
                   style: Theme.of(context).textTheme.bodyLarge,

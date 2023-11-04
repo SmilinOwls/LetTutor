@@ -29,14 +29,14 @@ class TuTorSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 5, 0, 15),
           child: Wrap(
               alignment: WrapAlignment.start,
               spacing: 8,
               runSpacing: 6,
-              children: [
+              children: <Widget>[
                 SizedBox(
                   width: 150,
                   height: 40,

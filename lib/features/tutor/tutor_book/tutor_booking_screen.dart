@@ -39,7 +39,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
           horizontal: 20,
         ),
         child: Column(
-          children: [
+          children: <Widget>[
             Text(
               'Choose Learning Date',
               style: Theme.of(context).textTheme.bodyLarge,

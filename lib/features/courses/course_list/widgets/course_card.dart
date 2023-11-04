@@ -35,7 +35,7 @@ class CourseCard extends StatelessWidget {
             borderOnForeground: true,
             shadowColor: const Color.fromARGB(255, 132, 132, 132),
             child: Column(
-              children: [
+              children: <Widget>[
                 Image(
                   image: AssetImage(course.imageUrl ?? ''),
                   fit: BoxFit.cover,
@@ -52,7 +52,7 @@ class CourseCard extends StatelessWidget {
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: <Widget>[
                       Text(
                         course.name ?? 'null name',
                         style: Theme.of(context).textTheme.bodyLarge,
@@ -70,7 +70,7 @@ class CourseCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 14),
                       Row(
-                        children: [
+                        children: <Widget>[
                           Expanded(
                             child: Text(
                               course.level ?? 'null level',

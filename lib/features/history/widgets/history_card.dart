@@ -46,7 +46,7 @@ class _HistoryCardState extends State<HistoryCard> {
 
   Widget buildSkillRating(BuildContext context, int index) {
     return Row(
-      children: [
+      children: <Widget>[
         Text(_skillRating[index]),
         const Text(' ('),
         const StarRating(rating: 5),
@@ -108,7 +108,7 @@ class _HistoryCardState extends State<HistoryCard> {
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Text(
                           'Keegan',
                           style: Theme.of(context).textTheme.bodyLarge,
@@ -150,7 +150,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       ),
                     ),
                     shape: RoundedRectangleBorder(),
-                    children: [
+                    children: <Widget>[
                       ListTile(
                         title: Text(
                           'Need to have more exercises',
@@ -177,7 +177,7 @@ class _HistoryCardState extends State<HistoryCard> {
                       ),
                     ),
                     shape: const RoundedRectangleBorder(),
-                    children: [
+                    children: <Widget>[
                       const Text(
                         'Session 1: 00:00 - 00:25',
                         style: TextStyle(

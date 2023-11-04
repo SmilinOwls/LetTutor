@@ -27,7 +27,7 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       backgroundColor: Colors.white,
       title: Column(
-        children: [
+        children: <Widget>[
           Text(
             'Report tutor',
             style: Theme.of(context).textTheme.bodyLarge,
@@ -39,9 +39,9 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
       titlePadding: const EdgeInsets.fromLTRB(24, 12, 0, 0),
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Row(
-            children: [
+            children: <Widget>[
               Icon(Icons.report_rounded, color: Colors.blue[700]),
               const SizedBox(width: 4),
               const Text(
