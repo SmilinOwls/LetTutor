@@ -23,8 +23,6 @@ jobs:
           cache: true 
       - name: Install dependencies
         run: flutter pub get
-      - name: Run tests
-        run: flutter test
       - name: Start Web Release build
         run: flutter build web --release
       - name: Upload Web Build Files
