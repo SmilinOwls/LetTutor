@@ -42,7 +42,7 @@ jobs:
         name: web-release
 
     - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v1
+      uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.SECRET_TOKEN }}
         publish_dir: ./
