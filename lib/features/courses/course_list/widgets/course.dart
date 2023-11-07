@@ -15,6 +15,7 @@ class _CourseState extends State<Course> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListView.builder(
+          primary: false,
           itemCount: courses.length,
           itemBuilder: (context, index) => CourseCard(course: courses[index])),
     );

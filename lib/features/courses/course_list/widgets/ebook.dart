@@ -15,6 +15,7 @@ class _EbookState extends State<Ebook> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: ListView.builder(
+          primary: false,
           itemCount: ebooks.length,
           itemBuilder: (context, index) => EbookCard(ebook: ebooks[index])),
     );

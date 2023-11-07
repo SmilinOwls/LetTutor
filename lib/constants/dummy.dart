@@ -378,7 +378,7 @@ const ebooks = [
   EBook(
     '7',
     'English World ',
-    'assets/ebook/english_world_ebook.jpg',
+    'assets/ebook/english_world_ebook.jpeg',
     "For kids who are able to pick up simple sounds, letters, words and learn new...",
     'Beginner',
   ),
