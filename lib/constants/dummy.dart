@@ -370,15 +370,15 @@ const ebooks = [
   ),
   EBook(
     '6',
-    'assets/ebook/new_headway_ebook.jpeg',
     'New Headway Elementary',
+    'assets/ebook/new_headway_ebook.jpeg',
     "For teenagers who want to form a grammatical background as well as...",
     'Beginner',
   ),
   EBook(
     '7',
     'English World ',
-    'assets/english_world_ebook.jpg',
+    'assets/ebook/english_world_ebook.jpg',
     "For kids who are able to pick up simple sounds, letters, words and learn new...",
     'Beginner',
   ),
