@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/settings/widgets/custom_card.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -46,15 +47,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 20),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.userProfile);
+            },
             child: const CustomCard(
-              icon: Icons.school_rounded,
+              icon: Icons.person,
               label: 'Account',
             ),
           ),
           const SizedBox(height: 8),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.tutorBecome);
+            },
             child: const CustomCard(
               icon: Icons.school_rounded,
               label: 'Become a Tutor',
@@ -62,7 +67,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const SizedBox(height: 8),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                Routes.login,
+                (route) => false,
+              );
+            },
             child: const CustomCard(
               icon: Icons.logout,
               label: 'Log out',
