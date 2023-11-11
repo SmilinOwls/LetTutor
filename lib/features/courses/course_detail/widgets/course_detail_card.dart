@@ -17,7 +17,7 @@ class CourseDetailCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(8.0),
       ),
-      surfaceTintColor: Colors.white,
+      color: Theme.of(context).cardColor,
       margin: const EdgeInsets.symmetric(vertical: 10),
       elevation: 2,
       clipBehavior: Clip.hardEdge,
@@ -54,7 +54,7 @@ class CourseDetailCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black54,
+                    color: Colors.grey,
                   ),
                 ),
                 const SizedBox(height: 16),

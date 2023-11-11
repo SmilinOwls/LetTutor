@@ -9,9 +9,16 @@ import 'package:lettutor/features/tutor/tutor_become/tutor_become_screen.dart';
 import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
 import 'package:lettutor/features/user/user_profile/user_profile_screen.dart';
 import 'package:lettutor/features/video_call/video_call_screen.dart';
+import 'package:lettutor/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const LetTutor());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const LetTutor(),
+    ),
+  );
 }
 
 class LetTutor extends StatelessWidget {
@@ -22,44 +29,7 @@ class LetTutor extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'LetTutor',
-        theme: ThemeData(
-          appBarTheme: const AppBarTheme(
-            color: Colors.white,
-          ),
-          useMaterial3: true,
-          scaffoldBackgroundColor: Colors.white,
-          primaryColor: Colors.blue,
-          hintColor: Colors.grey,
-          textTheme: TextTheme(
-            displayLarge: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.w700,
-              color: Colors.blue[600],
-            ),
-            displayMedium: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w700,
-              color: Colors.blue[600],
-            ),
-            displaySmall: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-            ),
-            bodyLarge: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
-            ),
-            bodyMedium: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-            bodySmall: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey[800],
-            ),
-          ),
-        ),
+        theme: Provider.of<ThemeProvider>(context).themeData,
         home: const LoginScreen(),
         routes: {
           Routes.login: (context) => const LoginScreen(),

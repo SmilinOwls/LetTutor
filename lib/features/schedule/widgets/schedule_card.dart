@@ -25,9 +25,8 @@ class ScheduleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      surfaceTintColor: Colors.white,
-      color: const Color.fromARGB(255, 241, 241, 241),
-      elevation: 0,
+      color: Theme.of(context).cardColor,
+      elevation: 6,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(14),
@@ -43,7 +42,6 @@ class ScheduleCard extends StatelessWidget {
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
-              color: Colors.white,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -86,7 +84,6 @@ class ScheduleCard extends StatelessWidget {
             const SizedBox(height: 20),
             Container(
               padding: const EdgeInsets.all(12),
-              color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -119,8 +116,6 @@ class ScheduleCard extends StatelessWidget {
                     collapsedShape: const RoundedRectangleBorder(
                       side: BorderSide(width: 0.5, color: Colors.grey),
                     ),
-                    collapsedBackgroundColor:
-                        const Color.fromARGB(255, 250, 250, 250),
                     children: const <Widget>[
                       ListTile(
                         title: Text(

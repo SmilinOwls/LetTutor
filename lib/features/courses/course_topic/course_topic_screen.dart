@@ -32,7 +32,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
         child: Column(
           children: <Widget>[
             Card(
-              surfaceTintColor: Colors.white,
+              color: Theme.of(context).cardColor,
               margin: const EdgeInsets.symmetric(vertical: 10),
               elevation: 2,
               borderOnForeground: true,
@@ -68,7 +68,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black54,
+                            color: Colors.grey,
                           ),
                         ),
                         const SizedBox(height: 24),

@@ -68,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 42, 52, 83),
               ),
               textAlign: TextAlign.center,
             ),
@@ -93,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 errorText: _emailErrorText,
                 errorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
@@ -102,17 +101,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Color.fromARGB(255, 64, 169, 255),
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
                   ),
                 ),
-                border: const OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
-                    color: Color.fromARGB(255, 217, 217, 217),
+                    color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
@@ -161,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 errorText: _passwordErrorText,
                 errorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
@@ -170,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Color.fromARGB(255, 64, 169, 255),
                   ),
                   borderRadius: BorderRadius.all(
@@ -186,10 +185,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Radius.circular(5),
                   ),
                 ),
-                border: const OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
-                    color: Colors.grey,
+                    color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),

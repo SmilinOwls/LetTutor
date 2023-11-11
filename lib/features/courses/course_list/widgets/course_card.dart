@@ -28,7 +28,7 @@ class CourseCard extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
-            surfaceTintColor: Colors.white,
+            color: Theme.of(context).cardColor,
             margin: const EdgeInsets.symmetric(vertical: 10),
             elevation: 2,
             clipBehavior: Clip.hardEdge,

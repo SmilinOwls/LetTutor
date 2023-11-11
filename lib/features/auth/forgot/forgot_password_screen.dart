@@ -51,7 +51,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 42, 52, 83),
               ),
               textAlign: TextAlign.center,
             ),
@@ -95,10 +94,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Radius.circular(5),
                   ),
                 ),
-                border: const OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
-                    color: Color.fromARGB(255, 217, 217, 217),
+                    color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),

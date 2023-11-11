@@ -33,46 +33,57 @@ class TuTorSearch extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 5, 0, 15),
           child: Wrap(
-              alignment: WrapAlignment.start,
-              spacing: 8,
-              runSpacing: 6,
-              children: <Widget>[
-                SizedBox(
-                  width: 150,
-                  height: 40,
-                  child: TextField(
-                    onChanged: onNameChange,
-                    controller: nameEditingController,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w400),
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 20,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      hintText: 'Enter tutor name',
-                      hintStyle: const TextStyle(
-                        color: Colors.grey,
-                      ),
+            alignment: WrapAlignment.start,
+            spacing: 8,
+            runSpacing: 6,
+            children: <Widget>[
+              SizedBox(
+                width: 150,
+                height: 40,
+                child: TextField(   
+                  onChanged: onNameChange,
+                  controller: nameEditingController,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.all(12),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    hintText: 'Enter tutor name',
+                    hintStyle: TextStyle(
+                      color: Theme.of(context).hintColor,
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(width: 1),
+              ),
+              SizedBox(
+                width: 200,
+                height: 40,
+                child: InputDecorator(
+                  expands: true,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 0,
+                      vertical: 0,
+                    ),
+                    border: Theme.of(context)
+                        .dropdownMenuTheme
+                        .inputDecorationTheme
+                        ?.border,
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2<String>(
                       isExpanded: true,
+                      alignment: Alignment.centerLeft,
                       hint: Text(
                         'Select tutor',
                         style: TextStyle(
                           fontSize: 14,
+                          fontWeight: FontWeight.w400,
                           color: Theme.of(context).hintColor,
                         ),
                       ),
@@ -108,19 +119,18 @@ class TuTorSearch extends StatelessWidget {
                             left: 8,
                           ),
                           child: TextField(
-                            expands: true,
-                            maxLines: null,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
                             controller: nationalityEditingController,
                             decoration: InputDecoration(
                               isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 8,
-                              ),
+                              contentPadding: const EdgeInsets.all(12),
                               hintText: 'Search for a tutor nationality...',
-                              hintStyle: const TextStyle(fontSize: 12),
+                              hintStyle: const TextStyle(fontSize: 14),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                             ),
                           ),
@@ -138,8 +148,10 @@ class TuTorSearch extends StatelessWidget {
                       },
                     ),
                   ),
-                )
-              ]),
+                ),
+              ),
+            ],
+          ),
         ),
         const SizedBox(width: 8),
         Wrap(
