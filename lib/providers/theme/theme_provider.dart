@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/providers/theme.dart';
+import 'package:lettutor/providers/theme/theme.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemeData _themeData = darkMode;
