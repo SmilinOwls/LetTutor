@@ -284,6 +284,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
+              const SizedBox(height: 8),
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(

@@ -48,7 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 20),
           CustomListTile(
             leadingIcon: Icons.person_rounded,
-            titleText: 'Account',
+            titleText: 'About me',
             onTap: () {
               Navigator.of(context).pushNamed(Routes.userProfile);
             },

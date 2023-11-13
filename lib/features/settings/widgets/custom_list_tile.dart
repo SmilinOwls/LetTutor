@@ -15,28 +15,31 @@ class CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: ListTile(
-        leading: Container(
-          padding: const EdgeInsets.all(6),
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color.fromARGB(104, 175, 175, 175),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: InkWell(
+        onTap: onTap,
+        child: ListTile(
+          leading: Container(
+            padding: const EdgeInsets.all(6),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromARGB(68, 175, 175, 175),
+            ),
+            child: Icon(
+              leadingIcon,
+              size: 28,
+              color: Theme.of(context).iconTheme.color,
+            ),
           ),
-          child: Icon(
-            leadingIcon,
-            size: 28,
-            color: Theme.of(context).iconTheme.color,
+          title: Text(
+            titleText,
+            style: const TextStyle(fontSize: 18),
           ),
+          trailing: isTrailing
+              ? const Icon(Icons.keyboard_arrow_right_outlined, size: 28)
+              : null,
         ),
-        title: Text(
-          titleText,
-          style: const TextStyle(fontSize: 18),
-        ),
-        trailing: isTrailing
-            ? const Icon(Icons.keyboard_arrow_right_outlined, size: 28)
-            : null,
       ),
     );
   }
