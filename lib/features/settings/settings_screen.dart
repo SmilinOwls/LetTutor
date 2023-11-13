@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/features/settings/widgets/custom_card.dart';
+import 'package:lettutor/features/settings/widgets/custom_list_tile.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -46,37 +46,66 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          InkWell(
+          CustomListTile(
+            leadingIcon: Icons.person_rounded,
+            titleText: 'Account',
             onTap: () {
               Navigator.of(context).pushNamed(Routes.userProfile);
             },
-            child: const CustomCard(
-              icon: Icons.person,
-              label: 'Account',
-            ),
+            isTrailing: true,
           ),
-          const SizedBox(height: 8),
-          InkWell(
+          CustomListTile(
+            leadingIcon: Icons.school_rounded,
+            titleText: 'Become a tutor',
             onTap: () {
               Navigator.of(context).pushNamed(Routes.tutorBecome);
             },
-            child: const CustomCard(
-              icon: Icons.school_rounded,
-              label: 'Become a Tutor',
+            isTrailing: true,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 12,
+            ),
+            child: Text(
+              'General',
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
-          const SizedBox(height: 8),
-          InkWell(
+          CustomListTile(
+            leadingIcon: Icons.language_rounded,
+            titleText: 'Languages',
+            onTap: () {},
+            isTrailing: true,
+          ),
+          CustomListTile(
+            leadingIcon: Icons.help_rounded,
+            titleText: 'Help & Support',
+            onTap: () {},
+            isTrailing: true,
+          ),
+          CustomListTile(
+            leadingIcon: Icons.dark_mode_rounded,
+            titleText: 'Display',
+            onTap: () {},
+            isTrailing: true,
+          ),
+          CustomListTile(
+            leadingIcon: Icons.feedback_rounded,
+            titleText: 'Give a feedback',
+            onTap: () {},
+            isTrailing: false,
+          ),
+          CustomListTile(
+            leadingIcon: Icons.logout_rounded,
+            titleText: 'Log out',
             onTap: () {
               Navigator.of(context).pushNamedAndRemoveUntil(
                 Routes.login,
                 (route) => false,
               );
             },
-            child: const CustomCard(
-              icon: Icons.logout,
-              label: 'Log out',
-            ),
+            isTrailing: false,
           ),
         ],
       ),
