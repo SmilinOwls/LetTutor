@@ -59,7 +59,6 @@ class _HistoryCardState extends State<HistoryCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).cardColor,
       elevation: 6,
       margin: const EdgeInsets.symmetric(
         vertical: 8,

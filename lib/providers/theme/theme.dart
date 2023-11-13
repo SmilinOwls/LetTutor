@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white,
-  colorScheme: const ColorScheme.light(),
+  colorScheme: const ColorScheme.light(primary: Colors.black),
   useMaterial3: true,
   primaryColor: Colors.blue[600],
   primarySwatch: Colors.blue,
@@ -48,11 +48,8 @@ ThemeData lightMode = ThemeData(
       ),
     ),
   ),
-  cardTheme: CardTheme(
-    surfaceTintColor: Colors.grey.shade100,
-  ),
   dialogTheme: DialogTheme(
-    surfaceTintColor: Colors.grey.shade400,
+    backgroundColor: Colors.grey.shade100,
   ),
   bottomAppBarTheme: BottomAppBarTheme(
     surfaceTintColor: Colors.grey.shade100,
@@ -60,12 +57,13 @@ ThemeData lightMode = ThemeData(
   iconTheme: IconThemeData(
     color: Colors.grey.shade800,
   ),
+  cardColor: Colors.grey.shade100,
 );
 
 ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: Colors.grey.shade900,
-  colorScheme: const ColorScheme.dark(),
+  colorScheme: const ColorScheme.dark(primary: Colors.white),
   useMaterial3: true,
   primaryColor: Colors.blue[300],
   primarySwatch: Colors.blue,
@@ -110,11 +108,8 @@ ThemeData darkMode = ThemeData(
       ),
     ),
   ),
-  cardTheme: CardTheme(
-    surfaceTintColor: Colors.grey.shade900,
-  ),
-   dialogTheme: DialogTheme(
-    surfaceTintColor: Colors.grey.shade600,
+  dialogTheme: DialogTheme(
+    backgroundColor: Colors.grey.shade900,
   ),
   bottomAppBarTheme: BottomAppBarTheme(
     surfaceTintColor: Colors.grey.shade900,
@@ -122,4 +117,5 @@ ThemeData darkMode = ThemeData(
   iconTheme: IconThemeData(
     color: Colors.grey.shade200,
   ),
+   cardColor: Colors.grey.shade900,
 );

@@ -19,10 +19,10 @@ class LessonDialog extends StatelessWidget {
             context: context,
             builder: (context) {
               return MessageDialog(message: message);
-            });
+            }).then((value) => Navigator.of(context).pop(message));
       }
     } else {
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(false);
     }
   }
 

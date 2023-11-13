@@ -88,7 +88,8 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                               });
                             },
                             selected: _selectTopicIndex == index,
-                            selectedTileColor: Colors.grey[300],
+                            selectedTileColor: Colors.grey[400],
+                            selectedColor: Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             leading: Text('${index + 1}.'),
                             leadingAndTrailingTextStyle:

@@ -30,7 +30,6 @@ class CourseTopicCard extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
-            color: Theme.of(context).cardColor,
             elevation: 2,
             borderOnForeground: true,
             child: Container(
