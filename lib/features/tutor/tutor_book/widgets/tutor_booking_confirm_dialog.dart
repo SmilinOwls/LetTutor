@@ -22,11 +22,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
       builder: (context) {
         return const MessageDialog(message: 'Book Successfully!');
       },
-    ).then((response) async {
-      if (response) {
-        Navigator.pop(context, true);
-        Navigator.pop(context, true);
-      }
+    ).then((_){
+      Navigator.pop(context, true);
+      Navigator.pop(context, true);
     });
   }
 

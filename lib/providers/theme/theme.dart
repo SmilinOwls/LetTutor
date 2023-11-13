@@ -9,7 +9,7 @@ ThemeData lightMode = ThemeData(
   primarySwatch: Colors.blue,
   hintColor: Colors.grey.shade600,
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.grey.shade100,
+    surfaceTintColor: Colors.grey.shade100,
   ),
   textTheme: TextTheme(
     displayLarge: TextStyle(
@@ -48,7 +48,18 @@ ThemeData lightMode = ThemeData(
       ),
     ),
   ),
-  cardColor: Colors.grey.shade100,
+  cardTheme: CardTheme(
+    surfaceTintColor: Colors.grey.shade100,
+  ),
+  dialogTheme: DialogTheme(
+    surfaceTintColor: Colors.grey.shade400,
+  ),
+  bottomAppBarTheme: BottomAppBarTheme(
+    surfaceTintColor: Colors.grey.shade100,
+  ),
+  iconTheme: IconThemeData(
+    color: Colors.grey.shade800,
+  ),
 );
 
 ThemeData darkMode = ThemeData(
@@ -60,7 +71,7 @@ ThemeData darkMode = ThemeData(
   primarySwatch: Colors.blue,
   hintColor: Colors.grey.shade400,
   appBarTheme: AppBarTheme(
-    backgroundColor: Colors.grey.shade900,
+    surfaceTintColor: Colors.grey.shade900,
   ),
   textTheme: TextTheme(
     displayLarge: TextStyle(
@@ -99,5 +110,16 @@ ThemeData darkMode = ThemeData(
       ),
     ),
   ),
-  cardColor: Colors.grey.shade900,
+  cardTheme: CardTheme(
+    surfaceTintColor: Colors.grey.shade900,
+  ),
+   dialogTheme: DialogTheme(
+    surfaceTintColor: Colors.grey.shade600,
+  ),
+  bottomAppBarTheme: BottomAppBarTheme(
+    surfaceTintColor: Colors.grey.shade900,
+  ),
+  iconTheme: IconThemeData(
+    color: Colors.grey.shade200,
+  ),
 );

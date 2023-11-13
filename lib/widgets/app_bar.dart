@@ -29,7 +29,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
               color: Colors.blue[600],
             )
           : null,
-      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       title: Container(
         alignment: Alignment.centerLeft,
         child: widget.appBarTitle != null

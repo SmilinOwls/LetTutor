@@ -17,7 +17,6 @@ class _TutorCardState extends State<TutorCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).cardColor,
       elevation: 6,
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       child: Padding(
