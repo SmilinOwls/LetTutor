@@ -58,6 +58,9 @@ ThemeData lightMode = ThemeData(
     color: Colors.grey.shade800,
   ),
   cardColor: Colors.grey.shade100,
+  cardTheme: CardTheme(
+    surfaceTintColor: Colors.grey.shade100,
+  )
 );
 
 ThemeData darkMode = ThemeData(
@@ -117,5 +120,8 @@ ThemeData darkMode = ThemeData(
   iconTheme: IconThemeData(
     color: Colors.grey.shade200,
   ),
-   cardColor: Colors.grey.shade900,
+  cardColor: Colors.grey.shade900,
+  cardTheme: CardTheme(
+    surfaceTintColor: Colors.grey.shade200.withOpacity(0.2),
+  )
 );
