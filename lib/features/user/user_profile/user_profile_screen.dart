@@ -20,7 +20,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       TextEditingController();
 
   late final List<Map<String, dynamic>> _desiredLearningData;
-  List<String> _selectedDesiredLearningItems = <String>[];
+  final List<String> _selectedDesiredLearningItems = <String>[];
 
   @override
   void initState() {
@@ -385,7 +385,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         const CustomLabel(label: 'Want to learn'),
                         DropdownButtonFormField2(
                           isExpanded: true,
-                          isDense: true,
                           decoration: customInputDecoration.copyWith(
                             contentPadding: const EdgeInsets.symmetric(
                               vertical: 4,
@@ -484,7 +483,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   children: List<Widget>.generate(
                                     _selectedDesiredLearningItems.length,
                                     (index) => Chip(
-                                      label: Text(_selectedDesiredLearningItems[index]),
+                                      label: Text(
+                                          _selectedDesiredLearningItems[index]),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.zero,
                                       ),
@@ -508,6 +508,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               .toList(),
                           buttonStyleData: const ButtonStyleData(
                             padding: EdgeInsets.only(right: 8),
+                            height: 180,
                           ),
                           iconStyleData: IconStyleData(
                             icon: Icon(
