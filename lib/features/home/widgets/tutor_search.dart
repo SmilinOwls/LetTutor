@@ -87,7 +87,7 @@ class TuTorSearch extends StatelessWidget {
                           color: Theme.of(context).hintColor,
                         ),
                       ),
-                      items: tutorNationalies
+                      items: tutorNationalities
                           .map((item) => DropdownMenuItem(
                                 value: item,
                                 child: Text(
