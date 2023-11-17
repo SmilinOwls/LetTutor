@@ -450,17 +450,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                                     color: Colors.blue.shade300,
                                                   ),
                                                 )
-                                              : 
-                                              ListTile(
-                                                title: Text(
-                                                  _desiredLearningData[index]
-                                                      ['value'],
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
+                                              : ListTile(
+                                                  title: Text(
+                                                    _desiredLearningData[index]
+                                                        ['value'],
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
                                                   ),
                                                 ),
-                                              )
                                         );
                                       },
                                     ),
@@ -473,20 +473,39 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             return null;
                           },
                           onChanged: (value) {},
-                          value: _selectedDesiredLearningItems.isEmpty ? null : _selectedDesiredLearningItems.last,
-                          selectedItemBuilder: (context) =>
-                              _desiredLearningData
-                                  .map(
-                                    (item) => Chip(
-                                      label: Text(item['value']),
+                          value: _selectedDesiredLearningItems.isEmpty
+                              ? null
+                              : _selectedDesiredLearningItems.last,
+                          selectedItemBuilder: (context) => _desiredLearningData
+                              .map<Widget>(
+                                (item) => Wrap(
+                                  spacing: 4,
+                                  runSpacing: 8,
+                                  children: List<Widget>.generate(
+                                    _selectedDesiredLearningItems.length,
+                                    (index) => Chip(
+                                      label: Text(_selectedDesiredLearningItems[index]),
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.zero,
                                       ),
+                                      side: BorderSide.none,
+                                      onDeleted: () {
+                                        setState(() {
+                                          _selectedDesiredLearningItems
+                                              .remove(item['value']);
+                                        });
+                                      },
+                                      deleteIcon: const Icon(
+                                        Icons.cancel_rounded,
+                                        size: 18,
+                                      ),
                                       backgroundColor:
-                                          Colors.grey.shade100.withOpacity(0.4),
+                                          Colors.grey.shade300.withOpacity(0.4),
                                     ),
-                                  )
-                                  .toList(),
+                                  ),
+                                ),
+                              )
+                              .toList(),
                           buttonStyleData: const ButtonStyleData(
                             padding: EdgeInsets.only(right: 8),
                           ),
