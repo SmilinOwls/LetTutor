@@ -1,10 +1,13 @@
+import 'dart:typed_data';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/user/user_profile/widgets/custom_label.dart';
+import 'package:lettutor/utils/image_picker.dart';
 import 'package:lettutor/widgets/app_bar.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -21,6 +24,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   late final List<Map<String, dynamic>> _desiredLearningData;
   final List<String> _selectedDesiredLearningItems = <String>[];
+
+  Uint8List? _imageData;
 
   @override
   void initState() {
@@ -41,6 +46,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               'isTitled': true,
             }
     ];
+  }
+
+  void _onAvatarChanged() async {
+    Uint8List imageData = await pickerImage(ImageSource.gallery);
+    setState(() {
+      _imageData = imageData;
+    });
   }
 
   void _onDateChanged(BuildContext context) async {
@@ -104,19 +116,28 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                         ),
-                        child: Image.asset(
-                          'assets/avatar/user/user_avatar.jpeg',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Icon(Icons.person_rounded, size: 62),
-                        ),
+                        child: _imageData != null
+                            ? Image.memory(
+                                _imageData!,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(Icons.person_rounded, size: 62),
+                              )
+                            : Image.asset(
+                                'assets/avatar/user/user_avatar.jpeg',
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const Icon(Icons.person_rounded, size: 62),
+                              ),
                       ),
                       Positioned(
                         bottom: 0,
                         right: 0,
                         width: 32,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            _onAvatarChanged;
+                          },
                           child: CircleAvatar(
                             backgroundColor: Theme.of(context).primaryColor,
                             child: const Icon(
