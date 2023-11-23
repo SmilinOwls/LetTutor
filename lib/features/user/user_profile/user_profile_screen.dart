@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/user/user_profile/widgets/custom_label.dart';
 import 'package:lettutor/utils/image_picker.dart';
 import 'package:lettutor/widgets/app_bar.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -48,11 +48,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     ];
   }
 
-  void _onAvatarChanged() async {
-    Uint8List imageData = await pickerImage(ImageSource.gallery);
-    setState(() {
-      _imageData = imageData;
-    });
+  Future<void> _onAvatarChanged() async {
+     Uint8List imageData = await pickerImage(ImageSource.gallery);
+      setState(() {
+        _imageData = imageData;
+      });
   }
 
   void _onDateChanged(BuildContext context) async {
@@ -136,7 +136,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         width: 32,
                         child: InkWell(
                           onTap: () {
-                            _onAvatarChanged;
+                            _onAvatarChanged();
                           },
                           child: CircleAvatar(
                             backgroundColor: Theme.of(context).primaryColor,
