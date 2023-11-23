@@ -45,7 +45,7 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
               const Text(
                 "Help us understand what's happening",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),

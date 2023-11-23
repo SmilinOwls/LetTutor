@@ -49,7 +49,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Future<void> _onAvatarChanged() async {
-     Uint8List imageData = await pickerImage(ImageSource.gallery);
+     Uint8List? imageData = await pickerImage(ImageSource.gallery);
       setState(() {
         _imageData = imageData;
       });
