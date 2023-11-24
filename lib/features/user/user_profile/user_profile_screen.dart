@@ -19,18 +19,38 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  Uint8List? _imageData;
+
+  final TextEditingController _nameTextEditingController =
+      TextEditingController();
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
+  final TextEditingController _countryTextEditingController =
+      TextEditingController();
+  final TextEditingController _phoneNumberTextEditingController =
+      TextEditingController();
   final TextEditingController _birthdayTextEditingController =
+      TextEditingController();
+  final TextEditingController _levelTextEditingController =
+      TextEditingController();
+  final TextEditingController _studyScheduleTextEditingController =
       TextEditingController();
 
   late final List<Map<String, dynamic>> _desiredLearningData;
-  final List<String> _selectedDesiredLearningItems = <String>[];
-
-  Uint8List? _imageData;
+  late final List<String> _selectedDesiredLearningItems;
 
   @override
   void initState() {
     super.initState();
+    _nameTextEditingController.text = 'Keegan';
+    _emailTextEditingController.text = 'student@lettutor.com';
+    _countryTextEditingController.text = 'VN';
+    _phoneNumberTextEditingController.text = '842499996508';
     _birthdayTextEditingController.text = '2023-11-17';
+    _levelTextEditingController.text = 'B2';
+    _selectedDesiredLearningItems = <String>['KET', 'PET'];
+    _studyScheduleTextEditingController.text = '';
+
     _desiredLearningData = <Map<String, dynamic>>[
       for (final item in desiredLearningContent)
         for (final value in item.values)
@@ -49,10 +69,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Future<void> _onAvatarChanged() async {
-     Uint8List? imageData = await pickerImage(ImageSource.gallery);
-      setState(() {
-        _imageData = imageData;
-      });
+    Uint8List? imageData = await pickerImage(ImageSource.gallery);
+    setState(() {
+      _imageData = imageData;
+    });
   }
 
   void _onDateChanged(BuildContext context) async {
@@ -71,10 +91,22 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     }
   }
 
+  void _onProfileChangeSubmited() {
+    if (_formKey.currentState!.validate()) {
+      
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
+    _nameTextEditingController.dispose();
+    _emailTextEditingController.dispose();
+    _countryTextEditingController.dispose();
+    _phoneNumberTextEditingController.dispose();
     _birthdayTextEditingController.dispose();
+    _levelTextEditingController.dispose();
+    _studyScheduleTextEditingController.dispose();
   }
 
   @override
@@ -222,6 +254,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         const SizedBox(height: 16),
                         const CustomLabel(label: 'Name'),
                         TextFormField(
+                          controller: _nameTextEditingController,
                           autocorrect: false,
                           keyboardType: TextInputType.name,
                           decoration: customInputDecoration.copyWith(
@@ -235,7 +268,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           style: Theme.of(context).textTheme.bodySmall,
-                          initialValue: 'Keegan',
                         ),
                         const SizedBox(height: 20),
                         const CustomLabel(
@@ -243,6 +275,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           isRequired: false,
                         ),
                         TextFormField(
+                          controller: _emailTextEditingController,
                           autocorrect: false,
                           keyboardType: TextInputType.emailAddress,
                           readOnly: true,
@@ -251,7 +284,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             fillColor: Colors.grey.shade300.withOpacity(0.3),
                           ),
                           style: Theme.of(context).textTheme.bodySmall,
-                          initialValue: 'student@lettutor.com',
                         ),
                         const SizedBox(height: 20),
                         const CustomLabel(label: 'Country'),
@@ -263,7 +295,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               horizontal: -4,
                             ),
                           ),
-                          value: 'VN',
+                          value: _countryTextEditingController.text,
                           items: List.generate(
                             countryList.length,
                             (index) => DropdownMenuItem<String>(
@@ -283,7 +315,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             return null;
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            _countryTextEditingController.text = value!;
+                          },
                           buttonStyleData: const ButtonStyleData(
                             padding: EdgeInsets.only(right: 8),
                           ),
@@ -306,6 +340,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         const SizedBox(height: 20),
                         const CustomLabel(label: 'Phone Number'),
                         TextFormField(
+                          controller: _phoneNumberTextEditingController,
                           autocorrect: false,
                           readOnly: true,
                           keyboardType: TextInputType.phone,
@@ -314,7 +349,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             fillColor: Colors.grey.shade300.withOpacity(0.3),
                           ),
                           style: Theme.of(context).textTheme.bodySmall,
-                          initialValue: '842499996508',
                         ),
                         const SizedBox(height: 8),
                         Chip(
@@ -362,7 +396,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               horizontal: -4,
                             ),
                           ),
-                          value: 'B2',
+                          value: _levelTextEditingController.text,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           items: List<DropdownMenuItem<String>>.generate(
                             studentLevels.length,
@@ -382,7 +416,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             }
                             return null;
                           },
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            _levelTextEditingController.text = value!;
+                          },
                           buttonStyleData: const ButtonStyleData(
                             padding: EdgeInsets.only(right: 8),
                           ),
@@ -555,6 +591,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         SizedBox(
                           height: 150,
                           child: TextFormField(
+                            controller: _studyScheduleTextEditingController,
                             expands: true,
                             maxLines: null,
                             autocorrect: false,
@@ -570,11 +607,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                              }
-                            },
+                            onPressed: _onProfileChangeSubmited,
                             style: TextButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
