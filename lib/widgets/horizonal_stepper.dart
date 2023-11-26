@@ -20,6 +20,14 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
     }
   }
 
+  void _onStepContinue() {
+    setState(() => currentStep += 1);
+  }
+
+  void _onStepCancel() {
+    setState(() => currentStep -= 1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stepper(
@@ -39,15 +47,32 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
           );
         },
       ),
+      controlsBuilder: (context, details) => Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Row(
+          children: <Widget>[
+            if (currentStep != 0)
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: details.onStepCancel,
+                  child: const Text('Back'),
+                ),
+              ),
+            const SizedBox(width: 12),
+            if (currentStep != widget.steps.length - 1)
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: details.onStepContinue,
+                  child: const Text('Next'),
+                ),
+              ),
+          ],
+        ),
+      ),
       currentStep: currentStep,
       onStepTapped: (step) => setState(() => currentStep = step),
-      onStepContinue: () {
-        if (currentStep < widget.steps.length - 1) {
-          setState(() => currentStep += 1);
-        }
-      },
-      onStepCancel:
-          currentStep == 0 ? null : () => setState(() => currentStep -= 1),
+      onStepContinue: _onStepContinue,
+      onStepCancel: _onStepCancel,
     );
   }
 }
