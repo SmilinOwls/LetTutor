@@ -21,7 +21,6 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
         appBarTitle: 'Expore Course',
       ),
       body: SingleChildScrollView(

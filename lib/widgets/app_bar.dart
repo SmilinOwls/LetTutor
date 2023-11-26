@@ -6,9 +6,8 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/language/language.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, this.appBarLeading, this.appBarTitle});
+  const CustomAppBar({super.key, this.appBarTitle});
 
-  final bool? appBarLeading;
   final String? appBarTitle;
 
   @override
@@ -24,11 +23,6 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: widget.appBarLeading != null
-          ? BackButton(
-              color: Colors.blue[600],
-            )
-          : null,
       title: Container(
         alignment: Alignment.centerLeft,
         child: widget.appBarTitle != null

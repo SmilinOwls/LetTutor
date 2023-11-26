@@ -37,7 +37,6 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
         appBarTitle: 'Tutor Details',
       ),
       body: SingleChildScrollView(

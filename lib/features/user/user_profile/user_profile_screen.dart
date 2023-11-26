@@ -113,8 +113,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
-        appBarTitle: 'User Profile',
+        appBarTitle: 'Profile',
       ),
       body: SingleChildScrollView(
         child: Card(

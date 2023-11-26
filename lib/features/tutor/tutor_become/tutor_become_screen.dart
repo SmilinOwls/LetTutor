@@ -20,12 +20,17 @@ class _TutorBecomeScreenState extends State<TutorBecomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
         appBarTitle: 'Become a Tutor',
       ),
-      body: SizedBox(
-        width: double.infinity,
-        child: HorizontalStepper(steps: steps)
+      body: Theme(
+        data: ThemeData(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+                secondary: Colors.blue,
+                primary: Colors.blue,
+              ),
+        ),
+        child: SizedBox(
+            width: double.infinity, child: HorizontalStepper(steps: steps)),
       ),
     );
   }

@@ -21,7 +21,6 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
         appBarTitle: 'Course Details',
       ),
       body: SingleChildScrollView(

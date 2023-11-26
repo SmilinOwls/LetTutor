@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/routes.dart';
 
 class HorizontalStepper extends StatefulWidget {
   const HorizontalStepper({super.key, required this.steps});
@@ -21,7 +22,11 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
   }
 
   void _onStepContinue() {
-    setState(() => currentStep += 1);
+    if (currentStep != widget.steps.length - 1) {
+      setState(() => currentStep += 1);
+    } else {
+      Navigator.of(context).pushNamed(Routes.main);
+    }
   }
 
   void _onStepCancel() {
@@ -51,26 +56,29 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
         padding: const EdgeInsets.only(top: 16),
         child: Row(
           children: <Widget>[
-            if (currentStep != 0)
+            if (currentStep != 0 && currentStep != widget.steps.length - 1)
               Expanded(
-                child: ElevatedButton(
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.blue),
+                  ),
                   onPressed: details.onStepCancel,
                   child: const Text('Back'),
                 ),
               ),
             const SizedBox(width: 12),
-            if (currentStep != widget.steps.length - 1)
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: details.onStepContinue,
-                  child: const Text('Next'),
-                ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: details.onStepContinue,
+                child: Text(currentStep != widget.steps.length - 1
+                    ? 'Next'
+                    : 'Back home'),
               ),
+            ),
           ],
         ),
       ),
       currentStep: currentStep,
-      onStepTapped: (step) => setState(() => currentStep = step),
       onStepContinue: _onStepContinue,
       onStepCancel: _onStepCancel,
     );

@@ -23,7 +23,6 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
 
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
         appBarTitle: 'Tutor Reviews',
       ),
       body: SingleChildScrollView(
