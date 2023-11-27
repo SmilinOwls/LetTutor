@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/features/account/account_screen.dart';
 import 'package:lettutor/features/courses/course_list/course_list_screen.dart';
 import 'package:lettutor/features/history/history_screen.dart';
 import 'package:lettutor/features/home/home_screen.dart';
 import 'package:lettutor/features/schedule/schedule_screen.dart';
-import 'package:lettutor/features/settings/settings_screen.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class TabBarNavigator extends StatefulWidget {
@@ -36,9 +36,9 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
       'screen': const CourseListScreen(),
     },
     {
-      'label': 'Settings',
-      'icon': Icons.settings,
-      'screen': const SettingsScreen(),
+      'label': 'Account',
+      'icon': Icons.person_outlined,
+      'screen': const AccountScreen(),
     },
   ];
 

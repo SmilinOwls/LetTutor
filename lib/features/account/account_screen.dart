@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/features/settings/widgets/custom_list_tile.dart';
+import 'package:lettutor/features/account/settings/display_screen.dart';
+import 'package:lettutor/features/account/widgets/custom_list_tile.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<AccountScreen> createState() => _AccountScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -68,7 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               horizontal: 12,
             ),
             child: Text(
-              'General',
+              'Settings',
               style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
@@ -87,7 +88,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           CustomListTile(
             leadingIcon: Icons.dark_mode_rounded,
             titleText: 'Display',
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const DisplayScreen(),
+              ));
+            },
             isTrailing: true,
           ),
           CustomListTile(

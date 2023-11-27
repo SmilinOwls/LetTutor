@@ -5,18 +5,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
-import 'package:lettutor/features/user/user_profile/widgets/custom_label.dart';
+import 'package:lettutor/features/account/user/profile/widgets/custom_label.dart';
 import 'package:lettutor/utils/image_picker.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
-class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Uint8List? _imageData;
