@@ -14,7 +14,7 @@ ThemeData lightMode = ThemeData(
     ),
   ),
   appBarTheme: AppBarTheme(
-    surfaceTintColor: Colors.grey.shade100,
+    surfaceTintColor: Colors.grey.shade400,
   ),
   textTheme: TextTheme(
     displayLarge: TextStyle(

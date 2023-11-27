@@ -4,6 +4,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/language/language.dart';
+import 'package:lettutor/providers/language/language_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, this.appBarTitle});
@@ -18,17 +20,21 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  String _appLanguage = 'English';
 
   @override
   Widget build(BuildContext context) {
+    final LanguageProvider languageProvider = Provider.of<LanguageProvider>(context);
+    final selectedLanguage = languageProvider.getLanguage();
+
     return AppBar(
       title: Container(
         alignment: Alignment.centerLeft,
         child: widget.appBarTitle != null
             ? Text(
                 widget.appBarTitle!.toUpperCase(),
-                style: Theme.of(context).textTheme.displayMedium,
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  fontSize: 24,
+                ),
               )
             : IconButton(
                 onPressed: () {
@@ -40,13 +46,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 ),
               ),
       ),
-      elevation: 18,
+      elevation: 9,
       actions: <Widget>[
         Container(
           width: 200,
           padding: const EdgeInsets.all(6),
           child: DropdownButtonHideUnderline(
-            child: DropdownButton2(
+            child: DropdownButton2<Language>(
               customButton: Align(
                 alignment: Alignment.centerRight,
                 child: Container(
@@ -56,17 +62,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     color: Colors.grey[400],
                   ),
                   child: SvgPicture.asset(
-                    'assets/language/${_appLanguage.toLowerCase()}.svg',
+                    'assets/language/${selectedLanguage.name!.toLowerCase()}.svg',
                     width: 30,
                     height: 30,
                   ),
                 ),
               ),
-              value: _appLanguage,
+              value: selectedLanguage,
               items: [
-                ...languageList.map<DropdownMenuItem<String>>(
-                  (Language lang) => DropdownMenuItem<String>(
-                    value: lang.name,
+                ...languageList.map<DropdownMenuItem<Language>>(
+                  (Language lang) => DropdownMenuItem<Language>(
+                    value: lang,
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(0),
                       leading: SvgPicture.asset(
@@ -78,12 +84,12 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         lang.name!,
                         style: TextStyle(
                           fontSize: 13,
-                          fontWeight: _appLanguage == lang.name
+                          fontWeight: selectedLanguage.name! == lang.name
                               ? FontWeight.bold
                               : FontWeight.normal,
                         ),
                       ),
-                      trailing: _appLanguage == lang.name
+                      trailing: selectedLanguage.name! == lang.name
                           ? Icon(
                               Icons.check,
                               color: Theme.of(context).primaryColor,
@@ -93,10 +99,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   ),
                 )
               ],
-              onChanged: (String? language) {
-                setState(() {
-                  _appLanguage = language ?? "English";
-                });
+              onChanged: (Language? language) {
+                languageProvider.switchLanguage(language!);
               },
             ),
           ),

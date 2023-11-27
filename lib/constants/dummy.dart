@@ -54,8 +54,14 @@ const testPreparations = [
 ];
 
 const desiredLearningContent = [
-  {'name': 'Subjects', 'detail': subjects},
-  {'name': 'Test Preparations', 'detail': testPreparations},
+  {
+    'name': 'Subjects',
+    'detail': subjects,
+  },
+  {
+    'name': 'Test Preparations',
+    'detail': testPreparations,
+  },
 ];
 
 const tutorBookingHours = [
@@ -422,8 +428,8 @@ const courseTopics = [
 ];
 
 const languageList = [
-  Language('1', 'English', 'assets/language/english.svg'),
-  Language('2', 'Vietnamese', 'assets/language/vietnamese.svg')
+  Language('en', 'English', 'assets/language/english.svg'),
+  Language('vi', 'Vietnamese', 'assets/language/vietnamese.svg')
 ];
 
 const tutorFeedback = [
