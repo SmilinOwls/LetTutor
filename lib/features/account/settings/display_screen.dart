@@ -11,10 +11,18 @@ class DisplayScreen extends StatefulWidget {
 }
 
 class _DisplayScreenState extends State<DisplayScreen> {
+  void _toggleTheme(bool? value) async {
+    Provider.of<ThemeProvider>(context, listen: false).toggleTheme(value!);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-
+    bool isDark = Provider.of<ThemeProvider>(context, listen: false).isDark();
     return Scaffold(
       appBar: const CustomAppBar(
         appBarTitle: 'Display',
@@ -52,9 +60,9 @@ class _DisplayScreenState extends State<DisplayScreen> {
                   ListTile(
                     trailing: Radio<bool>(
                       value: true,
-                      groupValue: themeProvider.isDarkMode(),
+                      groupValue: isDark,
                       onChanged: (bool? value) {
-                        themeProvider.toggleTheme(value!);
+                        _toggleTheme(value);
                       },
                       activeColor: Colors.blue,
                     ),
@@ -66,9 +74,9 @@ class _DisplayScreenState extends State<DisplayScreen> {
                   ListTile(
                     trailing: Radio<bool>(
                       value: false,
-                      groupValue: themeProvider.isDarkMode(),
+                      groupValue: isDark,
                       onChanged: (bool? value) {
-                        themeProvider.toggleTheme(value!);
+                        _toggleTheme(value);
                       },
                       activeColor: Colors.blue,
                     ),

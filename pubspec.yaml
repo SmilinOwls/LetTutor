@@ -41,6 +41,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^23.1.43
   provider: ^6.1.1
   image_picker: ^1.0.4
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
