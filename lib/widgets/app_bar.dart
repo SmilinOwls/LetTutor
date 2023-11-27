@@ -43,8 +43,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
       elevation: 18,
       actions: <Widget>[
         Container(
-          width: 180,
-          padding: const EdgeInsets.all(8),
+          width: 200,
+          padding: const EdgeInsets.all(6),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2(
               customButton: Align(
@@ -67,22 +67,29 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 ...languageList.map<DropdownMenuItem<String>>(
                   (Language lang) => DropdownMenuItem<String>(
                     value: lang.name,
-                    child: SizedBox(
-                        child: Row(children: [
-                      SvgPicture.asset(
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(0),
+                      leading: SvgPicture.asset(
                         lang.flag!,
                         width: 30,
                         height: 30,
                       ),
-                      const SizedBox(width: 10),
-                      Text(
+                      title: Text(
                         lang.name!,
                         style: TextStyle(
-                            fontWeight: _appLanguage == lang.name
-                                ? FontWeight.bold
-                                : FontWeight.normal),
-                      )
-                    ])),
+                          fontSize: 13,
+                          fontWeight: _appLanguage == lang.name
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                      trailing: _appLanguage == lang.name
+                          ? Icon(
+                              Icons.check,
+                              color: Theme.of(context).primaryColor,
+                            )
+                          : null,
+                    ),
                   ),
                 )
               ],
