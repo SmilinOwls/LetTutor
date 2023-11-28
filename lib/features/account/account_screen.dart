@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/account/settings/display_screen.dart';
+import 'package:lettutor/features/account/settings/language_screen.dart';
 import 'package:lettutor/features/account/widgets/custom_list_tile.dart';
+import 'package:lettutor/providers/language/language_provider.dart';
+import 'package:provider/provider.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -76,7 +79,13 @@ class _AccountScreenState extends State<AccountScreen> {
           CustomListTile(
             leadingIcon: Icons.language_rounded,
             titleText: 'Languages',
-            onTap: () {},
+            subTitleText:
+                Provider.of<LanguageProvider>(context).getLanguage().name,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const LanguageScreen(),
+              ));
+            },
             isTrailing: true,
           ),
           CustomListTile(

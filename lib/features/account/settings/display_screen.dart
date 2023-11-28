@@ -56,7 +56,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 50, top: 14),
               child: Column(
-                children: [
+                children: <Widget>[
                   ListTile(
                     trailing: Radio<bool>(
                       value: true,
