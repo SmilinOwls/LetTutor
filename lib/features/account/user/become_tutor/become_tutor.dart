@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/features/account/user/become_tutor/widgets/stepper/approval_step.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/horizonal_stepper.dart';
 
-class TutorBecomeScreen extends StatefulWidget {
-  const TutorBecomeScreen({super.key});
+class BecomeTutorScreen extends StatefulWidget {
+  const BecomeTutorScreen({super.key});
 
   @override
-  State<TutorBecomeScreen> createState() => _TutorBecomeScreenState();
+  State<BecomeTutorScreen> createState() => _BecomeTutorScreenState();
 }
 
-class _TutorBecomeScreenState extends State<TutorBecomeScreen> {
+class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   final Map<String, Widget> steps = <String, Widget>{
     'Complete profile': const Text('Complete profile'),
     'Video introdution': const Text('Video introdution'),
-    'Approval': const Text('Approval'),
+    'Approval': const ApprovalStep(),
   };
 
   @override
