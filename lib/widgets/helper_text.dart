@@ -13,12 +13,12 @@ class HelperText extends StatelessWidget {
         vertical: 4,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withOpacity(0.3),
+        color: Theme.of(context).primaryColor.withOpacity(0.1),
         border: Border.all(
           color: Theme.of(context).primaryColor.withOpacity(0.8),
         ),
       ),
-      child: Text(text),
+      child: Text(text, style: Theme.of(context).textTheme.bodySmall),
     );
   }
 }

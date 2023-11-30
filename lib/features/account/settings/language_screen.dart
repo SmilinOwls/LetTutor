@@ -14,7 +14,8 @@ class LanguageScreen extends StatefulWidget {
 
 class _LanguageScreenState extends State<LanguageScreen> {
   void _switchLanguage(Language? value) async {
-    Provider.of<LanguageProvider>(context, listen: false).switchLanguage(value!);
+    Provider.of<LanguageProvider>(context, listen: false)
+        .switchLanguage(value!);
   }
 
   @override
@@ -24,7 +25,8 @@ class _LanguageScreenState extends State<LanguageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Language appLanguage = Provider.of<LanguageProvider>(context).getLanguage();
+    final Language appLanguage =
+        Provider.of<LanguageProvider>(context).getLanguage();
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -60,7 +62,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
               padding: const EdgeInsets.only(left: 50, top: 14),
               child: Column(
                 children: languageList
-                    .map(
+                    .map<Widget>(
                       (language) => ListTile(
                         trailing: Radio<Language>(
                           value: language,

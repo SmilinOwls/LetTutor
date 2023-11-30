@@ -22,6 +22,11 @@ class _DisplayScreenState extends State<DisplayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, bool> _themeOptions = <String, bool>{
+      'On': true,
+      'Off': false,
+    };
+
     bool isDark = Provider.of<ThemeProvider>(context, listen: false).isDark();
     return Scaffold(
       appBar: const CustomAppBar(
@@ -56,36 +61,24 @@ class _DisplayScreenState extends State<DisplayScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 50, top: 14),
               child: Column(
-                children: <Widget>[
-                  ListTile(
-                    trailing: Radio<bool>(
-                      value: true,
-                      groupValue: isDark,
-                      onChanged: (bool? value) {
-                        _toggleTheme(value);
-                      },
-                      activeColor: Colors.blue,
-                    ),
-                    title: const Text(
-                      'On',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  ListTile(
-                    trailing: Radio<bool>(
-                      value: false,
-                      groupValue: isDark,
-                      onChanged: (bool? value) {
-                        _toggleTheme(value);
-                      },
-                      activeColor: Colors.blue,
-                    ),
-                    title: const Text(
-                      'Off',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ],
+                children: _themeOptions.entries
+                    .map<Widget>(
+                      (MapEntry theme) => ListTile(
+                        trailing: Radio<bool>(
+                          value: theme.value,
+                          groupValue: isDark,
+                          onChanged: (bool? value) {
+                            _toggleTheme(value);
+                          },
+                          activeColor: Theme.of(context).primaryColor,
+                        ),
+                        title: Text(
+                          theme.key.toString(),
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ],

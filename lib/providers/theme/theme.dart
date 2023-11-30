@@ -77,10 +77,21 @@ ThemeData lightMode = ThemeData(
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-    foregroundColor: MaterialStateProperty.all(Colors.white),
-    backgroundColor: MaterialStateProperty.all(Colors.blue),
-  )),
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.white),
+      backgroundColor: MaterialStateProperty.all(Colors.blue),
+    ),
+  ),
+  checkboxTheme: const CheckboxThemeData(
+    side: BorderSide(color: Colors.grey),
+  ),
+  listTileTheme: const ListTileThemeData(
+    contentPadding: EdgeInsets.all(0),
+    titleTextStyle: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+    ),
+  ),
 );
 
 ThemeData darkMode = ThemeData(
@@ -160,8 +171,12 @@ ThemeData darkMode = ThemeData(
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-    foregroundColor: MaterialStateProperty.all(Colors.white),
-    backgroundColor: MaterialStateProperty.all(Colors.blue),
-  )),
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.white),
+      backgroundColor: MaterialStateProperty.all(Colors.blue),
+    ),
+  ),
+  checkboxTheme: const CheckboxThemeData(
+    side: BorderSide(color: Colors.grey),
+  ),
 );

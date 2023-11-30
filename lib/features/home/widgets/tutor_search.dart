@@ -40,7 +40,7 @@ class TuTorSearch extends StatelessWidget {
               SizedBox(
                 width: 150,
                 height: 40,
-                child: TextField(   
+                child: TextField(
                   onChanged: onNameChange,
                   controller: nameEditingController,
                   style: const TextStyle(
@@ -158,7 +158,7 @@ class TuTorSearch extends StatelessWidget {
           alignment: WrapAlignment.start,
           spacing: 6,
           runSpacing: 8,
-          children: filteredTags
+          children: ['All', ...tutorSpecialities]
               .map<FilterChip>((String tag) => FilterChip(
                     onSelected: (_) {
                       onTagChange(tag);

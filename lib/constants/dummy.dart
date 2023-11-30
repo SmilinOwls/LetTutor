@@ -11,8 +11,7 @@ const tutorNationalities = [
   'Native English Tutor'
 ];
 
-const filteredTags = [
-  'All',
+const tutorSpecialities = [
   'English for kids',
   'English for Business',
   'Conversational',
@@ -388,6 +387,8 @@ const certificateLevels = {
   'TESTOL': 'TESTOL',
   'Other': 'Other'
 };
+
+const studentOverallLevels = ['Beginner', 'Intermediate', 'Advanced'];
 
 const courseTopics = [
   CourseTopic(

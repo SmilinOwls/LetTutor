@@ -31,7 +31,12 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
       TextEditingController();
   final TextEditingController _professionTextEditingController =
       TextEditingController();
+  final TextEditingController _introductionTextEditingController =
+      TextEditingController();
   final List<Map<String, dynamic>> _certificateList = <Map<String, dynamic>>[];
+
+  String? _teachingLevel;
+  final List<String?> _teachingSpecialities = [];
 
   @override
   void initState() {
@@ -88,6 +93,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
     _educationTextEditingController.dispose();
     _experienceTextEditingController.dispose();
     _professionTextEditingController.dispose();
+    _introductionTextEditingController.dispose();
   }
 
   @override
@@ -246,32 +252,18 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
-                    columns: const <DataColumn>[
-                      DataColumn(
-                        label: Text(
-                          'Certificate Type',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                    columns: ['Certificate Type', 'Certificate', 'Action']
+                        .map(
+                          (label) => DataColumn(
+                            label: Text(
+                              label,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Certificate',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Action',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    ],
+                        )
+                        .toList(),
                     rows: _certificateList
                         .map<DataRow>(
                           (certificate) => DataRow(
@@ -298,6 +290,114 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         )
                         .toList(),
                   ),
+                ),
+                const HeadlineText(textHeadline: 'Languages I speak'),
+                const SizedBox(height: 12),
+                const Text('Languages'),
+                const HeadlineText(textHeadline: 'Who I teach'),
+                const SizedBox(height: 12),
+                const HelperText(
+                  text: 'This is the first thing students '
+                      'will see when looking for tutors.',
+                ),
+                const SizedBox(height: 12),
+                const Text('Introduction'),
+                TextInput(
+                  controller: _introductionTextEditingController,
+                  isTextArea: true,
+                  hintText:
+                      'Example: "I was a doctor for 35 years and can help you practice '
+                      'business or medical English. I also enjoy teaching beginners '
+                      'as I am very patient and always speak slowly and clearly."',
+                  validator: 'Please input your introduction!',
+                ),
+                const Text('I am best at teaching students who are'),
+                FormField(
+                  builder: (FormFieldState state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          children: studentOverallLevels
+                              .map<Widget>(
+                                (level) => RadioListTile<String>(
+                                  value: level,
+                                  groupValue: _teachingLevel,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _teachingLevel = value!;
+                                    });
+                                  },
+                                  title: Text(level),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        if (state.hasError)
+                          Text(
+                            state.errorText!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                  validator: (value) {
+                    if (_teachingLevel == null) {
+                      return 'Please input your teaching level!';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                ),
+                const SizedBox(height: 12),
+                const Text('My specialties are'),
+                FormField(
+                  builder: (FormFieldState state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          children: tutorSpecialities
+                              .map<Widget>(
+                                (specialty) => CheckboxListTile(
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  value:
+                                      _teachingSpecialities.contains(specialty),
+                                  onChanged: (value) {
+                                    if (_teachingSpecialities
+                                        .contains(specialty)) {
+                                      _teachingSpecialities.remove(specialty);
+                                    } else {
+                                      _teachingSpecialities.add(specialty);
+                                    }
+                                    state.didChange(value);
+                                    state.validate();
+                                  },
+                                  title: Text(specialty),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        if (state.hasError)
+                          Text(
+                            state.errorText!,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                  validator: (value) {
+                    if (_teachingSpecialities.isEmpty) {
+                      return 'Please input your target specialties!';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
               ],
             ),

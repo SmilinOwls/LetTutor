@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String? _selectedNationality;
-  String _selectedTag = filteredTags[0];
+  String _selectedTag = 'All';
 
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _nationalityEditingController =
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _handleFilterReset() {
     setState(() {
       _selectedNationality = null;
-      _selectedTag = filteredTags[0];
+      _selectedTag = 'All';
       _nameEditingController.text = '';
       _nationalityEditingController.text = '';
     });
