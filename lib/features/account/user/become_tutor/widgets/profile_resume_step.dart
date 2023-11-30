@@ -8,15 +8,14 @@ import 'package:lettutor/widgets/helper_text.dart';
 import 'package:lettutor/widgets/text_input.dart';
 
 class ProfileResumeStep extends StatefulWidget {
-  const ProfileResumeStep({super.key});
+  const ProfileResumeStep({super.key, required this.formKey});
+  final GlobalKey<FormState> formKey;
 
   @override
   State<ProfileResumeStep> createState() => _ProfileResumeStepState();
 }
 
 class _ProfileResumeStepState extends State<ProfileResumeStep> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final TextEditingController _nameTextEditingController =
       TextEditingController();
   final TextEditingController _birthdayTextEditingController =
@@ -79,10 +78,6 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
     });
   }
 
-  void _onProfileChangeSubmited() {
-    if (_formKey.currentState!.validate()) {}
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -143,7 +138,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
           ),
           const SizedBox(height: 12),
           Form(
-            key: _formKey,
+            key: widget.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -334,10 +329,14 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                               .toList(),
                         ),
                         if (state.hasError)
-                          Text(
-                            state.errorText!,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Text(
+                              state.errorText!,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).colorScheme.error,
+                              ),
                             ),
                           ),
                       ],
@@ -382,10 +381,14 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                               .toList(),
                         ),
                         if (state.hasError)
-                          Text(
-                            state.errorText!,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Text(
+                              state.errorText!,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).colorScheme.error,
+                              ),
                             ),
                           ),
                       ],

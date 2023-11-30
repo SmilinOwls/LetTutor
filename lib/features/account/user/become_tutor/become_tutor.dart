@@ -12,11 +12,18 @@ class BecomeTutorScreen extends StatefulWidget {
 }
 
 class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
-  final Map<String, Widget> steps = <String, Widget>{
-    'Complete profile': const ProfileResumeStep(),
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late final Map<String, Widget> steps;
+
+  @override
+  void initState() {
+    super.initState();
+    steps = <String, Widget>{
+    'Complete profile': ProfileResumeStep(formKey: _formKey),
     'Video introdution': const Text('Video introdution'),
     'Approval': const ApprovalStep(),
   };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +40,7 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
         ),
         child: SizedBox(
           width: double.infinity,
-          child: HorizontalStepper(steps: steps),
+          child: HorizontalStepper(steps: steps, formKey: _formKey),
         ),
       ),
     );
