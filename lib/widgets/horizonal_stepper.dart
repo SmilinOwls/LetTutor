@@ -59,16 +59,13 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
             if (currentStep != 0 && currentStep != widget.steps.length - 1)
               Expanded(
                 child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.blue),
-                  ),
                   onPressed: details.onStepCancel,
                   child: const Text('Back'),
                 ),
               ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(
+              child: ElevatedButton(   
                 onPressed: details.onStepContinue,
                 child: Text(currentStep != widget.steps.length - 1
                     ? 'Next'

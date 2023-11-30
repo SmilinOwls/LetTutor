@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomHeadline extends StatelessWidget {
-  const CustomHeadline({super.key, required this.textHeadline});
+class HeadlineText extends StatelessWidget {
+  const HeadlineText({super.key, required this.textHeadline});
 
   final String textHeadline;
 

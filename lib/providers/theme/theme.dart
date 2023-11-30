@@ -4,15 +4,11 @@ ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white,
   colorScheme: const ColorScheme.light(primary: Colors.black),
+  canvasColor: Colors.white,
   useMaterial3: true,
   primaryColor: Colors.blue[600],
   primarySwatch: Colors.blue,
   hintColor: Colors.grey.shade600,
-  iconButtonTheme: IconButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: MaterialStateProperty.all(Colors.blue),
-    ),
-  ),
   appBarTheme: AppBarTheme(
     surfaceTintColor: Colors.grey.shade400,
   ),
@@ -66,20 +62,33 @@ ThemeData lightMode = ThemeData(
   cardTheme: CardTheme(
     surfaceTintColor: Colors.grey.shade100,
   ),
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.blue),
+    ),
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.blue),
+      side: const MaterialStatePropertyAll(BorderSide(color: Colors.blue)),
+    ),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.white),
+      backgroundColor: MaterialStateProperty.all(Colors.blue),
+    )
+  ),
 );
 
 ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: Colors.grey.shade900,
   colorScheme: const ColorScheme.dark(primary: Colors.white),
+  canvasColor: Colors.white.withOpacity(0.2),
   useMaterial3: true,
   primaryColor: Colors.blue[300],
   primarySwatch: Colors.blue,
-  iconButtonTheme: IconButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: MaterialStateProperty.all(Colors.blue),
-    ),
-  ),
   hintColor: Colors.grey.shade400,
   appBarTheme: AppBarTheme(
     surfaceTintColor: Colors.grey.shade900,
@@ -133,5 +142,22 @@ ThemeData darkMode = ThemeData(
   cardColor: Colors.grey.shade900,
   cardTheme: CardTheme(
     surfaceTintColor: Colors.grey.shade200.withOpacity(0.2),
+  ),
+  iconButtonTheme: IconButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.blue),
+    ),
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.blue),
+      side: const MaterialStatePropertyAll(BorderSide(color: Colors.blue)),
+    ),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStateProperty.all(Colors.white),
+      backgroundColor: MaterialStateProperty.all(Colors.blue),
+    )
   ),
 );

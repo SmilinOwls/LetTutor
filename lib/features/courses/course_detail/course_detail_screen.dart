@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/course_detail_card.dart';
-import 'package:lettutor/features/courses/course_detail/widgets/custom_headline.dart';
+import 'package:lettutor/widgets/headline_text.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/topic_card.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import '../../../models/courses/course.dart';
@@ -33,7 +33,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             children: <Widget>[
               CourseDetailCard(course: courseDetail),
               const SizedBox(height: 20),
-              const CustomHeadline(textHeadline: 'Overview'),
+              const HeadlineText(textHeadline: 'Overview'),
               const SizedBox(height: 14),
               Row(
                 children: <Widget>[
@@ -64,7 +64,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                 padding: const EdgeInsets.only(top: 8, left: 30),
                 child: Text(courseDetail.purpose ?? 'No purpose available'),
               ),
-              const CustomHeadline(textHeadline: 'Experience Level'),
+              const HeadlineText(textHeadline: 'Experience Level'),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 14,
@@ -84,7 +84,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   ],
                 ),
               ),
-              const CustomHeadline(textHeadline: 'Course Length'),
+              const HeadlineText(textHeadline: 'Course Length'),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 14,
@@ -104,7 +104,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   ],
                 ),
               ),
-              const CustomHeadline(textHeadline: 'List Topics'),
+              const HeadlineText(textHeadline: 'List Topics'),
               ...List<Widget>.generate(
                 courseDetail.topics?.length ?? 0,
                 (index) => CourseTopicCard(
@@ -112,7 +112,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   course: courseDetail,
                 ),
               ),
-              const CustomHeadline(textHeadline: 'Suggested Tutors'),
+              const HeadlineText(textHeadline: 'Suggested Tutors'),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   vertical: 14,
