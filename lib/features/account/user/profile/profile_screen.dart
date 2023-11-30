@@ -92,9 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _onProfileChangeSubmited() {
-    if (_formKey.currentState!.validate()) {
-      
-    }
+    if (_formKey.currentState!.validate()) {}
   }
 
   @override
@@ -357,9 +355,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: Colors.green.shade200.withOpacity(0.8),
                           ),
                           shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero),
+                            borderRadius: BorderRadius.zero,
+                          ),
                           backgroundColor:
-                              Colors.green.shade100.withOpacity(0.4),
+                              Colors.green.shade100.withOpacity(0.2),
                         ),
                         const SizedBox(height: 20),
                         const CustomLabel(label: 'Birthday'),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/features/account/user/become_tutor/widgets/stepper/approval_step.dart';
-import 'package:lettutor/features/account/user/become_tutor/widgets/stepper/profile_resume_step.dart';
+import 'package:lettutor/features/account/user/become_tutor/widgets/approval_step.dart';
+import 'package:lettutor/features/account/user/become_tutor/widgets/profile_resume_step.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/horizonal_stepper.dart';
 

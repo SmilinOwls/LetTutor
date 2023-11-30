@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   scaffoldBackgroundColor: Colors.white,
-  colorScheme: const ColorScheme.light(primary: Colors.black),
+  colorScheme: const ColorScheme.light(
+    primary: Colors.black,
+    error: Colors.red,
+  ),
   canvasColor: Colors.white,
   useMaterial3: true,
   primaryColor: Colors.blue[600],
@@ -50,7 +53,7 @@ ThemeData lightMode = ThemeData(
     ),
   ),
   dialogTheme: DialogTheme(
-    backgroundColor: Colors.grey.shade100,
+    surfaceTintColor: Colors.grey.shade50,
   ),
   bottomAppBarTheme: BottomAppBarTheme(
     surfaceTintColor: Colors.grey.shade100,
@@ -74,17 +77,19 @@ ThemeData lightMode = ThemeData(
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: MaterialStateProperty.all(Colors.white),
-      backgroundColor: MaterialStateProperty.all(Colors.blue),
-    )
-  ),
+      style: ButtonStyle(
+    foregroundColor: MaterialStateProperty.all(Colors.white),
+    backgroundColor: MaterialStateProperty.all(Colors.blue),
+  )),
 );
 
 ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   scaffoldBackgroundColor: Colors.grey.shade900,
-  colorScheme: const ColorScheme.dark(primary: Colors.white),
+  colorScheme: const ColorScheme.dark(
+    primary: Colors.white,
+    error: Colors.red,
+  ),
   canvasColor: Colors.white.withOpacity(0.2),
   useMaterial3: true,
   primaryColor: Colors.blue[300],
@@ -131,7 +136,7 @@ ThemeData darkMode = ThemeData(
     ),
   ),
   dialogTheme: DialogTheme(
-    backgroundColor: Colors.grey.shade900,
+    surfaceTintColor: Colors.grey.shade500,
   ),
   bottomAppBarTheme: BottomAppBarTheme(
     surfaceTintColor: Colors.grey.shade900,
@@ -155,9 +160,8 @@ ThemeData darkMode = ThemeData(
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      foregroundColor: MaterialStateProperty.all(Colors.white),
-      backgroundColor: MaterialStateProperty.all(Colors.blue),
-    )
-  ),
+      style: ButtonStyle(
+    foregroundColor: MaterialStateProperty.all(Colors.white),
+    backgroundColor: MaterialStateProperty.all(Colors.blue),
+  )),
 );

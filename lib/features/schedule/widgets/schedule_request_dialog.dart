@@ -94,9 +94,10 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                   ),
                   hintText: 'Wish topic (optional)',
                   hintStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,

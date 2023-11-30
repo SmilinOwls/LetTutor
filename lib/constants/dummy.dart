@@ -379,6 +379,16 @@ const studentLevels = {
   "Upper A2": 'Upper A2 (Pre Intermediate)',
 };
 
+const certificateLevels = {
+  'TOEIC': 'TOEIC',
+  'IELTS': 'IELTS',
+  'TOEFL': 'TOEFL',
+  'Graduate Certificate': 'Graduate Certificate',
+  'TEST': 'TEST',
+  'TESTOL': 'TESTOL',
+  'Other': 'Other'
+};
+
 const courseTopics = [
   CourseTopic(
     '1',

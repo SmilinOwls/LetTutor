@@ -37,13 +37,14 @@ class TextInput extends StatelessWidget {
         readOnly: isReadOnly ?? false,
         keyboardType: TextInputType.text,
         decoration: MergeInputDecoration.merge(customInputDecoration, inputDecoration).copyWith(
+              hintMaxLines: 3,
+              isDense: isTextArea == null ? true : false,
               hintText: hintText,
               filled: isDisabled ?? false,
               fillColor: isDisabled == null
                   ? null
                   : Colors.grey.shade300.withOpacity(0.3),
             ),
-        expands: isTextArea ?? false,
         maxLines: isTextArea ?? false ? null : 1,
         validator: (value) {
           if (value == null || value.isEmpty) {

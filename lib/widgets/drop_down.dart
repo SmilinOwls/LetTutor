@@ -8,11 +8,13 @@ class DropDownField extends StatelessWidget {
     required this.controller,
     required this.list,
     this.validator,
+    this.hintText,
   });
 
   final TextEditingController controller;
-  final Map list;
+  final Map<String, String> list;
   final String? validator;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,12 @@ class DropDownField extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(
             vertical: 4,
             horizontal: -4,
+          ),
+        ),
+        hint: Text(
+          hintText ?? '',
+          style: const TextStyle(
+            fontSize: 14,
           ),
         ),
         autovalidateMode: AutovalidateMode.onUserInteraction,
