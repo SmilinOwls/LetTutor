@@ -10,43 +10,42 @@ import 'package:lettutor/widgets/helper_text.dart';
 import 'package:lettutor/widgets/text_input.dart';
 
 class ProfileResumeStep extends StatefulWidget {
-  const ProfileResumeStep({super.key, this.formKey});
+  const ProfileResumeStep({
+    super.key,
+    required this.formKey,
+    required this.nameTextEditingController,
+    required this.birthdayTextEditingController,
+    required this.countryTextEditingController,
+    required this.interestsTextEditingController,
+    required this.educationTextEditingController,
+    required this.experienceTextEditingController,
+    required this.professionTextEditingController,
+    required this.introductionTextEditingController,
+    required this.certificateList,
+    required this.languages,
+    required this.teachingLevel,
+    required this.teachingSpecialities,
+  });
 
-  final GlobalKey<FormState>? formKey;
+  final GlobalKey<FormState> formKey;
+  final TextEditingController nameTextEditingController;
+  final TextEditingController birthdayTextEditingController;
+  final TextEditingController countryTextEditingController;
+  final TextEditingController interestsTextEditingController;
+  final TextEditingController educationTextEditingController;
+  final TextEditingController experienceTextEditingController;
+  final TextEditingController professionTextEditingController;
+  final TextEditingController introductionTextEditingController;
+  final List<Map<String, dynamic>> certificateList;
+  final List<String> languages;
+  final List<String?> teachingLevel;
+  final List<String> teachingSpecialities;
 
   @override
   State<ProfileResumeStep> createState() => _ProfileResumeStepState();
 }
 
 class _ProfileResumeStepState extends State<ProfileResumeStep> {
-  final TextEditingController _nameTextEditingController =
-      TextEditingController();
-  final TextEditingController _birthdayTextEditingController =
-      TextEditingController();
-  final TextEditingController _countryTextEditingController =
-      TextEditingController();
-  final TextEditingController _interestsTextEditingController =
-      TextEditingController();
-  final TextEditingController _educationTextEditingController =
-      TextEditingController();
-  final TextEditingController _experienceTextEditingController =
-      TextEditingController();
-  final TextEditingController _professionTextEditingController =
-      TextEditingController();
-  final TextEditingController _introductionTextEditingController =
-      TextEditingController();
-  final List<Map<String, dynamic>> _certificateList = <Map<String, dynamic>>[];
-
-  final List<String> _languages = <String>[];
-  String? _teachingLevel;
-  final List<String> _teachingSpecialities = <String>[];
-
-  @override
-  void initState() {
-    super.initState();
-    _nameTextEditingController.text = 'Keegan';
-  }
-
   void _onDateChanged(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -57,7 +56,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
 
     if (pickedDate != null) {
       setState(() {
-        _birthdayTextEditingController.text =
+        widget.birthdayTextEditingController.text =
             DateFormat('yyyy-MM-dd').format(pickedDate);
       });
     }
@@ -66,11 +65,12 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
   void _addCertificate(BuildContext context) async {
     await showDialog(
       context: context,
-      builder: (context) => CerificateDialog(certificates: _certificateList),
+      builder: (context) =>
+          CerificateDialog(certificates: widget.certificateList),
     ).then((value) {
       if (value != null) {
         setState(() {
-          _certificateList.add(value);
+          widget.certificateList.add(value);
         });
       }
     });
@@ -78,7 +78,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
 
   void _removeCertificate(Map<String, dynamic> certificate) {
     setState(() {
-      _certificateList.remove(certificate);
+      widget.certificateList.remove(certificate);
     });
   }
 
@@ -158,18 +158,18 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 const SizedBox(height: 12),
                 const Text('Tutoring name'),
                 TextInput(
-                  controller: _nameTextEditingController,
+                  controller: widget.nameTextEditingController,
                   validator: 'Please input your name!',
                 ),
                 const Text('I\'m from'),
                 DropDownField(
-                  controller: _countryTextEditingController,
+                  controller: widget.countryTextEditingController,
                   list: countryList,
                   validator: 'Please input your country!',
                 ),
                 const Text('Date of Birth'),
                 TextInput(
-                  controller: _birthdayTextEditingController,
+                  controller: widget.birthdayTextEditingController,
                   isReadOnly: true,
                   inputDecoration: InputDecoration(
                     suffixIcon: Icon(
@@ -198,7 +198,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 const SizedBox(height: 12),
                 const Text('Interests'),
                 TextInput(
-                  controller: _interestsTextEditingController,
+                  controller: widget.interestsTextEditingController,
                   isTextArea: true,
                   hintText:
                       'Interests, hobbies, memorable life experiences, or anything '
@@ -207,7 +207,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 ),
                 const Text('Education'),
                 TextInput(
-                  controller: _educationTextEditingController,
+                  controller: widget.educationTextEditingController,
                   isTextArea: true,
                   hintText:
                       'Example: "Bachelor of Arts in English from Cambly University; '
@@ -217,13 +217,13 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 ),
                 const Text('Experience'),
                 TextInput(
-                  controller: _experienceTextEditingController,
+                  controller: widget.experienceTextEditingController,
                   isTextArea: true,
                   validator: 'Please input your experience!',
                 ),
                 const Text('Current or Previous Pression'),
                 TextInput(
-                  controller: _professionTextEditingController,
+                  controller: widget.professionTextEditingController,
                   isTextArea: true,
                   validator: 'Please input your profession!',
                 ),
@@ -236,7 +236,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                       OutlinedButton(
                         onPressed: () {
                           _addCertificate(context);
-                          state.didChange(_certificateList);
+                          state.didChange(widget.certificateList);
                         },
                         child: const Text('Add new certificate'),
                       ),
@@ -255,7 +255,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                 ),
                               )
                               .toList(),
-                          rows: _certificateList
+                          rows: widget.certificateList
                               .map<DataRow>(
                                 (certificate) => DataRow(
                                   cells: <DataCell>[
@@ -299,7 +299,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                     ],
                   ),
                   validator: (value) {
-                    if (_certificateList.isEmpty) {
+                    if (widget.certificateList.isEmpty) {
                       return 'Please input at least one certificate!';
                     }
                     return null;
@@ -330,18 +330,19 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                               value: worldLanguages.keys.elementAt(index),
                               child: StatefulBuilder(
                                 builder: (context, menuSetState) {
-                                  final isSelected = _languages.contains(
+                                  final isSelected = widget.languages.contains(
                                       worldLanguages.keys.elementAt(index));
                                   return InkWell(
                                     onTap: () {
                                       isSelected
-                                          ? _languages.remove(worldLanguages
+                                          ? widget.languages.remove(
+                                              worldLanguages.keys
+                                                  .elementAt(index))
+                                          : widget.languages.add(worldLanguages
                                               .keys
-                                              .elementAt(index))
-                                          : _languages.add(worldLanguages.keys
                                               .elementAt(index));
                                       menuSetState(() {});
-                                      state.didChange(_languages);
+                                      state.didChange(widget.languages);
                                     },
                                     child: isSelected
                                         ? ListTile(
@@ -401,16 +402,18 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                           spacing: 4,
                           runSpacing: 8,
                           children: List<Widget>.generate(
-                            _languages.length,
+                            widget.languages.length,
                             (index) => Chip(
-                              label: Text(worldLanguages[_languages[index]]!),
+                              label: Text(
+                                  worldLanguages[widget.languages[index]]!),
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.zero,
                               ),
                               side: BorderSide.none,
                               onDeleted: () {
-                                _languages.remove(_languages[index]);
-                                state.didChange(_languages);
+                                widget.languages
+                                    .remove(widget.languages[index]);
+                                state.didChange(widget.languages);
                               },
                               deleteIcon: const Icon(
                                 Icons.cancel_rounded,
@@ -437,7 +440,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                     );
                   },
                   validator: (value) {
-                    if (_languages.isEmpty) {
+                    if (widget.languages.isEmpty) {
                       return 'Please input at least one language!';
                     }
                     return null;
@@ -453,7 +456,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 const SizedBox(height: 12),
                 const Text('Introduction'),
                 TextInput(
-                  controller: _introductionTextEditingController,
+                  controller: widget.introductionTextEditingController,
                   isTextArea: true,
                   hintText:
                       'Example: "I was a doctor for 35 years and can help you practice '
@@ -472,9 +475,9 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                               .map<Widget>(
                                 (level) => RadioListTile<String>(
                                   value: level,
-                                  groupValue: _teachingLevel,
+                                  groupValue: widget.teachingLevel.first,
                                   onChanged: (value) {
-                                    _teachingLevel = value!;
+                                    widget.teachingLevel[0] = value!;
                                     state.didChange(value);
                                   },
                                   title: Text(
@@ -502,7 +505,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                     );
                   },
                   validator: (value) {
-                    if (_teachingLevel == null) {
+                    if (widget.teachingLevel.isEmpty) {
                       return 'Please input your teaching level!';
                     }
                     return null;
@@ -522,14 +525,16 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                 (specialty) => CheckboxListTile(
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
-                                  value:
-                                      _teachingSpecialities.contains(specialty),
+                                  value: widget.teachingSpecialities
+                                      .contains(specialty),
                                   onChanged: (value) {
-                                    if (_teachingSpecialities
+                                    if (widget.teachingSpecialities
                                         .contains(specialty)) {
-                                      _teachingSpecialities.remove(specialty);
+                                      widget.teachingSpecialities
+                                          .remove(specialty);
                                     } else {
-                                      _teachingSpecialities.add(specialty);
+                                      widget.teachingSpecialities
+                                          .add(specialty);
                                     }
                                     state.didChange(value);
                                   },
@@ -558,7 +563,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                     );
                   },
                   validator: (value) {
-                    if (_teachingSpecialities.isEmpty) {
+                    if (widget.teachingSpecialities.isEmpty) {
                       return 'Please input your target specialties!';
                     }
                     return null;

@@ -11,18 +11,67 @@ class BecomeTutorScreen extends StatefulWidget {
   State<BecomeTutorScreen> createState() => _BecomeTutorScreenState();
 }
 
-class _BecomeTutorScreenState extends State<BecomeTutorScreen>{
+class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final Map<String, Widget> steps;
+
+  final TextEditingController _nameTextEditingController =
+      TextEditingController();
+  final TextEditingController _birthdayTextEditingController =
+      TextEditingController();
+  final TextEditingController _countryTextEditingController =
+      TextEditingController();
+  final TextEditingController _interestsTextEditingController =
+      TextEditingController();
+  final TextEditingController _educationTextEditingController =
+      TextEditingController();
+  final TextEditingController _experienceTextEditingController =
+      TextEditingController();
+  final TextEditingController _professionTextEditingController =
+      TextEditingController();
+  final TextEditingController _introductionTextEditingController =
+      TextEditingController();
+  final List<Map<String, dynamic>> _certificateList = <Map<String, dynamic>>[];
+
+  final List<String> _languages = <String>[];
+  final List<String?> _teachingLevel = <String?>[null];
+  final List<String> _teachingSpecialities = <String>[];
 
   @override
   void initState() {
     super.initState();
     steps = <String, Widget>{
-    'Complete profile': ProfileResumeStep(formKey: _formKey),
-    'Video introdution': const Text('Video introdution'),
-    'Approval': const ApprovalStep(),
-  };
+      'Complete profile': ProfileResumeStep(
+        formKey: _formKey,
+        nameTextEditingController: _nameTextEditingController,
+        birthdayTextEditingController: _birthdayTextEditingController,
+        countryTextEditingController: _countryTextEditingController,
+        interestsTextEditingController: _interestsTextEditingController,
+        educationTextEditingController: _educationTextEditingController,
+        experienceTextEditingController: _experienceTextEditingController,
+        professionTextEditingController: _professionTextEditingController,
+        introductionTextEditingController: _introductionTextEditingController,
+        certificateList: _certificateList,
+        languages: _languages,
+        teachingLevel: _teachingLevel,
+        teachingSpecialities: _teachingSpecialities,
+      ),
+      'Video introdution': const Text('Video introdution'),
+      'Approval': const ApprovalStep(),
+    };
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _nameTextEditingController.dispose();
+    _birthdayTextEditingController.dispose();
+    _countryTextEditingController.dispose();
+    _interestsTextEditingController.dispose();
+    _educationTextEditingController.dispose();
+    _experienceTextEditingController.dispose();
+    _professionTextEditingController.dispose();
+    _introductionTextEditingController.dispose();
   }
 
   @override
