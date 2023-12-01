@@ -10,8 +10,9 @@ import 'package:lettutor/widgets/helper_text.dart';
 import 'package:lettutor/widgets/text_input.dart';
 
 class ProfileResumeStep extends StatefulWidget {
-  const ProfileResumeStep({super.key, required this.formKey});
-  final GlobalKey<FormState> formKey;
+  const ProfileResumeStep({super.key, this.formKey});
+
+  final GlobalKey<FormState>? formKey;
 
   @override
   State<ProfileResumeStep> createState() => _ProfileResumeStepState();
@@ -24,7 +25,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
       TextEditingController();
   final TextEditingController _countryTextEditingController =
       TextEditingController();
-  final TextEditingController _interestTextEditingController =
+  final TextEditingController _interestsTextEditingController =
       TextEditingController();
   final TextEditingController _educationTextEditingController =
       TextEditingController();
@@ -79,19 +80,6 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
     setState(() {
       _certificateList.remove(certificate);
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _nameTextEditingController.dispose();
-    _birthdayTextEditingController.dispose();
-    _countryTextEditingController.dispose();
-    _interestTextEditingController.dispose();
-    _educationTextEditingController.dispose();
-    _experienceTextEditingController.dispose();
-    _professionTextEditingController.dispose();
-    _introductionTextEditingController.dispose();
   }
 
   @override
@@ -210,7 +198,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 const SizedBox(height: 12),
                 const Text('Interests'),
                 TextInput(
-                  controller: _interestTextEditingController,
+                  controller: _interestsTextEditingController,
                   isTextArea: true,
                   hintText:
                       'Interests, hobbies, memorable life experiences, or anything '
@@ -241,53 +229,82 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 ),
                 const Text('Certificate'),
                 const SizedBox(height: 12),
-                OutlinedButton(
-                  onPressed: () {
-                    _addCertificate(context);
-                  },
-                  child: const Text('Add new certificate'),
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
-                    columns: ['Certificate Type', 'Certificate', 'Action']
-                        .map(
-                          (label) => DataColumn(
-                            label: Text(
-                              label,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                FormField(
+                  builder: (FormFieldState state) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      OutlinedButton(
+                        onPressed: () {
+                          _addCertificate(context);
+                          state.didChange(_certificateList);
+                        },
+                        child: const Text('Add new certificate'),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          columns: ['Certificate Type', 'Certificate', 'Action']
+                              .map(
+                                (label) => DataColumn(
+                                  label: Text(
+                                    label,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          rows: _certificateList
+                              .map<DataRow>(
+                                (certificate) => DataRow(
+                                  cells: <DataCell>[
+                                    DataCell(
+                                      Text(
+                                          certificate['certificateType'] ?? ''),
+                                    ),
+                                    DataCell(
+                                      Text(
+                                        certificate['certificateFile']?.name ??
+                                            '',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    DataCell(
+                                      IconButton(
+                                        onPressed: () {
+                                          _removeCertificate(certificate);
+                                          state.didChange(certificate);
+                                        },
+                                        icon: const Icon(Icons.delete),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                      if (state.hasError)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: Text(
+                            state.errorText!,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Theme.of(context).colorScheme.error,
                             ),
                           ),
-                        )
-                        .toList(),
-                    rows: _certificateList
-                        .map<DataRow>(
-                          (certificate) => DataRow(
-                            cells: <DataCell>[
-                              DataCell(
-                                Text(certificate['certificateType'] ?? ''),
-                              ),
-                              DataCell(
-                                Text(
-                                  certificate['certificateFile']?.name ?? '',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              DataCell(
-                                IconButton(
-                                  onPressed: () {
-                                    _removeCertificate(certificate);
-                                  },
-                                  icon: const Icon(Icons.delete),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                        .toList(),
+                        ),
+                    ],
                   ),
+                  validator: (value) {
+                    if (_certificateList.isEmpty) {
+                      return 'Please input at least one certificate!';
+                    }
+                    return null;
+                  },
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const HeadlineText(textHeadline: 'Languages I speak'),
                 const SizedBox(height: 12),
@@ -352,7 +369,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                     ),
                   ),
                   validator: (value) {
-                    if (value == null) {
+                    if (_languages.isEmpty) {
                       return 'Please select at least one subject.';
                     }
                     return null;
@@ -433,11 +450,15 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                   value: level,
                                   groupValue: _teachingLevel,
                                   onChanged: (value) {
-                                    setState(() {
-                                      _teachingLevel = value!;
-                                    });
+                                    _teachingLevel = value!;
+                                    state.didChange(value);
                                   },
-                                  title: Text(level),
+                                  title: Text(
+                                    level,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  contentPadding: const EdgeInsets.all(0),
                                 ),
                               )
                               .toList(),
@@ -487,9 +508,13 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                       _teachingSpecialities.add(specialty);
                                     }
                                     state.didChange(value);
-                                    state.validate();
                                   },
-                                  title: Text(specialty),
+                                  title: Text(
+                                    specialty,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  contentPadding: const EdgeInsets.all(0),
                                 ),
                               )
                               .toList(),

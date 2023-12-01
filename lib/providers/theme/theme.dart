@@ -85,13 +85,6 @@ ThemeData lightMode = ThemeData(
   checkboxTheme: const CheckboxThemeData(
     side: BorderSide(color: Colors.grey),
   ),
-  listTileTheme: const ListTileThemeData(
-    contentPadding: EdgeInsets.all(0),
-    titleTextStyle: TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-    ),
-  ),
 );
 
 ThemeData darkMode = ThemeData(

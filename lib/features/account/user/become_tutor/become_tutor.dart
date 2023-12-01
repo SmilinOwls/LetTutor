@@ -11,7 +11,7 @@ class BecomeTutorScreen extends StatefulWidget {
   State<BecomeTutorScreen> createState() => _BecomeTutorScreenState();
 }
 
-class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
+class _BecomeTutorScreenState extends State<BecomeTutorScreen>{
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final Map<String, Widget> steps;
 

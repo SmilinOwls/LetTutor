@@ -22,7 +22,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, bool> _themeOptions = <String, bool>{
+    final Map<String, bool> themeOptions = <String, bool>{
       'On': true,
       'Off': false,
     };
@@ -61,7 +61,7 @@ class _DisplayScreenState extends State<DisplayScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 50, top: 14),
               child: Column(
-                children: _themeOptions.entries
+                children: themeOptions.entries
                     .map<Widget>(
                       (MapEntry theme) => ListTile(
                         trailing: Radio<bool>(
