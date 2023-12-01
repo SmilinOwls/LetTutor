@@ -27,7 +27,7 @@ class _HomeHeaderState extends State<HomeHeader> {
           ),
           const SizedBox(height: 18),
           const Text(
-            '2023-12-01 18:30-18:55',
+            '2024-01-01 18:30-18:55',
             style: TextStyle(
               fontSize: 18,
               color: Colors.white,

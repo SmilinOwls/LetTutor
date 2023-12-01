@@ -21,7 +21,6 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
         appBarTitle: 'Expore Course',
       ),
       body: SingleChildScrollView(
@@ -32,7 +31,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
         child: Column(
           children: <Widget>[
             Card(
-              surfaceTintColor: Colors.white,
+              color: Theme.of(context).cardColor,
               margin: const EdgeInsets.symmetric(vertical: 10),
               elevation: 2,
               borderOnForeground: true,
@@ -68,7 +67,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black54,
+                            color: Colors.grey,
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -88,7 +87,8 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                               });
                             },
                             selected: _selectTopicIndex == index,
-                            selectedTileColor: Colors.grey[300],
+                            selectedTileColor: Colors.grey[400],
+                            selectedColor: Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             leading: Text('${index + 1}.'),
                             leadingAndTrailingTextStyle:

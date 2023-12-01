@@ -59,9 +59,7 @@ class _HistoryCardState extends State<HistoryCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      surfaceTintColor: Colors.white,
-      color: const Color.fromARGB(255, 241, 241, 241),
-      elevation: 0,
+      elevation: 6,
       margin: const EdgeInsets.symmetric(
         vertical: 8,
       ),
@@ -81,7 +79,6 @@ class _HistoryCardState extends State<HistoryCard> {
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
-              color: Colors.white,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -126,7 +123,6 @@ class _HistoryCardState extends State<HistoryCard> {
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
-              color: Colors.white,
               child: const Text(
                 'Lesson Time: 19:30-19:55',
                 style: TextStyle(
@@ -136,109 +132,106 @@ class _HistoryCardState extends State<HistoryCard> {
               ),
             ),
             const SizedBox(height: 14),
-            Container(
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const ExpansionTile(
-                    title: Text(
-                      'Request for lesson',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const ExpansionTile(
+                  title: Text(
+                    'Request for lesson',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
-                    shape: RoundedRectangleBorder(),
-                    children: <Widget>[
-                      ListTile(
-                        title: Text(
-                          'Need to have more exercises',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
-                  const Divider(height: 1),
-                  ExpansionTile(
-                    expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-                    childrenPadding: const EdgeInsets.only(
-                      left: 14,
-                      bottom: 10,
-                    ),
-                    title: const Text(
-                      'Review from tutor',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    shape: const RoundedRectangleBorder(),
-                    children: <Widget>[
-                      const Text(
-                        'Session 1: 00:00 - 00:25',
+                  shape: RoundedRectangleBorder(),
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(
+                        'Need to have more exercises',
                         style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      const Text('Level status: Completed'),
-                      ...List<Widget>.generate(
-                        _skillRating.length,
-                        (index) => buildSkillRating(context, index),
+                    ),
+                  ],
+                ),
+                const Divider(height: 1),
+                ExpansionTile(
+                  expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+                  childrenPadding: const EdgeInsets.only(
+                    left: 14,
+                    bottom: 10,
+                  ),
+                  title: const Text(
+                    'Review from tutor',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  shape: const RoundedRectangleBorder(),
+                  children: <Widget>[
+                    const Text(
+                      'Session 1: 00:00 - 00:25',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
                       ),
-                      const Text('Overall comment: Good'),
+                    ),
+                    const Text('Level status: Completed'),
+                    ...List<Widget>.generate(
+                      _skillRating.length,
+                      (index) => buildSkillRating(context, index),
+                    ),
+                    const Text('Overall comment: Good'),
+                  ],
+                ),
+                const Divider(height: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 12,
+                    horizontal: 14,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: _rating != null
+                            ? Row(
+                                children: <Widget>[
+                                  const Text('Rating: '),
+                                  StarRating(
+                                    rating: _rating!,
+                                    onRatingChanged: (value) {},
+                                  ),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          _showHistoryRatingDialog(context);
+                        },
+                        child: Text(
+                          _rating != null ? 'Edit' : 'Add a rating',
+                          style: const TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      InkWell(
+                        onTap: () {
+                          _showHistoryReportDialog(context);
+                        },
+                        child: const Text(
+                          'Report',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
                     ],
                   ),
-                  const Divider(height: 1),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                      horizontal: 14,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: _rating != null
-                              ? Row(
-                                  children: <Widget>[
-                                    const Text('Rating: '),
-                                    StarRating(
-                                      rating: _rating!,
-                                      onRatingChanged: (value) {},
-                                    ),
-                                  ],
-                                )
-                              : const SizedBox.shrink(),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            _showHistoryRatingDialog(context);
-                          },
-                          child: Text(
-                            _rating != null ? 'Edit' : 'Add a rating',
-                            style: const TextStyle(color: Colors.blue),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        InkWell(
-                          onTap: () {
-                            _showHistoryReportDialog(context);
-                          },
-                          child: const Text(
-                            'Report',
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

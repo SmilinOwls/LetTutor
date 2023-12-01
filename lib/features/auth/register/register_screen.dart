@@ -112,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 errorText: _emailErrorText,
                 errorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
@@ -121,17 +121,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Color.fromARGB(255, 64, 169, 255),
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
                   ),
                 ),
-                border: const OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
-                    color: Color.fromARGB(255, 217, 217, 217),
+                    color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
@@ -182,7 +182,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 errorText: _passwordErrorText,
                 errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(width: 1, color: Colors.red),
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: Colors.red,
+                  ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
                   ),
@@ -196,8 +199,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Radius.circular(5),
                   ),
                 ),
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide(width: 0.5, color: Colors.grey),
+                focusedErrorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: Colors.red,
+                  ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
                   ),
@@ -248,7 +254,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 errorText: _rePasswordErrorText,
                 errorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
@@ -257,17 +263,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
+                    width: 0.5,
                     color: Color.fromARGB(255, 64, 169, 255),
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
                   ),
                 ),
-                border: const OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
-                    color: Colors.grey,
+                    color: Colors.red,
                   ),
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),

@@ -50,7 +50,6 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
-                color: Colors.black,
               ),
             ),
             const SizedBox(height: 16),
@@ -95,9 +94,10 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                   ),
                   hintText: 'Wish topic (optional)',
                   hintStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
                   focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,
@@ -111,9 +111,10 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
             const Text(
               'You can write in English or Vietnamese (Maximum 200 letters)',
               style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey),
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey,
+              ),
             ),
           ],
         ),

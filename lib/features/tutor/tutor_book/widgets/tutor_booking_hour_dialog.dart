@@ -28,6 +28,7 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
       height: MediaQuery.of(context).size.height * 0.75,
       padding: const EdgeInsets.symmetric(
         vertical: 16,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_list/widgets/course.dart';
+import 'package:lettutor/features/courses/course_list/widgets/ebook.dart';
 
 class CourseListScreen extends StatefulWidget {
   const CourseListScreen({super.key});
@@ -20,6 +21,12 @@ class _CourseListScreenState extends State<CourseListScreen>
       length: 2,
       vsync: this,
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
   }
 
   @override
@@ -125,7 +132,7 @@ class _CourseListScreenState extends State<CourseListScreen>
             // first tab
             Course(),
             // second tab
-            Course(),
+            Ebook(),
           ],
         ),
       ),

@@ -30,7 +30,6 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        appBarLeading: true,
         appBarTitle: 'Tutor Booking',
       ),
       body: Container(

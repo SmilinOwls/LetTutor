@@ -25,7 +25,6 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      backgroundColor: Colors.white,
       title: Column(
         children: <Widget>[
           Text(
@@ -36,7 +35,6 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
           const Divider(height: 1),
         ],
       ),
-      titlePadding: const EdgeInsets.fromLTRB(24, 12, 0, 0),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -47,7 +45,7 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
               const Text(
                 "Help us understand what's happening",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -59,23 +57,24 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
               children: List<Widget>.generate(
                 _reports.length,
                 (index) => CheckboxListTile(
-                    title: Text(
-                      _reports.keys.elementAt(index),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                      ),
+                  title: Text(
+                    _reports.keys.elementAt(index),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
                     ),
-                    value: _reports.values.elementAt(index),
-                    onChanged: (value) {
-                      setState(() {
-                        _reports.update(
-                            _reports.keys.elementAt(index), (value) => !value);
-                      });
-                    },
-                    side: const BorderSide(width: 0.5),
-                    activeColor: Colors.blue[500],
-                    controlAffinity: ListTileControlAffinity.leading),
+                  ),
+                  value: _reports.values.elementAt(index),
+                  onChanged: (value) {
+                    setState(() {
+                      _reports.update(
+                          _reports.keys.elementAt(index), (value) => !value);
+                    });
+                  },
+                  side: const BorderSide(width: 0.5, color: Colors.blue),
+                  activeColor: Colors.blue[500],
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
               ),
             ),
           ),

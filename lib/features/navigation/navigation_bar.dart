@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/features/account/account_screen.dart';
 import 'package:lettutor/features/courses/course_list/course_list_screen.dart';
 import 'package:lettutor/features/history/history_screen.dart';
 import 'package:lettutor/features/home/home_screen.dart';
@@ -35,9 +36,9 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
       'screen': const CourseListScreen(),
     },
     {
-      'label': 'Settings',
-      'icon': Icons.settings,
-      'screen': const HomeScreen(),
+      'label': 'Account',
+      'icon': Icons.person_outlined,
+      'screen': const AccountScreen(),
     },
   ];
 
@@ -49,29 +50,30 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
       appBar: CustomAppBar(appBarTitle: _tabList[_activeTab]['label']),
       body: _tabList[_activeTab]['screen'],
       bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          selectedLabelStyle: TextStyle(
-            fontSize: 16,
-            color: Theme.of(context).primaryColor,
-          ),
-          selectedItemColor: Theme.of(context).primaryColor,
-          onTap: (value) {
-            setState(() {
-              _activeTab = value;
-            });
-          },
-          elevation: 18,
-          currentIndex: _activeTab,
-          items: _tabList
-              .map<BottomNavigationBarItem>(
-                (Map tab) => BottomNavigationBarItem(
-                  label: tab['label'],
-                  icon: Icon(
-                    tab['icon'],
-                  ),
+        type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: TextStyle(
+          fontSize: 16,
+          color: Theme.of(context).primaryColor,
+        ),
+        selectedItemColor: Theme.of(context).primaryColor,
+        onTap: (value) {
+          setState(() {
+            _activeTab = value;
+          });
+        },
+        elevation: 18,
+        currentIndex: _activeTab,
+        items: _tabList
+            .map<BottomNavigationBarItem>(
+              (Map tab) => BottomNavigationBarItem(
+                label: tab['label'],
+                icon: Icon(
+                  tab['icon'],
                 ),
-              )
-              .toList()),
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }

@@ -6,6 +6,10 @@ A new Flutter project.
 
 Diagram link: [LetTutor Widget Tree](https://drive.google.com/file/d/1eZiXDW1jwxk_VSbtxTRXb-g5SGeuFaiR/view?usp=sharing)
 
+# Milestone 2. Offline App
+
+Link Demo: [LetTutor Offline App](https://youtu.be/2FhsBaOFjx8)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
