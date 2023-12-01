@@ -310,115 +310,139 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 const SizedBox(height: 12),
                 const Text('Languages'),
                 const SizedBox(height: 8),
-                DropdownButtonFormField2<String>(
-                  isExpanded: true,
-                  decoration: customInputDecoration.copyWith(
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: -4,
-                    ),
-                  ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  items: List<DropdownMenuItem<String>>.generate(
-                    worldLanguages.length,
-                    (index) => DropdownMenuItem<String>(
-                      enabled: false,
-                      value: worldLanguages.keys.elementAt(index),
-                      child: StatefulBuilder(
-                        builder: (context, menuSetState) {
-                          final isSelected = _languages
-                              .contains(worldLanguages.keys.elementAt(index));
-                          return InkWell(
-                            onTap: () {
-                              isSelected
-                                  ? _languages.remove(
-                                      worldLanguages.keys.elementAt(index))
-                                  : _languages.add(
+                FormField(
+                  builder: (FormFieldState state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        DropdownButtonFormField2<String>(
+                          isExpanded: true,
+                          decoration: customInputDecoration.copyWith(
+                            contentPadding: const EdgeInsets.symmetric(
+                              vertical: 4,
+                              horizontal: -4,
+                            ),
+                          ),
+                          items: List<DropdownMenuItem<String>>.generate(
+                            worldLanguages.length,
+                            (index) => DropdownMenuItem<String>(
+                              enabled: false,
+                              value: worldLanguages.keys.elementAt(index),
+                              child: StatefulBuilder(
+                                builder: (context, menuSetState) {
+                                  final isSelected = _languages.contains(
                                       worldLanguages.keys.elementAt(index));
-                              setState(() {});
-                              menuSetState(() {});
-                            },
-                            child: isSelected
-                                ? ListTile(
-                                    title: Text(
-                                      worldLanguages.values.elementAt(index),
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    tileColor:
-                                        Colors.blue.shade100.withOpacity(0.4),
-                                    trailing: Icon(
-                                      Icons.check_rounded,
-                                      color: Colors.blue.shade300,
-                                    ),
-                                  )
-                                : ListTile(
-                                    title: Text(
-                                      worldLanguages.values.elementAt(index),
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                                  return InkWell(
+                                    onTap: () {
+                                      isSelected
+                                          ? _languages.remove(worldLanguages
+                                              .keys
+                                              .elementAt(index))
+                                          : _languages.add(worldLanguages.keys
+                                              .elementAt(index));
+                                      menuSetState(() {});
+                                      state.didChange(_languages);
+                                    },
+                                    child: isSelected
+                                        ? ListTile(
+                                            title: Text(
+                                              worldLanguages.values
+                                                  .elementAt(index),
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            tileColor: Colors.blue.shade100
+                                                .withOpacity(0.4),
+                                            trailing: Icon(
+                                              Icons.check_rounded,
+                                              color: Colors.blue.shade300,
+                                            ),
+                                          )
+                                        : ListTile(
+                                            title: Text(
+                                              worldLanguages.values
+                                                  .elementAt(index),
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          hint: const Text('Select languages'),
+                          onChanged: (value) {},
+                          buttonStyleData: const ButtonStyleData(
+                            padding: EdgeInsets.only(right: 8),
+                          ),
+                          iconStyleData: IconStyleData(
+                            icon: Icon(
+                              Icons.arrow_drop_down_outlined,
+                              color: Colors.grey.shade300,
+                            ),
+                            iconSize: 24,
+                          ),
+                          dropdownStyleData: DropdownStyleData(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                          menuItemStyleData: const MenuItemStyleData(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 4,
+                          runSpacing: 8,
+                          children: List<Widget>.generate(
+                            _languages.length,
+                            (index) => Chip(
+                              label: Text(worldLanguages[_languages[index]]!),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                              side: BorderSide.none,
+                              onDeleted: () {
+                                _languages.remove(_languages[index]);
+                                state.didChange(_languages);
+                              },
+                              deleteIcon: const Icon(
+                                Icons.cancel_rounded,
+                                size: 18,
+                              ),
+                              backgroundColor:
+                                  Colors.grey.shade300.withOpacity(0.4),
+                              deleteButtonTooltipMessage: '',
+                            ),
+                          ),
+                        ),
+                        if (state.hasError)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12),
+                            child: Text(
+                              state.errorText!,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
                   validator: (value) {
                     if (_languages.isEmpty) {
-                      return 'Please select at least one subject.';
+                      return 'Please input at least one language!';
                     }
                     return null;
                   },
-                  hint: const Text('Select languages'),
-                  onChanged: (value) {},
-                  buttonStyleData: const ButtonStyleData(
-                    padding: EdgeInsets.only(right: 8),
-                  ),
-                  iconStyleData: IconStyleData(
-                    icon: Icon(
-                      Icons.arrow_drop_down_outlined,
-                      color: Colors.grey.shade300,
-                    ),
-                    iconSize: 24,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 4,
-                  runSpacing: 8,
-                  children: List<Widget>.generate(
-                    _languages.length,
-                    (index) => Chip(
-                      label: Text(worldLanguages[_languages[index]]!),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
-                      ),
-                      side: BorderSide.none,
-                      onDeleted: () {
-                        setState(() {
-                          _languages.remove(_languages[index]);
-                        });
-                      },
-                      deleteIcon: const Icon(
-                        Icons.cancel_rounded,
-                        size: 18,
-                      ),
-                      backgroundColor: Colors.grey.shade300.withOpacity(0.4),
-                    ),
-                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
                 const HeadlineText(textHeadline: 'Who I teach'),
                 const SizedBox(height: 12),
