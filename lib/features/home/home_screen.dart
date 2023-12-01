@@ -3,6 +3,7 @@ import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/home/widgets/home_header.dart';
 import 'package:lettutor/features/home/widgets/tutor_card.dart';
 import 'package:lettutor/features/home/widgets/tutor_search.dart';
+import 'package:lettutor/models/tutor/tutor.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _nationalityEditingController =
       TextEditingController();
+  late final List<Tutor> _tutors;
+
+  @override
+  initState() {
+    super.initState();
+    _tutors = tutors.toList()..sort((tutorLessRating, tutorMoreRating) {
+      if (tutorMoreRating.rating == null || tutorLessRating.rating == null) return 0;
+      return tutorMoreRating.rating!.compareTo(tutorLessRating.rating!);
+    });
+  }
 
   void _handleNameChange(String value) {
     setState(() {});
@@ -86,9 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: tutors.length,
+            itemCount: _tutors.length,
             itemBuilder: (content, index) => TutorCard(
-              tutor: tutors[index],
+              tutor: _tutors[index],
             ),
           )
         ],

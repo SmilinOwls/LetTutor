@@ -563,53 +563,55 @@ const tutors = [
     ],
     'I loved the weather, the scenery and the laid-back lifestyle of the locals.',
     'I have more than 10 years of teaching english experience',
-    4.0,
+    5.0,
     122,
   ),
   Tutor(
-      '2',
-      'assets/avatar/tutor/april_baldo_tutor_avatar.jpeg',
-      'April Baldo',
-      'Philippines',
-      'Hello! My name is April Baldo, you can just call me Teacher April. '
-          'I am an English teacher and currently teaching in senior high school. '
-          'I have been teaching grammar and literature for almost 10 years. '
-          'I am fond of reading and teaching literature as one way of knowing one’s '
-          'beliefs and culture. I am friendly and full of positivity. '
-          'I love teaching because I know each student has something to bring on. '
-          'Molding them to become an individual is a great success.',
-      'Earth, Vegeta planet',
-      ['English', 'Japanese'],
-      [
-        'English for Business',
-        'IELTS',
-        'PET',
-        'KET',
-      ],
-      'FIghting',
-      '7 years of English tutor',
-      4.0,
-      23),
+    '2',
+    'assets/avatar/tutor/april_baldo_tutor_avatar.jpeg',
+    'April Baldo',
+    'Philippines',
+    'Hello! My name is April Baldo, you can just call me Teacher April. '
+        'I am an English teacher and currently teaching in senior high school. '
+        'I have been teaching grammar and literature for almost 10 years. '
+        'I am fond of reading and teaching literature as one way of knowing one’s '
+        'beliefs and culture. I am friendly and full of positivity. '
+        'I love teaching because I know each student has something to bring on. '
+        'Molding them to become an individual is a great success.',
+    'Earth, Vegeta planet',
+    ['English', 'Japanese'],
+    [
+      'English for Business',
+      'IELTS',
+      'PET',
+      'KET',
+    ],
+    'FIghting',
+    '7 years of English tutor',
+    3.0,
+    23,
+  ),
   Tutor(
-      '3',
-      'assets/avatar/tutor/jill_leano_tutor_avatar.jpeg',
-      'Jill Leano',
-      'Philippines',
-      "Hi, My name is Jill I am an experienced English Teacher from Philippine. "
-          "I would like to share my enthusiasm with the learners in this platform. "
-          "I've been working with diverse learners of all levels for many years. "
-          "I am greatly passionate about about profession. I love teaching "
-          "because I can help others improve their skills and it gives me joy and "
-          "excitement meeting different learners around the world. "
-          "In my class I worked with wonderful enthusiasm and positivity, "
-          "and I'm happy to focus on my learner's goal.",
-      'Earth, Vegeta planet',
-      ['English'],
-      ['English for kids', 'English for Business', 'TOEFL', 'TOEIC'],
-      'English, Japansese',
-      '5 years in education',
-      4,
-      9),
+    '3',
+    'assets/avatar/tutor/jill_leano_tutor_avatar.jpeg',
+    'Jill Leano',
+    'Philippines',
+    "Hi, My name is Jill I am an experienced English Teacher from Philippine. "
+        "I would like to share my enthusiasm with the learners in this platform. "
+        "I've been working with diverse learners of all levels for many years. "
+        "I am greatly passionate about about profession. I love teaching "
+        "because I can help others improve their skills and it gives me joy and "
+        "excitement meeting different learners around the world. "
+        "In my class I worked with wonderful enthusiasm and positivity, "
+        "and I'm happy to focus on my learner's goal.",
+    'Earth, Vegeta planet',
+    ['English'],
+    ['English for kids', 'English for Business', 'TOEFL', 'TOEIC'],
+    'English, Japansese',
+    '5 years in education',
+    4.0,
+    9,
+  ),
 ];
 
 const ebooks = [
