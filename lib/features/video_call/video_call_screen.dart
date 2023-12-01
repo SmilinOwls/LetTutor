@@ -11,7 +11,7 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-  final DateTime _timeStamp = DateTime(2023, 12, 1, 18, 30);
+  final DateTime _timeStamp = DateTime(2024, 1, 1, 18, 30);
   bool _isHover = false;
   late Timer _timer;
   late Duration _currentTime;
