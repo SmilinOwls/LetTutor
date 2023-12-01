@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
 
 class HorizontalStepper extends StatefulWidget {
-  const HorizontalStepper({super.key, required this.steps, this.formKey});
+  const HorizontalStepper({super.key, required this.steps, required this.formKey});
 
   final Map<String, Widget> steps;
-  final GlobalKey<FormState>? formKey;
+  final List<GlobalKey<FormState>?> formKey;
 
   @override
   State<HorizontalStepper> createState() => _HorizontalStepperState();
@@ -24,7 +24,7 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
 
   void _onStepContinue() {
     if (currentStep != widget.steps.length - 1) {
-      if(widget.formKey!.currentState!.validate() == false)
+      if(widget.formKey[currentStep]!.currentState!.validate() == false)
       {
         setState(() => currentStep += 1);
       }

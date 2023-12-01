@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/account/user/profile/widgets/custom_label.dart';
-import 'package:lettutor/utils/image_picker.dart';
+import 'package:lettutor/utils/media_picker.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class ProfileScreen extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/approval_step.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/profile_resume_step.dart';
+import 'package:lettutor/features/account/user/become_tutor/widgets/video_introduction_step.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/horizonal_stepper.dart';
 
@@ -12,7 +13,9 @@ class BecomeTutorScreen extends StatefulWidget {
 }
 
 class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKeyStep1 = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKeyStep2 = GlobalKey<FormState>();
+
   late final Map<String, Widget> steps;
 
   final TextEditingController _nameTextEditingController =
@@ -42,7 +45,7 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
     super.initState();
     steps = <String, Widget>{
       'Complete profile': ProfileResumeStep(
-        formKey: _formKey,
+        formKey: _formKeyStep1,
         nameTextEditingController: _nameTextEditingController,
         birthdayTextEditingController: _birthdayTextEditingController,
         countryTextEditingController: _countryTextEditingController,
@@ -56,7 +59,9 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
         teachingLevel: _teachingLevel,
         teachingSpecialities: _teachingSpecialities,
       ),
-      'Video introdution': const Text('Video introdution'),
+      'Video introdution': VideoIntroductionStep(
+        formKey: _formKeyStep2,
+      ),
       'Approval': const ApprovalStep(),
     };
   }
@@ -89,7 +94,13 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
         ),
         child: SizedBox(
           width: double.infinity,
-          child: HorizontalStepper(steps: steps, formKey: _formKey),
+          child: HorizontalStepper(
+            steps: steps,
+            formKey: [
+              _formKeyStep1,
+              _formKeyStep2,
+            ],
+          ),
         ),
       ),
     );
