@@ -1,5 +1,7 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/cerificate_dialog.dart';
 import 'package:lettutor/widgets/drop_down.dart';
@@ -34,8 +36,9 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
       TextEditingController();
   final List<Map<String, dynamic>> _certificateList = <Map<String, dynamic>>[];
 
+  final List<String> _languages = <String>[];
   String? _teachingLevel;
-  final List<String?> _teachingSpecialities = [];
+  final List<String> _teachingSpecialities = <String>[];
 
   @override
   void initState() {
@@ -289,6 +292,117 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                 const HeadlineText(textHeadline: 'Languages I speak'),
                 const SizedBox(height: 12),
                 const Text('Languages'),
+                const SizedBox(height: 8),
+                DropdownButtonFormField2<String>(
+                  isExpanded: true,
+                  decoration: customInputDecoration.copyWith(
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: -4,
+                    ),
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  items: List<DropdownMenuItem<String>>.generate(
+                    worldLanguages.length,
+                    (index) => DropdownMenuItem<String>(
+                      enabled: false,
+                      value: worldLanguages.keys.elementAt(index),
+                      child: StatefulBuilder(
+                        builder: (context, menuSetState) {
+                          final isSelected = _languages
+                              .contains(worldLanguages.keys.elementAt(index));
+                          return InkWell(
+                            onTap: () {
+                              isSelected
+                                  ? _languages.remove(
+                                      worldLanguages.keys.elementAt(index))
+                                  : _languages.add(
+                                      worldLanguages.keys.elementAt(index));
+                              setState(() {});
+                              menuSetState(() {});
+                            },
+                            child: isSelected
+                                ? ListTile(
+                                    title: Text(
+                                      worldLanguages.values.elementAt(index),
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    tileColor:
+                                        Colors.blue.shade100.withOpacity(0.4),
+                                    trailing: Icon(
+                                      Icons.check_rounded,
+                                      color: Colors.blue.shade300,
+                                    ),
+                                  )
+                                : ListTile(
+                                    title: Text(
+                                      worldLanguages.values.elementAt(index),
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select at least one subject.';
+                    }
+                    return null;
+                  },
+                  hint: const Text('Select languages'),
+                  onChanged: (value) {},
+                  buttonStyleData: const ButtonStyleData(
+                    padding: EdgeInsets.only(right: 8),
+                  ),
+                  iconStyleData: IconStyleData(
+                    icon: Icon(
+                      Icons.arrow_drop_down_outlined,
+                      color: Colors.grey.shade300,
+                    ),
+                    iconSize: 24,
+                  ),
+                  dropdownStyleData: DropdownStyleData(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  menuItemStyleData: const MenuItemStyleData(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 4,
+                  runSpacing: 8,
+                  children: List<Widget>.generate(
+                    _languages.length,
+                    (index) => Chip(
+                      label: Text(worldLanguages[_languages[index]]!),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                      ),
+                      side: BorderSide.none,
+                      onDeleted: () {
+                        setState(() {
+                          _languages.remove(_languages[index]);
+                        });
+                      },
+                      deleteIcon: const Icon(
+                        Icons.cancel_rounded,
+                        size: 18,
+                      ),
+                      backgroundColor: Colors.grey.shade300.withOpacity(0.4),
+                    ),
+                  ),
+                ),
                 const HeadlineText(textHeadline: 'Who I teach'),
                 const SizedBox(height: 12),
                 const HelperText(
