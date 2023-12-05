@@ -440,17 +440,38 @@ const courseTopics = [
 
 const languageList = [
   Language('en', 'English', 'assets/language/english.svg'),
-  Language('vi', 'Vietnamese', 'assets/language/vietnamese.svg')
+  Language('vi', 'Vietnamese', 'assets/language/vietnamese.svg'),
 ];
 
 const tutorFeedback = [
   TutorFeedback(
-      '1', 'Phhai123', 'Tutor teaches very great lessons', 5, '2023-10-28'),
+    '1',
+    'Phhai123',
+    'Tutor teaches very great lessons',
+    5,
+    '2023-10-28',
+  ),
   TutorFeedback(
-      '2', 'Nameless User', '5 stars for amazing endeavors!', 5, '2023-10-28'),
-  TutorFeedback('3', 'Phhai321', 'Very impressive', 5, '2023-10-28'),
-  TutorFeedback('4', 'hailepham212', 'Cool lessons. Hope to see you again..', 4,
-      '2023-10-28'),
+    '2',
+    'Nameless User',
+    '5 stars for amazing endeavors!',
+    5,
+    '2023-10-28',
+  ),
+  TutorFeedback(
+    '3',
+    'Phhai321',
+    'Very impressive',
+    5,
+    '2023-10-28',
+  ),
+  TutorFeedback(
+    '4',
+    'hailepham212',
+    'Cool lessons. Hope to see you again..',
+    4,
+    '2023-10-28',
+  ),
 ];
 
 const courses = [
@@ -469,75 +490,80 @@ const courses = [
           "artificial intelligence, online privacy, and more. In addition to discussion questions,"
           "you will practice intermediate level speaking tasks such as using data to describe trends."),
   Course(
-      "2",
-      "Caring for Our Planet",
-      "assets/course/traveling/traveling_course_02.jpeg",
-      "Let's discuss our relationship as humans with our planet, Earth",
-      "Intermediate",
-      courseTopics,
-      "Our world is rapidly changing thanks to new technology, and the vocabulary"
-          "needed to discuss modern life is evolving almost daily. In this course"
-          "you will learn the most up-to-date terminology from expertly crafted lessons"
-          "as well from your native-speaking tutor.",
-      "You will learn vocabulary related to timely topics like remote work,"
-          "artificial intelligence, online privacy, and more. In addition to discussion questions,"
-          "you will practice intermediate level speaking tasks such as using data to describe trends."),
+    "2",
+    "Caring for Our Planet",
+    "assets/course/traveling/traveling_course_02.jpeg",
+    "Let's discuss our relationship as humans with our planet, Earth",
+    "Intermediate",
+    courseTopics,
+    "Our world is rapidly changing thanks to new technology, and the vocabulary"
+        "needed to discuss modern life is evolving almost daily. In this course"
+        "you will learn the most up-to-date terminology from expertly crafted lessons"
+        "as well from your native-speaking tutor.",
+    "You will learn vocabulary related to timely topics like remote work,"
+        "artificial intelligence, online privacy, and more. In addition to discussion questions,"
+        "you will practice intermediate level speaking tasks such as using data to describe trends.",
+  ),
   Course(
-      "3",
-      "Healthy Mind, Healthy Body",
-      "assets/course/traveling/traveling_course_03.jpeg",
-      "Let's discuss the many aspects of living a long, happy life",
-      "Intermediate",
-      courseTopics,
-      "Our world is rapidly changing thanks to new technology, and the vocabulary"
-          "needed to discuss modern life is evolving almost daily. In this course"
-          "you will learn the most up-to-date terminology from expertly crafted lessons"
-          "as well from your native-speaking tutor.",
-      "You will learn vocabulary related to timely topics like remote work,"
-          "artificial intelligence, online privacy, and more. In addition to discussion questions,"
-          "you will practice intermediate level speaking tasks such as using data to describe trends."),
+    "3",
+    "Healthy Mind, Healthy Body",
+    "assets/course/traveling/traveling_course_03.jpeg",
+    "Let's discuss the many aspects of living a long, happy life",
+    "Intermediate",
+    courseTopics,
+    "Our world is rapidly changing thanks to new technology, and the vocabulary"
+        "needed to discuss modern life is evolving almost daily. In this course"
+        "you will learn the most up-to-date terminology from expertly crafted lessons"
+        "as well from your native-speaking tutor.",
+    "You will learn vocabulary related to timely topics like remote work,"
+        "artificial intelligence, online privacy, and more. In addition to discussion questions,"
+        "you will practice intermediate level speaking tasks such as using data to describe trends.",
+  ),
   Course(
-      "4",
-      "Movies and Television",
-      "assets/course/traveling/traveling_course_04.jpeg",
-      "Let's discuss our preferences and habits surrounding movies and television shows",
-      "Beginner",
-      courseTopics,
-      "Our world is rapidly changing thanks to new technology, and the vocabulary"
-          "needed to discuss modern life is evolving almost daily. In this course"
-          "you will learn the most up-to-date terminology from expertly crafted lessons"
-          "as well from your native-speaking tutor.",
-      "You will learn vocabulary related to timely topics like remote work,"
-          "artificial intelligence, online privacy, and more. In addition to discussion questions,"
-          "you will practice intermediate level speaking tasks such as using data to describe trends."),
+    "4",
+    "Movies and Television",
+    "assets/course/traveling/traveling_course_04.jpeg",
+    "Let's discuss our preferences and habits surrounding movies and television shows",
+    "Beginner",
+    courseTopics,
+    "Our world is rapidly changing thanks to new technology, and the vocabulary"
+        "needed to discuss modern life is evolving almost daily. In this course"
+        "you will learn the most up-to-date terminology from expertly crafted lessons"
+        "as well from your native-speaking tutor.",
+    "You will learn vocabulary related to timely topics like remote work,"
+        "artificial intelligence, online privacy, and more. In addition to discussion questions,"
+        "you will practice intermediate level speaking tasks such as using data to describe trends.",
+  ),
   Course(
-      "5",
-      "Raising Children",
-      "assets/course/traveling/traveling_course_05.jpeg",
-      "Let's discuss raising children and practice using English for common parenting situations",
-      "Intermediate",
-      courseTopics,
-      "Our world is rapidly changing thanks to new technology, and the vocabulary"
-          "needed to discuss modern life is evolving almost daily. In this course"
-          "you will learn the most up-to-date terminology from expertly crafted lessons"
-          "as well from your native-speaking tutor.",
-      "You will learn vocabulary related to timely topics like remote work,"
-          "artificial intelligence, online privacy, and more. In addition to discussion questions,"
-          "you will practice intermediate level speaking tasks such as using data to describe trends."),
+    "5",
+    "Raising Children",
+    "assets/course/traveling/traveling_course_05.jpeg",
+    "Let's discuss raising children and practice using English for common parenting situations",
+    "Intermediate",
+    courseTopics,
+    "Our world is rapidly changing thanks to new technology, and the vocabulary"
+        "needed to discuss modern life is evolving almost daily. In this course"
+        "you will learn the most up-to-date terminology from expertly crafted lessons"
+        "as well from your native-speaking tutor.",
+    "You will learn vocabulary related to timely topics like remote work,"
+        "artificial intelligence, online privacy, and more. In addition to discussion questions,"
+        "you will practice intermediate level speaking tasks such as using data to describe trends.",
+  ),
   Course(
-      "6",
-      "The Olympics",
-      "assets/course/traveling/traveling_course_06.jpeg",
-      "Let’s practice talking about the Olympics, the biggest sports festival on earth!",
-      "Advanced",
-      courseTopics,
-      "Our world is rapidly changing thanks to new technology, and the vocabulary"
-          "needed to discuss modern life is evolving almost daily. In this course"
-          "you will learn the most up-to-date terminology from expertly crafted lessons"
-          "as well from your native-speaking tutor.",
-      "You will learn vocabulary related to timely topics like remote work,"
-          "artificial intelligence, online privacy, and more. In addition to discussion questions,"
-          "you will practice intermediate level speaking tasks such as using data to describe trends."),
+    "6",
+    "The Olympics",
+    "assets/course/traveling/traveling_course_06.jpeg",
+    "Let’s practice talking about the Olympics, the biggest sports festival on earth!",
+    "Advanced",
+    courseTopics,
+    "Our world is rapidly changing thanks to new technology, and the vocabulary"
+        "needed to discuss modern life is evolving almost daily. In this course"
+        "you will learn the most up-to-date terminology from expertly crafted lessons"
+        "as well from your native-speaking tutor.",
+    "You will learn vocabulary related to timely topics like remote work,"
+        "artificial intelligence, online privacy, and more. In addition to discussion questions,"
+        "you will practice intermediate level speaking tasks such as using data to describe trends.",
+  ),
 ];
 
 const tutors = [
