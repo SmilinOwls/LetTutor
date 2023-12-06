@@ -34,6 +34,7 @@ class LetTutor extends StatelessWidget {
     return MaterialApp(
         title: 'LetTutor',
         theme: Provider.of<ThemeProvider>(context).getThemeMode(),
+        debugShowCheckedModeBanner: false,
         home: const LoginScreen(),
         routes: {
           Routes.login: (context) => const LoginScreen(),
