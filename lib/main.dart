@@ -12,14 +12,18 @@ import 'package:lettutor/features/account/user/profile/profile_screen.dart';
 import 'package:lettutor/features/video_call/video_call_screen.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:lettutor/providers/theme/theme_provider.dart';
+import 'package:lettutor/services/dio_service.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  const enviroment = String.fromEnvironment('FLAVOR', defaultValue: 'development');
+  const enviroment =
+      String.fromEnvironment('FLAVOR', defaultValue: 'development');
   await dotenv.load(fileName: '.env.$enviroment');
 
+  DioService();
+  
   runApp(
     MultiProvider(
       providers: [

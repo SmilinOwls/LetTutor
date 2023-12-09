@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/services/auth_service.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -34,11 +35,39 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _handlePasswordValidate(value) {
     if (value.isEmpty) {
       return 'Please input your password!';
-    } else if (value.length < 8) {
+    } else if (value.length < 6) {
       return 'Password too short!';
     } else {
       return null;
     }
+  }
+
+  void _handleLogin() async {
+    await AuthService.loginWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+      onSuccess: (user, token) async {
+        // authProvider.logIn(user, token);
+
+        // final prefs = await SharedPreferences.getInstance();
+        // await prefs.setString(
+        //   'refresh_token',
+        //   authProvider.token!.refresh!.token!,
+        // );
+
+        // setState(() {
+        //   _isAuthenticating = false;
+        //   _isAuthenticated = true;
+        // });
+
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.of(context).pushReplacementNamed(Routes.main);
+        });
+      },
+      onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error Login: $message')),
+      ),
+    );
   }
 
   @override
@@ -217,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 14),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Routes.main);
+                _handleLogin();
               },
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(56),
