@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/services/auth_service.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -55,6 +56,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return null;
       }
     }
+  }
+
+  void _handleRegister() async {
+    await AuthService.registerWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+      onSuccess: () async {
+        // authProvider.logIn(user, token);
+
+        // final prefs = await SharedPreferences.getInstance();
+        // await prefs.setString(
+        //   'refresh_token',
+        //   authProvider.token!.refresh!.token!,
+        // );
+
+        // setState(() {
+        //   _isAuthenticating = false;
+        //   _isAuthenticated = true;
+        // });
+
+        Future.delayed(const Duration(seconds: 1), () {
+          Navigator.of(context).pushReplacementNamed(Routes.login);
+        });
+      },
+      onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error Register: $message')),
+      ),
+    );
   }
 
   @override
@@ -293,7 +322,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             const SizedBox(height: 18),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                _handleRegister();
+              },
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(56),
                 backgroundColor: Colors.blue[700],
