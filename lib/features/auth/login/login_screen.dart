@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/services/auth_service.dart';
 import 'package:lettutor/widgets/app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -46,19 +47,18 @@ class _LoginScreenState extends State<LoginScreen> {
     await AuthService.loginWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
-      onSuccess: (user, token) async {
-        // authProvider.logIn(user, token);
+      onSuccess: (user, tokens) async {
 
-        // final prefs = await SharedPreferences.getInstance();
-        // await prefs.setString(
-        //   'refresh_token',
-        //   authProvider.token!.refresh!.token!,
-        // );
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+          'refresh_token',
+          tokens.refresh!.token!
+        );
 
-        // setState(() {
-        //   _isAuthenticating = false;
-        //   _isAuthenticated = true;
-        // });
+        await prefs.setString(
+          'access_token',
+          tokens.access!.token!
+        );
 
         Future.delayed(const Duration(seconds: 1), () {
           Navigator.of(context).pushReplacementNamed(Routes.main);

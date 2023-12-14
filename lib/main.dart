@@ -14,6 +14,7 @@ import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:lettutor/providers/theme/theme_provider.dart';
 import 'package:lettutor/services/dio_service.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,20 +24,25 @@ void main() async {
   await dotenv.load(fileName: '.env.$enviroment');
 
   DioService();
-  
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? isLoginned = prefs.getString('access_token');
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
       ],
-      child: const LetTutor(),
+      child: LetTutor(isLoginned: isLoginned),
     ),
   );
 }
 
 class LetTutor extends StatelessWidget {
-  const LetTutor({super.key});
+  const LetTutor({super.key, this.isLoginned});
+
+  final String? isLoginned;
 
   // This widget is the root of your application.
   @override
@@ -45,7 +51,8 @@ class LetTutor extends StatelessWidget {
         title: 'LetTutor',
         theme: Provider.of<ThemeProvider>(context).getThemeMode(),
         debugShowCheckedModeBanner: false,
-        home: const LoginScreen(),
+        home:
+            isLoginned == null ? const LoginScreen() : const TabBarNavigator(),
         routes: {
           Routes.login: (context) => const LoginScreen(),
           Routes.register: (context) => const RegisterScreen(),

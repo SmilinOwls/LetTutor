@@ -22,7 +22,7 @@ class DioService {
     _dio = Dio(
       BaseOptions(
         baseUrl: dotenv.env['BASE_URL']!,
-        connectTimeout: const Duration(seconds: 3000),
+        connectTimeout: const Duration(seconds: 5000),
         receiveTimeout: const Duration(seconds: 3000),
         contentType: 'application/json',
       ),

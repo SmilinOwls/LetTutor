@@ -30,8 +30,8 @@ class AuthService {
       }
 
       final user = User.fromJson(data['user']);
-      final token = Tokens.fromJson(data['tokens']);
-      await onSuccess(user, token);
+      final tokens = Tokens.fromJson(data['tokens']);
+      await onSuccess(user, tokens);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -119,7 +119,6 @@ class AuthService {
 
       final data = response.data;
 
-      print(data);
       if (response.statusCode != 201) {
         throw Exception(data['message']);
       }

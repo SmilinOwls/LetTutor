@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/constants/dummy.dart';
-import 'package:lettutor/models/language/language.dart';
 import 'package:lettutor/models/user/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:lettutor/services/user_service.dart';
 
 class AuthProvider with ChangeNotifier {
   User? _user;
 
   User? get user => _user;
-
-  String finalId = '';
 
   set user(User? user) {
     _user = user;
@@ -17,18 +13,18 @@ class AuthProvider with ChangeNotifier {
   }
 
   User? getUser() {
-    getUserFromPreferences();
+    getUserFromAPI();
     return _user;
   }
 
-  void getUserFromPreferences() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString("user");
-    finalId = userId ?? '';
-  }
-
-  void setUser(User? user) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('user', finalId);
+  void getUserFromAPI() async {
+    await UserService.getUserInfo(
+      onSuccess: (userInfo) {
+        user = userInfo;
+      },
+      onError: (message) {
+        throw Exception(message);
+      },
+    );
   }
 }
