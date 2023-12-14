@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/services/auth_service.dart';
 import 'package:lettutor/widgets/app_bar.dart';
@@ -58,11 +59,45 @@ class _LoginScreenState extends State<LoginScreen> {
           await prefs.setString('access_token', tokens.access!.token!);
 
           Future.delayed(const Duration(seconds: 1), () {
-            Navigator.of(context).pushNamedAndRemoveUntil(Routes.main, (route) => false);
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(Routes.main, (route) => false);
           });
         },
         onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error Login: $message')),
+        ),
+      );
+    }
+  }
+
+  void _handleGoogleLogin() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    ).signIn();
+    
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    final String? accessToken = googleAuth?.accessToken;
+
+    if (accessToken != null) {
+      await AuthService.loginByGoogle(
+        accessToken: accessToken,
+        onSuccess: (user, tokens) async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('refresh_token', tokens.refresh!.token!);
+          await prefs.setString('access_token', tokens.access!.token!);
+
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(Routes.main, (route) => false);
+          });
+        },
+        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error Login by Google: $message')),
         ),
       );
     }
@@ -297,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: _handleGoogleLogin,
                       icon: SvgPicture.asset(
                         'assets/logo/google_logo.svg',
                         width: 36,
