@@ -37,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _handlePasswordValidate(value) {
     if (value.isEmpty) {
       return 'Please input your password!';
-    } else if (value.length < 8) {
+    } else if (value.length < 6) {
       return 'Password too short!';
     } else {
       return null;
@@ -47,7 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _handleRePasswordValidate(value) {
     if (value.isEmpty) {
       return 'Please input your re-password!';
-    } else if (value.length < 8) {
+    } else if (value.length < 6) {
       return 'Re-password too short!';
     } else {
       if (value != _passwordController.text) {
@@ -59,31 +59,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _handleRegister() async {
-    await AuthService.registerWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-      onSuccess: () async {
-        // authProvider.logIn(user, token);
-
-        // final prefs = await SharedPreferences.getInstance();
-        // await prefs.setString(
-        //   'refresh_token',
-        //   authProvider.token!.refresh!.token!,
-        // );
-
-        // setState(() {
-        //   _isAuthenticating = false;
-        //   _isAuthenticated = true;
-        // });
-
-        Future.delayed(const Duration(seconds: 1), () {
-          Navigator.of(context).pushReplacementNamed(Routes.login);
-        });
-      },
-      onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error Register: $message')),
-      ),
-    );
+    setState(() {
+      _emailErrorText = _handleEmailValidate(_emailController.text);
+      _passwordErrorText = _handlePasswordValidate(_passwordController.text);
+      _rePasswordErrorText =
+          _handleRePasswordValidate(_rePasswordController.text);
+    });
+    if (_emailErrorText == null &&
+        _passwordErrorText == null &&
+        _rePasswordErrorText == null) {
+      await AuthService.registerWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+        onSuccess: () async {
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.of(context).pushReplacementNamed(Routes.login);
+          });
+        },
+        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error Register: $message')),
+        ),
+      );
+    }
   }
 
   @override

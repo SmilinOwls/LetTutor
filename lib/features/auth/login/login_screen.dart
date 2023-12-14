@@ -44,30 +44,28 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin() async {
-    await AuthService.loginWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-      onSuccess: (user, tokens) async {
+    setState(() {
+      _emailErrorText = _handleEmailValidate(_emailController.text);
+      _passwordErrorText = _handlePasswordValidate(_passwordController.text);
+    });
+    if (_emailErrorText == null && _passwordErrorText == null) {
+      await AuthService.loginWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+        onSuccess: (user, tokens) async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('refresh_token', tokens.refresh!.token!);
+          await prefs.setString('access_token', tokens.access!.token!);
 
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(
-          'refresh_token',
-          tokens.refresh!.token!
-        );
-
-        await prefs.setString(
-          'access_token',
-          tokens.access!.token!
-        );
-
-        Future.delayed(const Duration(seconds: 1), () {
-          Navigator.of(context).pushReplacementNamed(Routes.main);
-        });
-      },
-      onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error Login: $message')),
-      ),
-    );
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.of(context).pushNamedAndRemoveUntil(Routes.main, (route) => false);
+          });
+        },
+        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error Login: $message')),
+        ),
+      );
+    }
   }
 
   @override

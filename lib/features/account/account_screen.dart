@@ -5,6 +5,7 @@ import 'package:lettutor/features/account/settings/language_screen.dart';
 import 'package:lettutor/features/account/widgets/custom_list_tile.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -113,11 +114,14 @@ class _AccountScreenState extends State<AccountScreen> {
           CustomListTile(
             leadingIcon: Icons.logout_rounded,
             titleText: 'Log out',
-            onTap: () {
+            onTap: () async {
               Navigator.of(context).pushNamedAndRemoveUntil(
                 Routes.login,
                 (route) => false,
               );
+
+              final prefs = await SharedPreferences.getInstance();
+              prefs.clear();
             },
             isTrailing: false,
           ),
