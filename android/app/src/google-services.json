@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1087235243360-hlsnccinjq7fpkjqeqnocgk2apaksbef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lettutor",
+            "certificate_hash": "41d30e5fd20e67d301b7b351ac03385ecd77a662"
+          }
+        },
+        {
           "client_id": "1087235243360-ih5eb8e2fm5fgk346tv8ag7ssrp931g8.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lettutor/constants/routes.dart';
@@ -77,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'https://www.googleapis.com/auth/contacts.readonly',
       ],
     ).signIn();
-    
+
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
 
@@ -98,6 +99,30 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error Login by Google: $message')),
+        ),
+      );
+    }
+  }
+
+  void _handleFacebookLogin() async {
+    final result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      final String accessToken = result.accessToken!.token;
+      await AuthService.loginByFacebook(
+        accessToken: accessToken,
+        onSuccess: (user, tokens) async {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('refresh_token', tokens.refresh!.token!);
+          await prefs.setString('access_token', tokens.access!.token!);
+
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(Routes.main, (route) => false);
+          });
+        },
+        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error Login by Facebook: $message')),
         ),
       );
     }
@@ -317,7 +342,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: _handleFacebookLogin,
                       icon: SvgPicture.asset(
                         'assets/logo/facebook_logo.svg',
                         width: 36,
