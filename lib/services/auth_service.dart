@@ -5,8 +5,8 @@ import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class AuthService {
-  static User parseUser(String responseBody) =>
-      User.fromJson(jsonDecode(responseBody));
+  static User parseUser(Map<String, dynamic> responseBody) =>
+      User.fromJson(responseBody);
 
   static Future<void> loginWithEmailAndPassword({
     required String email,
