@@ -10,9 +10,11 @@ import 'package:lettutor/features/account/user/become_tutor/become_tutor.dart';
 import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
 import 'package:lettutor/features/account/user/profile/profile_screen.dart';
 import 'package:lettutor/features/video_call/video_call_screen.dart';
+import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:lettutor/providers/theme/theme_provider.dart';
 import 'package:lettutor/services/dio_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,6 +35,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: LetTutor(isLoginned: isLoginned),
     ),
@@ -48,6 +51,7 @@ class LetTutor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        scaffoldMessengerKey: SnackBarHelper.scaffoldKey,
         title: 'LetTutor',
         theme: Provider.of<ThemeProvider>(context).getThemeMode(),
         debugShowCheckedModeBanner: false,

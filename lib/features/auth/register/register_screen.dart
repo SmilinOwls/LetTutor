@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -76,8 +77,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Navigator.of(context).pushReplacementNamed(Routes.login);
           });
         },
-        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error Register: $message')),
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
         ),
       );
     }

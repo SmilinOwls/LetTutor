@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:lettutor/models/user/tokens.dart';
 import 'package:lettutor/models/user/user.dart';

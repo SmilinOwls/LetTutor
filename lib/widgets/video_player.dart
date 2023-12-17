@@ -32,7 +32,8 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
         _videoPlayerController = VideoPlayerController.asset(widget.url);
         break;
       case DataSourceType.network:
-        _videoPlayerController = VideoPlayerController.networkUrl(Uri(path: widget.url));
+        _videoPlayerController =
+            VideoPlayerController.networkUrl(Uri(path: widget.url));
         break;
       case DataSourceType.file:
         _videoPlayerController = VideoPlayerController.file(File(widget.url));
@@ -64,10 +65,13 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           widget.dataSourceType.name.toUpperCase(),
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const Divider(),
         AspectRatio(

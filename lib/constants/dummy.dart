@@ -4,6 +4,8 @@ import 'package:lettutor/models/language/language.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/models/courses/ebook.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
+import 'package:lettutor/models/user/learn_topic.dart';
+import 'package:lettutor/models/user/test_preparation.dart';
 
 const tutorNationalities = [
   'Foreign Tutor',
@@ -35,24 +37,68 @@ const tutorLevels = [
   'C2 (Proficiency)',
 ];
 
-const subjects = [
-  'English for kids',
-  'English for Business',
-  'Conversational',
+final subjects = [
+  LearnTopic(
+    id: 3,
+    key: 'english-for-kids',
+    name: 'English for kids',
+  ),
+  LearnTopic(
+    id: 4,
+    key: 'business-english',
+    name: 'Business English',
+  ),
+  LearnTopic(
+    id: 5,
+    key: 'conversational-english',
+    name: 'Conversational English',
+  ),
 ];
 
-const testPreparations = [
-  'STARTERS',
-  'MOVERS',
-  'FLYERS',
-  'KET',
-  'PET',
-  'IELTS',
-  'TOEFL',
-  'TOEIC'
+final testPreparations = [
+  TestPreparation(
+    id: 1,
+    key: 'starters',
+    name: 'STARTERS',
+  ),
+  TestPreparation(
+    id: 2,
+    key: 'movers',
+    name: 'MOVERS',
+  ),
+  TestPreparation(
+    id: 3,
+    key: 'flyers',
+    name: 'FLYERS',
+  ),
+  TestPreparation(
+    id: 4,
+    key: 'ket',
+    name: 'KET',
+  ),
+  TestPreparation(
+    id: 5,
+    key: 'pet',
+    name: 'PET',
+  ),
+  TestPreparation(
+    id: 6,
+    key: 'ielts',
+    name: 'IELTS',
+  ),
+  TestPreparation(
+    id: 7,
+    key: 'toefl',
+    name: 'TOEFL',
+  ),
+  TestPreparation(
+    id: 8,
+    key: 'toeic',
+    name: 'TOEIC',
+  ),
 ];
 
-const desiredLearningContent = [
+final desiredLearningContent = [
   {
     'name': 'Subjects',
     'detail': subjects,
@@ -367,15 +413,13 @@ const countryList = {
 };
 
 const studentLevels = {
-  "Pre A1": 'Pre A1 (Beginner)',
-  "A1": 'A1 (Higher Beginner)',
-  "A2": 'A2 (Pre-Intermediate)',
-  "B1": 'B1 (Intermediate)',
-  "B2": 'B2 (Upper-Intermediate)',
-  "C1": 'C1 (Advanced)',
-  "C2": 'C2 (Proficiency)',
-  "Upper A1": 'Upper A1 (High Beginner)',
-  "Upper A2": 'Upper A2 (Pre Intermediate)',
+  'BEGINNER': 'Pre A1 (Beginner)',
+  'HIGHER_BEGINNER': 'A1 (Higher Beginner)'  ,
+  'PRE_INTERMEDIATE' : 'A2 (Pre-Intermediate)',
+  'INTERMEDIATE' : 'B1 (Intermediate)',
+  'UPPER_INTERMEDIATE' : 'B2 (Upper-Intermediate)',
+  'ADVANCED' : 'C1 (Advanced)',
+  'PROFICIENCY' : 'C2 (Proficiency)',
 };
 
 const certificateLevels = {

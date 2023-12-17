@@ -3,8 +3,13 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/models/user/tokens.dart';
+import 'package:lettutor/models/user/user.dart';
+import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/app_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,6 +50,21 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void _onSuccessLogin(User user, Tokens tokens) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('refresh_token', tokens.refresh!.token!);
+    await prefs.setString('access_token', tokens.access!.token!);
+
+    if (context.mounted) {
+      Provider.of<AuthProvider>(context, listen: false).setUser(user);
+
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(Routes.main, (route) => false);
+      });
+    }
+  }
+
   void _handleLogin() async {
     setState(() {
       _emailErrorText = _handleEmailValidate(_emailController.text);
@@ -54,18 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
       await AuthService.loginWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
-        onSuccess: (user, tokens) async {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('refresh_token', tokens.refresh!.token!);
-          await prefs.setString('access_token', tokens.access!.token!);
-
-          Future.delayed(const Duration(seconds: 1), () {
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(Routes.main, (route) => false);
-          });
-        },
-        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error Login: $message')),
+        onSuccess: _onSuccessLogin,
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
         ),
       );
     }
@@ -87,18 +99,10 @@ class _LoginScreenState extends State<LoginScreen> {
     if (accessToken != null) {
       await AuthService.loginByGoogle(
         accessToken: accessToken,
-        onSuccess: (user, tokens) async {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('refresh_token', tokens.refresh!.token!);
-          await prefs.setString('access_token', tokens.access!.token!);
-
-          Future.delayed(const Duration(seconds: 1), () {
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(Routes.main, (route) => false);
-          });
-        },
-        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error Login by Google: $message')),
+        onSuccess: _onSuccessLogin,
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
         ),
       );
     }
@@ -111,18 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
       final String accessToken = result.accessToken!.token;
       await AuthService.loginByFacebook(
         accessToken: accessToken,
-        onSuccess: (user, tokens) async {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('refresh_token', tokens.refresh!.token!);
-          await prefs.setString('access_token', tokens.access!.token!);
-
-          Future.delayed(const Duration(seconds: 1), () {
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil(Routes.main, (route) => false);
-          });
-        },
-        onError: (message) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error Login by Facebook: $message')),
+        onSuccess: _onSuccessLogin,
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
         ),
       );
     }

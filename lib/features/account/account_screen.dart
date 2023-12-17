@@ -3,6 +3,7 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/account/settings/display_screen.dart';
 import 'package:lettutor/features/account/settings/language_screen.dart';
 import 'package:lettutor/features/account/widgets/custom_list_tile.dart';
+import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +18,8 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthProvider>().getUser();
+
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
@@ -35,8 +38,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                   ),
-                  child: Image.asset(
-                    'assets/avatar/user/user_avatar.jpeg',
+                  child: Image.network(
+                    user?.avatar ?? '',
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         const Icon(Icons.person_rounded, size: 62),
@@ -44,7 +47,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  'Keegan',
+                  user?.name ?? '',
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
               ],

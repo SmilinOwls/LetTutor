@@ -17,7 +17,7 @@ class UserService {
       if (response.statusCode != 200) {
         throw Exception(data['message']);
       }
-
+      
       final user = User.fromJson(data['user']);
       await onSuccess(user);
     } on DioException catch (e) {
@@ -38,8 +38,9 @@ class UserService {
           'country': updateUser?.country,
           'birthday': updateUser?.birthday,
           'level': updateUser?.level,
-          'learnTopics': updateUser?.learnTopics,
-          'testPreparations': updateUser?.testPreparations,
+          'learnTopics': updateUser?.learnTopics?.map((e) => e.id).toList(),
+          'testPreparations':
+              updateUser?.testPreparations?.map((e) => e.id).toList(),
           'studySchedule': updateUser?.studySchedule,
         },
       );
