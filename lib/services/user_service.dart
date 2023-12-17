@@ -17,7 +17,7 @@ class UserService {
       if (response.statusCode != 200) {
         throw Exception(data['message']);
       }
-      
+
       final user = User.fromJson(data['user']);
       await onSuccess(user);
     } on DioException catch (e) {

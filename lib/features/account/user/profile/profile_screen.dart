@@ -120,6 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _onProfileChangeSubmited() async {
+    print(_selectedDesiredLearningItems);
     if (_formKey.currentState!.validate()) {
       await UserService.updateInfo(
         updateUser: User(
@@ -127,15 +128,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           country: _countryTextEditingController.text,
           birthday: _birthdayTextEditingController.text,
           level: _levelTextEditingController.text,
-          learnTopics: _learnTopics
-              .where((learnTopic) => _selectedDesiredLearningItems
-                  .where((item) => learnTopic.name == item)
-                  .isNotEmpty)
+          learnTopics: subjects
+              .where((learnTopic) =>
+                  _selectedDesiredLearningItems.contains(learnTopic.name))
               .toList(),
-          testPreparations: _testPreparations
-              .where((testPreparation) => _selectedDesiredLearningItems
-                  .where((item) => testPreparation.name == item)
-                  .isNotEmpty)
+          testPreparations: testPreparations
+              .where((testPreparation) =>
+                  _selectedDesiredLearningItems.contains(testPreparation.name))
               .toList(),
           studySchedule: _studyScheduleTextEditingController.text,
         ),
