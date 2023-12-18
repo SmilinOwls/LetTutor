@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:lettutor/models/user/tokens.dart';
+import 'package:lettutor/models/auth/tokens.dart';
 import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';
 

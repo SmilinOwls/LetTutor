@@ -4,6 +4,8 @@ import 'package:lettutor/features/home/widgets/home_header.dart';
 import 'package:lettutor/features/home/widgets/tutor_card.dart';
 import 'package:lettutor/features/home/widgets/tutor_search.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
+import 'package:lettutor/services/tutor_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,37 +15,103 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String? _selectedName;
   String? _selectedNationality;
   String _selectedTag = 'All';
 
   final TextEditingController _nameEditingController = TextEditingController();
   final TextEditingController _nationalityEditingController =
       TextEditingController();
-  late final List<Tutor> _tutors;
+  List<Tutor>? _tutors;
+  List<Tutor>? _filteredTutors;
 
   @override
   initState() {
     super.initState();
-    _tutors = tutors.toList()..sort((tutorLessRating, tutorMoreRating) {
-      if (tutorMoreRating.rating == null || tutorLessRating.rating == null) return 0;
-      return tutorMoreRating.rating!.compareTo(tutorLessRating.rating!);
-    });
+    _getTutors();
+  }
+
+  void _getTutors() async {
+    await TutorService.getListTutorWithPagination(
+      page: 1,
+      perPage: 10,
+      onSuccess: (tutors) {
+        setState(() {
+          _tutors = tutors.toList()
+            ..sort((tutorLessRating, tutorMoreRating) {
+              if (tutorMoreRating.rating == null ||
+                  tutorLessRating.rating == null) return 0;
+              return tutorMoreRating.rating!.compareTo(tutorLessRating.rating!);
+            }); // origin tutors
+          _filteredTutors = _tutors;
+        });
+      },
+      onError: (message) => SnackBarHelper.showErrorSnackBar(
+        context: context,
+        content: message,
+      ),
+    );
   }
 
   void _handleNameChange(String value) {
-    setState(() {});
+    _selectedName = value;
+    _handleSearch();
   }
 
   void _handleNationalityChange(String? value) {
-    setState(() {
-      _selectedNationality = value;
-    });
+    _selectedNationality = value;
+    _handleSearch();
   }
 
   void _handleTagChange(String value) {
-    setState(() {
-      _selectedTag = value;
-    });
+    _selectedTag = value;
+    _handleSearch();
+  }
+
+  void _handleSearch() async {
+    List<String> specialityList = <String>[];
+    if(_selectedTag != 'All') {
+      final tag = specialities.firstWhere((element) => element.name == _selectedTag);
+      specialityList.add(tag.key!);
+    }
+    
+    Map<String,bool> nationalityList = <String,bool>{};
+    switch (_selectedNationality) {
+      case 'Foreign Tutor':
+        nationalityList['isVietnamese'] = false;
+        nationalityList['isNative'] = false;
+        break;
+      case 'Vietnamese Tutor':
+        nationalityList['isVietnamese'] = true;
+        break;
+      case 'Native English Tutor':
+        nationalityList['isNative'] = true;
+        break;
+      default:
+        nationalityList = {};
+        break;
+    }
+    await TutorService.searchTutor(
+      page: 1,
+      perPage: 10,
+      search: _selectedName ?? '',
+      specialties: specialityList,
+      nationality: nationalityList,
+      onSuccess: (data) {
+        setState(() {
+          _filteredTutors = data['tutors'].toList()
+            ..sort((tutorLessRating, tutorMoreRating) {
+              if (tutorMoreRating.rating == null ||
+                  tutorLessRating.rating == null) return 0;
+              return tutorMoreRating.rating!.compareTo(tutorLessRating.rating!);
+            });
+        });
+      },
+      onError: (message) => SnackBarHelper.showErrorSnackBar(
+        context: context,
+        content: message,
+      ),
+    );
   }
 
   void _handleFilterReset() {
@@ -52,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedTag = 'All';
       _nameEditingController.text = '';
       _nationalityEditingController.text = '';
+      _filteredTutors = _tutors;
     });
   }
 
@@ -64,46 +133,48 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          const HomeHeader(),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
-            child: Text(
-              'Find a tutor',
-              style: Theme.of(context).textTheme.displaySmall,
+    return _tutors == null
+        ? const Center(child: CircularProgressIndicator())
+        : SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                const HomeHeader(),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
+                  child: Text(
+                    'Find a tutor',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+                TuTorSearch(
+                  nameEditingController: _nameEditingController,
+                  nationalityEditingController: _nationalityEditingController,
+                  selectedNationality: _selectedNationality,
+                  selectedTag: _selectedTag,
+                  onNameChange: _handleNameChange,
+                  onNationalityChange: _handleNationalityChange,
+                  onTagChange: _handleTagChange,
+                  onFilterReset: _handleFilterReset,
+                ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
+                  child: Text(
+                    'Recommend Tutors',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: _filteredTutors!.length,
+                  itemBuilder: (content, index) => TutorCard(
+                    tutor: _filteredTutors![index],
+                  ),
+                )
+              ],
             ),
-          ),
-          TuTorSearch(
-            nameEditingController: _nameEditingController,
-            nationalityEditingController: _nationalityEditingController,
-            selectedNationality: _selectedNationality,
-            selectedTag: _selectedTag,
-            onNameChange: _handleNameChange,
-            onNationalityChange: _handleNationalityChange,
-            onTagChange: _handleTagChange,
-            onFilterReset: _handleFilterReset,
-          ),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(15, 20, 0, 20),
-            child: Text(
-              'Recommend Tutors',
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: _tutors.length,
-            itemBuilder: (content, index) => TutorCard(
-              tutor: _tutors[index],
-            ),
-          )
-        ],
-      ),
-    );
+          );
   }
 }

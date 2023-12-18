@@ -1,9 +1,9 @@
+import 'package:lettutor/constants/dto/tutor/tutor.dart';
+import 'package:lettutor/constants/dto/tutor/tutor_feedback.dart';
 import 'package:lettutor/models/courses/course.dart';
 import 'package:lettutor/models/courses/course_topic.dart';
 import 'package:lettutor/models/language/language.dart';
-import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/models/courses/ebook.dart';
-import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/models/user/learn_topic.dart';
 import 'package:lettutor/models/user/test_preparation.dart';
 
@@ -11,20 +11,6 @@ const tutorNationalities = [
   'Foreign Tutor',
   'Vietnamese Tutor',
   'Native English Tutor'
-];
-
-const tutorSpecialities = [
-  'English for kids',
-  'English for Business',
-  'Conversational',
-  'STARTERS',
-  'MOVERS',
-  'FLYERS',
-  'KET',
-  'PET',
-  'IELTS',
-  'TOEFL',
-  'TOEIC'
 ];
 
 const tutorLevels = [
@@ -96,6 +82,11 @@ final testPreparations = [
     key: 'toeic',
     name: 'TOEIC',
   ),
+];
+
+final specialities = [
+  ...subjects,
+  ...testPreparations,
 ];
 
 final desiredLearningContent = [
@@ -414,12 +405,12 @@ const countryList = {
 
 const studentLevels = {
   'BEGINNER': 'Pre A1 (Beginner)',
-  'HIGHER_BEGINNER': 'A1 (Higher Beginner)'  ,
-  'PRE_INTERMEDIATE' : 'A2 (Pre-Intermediate)',
-  'INTERMEDIATE' : 'B1 (Intermediate)',
-  'UPPER_INTERMEDIATE' : 'B2 (Upper-Intermediate)',
-  'ADVANCED' : 'C1 (Advanced)',
-  'PROFICIENCY' : 'C2 (Proficiency)',
+  'HIGHER_BEGINNER': 'A1 (Higher Beginner)',
+  'PRE_INTERMEDIATE': 'A2 (Pre-Intermediate)',
+  'INTERMEDIATE': 'B1 (Intermediate)',
+  'UPPER_INTERMEDIATE': 'B2 (Upper-Intermediate)',
+  'ADVANCED': 'C1 (Advanced)',
+  'PROFICIENCY': 'C2 (Proficiency)',
 };
 
 const certificateLevels = {

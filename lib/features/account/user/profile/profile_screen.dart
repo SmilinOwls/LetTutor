@@ -120,7 +120,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void _onProfileChangeSubmited() async {
-    print(_selectedDesiredLearningItems);
     if (_formKey.currentState!.validate()) {
       await UserService.updateInfo(
         updateUser: User(

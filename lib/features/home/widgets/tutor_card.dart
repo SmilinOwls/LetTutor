@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/widgets/star_rating.dart';
@@ -30,20 +32,30 @@ class _TutorCardState extends State<TutorCard> {
                   onTap: () =>
                       Navigator.of(context).pushNamed(Routes.tutorDetail),
                   child: Container(
-                    width: 82,
+                    width: 72,
+                    height: 72,
+                    clipBehavior: Clip.hardEdge,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
-                    child: CircleAvatar(
-                      radius: 45,
-                      backgroundImage: AssetImage(widget.tutor.avatar!),
-                      onBackgroundImageError: (exception, stackTrace) =>
-                          const Icon(Icons.person_outline_rounded, size: 62),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.tutor.avatar ?? '',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Icon(
+                        Icons.person,
+                        color: Colors.grey,
+                        size: 72,
+                      ),
+                      errorWidget: (context, error, stackTrace) => const Icon(
+                        Icons.error_outline_rounded,
+                        color: Colors.red,
+                        size: 72,
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 18),
-                Flexible(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -54,8 +66,12 @@ class _TutorCardState extends State<TutorCard> {
                             style: Theme.of(context).textTheme.displaySmall),
                       ),
                       const SizedBox(height: 8),
-                      Text(widget.tutor.country ?? 'null country',
-                          style: const TextStyle(fontSize: 16)),
+                      Text(
+                        countryList[widget.tutor.country] ??
+                            widget.tutor.country ??
+                            'null country',
+                        style: const TextStyle(fontSize: 16),
+                      ),
                       const SizedBox(height: 8),
                       widget.tutor.rating != null
                           ? StarRating(rating: widget.tutor.rating!)
@@ -84,7 +100,7 @@ class _TutorCardState extends State<TutorCard> {
               ],
             ),
             const SizedBox(height: 10),
-            TagChip(tags: widget.tutor.specialties),
+            TagChip(tags: widget.tutor.specialties?.split(',') ?? []),
             const SizedBox(height: 10),
             Text(
               widget.tutor.bio ?? 'null',

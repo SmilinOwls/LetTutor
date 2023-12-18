@@ -3,7 +3,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/models/user/tokens.dart';
+import 'package:lettutor/models/auth/tokens.dart';
 import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/services/auth_service.dart';

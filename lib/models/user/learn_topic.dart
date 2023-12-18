@@ -1,6 +1,13 @@
-class LearnTopic {
+import 'package:lettutor/models/user/speciality.dart';
+
+class LearnTopic implements Speciality {
+  @override
   int? id;
+
+  @override
   String? key;
+
+  @override
   String? name;
 
   LearnTopic({

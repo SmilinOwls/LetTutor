@@ -164,7 +164,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => const TutorReviewScreen(
-                                feedbacks: tutorFeedback),
+                              feedbacks: tutorFeedback,
+                            ),
                           ),
                         );
                       },

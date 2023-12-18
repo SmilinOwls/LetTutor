@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/models/tutor/tutor_feedback.dart';
+import 'package:lettutor/constants/dto/tutor/tutor_feedback.dart';
 import 'package:lettutor/utils/time_diff.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 

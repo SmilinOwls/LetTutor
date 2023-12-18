@@ -520,7 +520,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Column(
-                          children: tutorSpecialities
+                          children: specialities.map((e) => e.name!)
                               .map<Widget>(
                                 (specialty) => CheckboxListTile(
                                   controlAffinity:

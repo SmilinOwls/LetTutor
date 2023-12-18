@@ -1,4 +1,4 @@
-import 'package:lettutor/models/user/token.dart';
+import 'package:lettutor/models/auth/token.dart';
 
 class Tokens {
   Token? access;
