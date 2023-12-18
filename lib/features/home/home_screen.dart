@@ -56,33 +56,38 @@ class _HomeScreenState extends State<HomeScreen> {
   void _handleNameChange(String value) {
     _selectedName = value;
     _handleSearch();
+    setState(() {});
   }
 
   void _handleNationalityChange(String? value) {
     _selectedNationality = value;
     _handleSearch();
+    setState(() {});
   }
 
   void _handleTagChange(String value) {
     _selectedTag = value;
     _handleSearch();
+    setState(() {});
   }
 
   void _handleSearch() async {
     List<String> specialityList = <String>[];
-    if(_selectedTag != 'All') {
-      final tag = specialities.firstWhere((element) => element.name == _selectedTag);
+    if (_selectedTag != '' && _selectedTag != 'All') {
+      final tag =
+          specialities.firstWhere((element) => element.name == _selectedTag);
       specialityList.add(tag.key!);
     }
-    
-    Map<String,bool> nationalityList = <String,bool>{};
+
+    Map<String, bool> nationalityList = <String, bool>{};
+
     switch (_selectedNationality) {
       case 'Foreign Tutor':
-        nationalityList['isVietnamese'] = false;
+        nationalityList['isVietNamese'] = false;
         nationalityList['isNative'] = false;
         break;
       case 'Vietnamese Tutor':
-        nationalityList['isVietnamese'] = true;
+        nationalityList['isVietNamese'] = true;
         break;
       case 'Native English Tutor':
         nationalityList['isNative'] = true;
@@ -91,15 +96,16 @@ class _HomeScreenState extends State<HomeScreen> {
         nationalityList = {};
         break;
     }
+
     await TutorService.searchTutor(
       page: 1,
       perPage: 10,
       search: _selectedName ?? '',
       specialties: specialityList,
       nationality: nationalityList,
-      onSuccess: (data) {
+      onSuccess: (tutors) {
         setState(() {
-          _filteredTutors = data['tutors'].toList()
+          _filteredTutors = tutors.toList()
             ..sort((tutorLessRating, tutorMoreRating) {
               if (tutorMoreRating.rating == null ||
                   tutorLessRating.rating == null) return 0;

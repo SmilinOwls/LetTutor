@@ -56,7 +56,7 @@ class TutorService {
     String search = '',
     Map<String, bool> nationality = const <String, bool>{},
     List<String> specialties = const <String>[],
-    required Function(Map<String, dynamic>) onSuccess,
+    required Function(List<Tutor>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
@@ -81,11 +81,9 @@ class TutorService {
 
       final List<dynamic> tutors = data['rows'];
 
-      onSuccess({
-        'count': data['count'],
-        'tutors': tutors.map((tutor) => Tutor.fromJson(tutor)).toList(),
-      });
-      
+      onSuccess(
+        tutors.map((tutor) => Tutor.fromJson(tutor)).toList(),
+      );
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
