@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
+import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class TutorService {
@@ -29,26 +30,27 @@ class TutorService {
     }
   }
 
-  // static Future<TutorInfo> getTutorInfoById({
-  //   required String token,
-  //   required String userId,
-  // }) async {
-  //   final response = await get(
-  //     Uri.parse('$baseUrl/tutor/$userId'),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //   );
+  static Future<void> getTutorInfoById({
+    required String userId,
+    required Function(TutorInfo) onSuccess,
+    required Function(String) onError,
+  }) async {
+    try {
+      final response = await DioService().get(
+        '/tutor/$userId',
+      );
 
-  //   final jsonDecode = json.decode(response.body);
+      final data = response.data;
 
-  //   if (response.statusCode != 200) {
-  //     throw Exception(jsonDecode['message']);
-  //   }
+      if (response.statusCode != 200) {
+        throw Exception(data['message']);
+      }
 
-  //   return TutorInfo.fromJson(jsonDecode);
-  // }
+      await onSuccess(TutorInfo.fromJson(data));
+    } on DioException catch (e) {
+      throw Exception(e.response?.data['message']);
+    }
+  }
 
   static Future<void> searchTutor({
     required int page,
@@ -90,7 +92,6 @@ class TutorService {
   }
 
   static Future<void> addTutorToFavorite({
-    required String token,
     required String userId,
   }) async {
     try {

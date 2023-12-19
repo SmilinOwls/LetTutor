@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Tutor>? _filteredTutors;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     _getTutors();
   }

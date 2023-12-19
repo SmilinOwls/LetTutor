@@ -16,6 +16,30 @@ class TutorCard extends StatefulWidget {
 }
 
 class _TutorCardState extends State<TutorCard> {
+  List<String>? _tags;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, _handleDataConvert);
+  }
+
+  void _handleDataConvert() {
+    final List<String> specialityList =
+        widget.tutor.specialties?.split(',') ?? [];
+
+    setState(() {
+      _tags = <String>[
+        for (final speciality in specialityList)
+          specialities.where((element) => element.key == speciality).isNotEmpty
+              ? specialities
+                  .firstWhere((element) => element.key == speciality)
+                  .name!
+              : speciality
+      ];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,8 +53,10 @@ class _TutorCardState extends State<TutorCard> {
             Row(
               children: <Widget>[
                 InkWell(
-                  onTap: () =>
-                      Navigator.of(context).pushNamed(Routes.tutorDetail),
+                  onTap: () => Navigator.of(context).pushNamed(
+                    Routes.tutorDetail,
+                    arguments: widget.tutor.userId,
+                  ),
                   child: Container(
                     width: 72,
                     height: 72,
@@ -100,7 +126,7 @@ class _TutorCardState extends State<TutorCard> {
               ],
             ),
             const SizedBox(height: 10),
-            TagChip(tags: widget.tutor.specialties?.split(',') ?? []),
+            TagChip(tags: _tags ?? []),
             const SizedBox(height: 10),
             Text(
               widget.tutor.bio ?? 'null',
