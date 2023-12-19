@@ -120,6 +120,8 @@ class TutorService {
   static Future<void> reportTutor({
     required String userId,
     required String content,
+    required Function() onSuccess,
+    required Function(String) onError,
   }) async {
     try {
       final response = await DioService().post(
@@ -135,8 +137,11 @@ class TutorService {
       if (response.statusCode != 200) {
         throw Exception(data['message']);
       }
+
+      await onSuccess();
+      
     } on DioException catch (e) {
-      throw Exception(e.response?.data['message']);
+      onError(e.response?.data['message']);
     }
   }
 }

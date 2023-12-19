@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/services/tutor_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 
 class TutorReportDiaglog extends StatefulWidget {
-  const TutorReportDiaglog({super.key});
+  const TutorReportDiaglog({super.key, required this.tutorId});
+
+  final String tutorId;
 
   @override
   State<TutorReportDiaglog> createState() => _TutorReportDiaglogState();
@@ -14,6 +18,36 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
     'This profile is pretending be someone or is fake': false,
     'Inappropriate profile photo': false
   };
+
+  void _trackReport() {
+    _reports.updateAll((key, value) => false);
+    final data = _reportTextEditingController.text.split('\n');
+    for (final report in data) {
+      if (_reports.containsKey(report)) {
+        _reports.update(report, (value) => true);
+      }
+    }
+  }
+
+  void _handleSubmitted() async {
+    await TutorService.reportTutor(
+      userId: widget.tutorId,
+      content: _reportTextEditingController.text,
+      onSuccess: () {
+        Navigator.pop(context, true);
+        SnackBarHelper.showSuccessSnackBar(
+          context: context,
+          content: 'Report successfully',
+        );
+      },
+      onError: (message) {
+        SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        );
+      },
+    );
+  }
 
   @override
   void dispose() {
@@ -69,6 +103,14 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
                     setState(() {
                       _reports.update(
                           _reports.keys.elementAt(index), (value) => !value);
+                      if (_reports.values.elementAt(index)) {
+                        _reportTextEditingController.text =
+                            '${_reportTextEditingController.text}${_reports.keys.elementAt(index)}\n';
+                      } else {
+                        _reportTextEditingController.text =
+                            _reportTextEditingController.text.replaceAll(
+                                '${_reports.keys.elementAt(index)}\n', '');
+                      }
                     });
                   },
                   side: const BorderSide(width: 0.5, color: Colors.blue),
@@ -85,7 +127,9 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
               expands: true,
               keyboardType: TextInputType.multiline,
               controller: _reportTextEditingController,
-              onChanged: (value) {},
+              onChanged: (value) {
+                _trackReport();
+              },
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
@@ -139,9 +183,7 @@ class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
           ),
         ),
         TextButton(
-          onPressed: () {
-            Navigator.pop(context, true);
-          },
+          onPressed: _handleSubmitted,
           style: TextButton.styleFrom(
             fixedSize: const Size(100, 38),
             shape: RoundedRectangleBorder(

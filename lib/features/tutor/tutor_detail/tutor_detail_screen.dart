@@ -9,7 +9,6 @@ import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/app_bar.dart';
-import 'package:lettutor/widgets/message_dialog.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 import 'package:lettutor/widgets/tag_chip.dart';
 import 'package:lettutor/widgets/video_player.dart';
@@ -90,17 +89,11 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
 
   Future<void> _showReportDialog() async {
     await showDialog(
-            context: context, builder: (context) => const TutorReportDiaglog())
-        .then((response) async {
-      if (response) {
-        await showDialog(
-          context: context,
-          builder: (context) {
-            return const MessageDialog(message: 'Report Successfully!');
-          },
-        );
-      }
-    });
+      context: context,
+      builder: (context) => TutorReportDiaglog(
+        tutorId: _tutor?.user?.id ?? 'null id',
+      ),
+    );
   }
 
   @override
@@ -356,8 +349,10 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text('Interests',
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    Text(
+                      'Interests',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 8,
@@ -369,8 +364,10 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text('Teaching experience',
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    Text(
+                      'Teaching experience',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 8,
