@@ -69,11 +69,8 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(
-          widget.dataSourceType.name.toUpperCase(),
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+          'Video',
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         const Divider(),
         AspectRatio(

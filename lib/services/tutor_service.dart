@@ -83,7 +83,7 @@ class TutorService {
 
       final List<dynamic> tutors = data['rows'];
 
-      onSuccess(
+      await onSuccess(
         tutors.map((tutor) => Tutor.fromJson(tutor)).toList(),
       );
     } on DioException catch (e) {
@@ -91,8 +91,10 @@ class TutorService {
     }
   }
 
-  static Future<void> addTutorToFavorite({
+  static Future<void> handleFavorite({
     required String userId,
+    required Function() onSuccess,
+    required Function(String) onError,
   }) async {
     try {
       final response = await DioService().post(
@@ -107,8 +109,11 @@ class TutorService {
       if (response.statusCode != 200) {
         throw Exception(data['message']);
       }
+
+      await onSuccess();
+
     } on DioException catch (e) {
-      throw Exception(e.response?.data['message']);
+      onError(e.response?.data['message']);
     }
   }
 

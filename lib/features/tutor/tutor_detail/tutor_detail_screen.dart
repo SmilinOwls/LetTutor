@@ -24,6 +24,7 @@ class TutorDetailScreen extends StatefulWidget {
 
 class _TutorDetailScreenState extends State<TutorDetailScreen> {
   TutorInfo? _tutor;
+  bool _isFavorite = false;
   final Map<String, List<String>> _tags = {
     'languages': [],
     'specialities': [],
@@ -53,6 +54,21 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
     );
   }
 
+  void _handleFavorite(String userId) async {
+    await TutorService.handleFavorite(
+      userId: userId,
+      onSuccess: () {
+        setState(() {
+          _isFavorite = !_isFavorite;
+        });
+      },
+      onError: (message) => SnackBarHelper.showErrorSnackBar(
+        context: context,
+        content: message,
+      ),
+    );
+  }
+
   void _handleDataConvert(TutorInfo tutorInfo) {
     final List<String> languageList = tutorInfo.languages?.split(',') ?? [];
     final List<String> specialityList = tutorInfo.specialties?.split(',') ?? [];
@@ -68,6 +84,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                 .name!
             : speciality
     ];
+    _isFavorite = tutorInfo.isFavorite ?? false;
     setState(() {});
   }
 
@@ -184,10 +201,12 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         Flexible(
                           fit: FlexFit.tight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _handleFavorite(_tutor?.user?.id ?? 'null id');
+                            },
                             child: Column(
                               children: <Widget>[
-                                [true, false].first
+                                _isFavorite == false
                                     ? const Icon(
                                         Icons.favorite_rounded,
                                         color: Colors.red,
@@ -200,7 +219,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                 Text(
                                   'Favorite',
                                   style: TextStyle(
-                                    color: [true, false].first
+                                    color: _isFavorite == false
                                         ? Colors.red
                                         : Colors.blue,
                                   ),
