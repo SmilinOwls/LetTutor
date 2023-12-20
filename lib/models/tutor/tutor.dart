@@ -45,6 +45,7 @@ class Tutor {
   bool? isNative;
   int? price;
   bool? isOnline;
+  bool? isFavorite;
 
   Tutor({
     this.level,
@@ -91,6 +92,7 @@ class Tutor {
     this.isNative,
     this.price,
     this.isOnline,
+    this.isFavorite,
   });
 
   Tutor.fromJson(Map<String, dynamic> json) {
@@ -142,6 +144,7 @@ class Tutor {
     isNative = json['isNative'];
     price = json['price'];
     isOnline = json['isOnline'];
+    isFavorite = json['isFavorite'];
   }
 
   Map<String, dynamic> toJson() {
@@ -190,6 +193,7 @@ class Tutor {
     data['isNative'] = isNative;
     data['price'] = price;
     data['isOnline'] = isOnline;
+    data['isFavorite'] = isFavorite;
     return data;
   }
 }

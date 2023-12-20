@@ -7,7 +7,7 @@ class TutorService {
   static Future<void> getListTutorWithPagination({
     required int page,
     required int perPage,
-    required Function(List<Tutor>) onSuccess,
+    required Function(List<Tutor>, List<Tutor>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
@@ -21,10 +21,35 @@ class TutorService {
         throw Exception(data['message']);
       }
 
-      final List<dynamic> tutors = data['tutors']['rows'];
+      final List<String> tutorIds = [];
 
-      await onSuccess(
-          tutors.map<Tutor>((tutor) => Tutor.fromJson(tutor)).toList());
+      final tutors = data['tutors']['rows'];
+      final favoriteTutors = data['favoriteTutor'];
+
+      favoriteTutors.removeWhere((element) => element['secondInfo'] == null);
+
+      final newFavoriteTutors = favoriteTutors.map((favorTutor) {
+        tutorIds.add(favorTutor['secondId']);
+
+        final secondInfoTutor = favorTutor['secondInfo'];
+
+        final {"tutorInfo": tutorInfo} = secondInfoTutor;
+        secondInfoTutor.removeWhere((key, value) => key == 'tutorInfo');
+
+        secondInfoTutor['isFavorite'] = true;
+
+        return <String, dynamic>{...secondInfoTutor, ...tutorInfo};
+      }).toList();
+
+      // remove duplicate tutor
+      tutors.removeWhere((element) => tutorIds.contains(element['userId']));
+
+      final tutorList =
+          tutors.map<Tutor>((tutor) => Tutor.fromJson(tutor)).toList();
+      final favoriteTutorList = newFavoriteTutors
+          .map<Tutor>((tutor) => Tutor.fromJson(tutor))
+          .toList();
+      await onSuccess(tutorList, favoriteTutorList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -46,7 +71,8 @@ class TutorService {
         throw Exception(data['message']);
       }
 
-      await onSuccess(TutorInfo.fromJson(data));
+      final tutorInfo = TutorInfo.fromJson(data);
+      await onSuccess(tutorInfo);
     } on DioException catch (e) {
       throw Exception(e.response?.data['message']);
     }
@@ -83,9 +109,9 @@ class TutorService {
 
       final List<dynamic> tutors = data['rows'];
 
-      await onSuccess(
-        tutors.map((tutor) => Tutor.fromJson(tutor)).toList(),
-      );
+      final tutorList = tutors.map((tutor) => Tutor.fromJson(tutor)).toList();
+
+      await onSuccess(tutorList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -111,7 +137,6 @@ class TutorService {
       }
 
       await onSuccess();
-
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -139,7 +164,6 @@ class TutorService {
       }
 
       await onSuccess();
-      
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }

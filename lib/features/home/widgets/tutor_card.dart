@@ -116,7 +116,7 @@ class _TutorCardState extends State<TutorCard> {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: ([true, false]).first
+                  icon: widget.tutor.isFavorite == true
                       ? const Icon(
                           Icons.favorite_rounded,
                           color: Colors.red,

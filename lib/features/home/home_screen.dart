@@ -35,14 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
     await TutorService.getListTutorWithPagination(
       page: 1,
       perPage: 10,
-      onSuccess: (tutors) {
+      onSuccess: (tutors, favoriteTutors) {
         setState(() {
-          _tutors = tutors.toList()
-            ..sort((tutorLessRating, tutorMoreRating) {
-              if (tutorMoreRating.rating == null ||
-                  tutorLessRating.rating == null) return 0;
-              return tutorMoreRating.rating!.compareTo(tutorLessRating.rating!);
-            }); // origin tutors
+          sortTutorByRating(tutors);
+          sortTutorByRating(favoriteTutors);
+          _tutors = [...favoriteTutors, ...tutors];
           _filteredTutors = _tutors;
         });
       },
@@ -51,6 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
         content: message,
       ),
     );
+  }
+
+  void sortTutorByRating(List<Tutor> tutors) {
+    tutors = tutors
+      ..sort((tutorLessRating, tutorMoreRating) {
+        if (tutorMoreRating.rating == null || tutorLessRating.rating == null) {
+          return 0;
+        }
+        return tutorMoreRating.rating!.compareTo(tutorLessRating.rating!);
+      });
   }
 
   void _handleNameChange(String value) {

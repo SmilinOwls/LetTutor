@@ -205,7 +205,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                             },
                             child: Column(
                               children: <Widget>[
-                                _isFavorite == false
+                                _isFavorite
                                     ? const Icon(
                                         Icons.favorite_rounded,
                                         color: Colors.red,
@@ -218,7 +218,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                 Text(
                                   'Favorite',
                                   style: TextStyle(
-                                    color: _isFavorite == false
+                                    color: _isFavorite
                                         ? Colors.red
                                         : Colors.blue,
                                   ),
