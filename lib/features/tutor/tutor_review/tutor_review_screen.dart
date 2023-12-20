@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/constants/dto/tutor/tutor_feedback.dart';
 import 'package:lettutor/features/tutor/tutor_review/widgets/review_card.dart';
+import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class TutorReviewScreen extends StatefulWidget {

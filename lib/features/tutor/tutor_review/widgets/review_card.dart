@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/constants/dto/tutor/tutor_feedback.dart';
+import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/utils/time_diff.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
@@ -48,7 +48,7 @@ class ReviewCard extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        review.username ?? 'null name',
+                        review.firstInfo?.name ?? 'null name',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -67,7 +67,7 @@ class ReviewCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  StarRating(rating: review.rating ?? 0),
+                  StarRating(rating: review.rating as double),
                   const SizedBox(height: 4),
                   Text(review.content ?? 'null content'),
                 ],

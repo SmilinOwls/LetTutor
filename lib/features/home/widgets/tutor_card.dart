@@ -55,7 +55,10 @@ class _TutorCardState extends State<TutorCard> {
                 InkWell(
                   onTap: () => Navigator.of(context).pushNamed(
                     Routes.tutorDetail,
-                    arguments: widget.tutor.userId,
+                    arguments: {
+                      'tutorId': widget.tutor.userId,
+                      'feedbacks': widget.tutor.feedbacks,
+                    }
                   ),
                   child: Container(
                     width: 72,

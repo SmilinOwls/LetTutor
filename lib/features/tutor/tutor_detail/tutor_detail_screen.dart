@@ -5,6 +5,7 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/tutor/tutor_book/tutor_booking_screen.dart';
 import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog.dart';
 import 'package:lettutor/features/tutor/tutor_review/tutor_review_screen.dart';
+import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
@@ -28,6 +29,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
     'languages': [],
     'specialities': [],
   };
+  List<TutorFeedback> _feedbacks = [];
 
   @override
   void initState() {
@@ -38,10 +40,14 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
   }
 
   void _getTutorInfo() async {
-    final String tutorId = ModalRoute.of(context)!.settings.arguments as String;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    final String userId = arguments['tutorId'] ?? 'null id';
+    _feedbacks = arguments['feedbacks'] ?? [];
 
     await TutorService.getTutorInfoById(
-      userId: tutorId,
+      userId: userId,
       onSuccess: (tutorInfo) {
         _tutor = tutorInfo;
         _handleDataConvert(tutorInfo);
@@ -229,8 +235,10 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                               children: <Widget>[
                                 Icon(Icons.report_outlined, color: Colors.blue),
                                 SizedBox(height: 4),
-                                Text('Report',
-                                    style: TextStyle(color: Colors.blue))
+                                Text(
+                                  'Report',
+                                  style: TextStyle(color: Colors.blue),
+                                )
                               ],
                             ),
                           ),
@@ -241,16 +249,18 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const TutorReviewScreen(
-                                    feedbacks: tutorFeedback,
+                                  builder: (context) => TutorReviewScreen(
+                                    feedbacks: _feedbacks,
                                   ),
                                 ),
                               );
                             },
                             child: const Column(
                               children: <Widget>[
-                                Icon(Icons.reviews_outlined,
-                                    color: Colors.blue),
+                                Icon(
+                                  Icons.reviews_outlined,
+                                  color: Colors.blue,
+                                ),
                                 SizedBox(height: 4),
                                 Text(
                                   'Reviews',
