@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
+import 'package:lettutor/services/tutor_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 import 'package:lettutor/widgets/tag_chip.dart';
 
@@ -17,6 +19,7 @@ class TutorCard extends StatefulWidget {
 
 class _TutorCardState extends State<TutorCard> {
   List<String>? _tags;
+  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -37,7 +40,30 @@ class _TutorCardState extends State<TutorCard> {
                   .name!
               : speciality
       ];
+
+      _isFavorite = widget.tutor.isFavorite ?? false;
     });
+  }
+
+  void _handleFavorite(String userId) async {
+    await TutorService.handleFavorite(
+      userId: userId,
+      onSuccess: () {
+        setState(() {
+          _isFavorite = !_isFavorite;
+        });
+        SnackBarHelper.showSuccessSnackBar(
+          context: context,
+          content: _isFavorite
+              ? 'Add favorite tutor successfully'
+              : 'Remove favorite tutor successfully',
+        );
+      },
+      onError: (message) => SnackBarHelper.showErrorSnackBar(
+        context: context,
+        content: message,
+      ),
+    );
   }
 
   @override
@@ -53,13 +79,11 @@ class _TutorCardState extends State<TutorCard> {
             Row(
               children: <Widget>[
                 InkWell(
-                  onTap: () => Navigator.of(context).pushNamed(
-                    Routes.tutorDetail,
-                    arguments: {
-                      'tutorId': widget.tutor.userId,
-                      'feedbacks': widget.tutor.feedbacks,
-                    }
-                  ),
+                  onTap: () => Navigator.of(context)
+                      .pushNamed(Routes.tutorDetail, arguments: {
+                    'tutorId': widget.tutor.userId,
+                    'feedbacks': widget.tutor.feedbacks,
+                  }),
                   child: Container(
                     width: 72,
                     height: 72,
@@ -115,8 +139,8 @@ class _TutorCardState extends State<TutorCard> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: widget.tutor.isFavorite == true
+                  onPressed: () => _handleFavorite(widget.tutor.userId ?? ''),
+                  icon: _isFavorite
                       ? const Icon(
                           Icons.favorite_rounded,
                           color: Colors.red,

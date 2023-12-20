@@ -66,6 +66,12 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
         setState(() {
           _isFavorite = !_isFavorite;
         });
+        SnackBarHelper.showSuccessSnackBar(
+          context: context,
+          content: _isFavorite
+              ? 'Add favorite tutor successfully'
+              : 'Remove favorite tutor successfully',
+        );
       },
       onError: (message) => SnackBarHelper.showErrorSnackBar(
         context: context,
