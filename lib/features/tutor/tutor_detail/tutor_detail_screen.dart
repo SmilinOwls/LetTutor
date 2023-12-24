@@ -224,9 +224,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                 Text(
                                   'Favorite',
                                   style: TextStyle(
-                                    color: _isFavorite
-                                        ? Colors.red
-                                        : Colors.blue,
+                                    color:
+                                        _isFavorite ? Colors.red : Colors.blue,
                                   ),
                                 )
                               ],
@@ -408,7 +407,9 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const TutorBookingScreen(),
+                              builder: (context) => TutorBookingScreen(
+                                tutorId: _tutor?.user?.id ?? 'null id',
+                              ),
                             ),
                           );
                         },

@@ -6,7 +6,7 @@ class BookingService {
   static final DioService _dioService = DioService();
 
   static Future<void> getTutorScheduleById({
-    required String userId,
+    required String tutorId,
     required Function(List<Schedule>) onSuccess,
     required Function(String) onError,
   }) async {
@@ -14,7 +14,7 @@ class BookingService {
       final response = await _dioService.get(
         '/schedule',
         data: {
-          'tutorId': userId,
+          'tutorId': tutorId,
         },
       );
 

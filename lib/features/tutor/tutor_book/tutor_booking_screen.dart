@@ -1,16 +1,53 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_hour_dialog.dart';
+import 'package:lettutor/models/schedule/schedule.dart';
+import 'package:lettutor/services/schedule_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 
 class TutorBookingScreen extends StatefulWidget {
-  const TutorBookingScreen({super.key});
+  const TutorBookingScreen({super.key, required this.tutorId});
+
+  final String tutorId;
 
   @override
   State<TutorBookingScreen> createState() => _TutorBookingScreenState();
 }
 
 class _TutorBookingScreenState extends State<TutorBookingScreen> {
+  List<Schedule> tutorSchedules = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getTutorSchedule();
+  }
+
+  void getTutorSchedule() async {
+    await BookingService.getTutorScheduleById(
+      tutorId: widget.tutorId,
+      onSuccess: (schedules) {
+        _tutorScheduleHandle(schedules);
+      },
+      onError: (message) => SnackBarHelper.showErrorSnackBar(
+        context: context,
+        content: message,
+      ),
+    );
+  }
+
+  void _tutorScheduleHandle(List<Schedule> schedules) {
+    schedules.removeWhere(
+      (schedule) =>
+          DateTime.fromMillisecondsSinceEpoch(schedule.startTimestamp ?? 0)
+              .isBefore(DateTime.now()),
+    );
+    schedules.sort((schedule1, schedule2) =>
+        schedule1.startTimestamp!.compareTo(schedule2.startTimestamp!));
+    
+  }
+
   final scheduledStartingDate = getDaysInBetween(
       DateTime.now(), DateTime.utc(DateTime.now().year + 1, 1, 0));
 
