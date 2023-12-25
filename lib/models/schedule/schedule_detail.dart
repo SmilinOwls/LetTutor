@@ -1,5 +1,4 @@
 import 'package:lettutor/models/schedule/booking_info.dart';
-import 'package:lettutor/models/schedule/schedule.dart';
 
 class ScheduleDetail {
   int? startPeriodTimestamp;
@@ -12,7 +11,6 @@ class ScheduleDetail {
   String? updatedAt;
   List<BookingInfo>? bookingInfo;
   bool? isBooked;
-  Schedule? scheduleInfo;
 
   ScheduleDetail({
     this.startPeriodTimestamp,
@@ -24,8 +22,7 @@ class ScheduleDetail {
     this.createdAt,
     this.updatedAt,
     this.bookingInfo,
-    this.isBooked,
-    this.scheduleInfo,
+     this.isBooked,
   });
 
   ScheduleDetail.fromJson(Map<String, dynamic> json) {
@@ -37,11 +34,10 @@ class ScheduleDetail {
     endPeriod = json['endPeriod'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    bookingInfo = json['bookingInfo']
-        ?.map<BookingInfo>((info) => BookingInfo.fromJson(info))
-        .toList();
     isBooked = json['isBooked'];
-    scheduleInfo = json['scheduleInfo'] != null ? Schedule.fromJson(json['scheduleInfo']) : null;
+    bookingInfo = json['bookingInfo']?.map<BookingInfo>((info) {
+      return BookingInfo.fromJson(info);
+    }).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -54,9 +50,11 @@ class ScheduleDetail {
     data['endPeriod'] = endPeriod;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    data['bookingInfo'] = bookingInfo?.map((info) => info.toJson()).toList();
     data['isBooked'] = isBooked;
-    data['scheduleInfo'] = scheduleInfo?.toJson();
+    data['bookingInfo'] = bookingInfo?.map((info) {
+      return info.toJson();
+    }).toList();
+
     return data;
   }
 }

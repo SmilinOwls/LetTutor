@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_confirm_dialog.dart';
+import 'package:lettutor/models/schedule/schedule.dart';
+import 'package:lettutor/utils/time_convert.dart';
 
 class TutorBookingHourDialog extends StatefulWidget {
-  const TutorBookingHourDialog({super.key, required this.date});
+  const TutorBookingHourDialog({super.key, this.dateSchedules});
 
-  final DateTime date;
+  final MapEntry<String, List<Schedule>>? dateSchedules;
 
   @override
   State<TutorBookingHourDialog> createState() => _TutorBookingHourDialogState();
 }
 
 class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
-  Future<void> _showTutorBookingConfirmDialog(String hour) async {
-    final Map<String, dynamic> schedule = {
-      'date': widget.date,
-      'hour': hour,
-    };
-
+  Future<void> _showTutorBookingConfirmDialog(Schedule detailSchedule) async {
     await showDialog(
       context: context,
-      builder: (context) => TutorBookingConfirmDialog(schedule: schedule),
+      builder: (context) => TutorBookingConfirmDialog(schedule: detailSchedule),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final String tutorDateSchedule = widget.dateSchedules?.key ?? '';
+    final List<Schedule> tutorDetailSchedule =
+        widget.dateSchedules?.value ?? [];
+
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       height: MediaQuery.of(context).size.height * 0.75,
@@ -42,7 +41,7 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
           ),
           const SizedBox(height: 6),
           Text(
-            'On ${DateFormat('yyyy-MM-dd').format(widget.date)}',
+            'On $tutorDateSchedule',
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -53,28 +52,52 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
           Flexible(
             fit: FlexFit.tight,
             child: GridView.builder(
-              itemCount: tutorBookingHours.length,
+              itemCount: tutorDetailSchedule.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 18,
                 crossAxisSpacing: 28,
                 childAspectRatio: 4,
               ),
-              itemBuilder: (BuildContext context, int index) => ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[300],
-                ),
-                onPressed: () {
-                  _showTutorBookingConfirmDialog(tutorBookingHours[index]);
-                },
-                child: Text(
-                  tutorBookingHours[index],
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+              itemBuilder: (BuildContext context, int index) {
+                if (tutorDetailSchedule[index].isBooked == false) {
+                  return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[300],
+                      ),
+                      onPressed: () {
+                        _showTutorBookingConfirmDialog(
+                            tutorDetailSchedule[index]);
+                      },
+                      child: Text(
+                        '${convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
+                        '-'
+                        '${convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ));
+                } else {
+                  return ElevatedButton(
+                      style:
+                          Theme.of(context).elevatedButtonTheme.style?.copyWith(
+                                backgroundColor: MaterialStateProperty.all(
+                                  Colors.grey[500],
+                                ),
+                              ),
+                      onPressed: null,
+                      child: Text(
+                        '${convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
+                        '-'
+                        '${convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ));
+                }
+              },
             ),
           ),
         ],

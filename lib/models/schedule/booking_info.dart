@@ -15,10 +15,10 @@ class BookingInfo {
   String? createdAt;
   String? updatedAt;
   String? recordUrl;
-  String? cancelReasonId;
-  String? lessonPlanId;
-  String? cancelNote;
-  String? calendarId;
+  // String? cancelReasonId;
+  // String? lessonPlanId;
+  // String? cancelNote;
+  // String? calendarId;
   bool? isDeleted;
   ScheduleDetail? scheduleDetailInfo;
   ClassReview? classReview;
@@ -37,10 +37,10 @@ class BookingInfo {
     this.createdAt,
     this.updatedAt,
     this.recordUrl,
-    this.cancelReasonId,
-    this.lessonPlanId,
-    this.cancelNote,
-    this.calendarId,
+    // this.cancelReasonId,
+    // this.lessonPlanId,
+    // this.cancelNote,
+    // this.calendarId,
     this.isDeleted,
     this.scheduleDetailInfo,
     this.classReview,
@@ -60,10 +60,10 @@ class BookingInfo {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     recordUrl = json['recordUrl'];
-    cancelReasonId = json['cancelReasonId'];
-    lessonPlanId = json['lessonPlanId'];
-    cancelNote = json['cancelNote'];
-    calendarId = json['calendarId'];
+    // cancelReasonId = json['cancelReasonId'];
+    // lessonPlanId = json['lessonPlanId'];
+    // cancelNote = json['cancelNote'];
+    // calendarId = json['calendarId'];
     isDeleted = json['isDeleted'];
     scheduleDetailInfo = json['scheduleDetailInfo'] != null
         ? ScheduleDetail.fromJson(json['scheduleDetailInfo'])
@@ -88,10 +88,10 @@ class BookingInfo {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['recordUrl'] = recordUrl;
-    data['cancelReasonId'] = cancelReasonId;
-    data['lessonPlanId'] = lessonPlanId;
-    data['cancelNote'] = cancelNote;
-    data['calendarId'] = calendarId;
+    // data['cancelReasonId'] = cancelReasonId;
+    // data['lessonPlanId'] = lessonPlanId;
+    // data['cancelNote'] = cancelNote;
+    // data['calendarId'] = calendarId;
     data['isDeleted'] = isDeleted;
     data['scheduleDetailInfo'] = scheduleDetailInfo?.toJson();
     data['classReview'] = classReview?.toJson();

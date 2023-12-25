@@ -11,17 +11,17 @@ class BookingService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await _dioService.get(
+      final response = await DioService().post(
         '/schedule',
         data: {
           'tutorId': tutorId,
         },
       );
 
-      final schedules = response.data['data'] as List;
-      final scheduleList =
-          schedules.map((schedule) => Schedule.fromJson(schedule)).toList();
-
+      final schedules = response.data['data'];
+      final scheduleList = schedules
+          .map<Schedule>((schedule) => Schedule.fromJson(schedule))
+          .toList();
       await onSuccess(scheduleList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);

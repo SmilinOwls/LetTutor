@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/models/schedule/schedule.dart';
+import 'package:lettutor/utils/time_convert.dart';
 import 'package:lettutor/widgets/message_dialog.dart';
 
 class TutorBookingConfirmDialog extends StatefulWidget {
   const TutorBookingConfirmDialog({super.key, required this.schedule});
 
-  final Map<String, dynamic> schedule;
+  final Schedule schedule;
 
   @override
   State<TutorBookingConfirmDialog> createState() =>
@@ -22,7 +24,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
       builder: (context) {
         return const MessageDialog(message: 'Book Successfully!');
       },
-    ).then((_){
+    ).then((_) {
       Navigator.pop(context, true);
       Navigator.pop(context, true);
     });
@@ -62,7 +64,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             ),
             const SizedBox(height: 6),
             Text(
-              widget.schedule['hour'],
+              '${convertTimeStampToHour(widget.schedule.startTimestamp ?? 0)}'
+              '-'
+              '${convertTimeStampToHour(widget.schedule.endTimestamp ?? 0)}',
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.blue[700],
@@ -70,7 +74,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
               textAlign: TextAlign.center,
             ),
             Text(
-              DateFormat('yyyy-MM-dd').format(widget.schedule['date']),
+              DateFormat('yyyy-MM-dd').format(
+                  DateTime.fromMillisecondsSinceEpoch(
+                      widget.schedule.startTimestamp!)),
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.blue[700],
@@ -172,7 +178,10 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
           ),
         ),
         TextButton.icon(
-          icon: const Icon(Icons.keyboard_double_arrow_right),
+          icon: const Icon(
+            Icons.keyboard_double_arrow_right,
+            color: Colors.white,
+          ),
           onPressed: _showTutorBookingStatusDialog,
           style: TextButton.styleFrom(
               fixedSize: const Size(100, 38),

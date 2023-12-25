@@ -1,5 +1,4 @@
 import 'package:lettutor/models/schedule/schedule_detail.dart';
-import 'package:lettutor/models/tutor/tutor.dart';
 
 class Schedule {
   String? id;
@@ -11,7 +10,6 @@ class Schedule {
   String? createdAt;
   bool? isBooked;
   List<ScheduleDetail>? scheduleDetails;
-  Tutor? tutorInfo;
 
   Schedule({
     this.id,
@@ -23,7 +21,6 @@ class Schedule {
     this.createdAt,
     this.isBooked,
     this.scheduleDetails,
-    this.tutorInfo,
   });
 
   Schedule.fromJson(Map<String, dynamic> json) {
@@ -36,10 +33,9 @@ class Schedule {
     createdAt = json['createdAt'];
     isBooked = json['isBooked'];
     scheduleDetails = json['scheduleDetails']
-        ?.map((scheduleDetail) => ScheduleDetail.fromJson(scheduleDetail))
+        ?.map<ScheduleDetail>(
+            (scheduleDetail) => ScheduleDetail.fromJson(scheduleDetail))
         .toList();
-    tutorInfo =
-        json['tutorInfo'] != null ? Tutor.fromJson(json['tutorInfo']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -55,7 +51,6 @@ class Schedule {
     data['scheduleDetails'] = scheduleDetails
         ?.map((scheduleDetail) => scheduleDetail.toJson())
         .toList();
-    data['tutorInfo'] = tutorInfo?.toJson();
     return data;
   }
 }

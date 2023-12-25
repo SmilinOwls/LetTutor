@@ -16,7 +16,7 @@ class TutorBookingScreen extends StatefulWidget {
 }
 
 class _TutorBookingScreenState extends State<TutorBookingScreen> {
-  List<Schedule> tutorSchedules = [];
+  Map<String, List<Schedule>>? _tutorSchedules;
 
   @override
   void initState() {
@@ -45,13 +45,23 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
     );
     schedules.sort((schedule1, schedule2) =>
         schedule1.startTimestamp!.compareTo(schedule2.startTimestamp!));
-    
+
+    setState(() {
+      for (var schedule in schedules) {
+        final date =
+            DateTime.fromMillisecondsSinceEpoch(schedule.startTimestamp!);
+        final dateKey = DateFormat('yyyy-MM-dd').format(date);
+        _tutorSchedules ??= <String, List<Schedule>>{};
+        if (_tutorSchedules?[dateKey] == null) {
+          _tutorSchedules?[dateKey] = [];
+        }
+        _tutorSchedules?[dateKey]?.add(schedule);
+      }
+    });
   }
 
-  final scheduledStartingDate = getDaysInBetween(
-      DateTime.now(), DateTime.utc(DateTime.now().year + 1, 1, 0));
-
-  Future<void> _showTutorBookingTimeDialog(DateTime date) async {
+  Future<void> _showTutorBookingTimeDialog(
+      MapEntry<String, List<Schedule>>? dateSchedules) async {
     await showModalBottomSheet(
       elevation: 3,
       isScrollControlled: true,
@@ -59,65 +69,96 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
         borderRadius: BorderRadius.circular(10),
       ),
       context: context,
-      builder: (context) => TutorBookingHourDialog(date: date),
+      builder: (context) =>
+          TutorBookingHourDialog(dateSchedules: dateSchedules),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Tutor Booking',
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 20,
-        ),
-        child: Column(
-          children: <Widget>[
-            Text(
-              'Choose Learning Date',
-              style: Theme.of(context).textTheme.bodyLarge,
+    return _tutorSchedules == null
+        ? const Center(child: CircularProgressIndicator())
+        : Scaffold(
+            appBar: const CustomAppBar(
+              appBarTitle: 'Tutor Booking',
             ),
-            const SizedBox(height: 10),
-            Flexible(
-              fit: FlexFit.tight,
-              child: GridView.builder(
-                itemCount: scheduledStartingDate.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 18,
-                  crossAxisSpacing: 28,
-                  childAspectRatio: 4,
-                ),
-                itemBuilder: (BuildContext context, int index) =>
-                    ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue[300],
+            body: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 16,
+                horizontal: 20,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Choose Learning Date',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  onPressed: () {
-                    _showTutorBookingTimeDialog(scheduledStartingDate[index]);
-                  },
-                  child: Text(
-                    DateFormat('yyyy-MM-dd')
-                        .format(scheduledStartingDate[index]),
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: GridView.builder(
+                        itemCount: _tutorSchedules?.length ?? 0,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 18,
+                          crossAxisSpacing: 28,
+                          childAspectRatio: 4,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          final isFullBookingDate = _tutorSchedules?.entries
+                              .elementAt(index)
+                              .value
+                              .every((schedule) => schedule.isBooked == true);
+
+                          if (isFullBookingDate == false) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue[300],
+                              ),
+                              onPressed: () {
+                                _showTutorBookingTimeDialog(
+                                    _tutorSchedules?.entries.elementAt(index));
+                              },
+                              child: Text(
+                                _tutorSchedules?.keys.elementAt(index) ?? '',
+                                style: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              ),
+                            );
+                          } else {
+                            return ElevatedButton(
+                              style: Theme.of(context)
+                                  .elevatedButtonTheme
+                                  .style
+                                  ?.copyWith(
+                                    backgroundColor: MaterialStateProperty.all(
+                                      Colors.grey[500],
+                                    ),
+                                  ),
+                              onPressed: () {},
+                              child: Text(
+                                _tutorSchedules?.keys.elementAt(index) ?? '',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }
 
-List<DateTime> getDaysInBetween(DateTime startDate, DateTime endDate) {
-  List<DateTime> days = [];
-  for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
-    days.add(DateTime(startDate.year, startDate.month, startDate.day + i));
-  }
-  return days;
-}
+// List<DateTime> getDaysInBetween(DateTime startDate, DateTime endDate) {
+//   List<DateTime> days = [];
+//   for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
+//     days.add(DateTime(startDate.year, startDate.month, startDate.day + i));
+//   }
+//   return days;
+// }
