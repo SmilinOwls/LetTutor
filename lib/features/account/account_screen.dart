@@ -124,7 +124,7 @@ class _AccountScreenState extends State<AccountScreen> {
               );
 
               final prefs = await SharedPreferences.getInstance();
-              prefs.clear();
+              await prefs.clear();
             },
             isTrailing: false,
           ),

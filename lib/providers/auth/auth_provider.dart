@@ -20,7 +20,7 @@ class AuthProvider with ChangeNotifier {
 
   void getUserFromPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final userData = jsonDecode(prefs.getString("user")!);
+    final userData = jsonDecode(prefs.getString("user") ?? '{}');
     user = User.fromJson(userData);
   }
 

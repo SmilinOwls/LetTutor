@@ -122,11 +122,9 @@ class Tutor {
     updatedAt = json['updatedAt'];
     deletedAt = json['deletedAt'];
     studentGroupId = json['studentGroupId'];
-    feedbacks = json['feedbacks'] != null
-        ? (json['feedbacks'] as List)
-            .map((i) => TutorFeedback.fromJson(i))
-            .toList()
-        : null;
+    feedbacks = json['feedbacks']
+        ?.map<TutorFeedback>((feedback) => TutorFeedback.fromJson(feedback))
+        .toList();
     id = json['id'];
     userId = json['userId'];
     video = json['video'];
