@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_hour_dialog.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
-import 'package:lettutor/services/schedule_service.dart';
+import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 

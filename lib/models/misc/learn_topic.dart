@@ -1,4 +1,4 @@
-import 'package:lettutor/models/user/speciality.dart';
+import 'package:lettutor/models/misc/speciality.dart';
 
 class LearnTopic implements Speciality {
   @override

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
+import 'package:lettutor/services/booking_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_convert.dart';
 import 'package:lettutor/widgets/message_dialog.dart';
 
@@ -18,6 +20,24 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
   final TextEditingController _requestTextEditingController =
       TextEditingController();
 
+  void _tutorBookingHandle() async {
+    await BookingService.bookClass(
+      scheduleDetailIds: [widget.schedule.scheduleDetails?[0].id! ?? ''],
+      note: _requestTextEditingController.text,
+      onSuccess: () {
+        
+        _showTutorBookingStatusDialog();
+      },
+      onError: (message) {
+        Navigator.pop(context, false);
+        SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        );
+      },
+    );
+  }
+  
   Future<void> _showTutorBookingStatusDialog() async {
     await showDialog(
       context: context,
@@ -182,7 +202,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             Icons.keyboard_double_arrow_right,
             color: Colors.white,
           ),
-          onPressed: _showTutorBookingStatusDialog,
+          onPressed: _tutorBookingHandle,
           style: TextButton.styleFrom(
               fixedSize: const Size(100, 38),
               shape: RoundedRectangleBorder(

@@ -8,6 +8,7 @@ class SnackBarHelper {
   }) {
     scaffoldKey.currentState?.showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 1),
         content: Text(
           content,
           style: const TextStyle(
@@ -32,6 +33,7 @@ class SnackBarHelper {
   }) {
     scaffoldKey.currentState?.showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 1),
         content: Text(
           content,
           style: const TextStyle(
@@ -56,6 +58,7 @@ class SnackBarHelper {
   }) {
     scaffoldKey.currentState?.showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 1),
         content: Text(
           content,
           style: const TextStyle(

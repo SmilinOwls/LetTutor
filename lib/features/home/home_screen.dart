@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _handleSearch() async {
     List<String> specialityList = <String>[];
-    if (_selectedTag != '' && _selectedTag != 'All') {
+    if (_selectedTag != 'All') {
       final tag =
           specialities.firstWhere((element) => element.name == _selectedTag);
       specialityList.add(tag.key!);

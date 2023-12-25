@@ -4,8 +4,8 @@ import 'package:lettutor/models/courses/course.dart';
 import 'package:lettutor/models/courses/course_topic.dart';
 import 'package:lettutor/models/language/language.dart';
 import 'package:lettutor/models/courses/ebook.dart';
-import 'package:lettutor/models/user/learn_topic.dart';
-import 'package:lettutor/models/user/test_preparation.dart';
+import 'package:lettutor/models/misc/learn_topic.dart';
+import 'package:lettutor/models/misc/test_preparation.dart';
 
 const tutorNationalities = [
   'Foreign Tutor',

@@ -1,5 +1,5 @@
-import 'package:lettutor/models/user/learn_topic.dart';
-import 'package:lettutor/models/user/test_preparation.dart';
+import 'package:lettutor/models/misc/learn_topic.dart';
+import 'package:lettutor/models/misc/test_preparation.dart';
 import 'package:lettutor/models/user/user_course.dart';
 import 'package:lettutor/models/user/wallet.dart';
 
