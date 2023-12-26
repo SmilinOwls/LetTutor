@@ -5,7 +5,6 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/tutor/tutor_book/tutor_booking_screen.dart';
 import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog.dart';
 import 'package:lettutor/features/tutor/tutor_review/tutor_review_screen.dart';
-import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
@@ -29,7 +28,6 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
     'languages': [],
     'specialities': [],
   };
-  List<TutorFeedback> _feedbacks = [];
 
   @override
   void initState() {
@@ -44,7 +42,6 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     final String userId = arguments['tutorId'] ?? 'null id';
-    _feedbacks = arguments['feedbacks'] ?? [];
 
     await TutorService.getTutorInfoById(
       userId: userId,
@@ -102,7 +99,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
   Future<void> _showReportDialog() async {
     await showDialog(
       context: context,
-      builder: (context) => TutorReportDiaglog(
+      builder: (context) => TutorReportDialog(
         tutorId: _tutor?.user?.id ?? 'null id',
       ),
     );
@@ -255,7 +252,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => TutorReviewScreen(
-                                    feedbacks: _feedbacks,
+                                    tutorId: _tutor?.user?.id ?? 'null id',
                                   ),
                                 ),
                               );

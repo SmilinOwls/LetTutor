@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/utils/time_diff.dart';
@@ -24,17 +25,16 @@ class ReviewCard extends StatelessWidget {
               child: Container(
                 width: 62,
                 height: 62,
+                clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                 ),
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/avatar/user/user_avatar.jpeg',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
-                      Icons.person_outline_rounded,
-                      size: 62,
-                    ),
+                child: CachedNetworkImage(
+                  imageUrl: review.firstInfo?.avatar ?? '',
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                    size: 42,
                   ),
                 ),
               ),

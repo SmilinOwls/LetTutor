@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 
-class TutorReportDiaglog extends StatefulWidget {
-  const TutorReportDiaglog({super.key, required this.tutorId});
+class TutorReportDialog extends StatefulWidget {
+  const TutorReportDialog({super.key, required this.tutorId});
 
   final String tutorId;
 
   @override
-  State<TutorReportDiaglog> createState() => _TutorReportDiaglogState();
+  State<TutorReportDialog> createState() => _TutorReportDialogState();
 }
 
-class _TutorReportDiaglogState extends State<TutorReportDiaglog> {
+class _TutorReportDialogState extends State<TutorReportDialog> {
   final _reportTextEditingController = TextEditingController();
   final Map<String, bool> _reports = {
     'This tutor is annoying me': false,

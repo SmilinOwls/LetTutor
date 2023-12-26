@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
+import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/dio_service.dart';
 
@@ -109,7 +110,8 @@ class TutorService {
 
       final List<dynamic> tutors = data['rows'];
 
-      final tutorList = tutors.map((tutor) => Tutor.fromJson(tutor)).toList();
+      final tutorList =
+          tutors.map<Tutor>((tutor) => Tutor.fromJson(tutor)).toList();
 
       await onSuccess(tutorList);
     } on DioException catch (e) {
@@ -164,6 +166,36 @@ class TutorService {
       }
 
       await onSuccess();
+    } on DioException catch (e) {
+      onError(e.response?.data['message']);
+    }
+  }
+
+  static Future<void> getTutorFeedback({
+    required int page,
+    required int perPage,
+    required String userId,
+    required Function(List<TutorFeedback>) onSuccess,
+    required Function(String) onError,
+  }) async {
+    try {
+      final response = await DioService().get(
+        '/feedback/v2/$userId?perPage=$perPage&page=$page',
+      );
+
+      final data = response.data;
+
+      if (response.statusCode != 200) {
+        throw Exception(data['message']);
+      }
+
+      final List<dynamic> feedbacks = data['data']['rows'];
+
+      final feedbackList = feedbacks
+          .map<TutorFeedback>((feedback) => TutorFeedback.fromJson(feedback))
+          .toList();
+
+      await onSuccess(feedbackList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
