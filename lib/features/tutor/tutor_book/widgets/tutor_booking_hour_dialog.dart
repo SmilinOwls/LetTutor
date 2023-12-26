@@ -4,9 +4,10 @@ import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/utils/time_convert.dart';
 
 class TutorBookingHourDialog extends StatefulWidget {
-  const TutorBookingHourDialog({super.key, this.dateSchedules});
+  const TutorBookingHourDialog({super.key, this.dateSchedules, required this.onBooked});
 
   final MapEntry<String, List<Schedule>>? dateSchedules;
+  final void Function(String, Schedule) onBooked;
 
   @override
   State<TutorBookingHourDialog> createState() => _TutorBookingHourDialogState();
@@ -17,7 +18,11 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
     await showDialog(
       context: context,
       builder: (context) => TutorBookingConfirmDialog(schedule: detailSchedule),
-    );
+    ).then((value) {
+      if (value == true) {
+        widget.onBooked(widget.dateSchedules?.key ?? '', detailSchedule);
+      }
+    });
   }
 
   @override

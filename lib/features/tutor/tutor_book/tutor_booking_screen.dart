@@ -60,6 +60,14 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
     });
   }
 
+  void _updateBookingDateStatus(String date, Schedule schedule) {
+    setState(() {
+      _tutorSchedules?[date]
+          ?.firstWhere((element) => element.id == schedule.id)
+          .isBooked = true;
+    });
+  }
+
   Future<void> _showTutorBookingTimeDialog(
       MapEntry<String, List<Schedule>>? dateSchedules) async {
     await showModalBottomSheet(
@@ -70,7 +78,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
       ),
       context: context,
       builder: (context) =>
-          TutorBookingHourDialog(dateSchedules: dateSchedules),
+          TutorBookingHourDialog(dateSchedules: dateSchedules, onBooked: _updateBookingDateStatus),
     );
   }
 
