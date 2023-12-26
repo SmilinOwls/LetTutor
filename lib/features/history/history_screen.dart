@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/history/widgets/history_card.dart';
 
@@ -15,7 +16,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: <Widget>[
-          const Icon(Icons.phone_callback_outlined, size: 62),
+          CachedNetworkImage(
+            imageUrl:
+                'https://sandbox.app.lettutor.com/static/media/history.1e097d10.svg',
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+            errorWidget: (context, url, error) => const Icon(
+              Icons.phone_callback_outlined,
+              size: 62,
+            ),
+          ),
           const SizedBox(height: 8),
           Text(
             'History',

@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
+import 'package:lettutor/services/booking_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 
 class SchduleRequestDialog extends StatefulWidget {
-  const SchduleRequestDialog({super.key});
+  const SchduleRequestDialog({
+    super.key,
+    required this.booking,
+    required this.updateStudentRequest,
+  });
+
+  final BookingInfo booking;
+  final Function(String) updateStudentRequest;
 
   @override
   State<SchduleRequestDialog> createState() => _SchduleRequestDialogState();
@@ -12,11 +22,29 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
       TextEditingController();
   bool _validate = false;
 
-  void _handleRequestSubmit() {
-    setState(() {
-      _validate = _requestTextEditingController.text.isEmpty;
-    });
-    if (!_validate) Navigator.of(context).pop(true);
+  @override
+  void initState() {
+    super.initState();
+    _requestTextEditingController.text = widget.booking.studentRequest ?? '';
+  }
+
+  void _handleRequestSubmit() async {
+    _validate = _requestTextEditingController.text.isEmpty;
+    if (!_validate) {
+      await BookingService.hanldeBookingStudentRequest(
+        bookingId: widget.booking.id ?? '',
+        studentRequest: _requestTextEditingController.text,
+        onSuccess: () {
+          widget.updateStudentRequest(_requestTextEditingController.text);
+          Navigator.of(context).pop(true);
+        },
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        ),
+      );
+    }
+    setState(() {});
   }
 
   @override
@@ -87,6 +115,12 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                   ),
                   errorText: _validate ? "The reason cannot be empty!" : null,
                   errorBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                      color: Colors.red,
+                    ),
+                  ),
+                  focusedErrorBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,
                       color: Colors.red,

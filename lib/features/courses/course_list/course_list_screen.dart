@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_list/widgets/course.dart';
 import 'package:lettutor/features/courses/course_list/widgets/ebook.dart';
@@ -38,7 +39,17 @@ class _CourseListScreenState extends State<CourseListScreen>
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: <Widget>[
-              const Icon(Icons.school_rounded, size: 62),
+              CachedNetworkImage(
+                imageUrl:
+                    'rhttps://sandbox.app.lettutor.com/static/media/course.0bf1bb71.svg',
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+                errorWidget: (context, url, error) => const Icon(
+                  Icons.school_rounded,
+                  size: 62,
+                ),
+              ),
               const SizedBox(height: 8),
               Text(
                 'Discover Courses',

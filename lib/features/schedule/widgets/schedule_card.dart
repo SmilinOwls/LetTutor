@@ -1,11 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
+import 'package:lettutor/models/schedule/schedule_info.dart';
+import 'package:lettutor/utils/time_convert.dart';
 
-class ScheduleCard extends StatelessWidget {
-  const ScheduleCard({super.key});
+class ScheduleCard extends StatefulWidget {
+  const ScheduleCard({super.key, required this.booking});
 
+  final BookingInfo booking;
+
+  @override
+  State<ScheduleCard> createState() => _ScheduleCardState();
+}
+
+class _ScheduleCardState extends State<ScheduleCard> {
   Future<void> _showScheduleCancelingDialog(BuildContext context) async {
     await showDialog(
         context: context,
@@ -18,12 +30,21 @@ class ScheduleCard extends StatelessWidget {
     await showDialog(
         context: context,
         builder: (context) {
-          return const SchduleRequestDialog();
+          return SchduleRequestDialog(
+              booking: widget.booking, updateStudentRequest: _updateStudentRequest);
         });
+  }
+
+  void _updateStudentRequest(String request) {
+    setState(() {
+      widget.booking.studentRequest = request;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final ScheduleInfo? scheduleInfo = widget.booking.scheduleDetailInfo?.scheduleInfo;
+
     return Card(
       elevation: 6,
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -33,7 +54,9 @@ class ScheduleCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              DateFormat.yMMMEd().format(DateTime.now()),
+              DateFormat.yMMMEd().format(
+                DateFormat('yyyy-MM-dd').parse(scheduleInfo?.date ?? ''),
+              ),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
@@ -45,34 +68,39 @@ class ScheduleCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   InkWell(
-                      onTap: () {},
-                      child: Container(
-                          width: 62,
-                          height: 62,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipOval(
-                            child: Image.asset(
-                              'assets/avatar/user/user_avatar.jpeg',
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.person_outline_rounded,
-                                      size: 62),
-                            ),
-                          ))),
+                    onTap: () {},
+                    child: Container(
+                      width: 62,
+                      height: 62,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      child: CachedNetworkImage(
+                        imageUrl: scheduleInfo?.tutorInfo?.avatar ?? '',
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => const Icon(
+                          Icons.person,
+                          size: 62,
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Keegan',
+                          scheduleInfo?.tutorInfo
+                                  ?.name ??
+                              '',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         const SizedBox(width: 8),
-                        const Text(
-                          'French',
+                        Text(
+                          countryList[scheduleInfo?.tutorInfo?.country ?? ''] ??
+                              '',
                         ),
                       ],
                     ),
@@ -80,32 +108,41 @@ class ScheduleCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  const Text(
-                    '18:30 - 18:55',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  Text(
+                    '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+                    ' - '
+                    '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   ExpansionTile(
                     title: const Text(
                       'Request for lesson',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     trailing: InkWell(
                       onTap: () {
                         _showScheduleRequestingDialog(context);
                       },
-                      child: const Text('Edit request',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue,
-                          )),
+                      child: const Text(
+                        'Edit request',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                        ),
+                      ),
                     ),
                     initiallyExpanded: true,
                     controlAffinity: ListTileControlAffinity.leading,
@@ -115,13 +152,15 @@ class ScheduleCard extends StatelessWidget {
                     collapsedShape: const RoundedRectangleBorder(
                       side: BorderSide(width: 0.5, color: Colors.grey),
                     ),
-                    children: const <Widget>[
+                    children: <Widget>[
                       ListTile(
                         title: Text(
-                          'Currently there are no requests for this class. Please write down any requests for the teacher.',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
+                          widget.booking.studentRequest ??
+                              'Currently there are no requests for this class. '
+                                  'Please write down any requests for the teacher.',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
