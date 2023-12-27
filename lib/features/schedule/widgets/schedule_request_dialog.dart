@@ -31,7 +31,7 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
   void _handleRequestSubmit() async {
     _validate = _requestTextEditingController.text.isEmpty;
     if (!_validate) {
-      await BookingService.hanldeBookingStudentRequest(
+      await BookingService.handleBookingStudentRequest(
         bookingId: widget.booking.id ?? '',
         studentRequest: _requestTextEditingController.text,
         onSuccess: () {

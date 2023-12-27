@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/services/booking_service.dart';
-import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_convert.dart';
-import 'package:lettutor/widgets/message_dialog.dart';
 
 class TutorBookingConfirmDialog extends StatefulWidget {
   const TutorBookingConfirmDialog({super.key, required this.schedule});
@@ -25,30 +23,15 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
       scheduleDetailIds: [widget.schedule.scheduleDetails?[0].id! ?? ''],
       note: _requestTextEditingController.text,
       onSuccess: () {
-        
-        _showTutorBookingStatusDialog();
+        Navigator.pop(context, true);
       },
       onError: (message) {
         Navigator.pop(context, false);
-        SnackBarHelper.showErrorSnackBar(
-          context: context,
-          content: message,
-        );
       },
     );
   }
   
-  Future<void> _showTutorBookingStatusDialog() async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return const MessageDialog(message: 'Book Successfully!');
-      },
-    ).then((_) {
-      Navigator.pop(context, true);
-      Navigator.pop(context, true);
-    });
-  }
+
 
   @override
   void dispose() {
@@ -181,7 +164,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
       actions: [
         OutlinedButton(
           onPressed: () {
-            Navigator.pop(context, false);
+            Navigator.pop(context);
           },
           style: OutlinedButton.styleFrom(
               fixedSize: const Size(100, 38),

@@ -1,33 +1,42 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lettutor/widgets/message_dialog.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
+import 'package:lettutor/models/schedule/schedule_info.dart';
+import 'package:lettutor/utils/time_convert.dart';
 
 class LessonDialog extends StatelessWidget {
-  const LessonDialog({super.key, this.child, this.onSubmit});
+  const LessonDialog({super.key, this.booking, this.child, this.onSubmit});
 
+  final BookingInfo? booking;
   final Widget? child;
-  final String? Function()? onSubmit;
+  final Future<String?> Function()? onSubmit;
 
-  Future<void> _showSuccessfulMessageDialog(BuildContext context) async {
-    final String? message = onSubmit!();
+  void _showSuccessfulMessageDialog(BuildContext context) async {
+    final String? message = await onSubmit!();
     if (message != null) {
       double? value = double.tryParse(message);
       if (value != null) {
-        Navigator.of(context).pop(value);
+        if (context.mounted) {
+          Navigator.of(context).pop(value);
+        }
       } else {
-        await showDialog(
-            context: context,
-            builder: (context) {
-              return MessageDialog(message: message);
-            }).then((value) => Navigator.of(context).pop(message));
+        if (context.mounted) {
+          Navigator.of(context).pop(message);
+        }
       }
     } else {
-      Navigator.of(context).pop(false);
+      if (context.mounted) {
+        Navigator.of(context).pop(false);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final ScheduleInfo? scheduleInfo =
+        booking?.scheduleDetailInfo?.scheduleInfo;
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       content: Container(
@@ -43,28 +52,32 @@ class LessonDialog extends StatelessWidget {
                   child: Container(
                     width: 62,
                     height: 62,
+                    clipBehavior: Clip.hardEdge,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        'assets/avatar/user/user_avatar.jpeg',
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.person_outline_rounded, size: 62),
+                    child: CachedNetworkImage(
+                      imageUrl: scheduleInfo?.tutorInfo?.avatar ?? '',
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.person,
+                        size: 62,
                       ),
                     ),
                   ),
                 ),
                 Text(
-                  'Keegan',
+                  scheduleInfo?.tutorInfo?.name ?? '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 8),
                 const Text('Lesson Time', style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 2),
                 Text(
-                  '${DateFormat.yMMMEd().format(DateTime.now())}, 18:30 - 18:55',
+                  '${DateFormat.yMMMEd().format(DateFormat('yyyy-MM-dd').parse(scheduleInfo?.date ?? ''))}, '
+                  '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+                  ' - '
+                  '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],

@@ -6,6 +6,7 @@ import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_convert.dart';
 
 class ScheduleCard extends StatefulWidget {
@@ -22,8 +23,22 @@ class _ScheduleCardState extends State<ScheduleCard> {
     await showDialog(
         context: context,
         builder: (context) {
-          return const ScheduleCancelingDialog();
-        });
+          return ScheduleCancelingDialog(booking: widget.booking);
+        }).then((value) {
+      if (value is String) {
+        if (value.toLowerCase() == 'true') {
+          SnackBarHelper.showSuccessSnackBar(
+            context: context,
+            content: 'You deleted booking successfully!',
+          );
+        } else {
+          SnackBarHelper.showErrorSnackBar(
+            context: context,
+            content: 'You failed to cancel booking!',
+          );
+        }
+      }
+    });
   }
 
   Future<void> _showScheduleRequestingDialog(BuildContext context) async {
@@ -31,7 +46,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
         context: context,
         builder: (context) {
           return SchduleRequestDialog(
-              booking: widget.booking, updateStudentRequest: _updateStudentRequest);
+            booking: widget.booking,
+            updateStudentRequest: _updateStudentRequest,
+          );
         });
   }
 
@@ -43,7 +60,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
 
   @override
   Widget build(BuildContext context) {
-    final ScheduleInfo? scheduleInfo = widget.booking.scheduleDetailInfo?.scheduleInfo;
+    final ScheduleInfo? scheduleInfo =
+        widget.booking.scheduleDetailInfo?.scheduleInfo;
 
     return Card(
       elevation: 6,
@@ -92,9 +110,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          scheduleInfo?.tutorInfo
-                                  ?.name ??
-                              '',
+                          scheduleInfo?.tutorInfo?.name ?? '',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         const SizedBox(width: 8),

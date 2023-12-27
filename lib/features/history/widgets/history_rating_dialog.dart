@@ -82,8 +82,8 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
           ),
         ],
       ),
-      onSubmit: () {
-        return _rating.toString();
+      onSubmit: () async {
+        return await Future<String>.value(_rating.toString());
       },
     );
   }

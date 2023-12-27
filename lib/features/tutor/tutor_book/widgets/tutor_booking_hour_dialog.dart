@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_confirm_dialog.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_convert.dart';
 
 class TutorBookingHourDialog extends StatefulWidget {
@@ -21,6 +22,15 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
     ).then((value) {
       if (value == true) {
         widget.onBooked(widget.dateSchedules?.key ?? '', detailSchedule);
+        SnackBarHelper.showSuccessSnackBar(
+          context: context,
+          content: 'You booked this tutor successfully!',
+        );
+      } else {
+        SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: 'You failed to book this tutor!',
+        );
       }
     });
   }

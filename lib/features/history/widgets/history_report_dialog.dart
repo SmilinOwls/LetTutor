@@ -133,8 +133,8 @@ class _HistoryReportDialogState extends State<HistoryReportDialog> {
           ),
         ],
       ),
-      onSubmit: () {
-        return 'You deleted booking successfully!';
+      onSubmit: () async {
+        return await Future<String>.value('You deleted booking successfully!');
       },
     );
   }

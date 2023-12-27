@@ -73,6 +73,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
     await showModalBottomSheet(
       elevation: 3,
       isScrollControlled: true,
+      barrierColor: Colors.black.withOpacity(0.2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),

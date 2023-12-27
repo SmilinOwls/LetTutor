@@ -94,7 +94,7 @@ class BookingService {
     }
   }
 
-  static Future<void> hanldeBookingStudentRequest({
+  static Future<void> handleBookingStudentRequest({
     required String bookingId,
     required String studentRequest,
     required Function() onSuccess,
@@ -120,16 +120,20 @@ class BookingService {
     }
   }
 
-  static Future<void> cancelBookedClass({
-    required List<String> scheduleDetailIds,
-    required Function() onSuccess,
-    required Function(String) onError,
+  static Future<bool?> cancelBooking({
+    required int cancelReasonId,
+    String? cancelNote,
+    required String scheduleDetailId,
   }) async {
     try {
       final response = await _dioService.delete(
-        '/booking',
+        '/booking/schedule-detail',
         data: {
-          'scheduleDetailIds': scheduleDetailIds,
+          'cancelInfo': {
+            'cancelReasonId': cancelReasonId,
+            'note': cancelNote,
+          },
+          'scheduleDetailId': scheduleDetailId,
         },
       );
 
@@ -139,9 +143,9 @@ class BookingService {
         throw Exception(data['message']);
       }
 
-      await onSuccess();
-    } on DioException catch (e) {
-      onError(e.response?.data['message']);
+      return true;
+    } on DioException {
+      return false;
     }
   }
 }
