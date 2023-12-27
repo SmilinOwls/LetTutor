@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:intl/intl.dart';
+import 'package:lettutor/utils/time_helper.dart';
 
 class VideoCallScreen extends StatefulWidget {
   const VideoCallScreen({super.key});
@@ -34,18 +35,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         }
       },
     );
-  }
-
-  String get _getRemainingTimer {
-    final String days = _currentTime.inDays.toString().padLeft(2, '0');
-    final String hours =
-        _currentTime.inHours.remainder(7).toString().padLeft(2, '0');
-    final String minutes =
-        _currentTime.inMinutes.remainder(24).toString().padLeft(2, '0');
-    final String seconds =
-        _currentTime.inSeconds.remainder(60).toString().padLeft(2, '0');
-
-    return '$days:$hours:$minutes:$seconds';
   }
 
   @override
@@ -84,7 +73,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                     color: Colors.black,
                   ),
                   child: Text(
-                    '$_getRemainingTimer until lesson start (${DateFormat('E, dd MMM yy H:m').format(_timeStamp)})',
+                    '${TimeHelper.getRemainingTimer(_currentTime)} until lesson start (${DateFormat('E, dd MMM yy H:m').format(_timeStamp)})',
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),

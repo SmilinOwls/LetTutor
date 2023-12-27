@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/features/history/widgets/history_rating_dialog.dart';
 import 'package:lettutor/features/history/widgets/history_report_dialog.dart';
-import 'package:lettutor/utils/time_diff.dart';
+import 'package:lettutor/utils/time_helper.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
 class HistoryCard extends StatefulWidget {
@@ -74,7 +74,7 @@ class _HistoryCardState extends State<HistoryCard> {
             ),
             const SizedBox(height: 4),
             Text(
-              TimeDiff.timeAgo('2023-10-30 00:00'),
+              TimeHelper.timeAgo('2023-10-30 00:00'),
             ),
             const SizedBox(height: 16),
             Container(

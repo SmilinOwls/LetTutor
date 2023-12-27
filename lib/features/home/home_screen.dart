@@ -178,14 +178,37 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: _filteredTutors!.length,
-                  itemBuilder: (content, index) => TutorCard(
-                    tutor: _filteredTutors![index],
-                  ),
-                )
+                _filteredTutors!.isNotEmpty
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _filteredTutors!.length,
+                        itemBuilder: (content, index) => TutorCard(
+                          tutor: _filteredTutors![index],
+                        ),
+                      )
+                    : const Center(
+                        child: Column(
+                        children: <Widget>[
+                          Icon(
+                            Icons.search_off,
+                            size: 100,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 12),
+                          Text(
+                            'No tutor found',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Please try again with different filters',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      )),
               ],
             ),
           );

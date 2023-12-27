@@ -1,7 +1,7 @@
-class TimeDiff {
+class TimeHelper {
   static String timeAgo(String createdTime) {
     final DateTime dt = DateTime.tryParse(createdTime) ?? DateTime.now();
-    
+
     Duration diff = DateTime.now().difference(dt);
     if (diff.inDays > 365) {
       return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
@@ -23,5 +23,16 @@ class TimeDiff {
     }
     return "just now";
   }
+
+  static String getRemainingTimer(Duration currentTime) {
+    final String days = currentTime.inDays.toString().padLeft(2, '0');
+    final String hours =
+        currentTime.inHours.remainder(24).toString().padLeft(2, '0');
+    final String minutes =
+        currentTime.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final String seconds =
+        currentTime.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    return '$days:$hours:$minutes:$seconds';
+  }
 }
- 

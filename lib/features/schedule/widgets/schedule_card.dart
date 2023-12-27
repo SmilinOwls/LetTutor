@@ -76,7 +76,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
           children: <Widget>[
             Text(
               DateFormat.yMMMEd().format(
-                DateFormat('yyyy-MM-dd').parse(scheduleInfo?.date ?? ''),
+                DateTime.fromMillisecondsSinceEpoch(
+                  scheduleInfo?.startTimeStamp ?? 0,
+                ),
               ),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
@@ -177,8 +179,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                           widget.booking.studentRequest ??
                               'Currently there are no requests for this class. '
                                   'Please write down any requests for the teacher.',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
+                            color: Colors.black.withOpacity(0.5),
                             fontWeight: FontWeight.w400,
                           ),
                         ),
