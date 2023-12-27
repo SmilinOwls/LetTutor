@@ -26,7 +26,7 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
           context: context,
           content: 'You booked this tutor successfully!',
         );
-      } else {
+      } if(value == false) {
         SnackBarHelper.showErrorSnackBar(
           context: context,
           content: 'You failed to book this tutor!',

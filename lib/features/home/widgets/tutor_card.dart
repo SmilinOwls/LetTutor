@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/features/tutor/tutor_book/tutor_booking_screen.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
@@ -164,7 +165,15 @@ class _TutorCardState extends State<TutorCard> {
             Align(
               alignment: Alignment.centerRight,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TutorBookingScreen(
+                        tutorId: widget.tutor.userId ?? 'null id',
+                      ),
+                    ),
+                  );
+                },
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: Theme.of(context).primaryColor),
                 ),

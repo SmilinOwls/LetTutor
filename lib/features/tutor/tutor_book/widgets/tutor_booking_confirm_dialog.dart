@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
+import 'package:lettutor/models/user/user.dart';
+import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/services/booking_service.dart';
+import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/time_convert.dart';
+import 'package:provider/provider.dart';
 
 class TutorBookingConfirmDialog extends StatefulWidget {
   const TutorBookingConfirmDialog({super.key, required this.schedule});
@@ -23,6 +27,18 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
       scheduleDetailIds: [widget.schedule.scheduleDetails?[0].id! ?? ''],
       note: _requestTextEditingController.text,
       onSuccess: () {
+        _updateUserInfo();
+      },
+      onError: (message) {
+        Navigator.pop(context, false);
+      },
+    );
+  }
+
+  void _updateUserInfo() async {
+    await UserService.getUserInfo(
+      onSuccess: (User user) {
+        context.read<AuthProvider>().setUser(user);
         Navigator.pop(context, true);
       },
       onError: (message) {
@@ -30,8 +46,6 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
       },
     );
   }
-  
-
 
   @override
   void dispose() {
@@ -41,6 +55,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthProvider>();
+    final balance = authProvider.getUser()?.walletInfo?.amount ?? '0';
+    
     return AlertDialog(
       title: Column(
         children: <Widget>[
@@ -94,9 +111,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                   'Balance',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
-                const Text(
-                  'You have 1 lesson left',
-                  style: TextStyle(fontSize: 16, color: Colors.blue),
+                Text(
+                  'You have ${int.parse(balance) / 100000} lesson(s) left',
+                  style: const TextStyle(fontSize: 16, color: Colors.blue),
                 ),
               ],
             ),
