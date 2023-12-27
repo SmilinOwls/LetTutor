@@ -10,7 +10,9 @@ import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_convert.dart';
 
 class ScheduleCard extends StatefulWidget {
-  const ScheduleCard({super.key, required this.booking});
+  const ScheduleCard({super.key, required this.booking, this.onCancel});
+
+  final Function(BookingInfo)? onCancel;
 
   final BookingInfo booking;
 
@@ -27,6 +29,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
         }).then((value) {
       if (value is String) {
         if (value.toLowerCase() == 'true') {
+          widget.onCancel?.call(widget.booking);
           SnackBarHelper.showSuccessSnackBar(
             context: context,
             content: 'You deleted booking successfully!',

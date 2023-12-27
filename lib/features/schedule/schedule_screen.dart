@@ -37,6 +37,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
+  void _updateBookingListAfterCanceling(BookingInfo booking){
+    setState(() {
+      _bookings = _bookings!.then((bookings) {
+        bookings.remove(booking);
+        return bookings;
+      });
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -78,6 +87,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   itemBuilder: (context, index) {
                     return ScheduleCard(
                       booking: bookings[index],
+                      onCancel: _updateBookingListAfterCanceling,
                     );
                   },
                 );
