@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/models/schedule/booking_info.dart';
+import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/call_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
@@ -19,13 +18,14 @@ class HomeHeader extends StatefulWidget {
 
 class _HomeHeaderState extends State<HomeHeader> {
   int? _totalCall;
-  BookingInfo? _nextLesson;
+  ScheduleInfo? _nextLesson;
   Timer? _timer;
   Duration? _currentTime;
 
   @override
   void initState() {
     super.initState();
+    _getMostUpcommingLesson();
     _getTotalCall();
   }
 
@@ -62,11 +62,10 @@ class _HomeHeaderState extends State<HomeHeader> {
           return soonScheduleTimeStamp.compareTo(laterScheduleTimeStamp);
         });
         setState(() {
-          _nextLesson = schedules.first;
+          _nextLesson = schedules.first.scheduleDetailInfo?.scheduleInfo;
           _startTimer(
             DateTime.fromMillisecondsSinceEpoch(
-              _nextLesson?.scheduleDetailInfo?.scheduleInfo?.startTimeStamp ??
-                  0,
+              _nextLesson?.startTimeStamp ?? 0,
             ),
           );
         });
@@ -84,7 +83,6 @@ class _HomeHeaderState extends State<HomeHeader> {
         setState(() {
           _totalCall = total;
         });
-        _getMostUpcommingLesson();
       },
       onError: (message) => SnackBarHelper.showErrorSnackBar(
         context: context,
@@ -99,17 +97,77 @@ class _HomeHeaderState extends State<HomeHeader> {
     _timer?.cancel();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final scheduleInfo = _nextLesson?.scheduleDetailInfo?.scheduleInfo;
-    final date = DateFormat.yMMMEd().format(
+  Widget upcomingLessonWidget() {
+     if(_nextLesson == null) return const SizedBox.shrink();
+
+     final date = DateFormat.yMMMEd().format(
       DateTime.fromMillisecondsSinceEpoch(
-        scheduleInfo?.startTimeStamp ?? 0,
+        _nextLesson?.startTimeStamp ?? 0,
       ),
     );
-    final time = '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+    final time = '${convertTimeStampToHour(_nextLesson?.startTimeStamp ?? 0)}'
         ' - '
-        '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}';
+        '${convertTimeStampToHour(_nextLesson?.endTimeStamp ?? 0)}';
+
+    return Column(
+      children: [
+        const SizedBox(height: 18),
+        const Text(
+          'Upcomming Lesson',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 18),
+        Text(
+          '$date $time',
+          style: const TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 18),
+        Text(
+          '(starts in ${TimeHelper.getRemainingTimer(_currentTime ?? Duration.zero)})',
+          style: const TextStyle(
+            fontSize: 18,
+            color: Colors.yellow,
+          ),
+        ),
+        const SizedBox(height: 18),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed(Routes.videoCall);
+          },
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.white,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(
+                Icons.ondemand_video_rounded,
+                color: Colors.blue[500],
+              ),
+              const SizedBox(width: 14),
+              Text(
+                'Enter Lesson Room',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.blue[500],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+   
     final hour = (_totalCall ?? 0) ~/ 60;
     final minute = (_totalCall ?? 0) % 60;
 
@@ -119,56 +177,7 @@ class _HomeHeaderState extends State<HomeHeader> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(height: 18),
-          const Text(
-            'Upcomming Lesson',
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 18),
-          Text(
-            '$date $time',
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 18),
-          Text(
-            '(starts in ${TimeHelper.getRemainingTimer(_currentTime ?? Duration.zero)})',
-            style: const TextStyle(
-              fontSize: 18,
-              color: Colors.yellow,
-            ),
-          ),
-          const SizedBox(height: 18),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(Routes.videoCall);
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.white,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(
-                  Icons.ondemand_video_rounded,
-                  color: Colors.blue[500],
-                ),
-                const SizedBox(width: 14),
-                Text(
-                  'Enter Lesson Room',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.blue[500],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          upcomingLessonWidget(),
           const SizedBox(height: 18),
           Text(
             'Total Lesson Time: $hour hours $minute minutes',
