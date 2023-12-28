@@ -74,7 +74,7 @@ class LessonDialog extends StatelessWidget {
                 const Text('Lesson Time', style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 2),
                 Text(
-                  '${DateFormat.yMMMEd().format(DateFormat('yyyy-MM-dd').parse(scheduleInfo?.date ?? ''))}, '
+                  '${DateFormat.yMMMEd().format(DateFormat('yyyy-MM-dd').parse(scheduleInfo?.date ?? '1999-01-01'))}, '
                   '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
                   ' - '
                   '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',

@@ -181,7 +181,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                                   'Please write down any requests for the teacher.',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withOpacity(0.8),
                             fontWeight: FontWeight.w400,
                           ),
                         ),

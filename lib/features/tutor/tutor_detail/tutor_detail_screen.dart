@@ -7,6 +7,7 @@ import 'package:lettutor/features/tutor/tutor_detail/widgets/tutor_report_dialog
 import 'package:lettutor/features/tutor/tutor_review/tutor_review_screen.dart';
 import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/tutor_service.dart';
+import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:lettutor/widgets/star_rating.dart';
@@ -57,7 +58,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
   }
 
   void _handleFavorite(String userId) async {
-    await TutorService.handleFavorite(
+    await UserService.handleFavorite(
       userId: userId,
       onSuccess: () {
         setState(() {

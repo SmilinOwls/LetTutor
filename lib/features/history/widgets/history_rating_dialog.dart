@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
+import 'package:lettutor/models/tutor/tutor_feedback.dart';
+import 'package:lettutor/services/user_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/lesson_dialog.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
 class HistoryRatingDialog extends StatefulWidget {
-  const HistoryRatingDialog({super.key});
+  const HistoryRatingDialog({super.key, required this.booking, this.feedback});
+
+  final BookingInfo booking;
+  final TutorFeedback? feedback;
 
   @override
   State<HistoryRatingDialog> createState() => _HistoryRatingDialogState();
@@ -12,7 +19,37 @@ class HistoryRatingDialog extends StatefulWidget {
 class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
   final TextEditingController _reviewTextEditingController =
       TextEditingController();
-  double _rating = 5;
+  double? _rating;
+
+  late final BookingInfo booking;
+
+  @override
+  void initState() {
+    super.initState();
+    booking = widget.booking;
+    _rating = widget.feedback?.rating?.toDouble();
+    _reviewTextEditingController.text = widget.feedback?.content ?? '';
+  }
+
+  Future<String?> _handleRatingSubmit() async {
+    final response = await UserService.feedbackTutor(
+      bookingId: booking.id ?? '',
+      userId: booking.userId ?? '',
+      rating: _rating as int,
+      content: _reviewTextEditingController.text,
+      onSuccess: () {
+        return _rating.toString();
+      },
+      onError: (message) {
+        SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        );
+      },
+    );
+
+    return response;
+  }
 
   @override
   void dispose() {
@@ -23,16 +60,17 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
   @override
   Widget build(BuildContext context) {
     return LessonDialog(
+      booking: booking,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            'What is your rating for Keegan?',
+            'What is your rating for ${booking.scheduleDetailInfo?.scheduleInfo?.tutorInfo?.name}?',
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 14),
           StarRating(
-            rating: _rating,
+            rating: _rating ?? 0,
             onRatingChanged: (value) => setState(() {
               _rating = value;
             }),
@@ -83,7 +121,7 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
         ],
       ),
       onSubmit: () async {
-        return await Future<String>.value(_rating.toString());
+        return await _handleRatingSubmit();
       },
     );
   }

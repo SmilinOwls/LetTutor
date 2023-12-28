@@ -4,7 +4,7 @@ import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/tutor/tutor_book/tutor_booking_screen.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
-import 'package:lettutor/services/tutor_service.dart';
+import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 import 'package:lettutor/widgets/tag_chip.dart';
@@ -47,7 +47,7 @@ class _TutorCardState extends State<TutorCard> {
   }
 
   void _handleFavorite(String userId) async {
-    await TutorService.handleFavorite(
+    await UserService.handleFavorite(
       userId: userId,
       onSuccess: () {
         setState(() {

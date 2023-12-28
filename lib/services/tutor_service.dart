@@ -119,31 +119,6 @@ class TutorService {
     }
   }
 
-  static Future<void> handleFavorite({
-    required String userId,
-    required Function() onSuccess,
-    required Function(String) onError,
-  }) async {
-    try {
-      final response = await DioService().post(
-        '/user/manageFavoriteTutor',
-        data: {
-          'tutorId': userId,
-        },
-      );
-
-      final data = response.data;
-
-      if (response.statusCode != 200) {
-        throw Exception(data['message']);
-      }
-
-      await onSuccess();
-    } on DioException catch (e) {
-      onError(e.response?.data['message']);
-    }
-  }
-
   static Future<void> reportTutor({
     required String userId,
     required String content,

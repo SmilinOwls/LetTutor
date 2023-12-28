@@ -24,7 +24,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
 
   void _tutorBookingHandle() async {
     await BookingService.bookClass(
-      scheduleDetailIds: [widget.schedule.scheduleDetails?[0].id! ?? ''],
+      scheduleDetailIds: [widget.schedule.scheduleDetails?[0].id ?? ''],
       note: _requestTextEditingController.text,
       onSuccess: () {
         _updateUserInfo();

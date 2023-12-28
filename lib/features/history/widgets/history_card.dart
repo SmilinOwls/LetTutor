@@ -1,26 +1,40 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/history/widgets/history_rating_dialog.dart';
 import 'package:lettutor/features/history/widgets/history_report_dialog.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
+import 'package:lettutor/models/schedule/schedule_info.dart';
+import 'package:lettutor/utils/time_convert.dart';
 import 'package:lettutor/utils/time_helper.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
 class HistoryCard extends StatefulWidget {
-  const HistoryCard({super.key});
+  const HistoryCard({super.key, required this.booking, required this.onUpdatedBooking});
+
+  final BookingInfo booking;
+
+  final void Function() onUpdatedBooking;
 
   @override
   State<HistoryCard> createState() => _HistoryCardState();
 }
 
 class _HistoryCardState extends State<HistoryCard> {
-  final List<String> _skillRating = <String>[
-    'Behavior',
-    'Listening',
-    'Speaking',
-    'Vocabulary'
-  ];
+  // final List<String> _skillRating = <String>[
+  //   'Behavior',
+  //   'Listening',
+  //   'Speaking',
+  //   'Vocabulary'
+  // ];
 
   double? _rating;
+  @override
+  void initState() {
+    super.initState();
+    _rating = widget.booking.feedbacks?.lastOrNull?.rating?.toDouble();
+  }
 
   Future<void> _showHistoryReportDialog(BuildContext context) async {
     await showDialog(
@@ -34,9 +48,13 @@ class _HistoryCardState extends State<HistoryCard> {
     await showDialog(
         context: context,
         builder: (context) {
-          return const HistoryRatingDialog();
+          return HistoryRatingDialog(
+            booking: widget.booking,
+            feedback: widget.booking.feedbacks?.lastOrNull,
+          );
         }).then((value) {
       if (value != null) {
+        widget.onUpdatedBooking();
         setState(() {
           _rating = value;
         });
@@ -44,20 +62,23 @@ class _HistoryCardState extends State<HistoryCard> {
     });
   }
 
-  Widget buildSkillRating(BuildContext context, int index) {
-    return Row(
-      children: <Widget>[
-        Text(_skillRating[index]),
-        const Text(' ('),
-        const StarRating(rating: 5),
-        const Text('): '),
-        const Text('Great')
-      ],
-    );
-  }
+  // Widget buildSkillRating(BuildContext context, int index) {
+  //   return Row(
+  //     children: <Widget>[
+  //       Text(_skillRating[index]),
+  //       const Text(' ('),
+  //       const StarRating(rating: 5),
+  //       const Text('): '),
+  //       const Text('Great')
+  //     ],
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final ScheduleInfo? scheduleInfo =
+        widget.booking.scheduleDetailInfo?.scheduleInfo;
+
     return Card(
       elevation: 6,
       margin: const EdgeInsets.symmetric(
@@ -69,12 +90,20 @@ class _HistoryCardState extends State<HistoryCard> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              DateFormat.yMMMEd().format(DateTime.now()),
+              DateFormat.yMMMEd().format(
+                DateTime.fromMillisecondsSinceEpoch(
+                  scheduleInfo?.startTimeStamp ?? 0,
+                ),
+              ),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
             Text(
-              TimeHelper.timeAgo('2023-10-30 00:00'),
+              TimeHelper.timeAgo(
+                DateTime.fromMillisecondsSinceEpoch(
+                  scheduleInfo?.startTimeStamp ?? 0,
+                ).toString(),
+              ),
             ),
             const SizedBox(height: 16),
             Container(
@@ -90,13 +119,13 @@ class _HistoryCardState extends State<HistoryCard> {
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/avatar/user/user_avatar.jpeg',
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Icon(Icons.person_outline_rounded,
-                                  size: 62),
+                      clipBehavior: Clip.hardEdge,
+                      child: CachedNetworkImage(
+                        imageUrl: scheduleInfo?.tutorInfo?.avatar ?? '',
+                        fit: BoxFit.cover,
+                        errorWidget: (context, url, error) => const Icon(
+                          Icons.person,
+                          size: 62,
                         ),
                       ),
                     ),
@@ -107,12 +136,13 @@ class _HistoryCardState extends State<HistoryCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          'Keegan',
+                          scheduleInfo?.tutorInfo?.name ?? '',
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                         const SizedBox(width: 8),
-                        const Text(
-                          'French',
+                        Text(
+                          countryList[scheduleInfo?.tutorInfo?.country ?? ''] ??
+                              '',
                         ),
                       ],
                     ),
@@ -123,11 +153,14 @@ class _HistoryCardState extends State<HistoryCard> {
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
-              child: const Text(
-                'Lesson Time: 19:30-19:55',
-                style: TextStyle(
+              child: Text(
+                'Lesson Time: '
+                '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+                ' - '
+                '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
+                style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -135,32 +168,39 @@ class _HistoryCardState extends State<HistoryCard> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const ExpansionTile(
-                  title: Text(
+                ExpansionTile(
+                  expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+                  childrenPadding: const EdgeInsets.only(
+                    left: 8,
+                    bottom: 10,
+                  ),
+                  title: const Text(
                     'Request for lesson',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  shape: RoundedRectangleBorder(),
+                  shape: const RoundedRectangleBorder(),
                   children: <Widget>[
-                    ListTile(
-                      title: Text(
-                        'Need to have more exercises',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
+                     ListTile(
+                        title: Text(
+                          widget.booking.studentRequest ??
+                              'No request for this lesson',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black.withOpacity(0.8),
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
                 const Divider(height: 1),
                 ExpansionTile(
                   expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
                   childrenPadding: const EdgeInsets.only(
-                    left: 14,
+                    left: 8,
                     bottom: 10,
                   ),
                   title: const Text(
@@ -172,19 +212,30 @@ class _HistoryCardState extends State<HistoryCard> {
                   ),
                   shape: const RoundedRectangleBorder(),
                   children: <Widget>[
-                    const Text(
-                      'Session 1: 00:00 - 00:25',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                    // const Text(
+                    //   'Session 1: 00:00 - 00:25',
+                    //   style: TextStyle(
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w700,
+                    //   ),
+                    // ),
+                    // const Text('Level status: Completed'),
+                    // ...List<Widget>.generate(
+                    //   _skillRating.length,
+                    //   (index) => buildSkillRating(context, index),
+                    // ),
+                    // const Text('Overall comment: Good'),
+                    ListTile(
+                        title: Text(
+                          widget.booking.tutorReview ??
+                              'Tutor has not reviewed yet',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black.withOpacity(0.8),
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
-                    ),
-                    const Text('Level status: Completed'),
-                    ...List<Widget>.generate(
-                      _skillRating.length,
-                      (index) => buildSkillRating(context, index),
-                    ),
-                    const Text('Overall comment: Good'),
                   ],
                 ),
                 const Divider(height: 1),
