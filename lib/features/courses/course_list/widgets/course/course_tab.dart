@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_list/widgets/course/course_card.dart';
-import 'package:lettutor/models/courses/course.dart';
-import 'package:lettutor/services/course_service.dart';
+import 'package:lettutor/models/courses/course/course.dart';
+import 'package:lettutor/services/courses_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 
 class CourseTab extends StatefulWidget {
@@ -21,7 +21,7 @@ class _CourseTabState extends State<CourseTab> {
   }
 
   void _getCourseList() {
-    CourseService.getListCourseWithPagination(
+    CoursesService.getListCourseWithPagination(
       page: 1,
       size: 100,
       onSuccess: (courses) {

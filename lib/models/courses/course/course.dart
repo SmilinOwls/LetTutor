@@ -1,5 +1,5 @@
-import 'package:lettutor/models/courses/course_category.dart';
-import 'package:lettutor/models/courses/course_topic.dart';
+import 'package:lettutor/models/courses/course/course_category.dart';
+import 'package:lettutor/models/courses/course/course_topic.dart';
 
 class Course {
   String? id;
@@ -79,3 +79,5 @@ class Course {
     return data;
   }
 }
+
+

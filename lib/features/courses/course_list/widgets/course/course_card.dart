@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/models/courses/course.dart';
+import 'package:lettutor/models/courses/course/course.dart';
 
 class CourseCard extends StatelessWidget {
   const CourseCard({super.key, required this.course});
@@ -59,9 +59,7 @@ class CourseCard extends StatelessWidget {
                         course.name ?? 'null name',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
+                      const SizedBox(height: 8),
                       Text(
                         course.description ?? 'null description',
                         style: const TextStyle(
@@ -75,7 +73,7 @@ class CourseCard extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              courseLevel[course.level] ?? 'null level',
+                              coursesLevel[course.level] ?? 'null level',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
