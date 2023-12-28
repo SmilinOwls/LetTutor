@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/cerificate_dialog.dart';
-import 'package:lettutor/widgets/drop_down.dart';
-import 'package:lettutor/widgets/headline_text.dart';
-import 'package:lettutor/widgets/helper_text.dart';
-import 'package:lettutor/widgets/text_input.dart';
+import 'package:lettutor/widgets/drop_down/drop_down.dart';
+import 'package:lettutor/widgets/text/headline_text.dart';
+import 'package:lettutor/widgets/text/helper_text.dart';
+import 'package:lettutor/widgets/form_field/text_input.dart';
 
 class ProfileResumeStep extends StatefulWidget {
   const ProfileResumeStep({

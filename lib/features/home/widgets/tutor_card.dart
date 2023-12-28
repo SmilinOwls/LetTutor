@@ -6,8 +6,8 @@ import 'package:lettutor/features/tutor/tutor_book/tutor_booking_screen.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/widgets/star_rating.dart';
-import 'package:lettutor/widgets/tag_chip.dart';
+import 'package:lettutor/widgets/star_rating/star_rating.dart';
+import 'package:lettutor/widgets/chip/tag_chip.dart';
 
 class TutorCard extends StatefulWidget {
   const TutorCard({super.key, required this.tutor});

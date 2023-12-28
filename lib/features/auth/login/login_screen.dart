@@ -8,7 +8,7 @@ import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/services/auth_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

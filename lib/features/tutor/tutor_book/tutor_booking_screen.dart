@@ -4,7 +4,7 @@ import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_hour_di
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 
 class TutorBookingScreen extends StatefulWidget {
   const TutorBookingScreen({super.key, required this.tutorId});

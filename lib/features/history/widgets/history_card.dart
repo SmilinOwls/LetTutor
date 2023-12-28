@@ -7,7 +7,7 @@ import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
-import 'package:lettutor/widgets/star_rating.dart';
+import 'package:lettutor/widgets/star_rating/star_rating.dart';
 
 class HistoryCard extends StatefulWidget {
   const HistoryCard(

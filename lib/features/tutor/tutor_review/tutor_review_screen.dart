@@ -3,7 +3,7 @@ import 'package:lettutor/features/tutor/tutor_review/widgets/review_card.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 
 class TutorReviewScreen extends StatefulWidget {
   const TutorReviewScreen({super.key, required this.tutorId});

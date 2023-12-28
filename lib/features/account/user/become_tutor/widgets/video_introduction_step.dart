@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lettutor/utils/media_picker.dart';
-import 'package:lettutor/widgets/headline_text.dart';
-import 'package:lettutor/widgets/helper_text.dart';
-import 'package:lettutor/widgets/video_player.dart';
+import 'package:lettutor/widgets/text/headline_text.dart';
+import 'package:lettutor/widgets/text/helper_text.dart';
+import 'package:lettutor/widgets/video_player/video_player.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoIntroductionStep extends StatefulWidget {

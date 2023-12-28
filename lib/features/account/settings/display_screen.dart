@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/providers/theme/theme_provider.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
 
 class DisplayScreen extends StatefulWidget {

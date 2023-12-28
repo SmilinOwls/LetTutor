@@ -5,9 +5,9 @@ import 'package:lettutor/features/courses/course_detail/widgets/course_detail_ca
 import 'package:lettutor/models/courses/course/course.dart';
 import 'package:lettutor/services/courses_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/widgets/headline_text.dart';
+import 'package:lettutor/widgets/text/headline_text.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/topic_card.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 
 class CourseDetailScreen extends StatefulWidget {
   const CourseDetailScreen({super.key});

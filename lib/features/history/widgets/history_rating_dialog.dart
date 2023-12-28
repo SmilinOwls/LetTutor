@@ -3,8 +3,8 @@ import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/widgets/lesson_dialog.dart';
-import 'package:lettutor/widgets/star_rating.dart';
+import 'package:lettutor/widgets/dialog/lesson_dialog.dart';
+import 'package:lettutor/widgets/star_rating/star_rating.dart';
 
 class HistoryRatingDialog extends StatefulWidget {
   const HistoryRatingDialog({super.key, required this.booking, this.feedback});

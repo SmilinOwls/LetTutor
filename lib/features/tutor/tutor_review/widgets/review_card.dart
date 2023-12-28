@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/utils/time_helper.dart';
-import 'package:lettutor/widgets/star_rating.dart';
+import 'package:lettutor/widgets/star_rating/star_rating.dart';
 
 class ReviewCard extends StatelessWidget {
   const ReviewCard({super.key, required this.review});

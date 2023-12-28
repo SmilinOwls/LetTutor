@@ -9,10 +9,10 @@ import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/widgets/app_bar.dart';
-import 'package:lettutor/widgets/star_rating.dart';
-import 'package:lettutor/widgets/tag_chip.dart';
-import 'package:lettutor/widgets/video_player.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:lettutor/widgets/star_rating/star_rating.dart';
+import 'package:lettutor/widgets/chip/tag_chip.dart';
+import 'package:lettutor/widgets/video_player/video_player.dart';
 import 'package:video_player/video_player.dart';
 
 class TutorDetailScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/courses/course/course.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CourseTopicScreen extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
-import 'package:lettutor/widgets/lesson_dialog.dart';
+import 'package:lettutor/widgets/dialog/lesson_dialog.dart';
 
 class ScheduleCancelingDialog extends StatefulWidget {
   const ScheduleCancelingDialog({super.key, required this.booking});

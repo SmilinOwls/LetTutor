@@ -4,7 +4,7 @@ import 'package:lettutor/features/courses/course_list/course_list_screen.dart';
 import 'package:lettutor/features/history/history_screen.dart';
 import 'package:lettutor/features/home/home_screen.dart';
 import 'package:lettutor/features/schedule/schedule_screen.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 
 class TabBarNavigator extends StatefulWidget {
   const TabBarNavigator({super.key});
