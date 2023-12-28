@@ -1,5 +1,6 @@
 import 'package:lettutor/models/courses/course/course_category.dart';
 import 'package:lettutor/models/courses/course/course_topic.dart';
+import 'package:lettutor/models/user/user.dart';
 
 class Course {
   String? id;
@@ -17,6 +18,7 @@ class Course {
   String? updatedAt;
   List<CourseTopic>? topics;
   List<CourseCategory>? categories;
+  List<User>? users;
 
   Course({
     this.id,
@@ -34,6 +36,7 @@ class Course {
     this.updatedAt,
     this.topics,
     this.categories,
+    this.users,
   });
 
   Course.fromJson(Map<String, dynamic> json) {
@@ -56,6 +59,9 @@ class Course {
     categories = json['categories']?.map<CourseCategory>((category) {
       return CourseCategory.fromJson(category);
     }).toList();
+    users = json['users']?.map<User>((user) {
+      return User.fromJson(user);
+    }).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -74,10 +80,9 @@ class Course {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['topics'] = topics?.map((topic) => topic.toJson()).toList();
-    data['categories'] = categories?.map((category) => category.toJson()).toList();
-
+    data['categories'] =
+        categories?.map((category) => category.toJson()).toList();
+    data['users'] = users?.map((user) => user.toJson()).toList();
     return data;
   }
 }
-
-

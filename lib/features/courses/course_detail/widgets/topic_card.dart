@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
-import 'package:lettutor/constants/dto/courses/course.dart';
+import 'package:lettutor/models/courses/course/course.dart';
 
 class CourseTopicCard extends StatelessWidget {
-  const CourseTopicCard(
-      {super.key, required this.index, required this.course});
+  const CourseTopicCard({
+    super.key,
+    required this.index,
+    required this.course,
+  });
 
   final int index;
   final Course course;

@@ -9,7 +9,7 @@ class EbookCard extends StatelessWidget {
 
   final EBook ebook;
 
-  Future<void> _launchEBookUrl(String url) async {
+  void _launchEBookUrl(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }

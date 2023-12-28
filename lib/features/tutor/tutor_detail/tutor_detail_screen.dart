@@ -39,10 +39,9 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
   }
 
   void _getTutorInfo() async {
-    final arguments =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final arguments = ModalRoute.of(context)!.settings.arguments as String?;
 
-    final String userId = arguments['tutorId'] ?? 'null id';
+    final String userId = arguments ?? 'null id';
 
     await TutorService.getTutorInfoById(
       userId: userId,

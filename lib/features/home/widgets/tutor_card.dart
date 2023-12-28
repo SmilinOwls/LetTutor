@@ -80,11 +80,10 @@ class _TutorCardState extends State<TutorCard> {
             Row(
               children: <Widget>[
                 InkWell(
-                  onTap: () => Navigator.of(context)
-                      .pushNamed(Routes.tutorDetail, arguments: {
-                    'tutorId': widget.tutor.userId,
-                    'feedbacks': widget.tutor.feedbacks,
-                  }),
+                  onTap: () => Navigator.of(context).pushNamed(
+                    Routes.tutorDetail,
+                    arguments: widget.tutor.userId,
+                  ),
                   child: Container(
                     width: 72,
                     height: 72,
@@ -114,8 +113,10 @@ class _TutorCardState extends State<TutorCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       InkWell(
-                        onTap: () =>
-                            Navigator.of(context).pushNamed(Routes.tutorDetail),
+                        onTap: () => Navigator.of(context).pushNamed(
+                          Routes.tutorDetail,
+                          arguments: widget.tutor.userId,
+                        ),
                         child: Text(widget.tutor.name ?? 'null name',
                             style: Theme.of(context).textTheme.displaySmall),
                       ),

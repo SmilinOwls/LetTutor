@@ -1,6 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
-import 'package:lettutor/constants/dto/courses/course.dart';
+import 'package:lettutor/models/courses/course/course.dart';
 
 class CourseDetailCard extends StatelessWidget {
   const CourseDetailCard({super.key, required this.course});
@@ -25,13 +26,12 @@ class CourseDetailCard extends StatelessWidget {
       shadowColor: const Color.fromARGB(255, 132, 132, 132),
       child: Column(
         children: <Widget>[
-          Image(
-            image: AssetImage(course.imageUrl ?? ''),
+          CachedNetworkImage(
+            imageUrl: course.imageUrl ?? 'null image url',
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) => const Icon(
-              Icons.error_outline_rounded,
-              size: 32,
-              color: Colors.redAccent,
+            errorWidget: (context, url, error) => const Icon(
+              Icons.error,
+              size: 62,
             ),
           ),
           Padding(
