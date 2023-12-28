@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
-import 'package:lettutor/utils/time_convert.dart';
+import 'package:lettutor/utils/time_helper.dart';
 
 class LessonDialog extends StatelessWidget {
   const LessonDialog({super.key, this.booking, this.child, this.onSubmit});
@@ -74,10 +73,10 @@ class LessonDialog extends StatelessWidget {
                 const Text('Lesson Time', style: TextStyle(fontSize: 16)),
                 const SizedBox(height: 2),
                 Text(
-                  '${DateFormat.yMMMEd().format(DateFormat('yyyy-MM-dd').parse(scheduleInfo?.date ?? '1999-01-01'))}, '
-                  '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+                  '${TimeHelper.convertTimeStampToDay(scheduleInfo?.startTimeStamp ?? 0)}, '
+                  '${TimeHelper.convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
                   ' - '
-                  '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
+                  '${TimeHelper.convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],

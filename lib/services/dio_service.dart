@@ -99,11 +99,15 @@ class DioService {
 
   Future<Response> post(
     String url, {
-    Map<String, dynamic>? data,
+    dynamic data,
+    String? contentType,
   }) async {
     return _dio.post(
       url,
       data: data,
+      options: Options(
+        contentType: contentType,
+      ),
     );
   }
 

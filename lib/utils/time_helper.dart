@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class TimeHelper {
   static String timeAgo(String createdTime) {
     final DateTime dt = DateTime.tryParse(createdTime) ?? DateTime.now();
@@ -34,5 +36,17 @@ class TimeHelper {
         currentTime.inSeconds.remainder(60).toString().padLeft(2, '0');
 
     return '$days:$hours:$minutes:$seconds';
+  }
+
+  static String convertTimeStampToHour(int timestamp) {
+    final DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    final String hour = DateFormat('HH:mm').format(date);
+    return hour;
+  }
+
+  static String convertTimeStampToDay(int timestamp) {
+    final String day = DateFormat.yMMMEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(timestamp));
+    return day;
   }
 }

@@ -5,7 +5,7 @@ import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/user_service.dart';
-import 'package:lettutor/utils/time_convert.dart';
+import 'package:lettutor/utils/time_helper.dart';
 import 'package:provider/provider.dart';
 
 class TutorBookingConfirmDialog extends StatefulWidget {
@@ -84,9 +84,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             ),
             const SizedBox(height: 6),
             Text(
-              '${convertTimeStampToHour(widget.schedule.startTimestamp ?? 0)}'
+              '${TimeHelper.convertTimeStampToHour(widget.schedule.startTimestamp ?? 0)}'
               '-'
-              '${convertTimeStampToHour(widget.schedule.endTimestamp ?? 0)}',
+              '${TimeHelper.convertTimeStampToHour(widget.schedule.endTimestamp ?? 0)}',
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.blue[700],

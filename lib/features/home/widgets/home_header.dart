@@ -6,7 +6,6 @@ import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/call_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/utils/time_convert.dart';
 import 'package:lettutor/utils/time_helper.dart';
 
 class HomeHeader extends StatefulWidget {
@@ -105,9 +104,9 @@ class _HomeHeaderState extends State<HomeHeader> {
         _nextLesson?.startTimeStamp ?? 0,
       ),
     );
-    final time = '${convertTimeStampToHour(_nextLesson?.startTimeStamp ?? 0)}'
+    final time = '${TimeHelper.convertTimeStampToHour(_nextLesson?.startTimeStamp ?? 0)}'
         ' - '
-        '${convertTimeStampToHour(_nextLesson?.endTimeStamp ?? 0)}';
+        '${TimeHelper.convertTimeStampToHour(_nextLesson?.endTimeStamp ?? 0)}';
 
     return Column(
       children: [

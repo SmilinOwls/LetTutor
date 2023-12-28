@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';
@@ -114,5 +116,33 @@ class UserService {
     }
     
     return null;
+  }
+
+  static Future<void> uploadImage({
+    required File image,
+    required Function(User) onSuccess,
+    required Function(String) onError,
+  }) async {
+    try {
+      final response = await DioService().post(
+        '/user/uploadAvatar',
+        data: FormData.fromMap({
+          'avatar': await MultipartFile.fromFile(image.path),
+        }),
+        contentType: 'multipart/form-data',
+      );
+
+      final data = response.data;
+
+      if (response.statusCode != 200) {
+        throw Exception(data['message']);
+      }
+
+      final user = User.fromJson(data['user']);
+
+      await onSuccess(user);
+    } on DioException catch (e) {
+      onError(e.response?.data['message']);
+    }
   }
 }

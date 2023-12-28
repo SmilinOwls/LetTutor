@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/utils/time_convert.dart';
+import 'package:lettutor/utils/time_helper.dart';
 
 class ScheduleCard extends StatefulWidget {
   const ScheduleCard({super.key, required this.booking, this.onCancel});
@@ -75,11 +74,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              DateFormat.yMMMEd().format(
-                DateTime.fromMillisecondsSinceEpoch(
-                  scheduleInfo?.startTimeStamp ?? 0,
-                ),
-              ),
+              TimeHelper.convertTimeStampToDay(scheduleInfo?.startTimeStamp ?? 0),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
@@ -136,9 +131,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+                    '${TimeHelper.convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
                     ' - '
-                    '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
+                    '${TimeHelper.convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

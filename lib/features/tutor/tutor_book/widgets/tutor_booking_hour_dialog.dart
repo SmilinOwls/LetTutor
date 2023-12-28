@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_confirm_dialog.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/utils/time_convert.dart';
+import 'package:lettutor/utils/time_helper.dart';
 
 class TutorBookingHourDialog extends StatefulWidget {
   const TutorBookingHourDialog({super.key, this.dateSchedules, required this.onBooked});
@@ -85,9 +85,9 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
                             tutorDetailSchedule[index]);
                       },
                       child: Text(
-                        '${convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
+                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
                         '-'
-                        '${convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
+                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -103,9 +103,9 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
                               ),
                       onPressed: null,
                       child: Text(
-                        '${convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
+                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
                         '-'
-                        '${convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
+                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white,

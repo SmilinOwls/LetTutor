@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,7 +26,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Uint8List? _imageData;
+  ValueNotifier<String?>? _imageData;
 
   final TextEditingController _nameTextEditingController =
       TextEditingController();
@@ -67,6 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _getAccountInfo() async {
     await UserService.getUserInfo(
       onSuccess: (user) {
+        _imageData = ValueNotifier(user.avatar);
         _nameTextEditingController.text = user.name ?? '';
         _emailTextEditingController.text = user.email ?? '';
         _countryTextEditingController.text = user.country ?? '';
@@ -94,11 +95,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _getAccountInfo();
   }
 
-  Future<void> _onAvatarChanged() async {
-    Uint8List? imageData = await pickerImage(ImageSource.gallery);
-    setState(() {
-      _imageData = imageData;
-    });
+  void _onAvatarSubmited() async {
+    File? imageData = await pickerImage(ImageSource.gallery);
+    if (imageData != null) {
+      _imageData?.value = imageData.path;
+      await UserService.uploadImage(
+        image: imageData,
+        onSuccess: (user){
+          _imageData?.value = user.avatar;
+          context.read<AuthProvider>().setUser(user);
+        },
+        onError: (message) {
+          SnackBarHelper.showErrorSnackBar(
+            context: context,
+            content: message,
+          );
+        },
+      );
+    }
   }
 
   void _onDateChanged(BuildContext context) async {
@@ -138,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           studySchedule: _studyScheduleTextEditingController.text,
         ),
         onSuccess: (user) {
-          Provider.of<AuthProvider>(context, listen: false).setUser(user!);
+          context.read<AuthProvider>().setUser(user!);
           SnackBarHelper.showSuccessSnackBar(
             context: context,
             content: 'Your profile has been updated.',
@@ -199,35 +213,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: <Widget>[
-                      Container(
-                        width: 140,
-                        height: 140,
-                        clipBehavior: Clip.hardEdge,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
+                      ValueListenableBuilder<String?>(
+                        valueListenable: _imageData ?? ValueNotifier(''),
+                        builder: (context, value, child) => Container(
+                          width: 140,
+                          height: 140,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.network(
+                            value ?? '',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.person_rounded, size: 62),
+                          ),
                         ),
-                        child: _imageData != null
-                            ? Image.memory(
-                                _imageData!,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.person_rounded, size: 62),
-                              )
-                            : Image.network(
-                                user?.avatar ?? '',
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.person_rounded, size: 62),
-                              ),
                       ),
                       Positioned(
                         bottom: 0,
                         right: 0,
                         width: 32,
                         child: InkWell(
-                          onTap: () {
-                            _onAvatarChanged();
-                          },
+                          onTap: _onAvatarSubmited,
                           child: CircleAvatar(
                             backgroundColor: Theme.of(context).primaryColor,
                             child: const Icon(
@@ -257,6 +265,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Colors.grey.shade500,
                           fontWeight: FontWeight.w400,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 6),
                       const Text(

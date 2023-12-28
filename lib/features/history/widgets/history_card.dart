@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/history/widgets/history_rating_dialog.dart';
 import 'package:lettutor/features/history/widgets/history_report_dialog.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/utils/snack_bar.dart';
-import 'package:lettutor/utils/time_convert.dart';
 import 'package:lettutor/utils/time_helper.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
@@ -101,10 +99,8 @@ class _HistoryCardState extends State<HistoryCard> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              DateFormat.yMMMEd().format(
-                DateTime.fromMillisecondsSinceEpoch(
-                  scheduleInfo?.startTimeStamp ?? 0,
-                ),
+              TimeHelper.convertTimeStampToDay(
+                scheduleInfo?.startTimeStamp ?? 0,
               ),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
@@ -166,9 +162,9 @@ class _HistoryCardState extends State<HistoryCard> {
               padding: const EdgeInsets.all(12),
               child: Text(
                 'Lesson Time: '
-                '${convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+                '${TimeHelper.convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
                 ' - '
-                '${convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
+                '${TimeHelper.convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
