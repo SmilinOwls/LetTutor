@@ -23,11 +23,9 @@ class _CourseTabState extends State<CourseTab> {
   void _getCourseList() {
     CourseService.getListCourseWithPagination(
       page: 1,
-      size: 10,
+      size: 100,
       onSuccess: (courses) {
-        setState(() {
-          _courses = Future.value(courses);
-        });
+        _sortCourses(courses);
       },
       onError: (message) {
         SnackBarHelper.showErrorSnackBar(
@@ -36,6 +34,26 @@ class _CourseTabState extends State<CourseTab> {
         );
       },
     );
+  }
+
+  void _sortCourses(List<Course> courses) {
+    Map<String, List<Course>> courseMap = {};
+    for (var course in courses) {
+      final String key = course.categories?.first.key ?? 'null key';
+      if (courseMap.containsKey(key)) {
+        courseMap[key]!.add(course);
+      } else {
+        courseMap[key] = [course];
+      }
+    }
+    final List<Course> sortedCourses = [];
+    courseMap.forEach((key, value) {
+      sortedCourses.addAll(value);
+    });
+
+    setState(() {
+      _courses = Future.value(sortedCourses);
+    });
   }
 
   @override

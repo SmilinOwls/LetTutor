@@ -39,7 +39,10 @@ class LessonDialog extends StatelessWidget {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       content: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 14,
+        ),
         child: Wrap(
           alignment: WrapAlignment.center,
           runSpacing: 20,
