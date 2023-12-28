@@ -66,7 +66,7 @@ class SnackBarHelper {
             fontSize: 16,
           ),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blue,
         behavior: SnackBarBehavior.floating,
         margin: EdgeInsets.only(
           bottom: MediaQuery.of(context).size.height - 150,

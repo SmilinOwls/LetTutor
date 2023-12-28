@@ -1,9 +1,12 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/widgets/lesson_dialog.dart';
 
 class HistoryReportDialog extends StatefulWidget {
-  const HistoryReportDialog({super.key});
+  const HistoryReportDialog({super.key, required this.booking});
+
+  final BookingInfo booking;
 
   @override
   State<HistoryReportDialog> createState() => _HistoryReportDialogState();
@@ -30,6 +33,7 @@ class _HistoryReportDialogState extends State<HistoryReportDialog> {
   @override
   Widget build(BuildContext context) {
     return LessonDialog(
+      booking: widget.booking,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -134,7 +138,7 @@ class _HistoryReportDialogState extends State<HistoryReportDialog> {
         ],
       ),
       onSubmit: () async {
-        return await Future<String>.value('You deleted booking successfully!');
+        return await Future<String>.value('The report has been sent.');
       },
     );
   }

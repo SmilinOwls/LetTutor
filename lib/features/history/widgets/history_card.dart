@@ -6,12 +6,14 @@ import 'package:lettutor/features/history/widgets/history_rating_dialog.dart';
 import 'package:lettutor/features/history/widgets/history_report_dialog.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
+import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_convert.dart';
 import 'package:lettutor/utils/time_helper.dart';
 import 'package:lettutor/widgets/star_rating.dart';
 
 class HistoryCard extends StatefulWidget {
-  const HistoryCard({super.key, required this.booking, required this.onUpdatedBooking});
+  const HistoryCard(
+      {super.key, required this.booking, required this.onUpdatedBooking});
 
   final BookingInfo booking;
 
@@ -40,8 +42,17 @@ class _HistoryCardState extends State<HistoryCard> {
     await showDialog(
         context: context,
         builder: (context) {
-          return const HistoryReportDialog();
-        });
+          return HistoryReportDialog(
+            booking: widget.booking,
+          );
+        }).then((value) {
+      if (value != null) {
+        SnackBarHelper.showInfoSnackBar(
+          context: context,
+          content: value,
+        );
+      }
+    });
   }
 
   Future<void> _showHistoryRatingDialog(BuildContext context) async {
@@ -183,17 +194,17 @@ class _HistoryCardState extends State<HistoryCard> {
                   ),
                   shape: const RoundedRectangleBorder(),
                   children: <Widget>[
-                     ListTile(
-                        title: Text(
-                          widget.booking.studentRequest ??
-                              'No request for this lesson',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black.withOpacity(0.8),
-                            fontWeight: FontWeight.w400,
-                          ),
+                    ListTile(
+                      title: Text(
+                        widget.booking.studentRequest ??
+                            'No request for this lesson',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black.withOpacity(0.8),
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
+                    ),
                   ],
                 ),
                 const Divider(height: 1),
@@ -226,16 +237,16 @@ class _HistoryCardState extends State<HistoryCard> {
                     // ),
                     // const Text('Overall comment: Good'),
                     ListTile(
-                        title: Text(
-                          widget.booking.tutorReview ??
-                              'Tutor has not reviewed yet',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black.withOpacity(0.8),
-                            fontWeight: FontWeight.w400,
-                          ),
+                      title: Text(
+                        widget.booking.tutorReview ??
+                            'Tutor has not reviewed yet',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black.withOpacity(0.8),
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
+                    ),
                   ],
                 ),
                 const Divider(height: 1),
