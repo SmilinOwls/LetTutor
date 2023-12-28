@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
-import 'package:lettutor/models/courses/course.dart';
+import 'package:lettutor/constants/dto/courses/course.dart';
 
 class CourseTopicCard extends StatelessWidget {
   const CourseTopicCard(

@@ -1,9 +1,10 @@
+import 'package:lettutor/constants/dto/courses/course_topic.dart';
+import 'package:lettutor/constants/dto/courses/ebook.dart';
 import 'package:lettutor/constants/dto/tutor/tutor.dart';
 import 'package:lettutor/constants/dto/tutor/tutor_feedback.dart';
-import 'package:lettutor/models/courses/course.dart';
-import 'package:lettutor/models/courses/course_topic.dart';
+import 'package:lettutor/constants/dto/courses/course.dart';
 import 'package:lettutor/models/language/language.dart';
-import 'package:lettutor/models/courses/ebook.dart';
+
 import 'package:lettutor/models/misc/learn_topic.dart';
 import 'package:lettutor/models/misc/test_preparation.dart';
 
@@ -421,6 +422,13 @@ const certificateLevels = {
   'TEST': 'TEST',
   'TESTOL': 'TESTOL',
   'Other': 'Other'
+};
+
+const courseLevel = {
+  '0': 'Any Level',
+  '1': 'Beginner',
+  '4': 'Intermediate',
+  '7': 'Advanced',
 };
 
 const studentOverallLevels = ['Beginner', 'Intermediate', 'Advanced'];

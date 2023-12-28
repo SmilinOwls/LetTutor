@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/courses/course.dart';
 
@@ -24,7 +26,7 @@ class CourseCard extends StatelessWidget {
             shape: RoundedRectangleBorder(
               side: const BorderSide(
                 width: 0.5,
-                color:  Color.fromARGB(255, 195, 193, 193),
+                color: Color.fromARGB(255, 195, 193, 193),
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
@@ -36,10 +38,10 @@ class CourseCard extends StatelessWidget {
             shadowColor: const Color.fromARGB(255, 132, 132, 132),
             child: Column(
               children: <Widget>[
-                Image(
-                  image: AssetImage(course.imageUrl ?? ''),
+                CachedNetworkImage(
+                  imageUrl: course.imageUrl ?? '',
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
+                  errorWidget: (context, url, error) => const Icon(
                     Icons.error_outline_rounded,
                     size: 32,
                     color: Colors.redAccent,
@@ -73,7 +75,7 @@ class CourseCard extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              course.level ?? 'null level',
+                              courseLevel[course.level] ?? 'null level',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,

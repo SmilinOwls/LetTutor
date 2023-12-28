@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lettutor/features/courses/course_list/widgets/course.dart';
-import 'package:lettutor/features/courses/course_list/widgets/ebook.dart';
+import 'package:lettutor/features/courses/course_list/widgets/course/course_tab.dart';
+import 'package:lettutor/features/courses/course_list/widgets/ebook/ebook_tab.dart';
 
 class CourseListScreen extends StatefulWidget {
   const CourseListScreen({super.key});
@@ -24,6 +24,7 @@ class _CourseListScreenState extends State<CourseListScreen>
     );
   }
 
+
   @override
   void dispose() {
     super.dispose();
@@ -41,7 +42,7 @@ class _CourseListScreenState extends State<CourseListScreen>
             children: <Widget>[
               CachedNetworkImage(
                 imageUrl:
-                    'rhttps://sandbox.app.lettutor.com/static/media/course.0bf1bb71.svg',
+                    'https://sandbox.app.lettutor.com/static/media/course.0bf1bb71.svg',
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,
@@ -141,9 +142,9 @@ class _CourseListScreenState extends State<CourseListScreen>
           controller: _tabController,
           children: const <Widget>[
             // first tab
-            Course(),
+            CourseTab(),
             // second tab
-            Ebook(),
+            EbookTab(),
           ],
         ),
       ),

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/dto/courses/course.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/course_detail_card.dart';
 import 'package:lettutor/widgets/headline_text.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/topic_card.dart';
 import 'package:lettutor/widgets/app_bar.dart';
-import '../../../models/courses/course.dart';
 
 class CourseDetailScreen extends StatefulWidget {
   const CourseDetailScreen({super.key});

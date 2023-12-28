@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
-import 'package:lettutor/models/courses/course.dart';
+import 'package:lettutor/constants/dto/courses/course.dart';
 
 class CourseDetailCard extends StatelessWidget {
   const CourseDetailCard({super.key, required this.course});

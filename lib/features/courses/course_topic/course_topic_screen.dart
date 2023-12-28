@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/models/courses/course.dart';
+import 'package:lettutor/constants/dto/courses/course.dart';
 import 'package:lettutor/widgets/app_bar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CourseTopicScreen extends StatefulWidget {
-  const CourseTopicScreen(
-      {super.key, required this.index, required this.course});
+  const CourseTopicScreen({
+    super.key,
+    required this.index,
+    required this.course,
+  });
 
   final int index;
   final Course course;
@@ -88,8 +91,10 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                             },
                             selected: _selectTopicIndex == index,
                             selectedTileColor: Colors.grey[400],
-                            selectedColor: Theme.of(context).colorScheme.primary,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            selectedColor:
+                                Theme.of(context).colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
                             leading: Text('${index + 1}.'),
                             leadingAndTrailingTextStyle:
                                 Theme.of(context).textTheme.bodyLarge,
