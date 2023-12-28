@@ -69,95 +69,100 @@ class _TutorReportDialogState extends State<TutorReportDialog> {
           const Divider(height: 1),
         ],
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Row(
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.3,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(Icons.report_rounded, color: Colors.blue[700]),
-              const SizedBox(width: 4),
-              const Text(
-                "Help us understand what's happening",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              children: List<Widget>.generate(
-                _reports.length,
-                (index) => CheckboxListTile(
-                  title: Text(
-                    _reports.keys.elementAt(index),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.normal,
+              Row(
+                children: <Widget>[
+                  Icon(Icons.report_rounded, color: Colors.blue[700]),
+                  const SizedBox(width: 4),
+                  const Text(
+                    "Help us understand what's happening",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  value: _reports.values.elementAt(index),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: List<Widget>.generate(
+                    _reports.length,
+                    (index) => CheckboxListTile(
+                      title: Text(
+                        _reports.keys.elementAt(index),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      value: _reports.values.elementAt(index),
+                      onChanged: (value) {
+                        setState(() {
+                          _reports.update(_reports.keys.elementAt(index),
+                              (value) => !value);
+                          if (_reports.values.elementAt(index)) {
+                            _reportTextEditingController.text =
+                                '${_reportTextEditingController.text}${_reports.keys.elementAt(index)}\n';
+                          } else {
+                            _reportTextEditingController.text =
+                                _reportTextEditingController.text.replaceAll(
+                                    '${_reports.keys.elementAt(index)}\n', '');
+                          }
+                        });
+                      },
+                      side: const BorderSide(width: 0.5, color: Colors.blue),
+                      activeColor: Colors.blue[500],
+                      controlAffinity: ListTileControlAffinity.leading,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 120,
+                child: TextField(
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
+                  controller: _reportTextEditingController,
                   onChanged: (value) {
-                    setState(() {
-                      _reports.update(
-                          _reports.keys.elementAt(index), (value) => !value);
-                      if (_reports.values.elementAt(index)) {
-                        _reportTextEditingController.text =
-                            '${_reportTextEditingController.text}${_reports.keys.elementAt(index)}\n';
-                      } else {
-                        _reportTextEditingController.text =
-                            _reportTextEditingController.text.replaceAll(
-                                '${_reports.keys.elementAt(index)}\n', '');
-                      }
-                    });
+                    _trackReport();
                   },
-                  side: const BorderSide(width: 0.5, color: Colors.blue),
-                  activeColor: Colors.blue[500],
-                  controlAffinity: ListTileControlAffinity.leading,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 120,
-            child: TextField(
-              maxLines: null,
-              expands: true,
-              keyboardType: TextInputType.multiline,
-              controller: _reportTextEditingController,
-              onChanged: (value) {
-                _trackReport();
-              },
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-              ),
-              decoration: const InputDecoration(
-                isCollapsed: true,
-                contentPadding: EdgeInsets.all(12),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 0.5,
-                    color: Colors.grey,
-                  ),
-                ),
-                hintText: 'Please let us know details about your problems',
-                hintStyle: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Colors.blue,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  decoration: const InputDecoration(
+                    isCollapsed: true,
+                    contentPadding: EdgeInsets.all(12),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    hintText: 'Please let us know details about your problems',
+                    hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.blue,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          )
-        ],
+              )
+            ],
+          ),
+        ),
       ),
       actions: [
         OutlinedButton(

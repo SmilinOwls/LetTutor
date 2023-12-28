@@ -38,55 +38,60 @@ class LessonDialog extends StatelessWidget {
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      content: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 14,
-        ),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          runSpacing: 20,
-          children: <Widget>[
-            Column(
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              vertical: 12,
+              horizontal: 14,
+            ),
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              runSpacing: 20,
               children: <Widget>[
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    width: 62,
-                    height: 62,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: scheduleInfo?.tutorInfo?.avatar ?? '',
-                      fit: BoxFit.cover,
-                      errorWidget: (context, url, error) => const Icon(
-                        Icons.person,
-                        size: 62,
+                Column(
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () {},
+                      child: Container(
+                        width: 62,
+                        height: 62,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: scheduleInfo?.tutorInfo?.avatar ?? '',
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.person,
+                            size: 62,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Text(
+                      scheduleInfo?.tutorInfo?.name ?? '',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    const Text('Lesson Time', style: TextStyle(fontSize: 16)),
+                    const SizedBox(height: 2),
+                    Text(
+                      '${TimeHelper.convertTimeStampToDay(scheduleInfo?.startTimeStamp ?? 0)}, '
+                      '${TimeHelper.convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
+                      ' - '
+                      '${TimeHelper.convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
                 ),
-                Text(
-                  scheduleInfo?.tutorInfo?.name ?? '',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const SizedBox(height: 8),
-                const Text('Lesson Time', style: TextStyle(fontSize: 16)),
-                const SizedBox(height: 2),
-                Text(
-                  '${TimeHelper.convertTimeStampToDay(scheduleInfo?.startTimeStamp ?? 0)}, '
-                  '${TimeHelper.convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
-                  ' - '
-                  '${TimeHelper.convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
+                const Divider(height: 1),
+                child!
               ],
             ),
-            const Divider(height: 1),
-            child!
-          ],
+          ),
         ),
       ),
       actions: <Widget>[

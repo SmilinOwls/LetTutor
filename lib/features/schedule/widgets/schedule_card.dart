@@ -144,7 +144,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     title: const Text(
                       'Request for lesson',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -155,7 +155,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       child: const Text(
                         'Edit request',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 15,
                           color: Colors.blue,
                         ),
                       ),
@@ -175,7 +175,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                               'Currently there are no requests for this class. '
                                   'Please write down any requests for the teacher.',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: Colors.black.withOpacity(0.8),
                             fontWeight: FontWeight.w400,
                           ),
