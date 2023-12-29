@@ -66,6 +66,34 @@ class _CourseListScreenState extends State<CourseListScreen>
     );
   }
 
+  void _onSearchChanged(String value) {
+    _searchList.value = {
+      ..._searchList.value,
+      'search': value,
+    };
+  }
+
+  void _onLevelChanged(List<String> value) {
+    _searchList.value = {
+      ..._searchList.value,
+      'level': value,
+    };
+  }
+
+  void _onCategoryChanged(List<String> value) {
+    _searchList.value = {
+      ..._searchList.value,
+      'categoryId': value,
+    };
+  }
+
+  void _onLevelSortChanged(String value) {
+    _searchList.value = {
+      ..._searchList.value,
+      'orderBy': value,
+    };
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -120,12 +148,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                 ),
-                onChanged: (value) {
-                  _searchList.value = {
-                    ..._searchList.value,
-                    'search': value,
-                  };
-                },
+                onChanged: _onSearchChanged,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -173,12 +196,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                 items: _levelList,
                 selectedItems: _selectedLevel,
                 hintText: 'Select level',
-                onSelected: (value) {
-                  _searchList.value = {
-                    ..._searchList.value,
-                    'level': value,
-                  };
-                },
+                onSelected: _onLevelChanged,
               ),
               const SizedBox(height: 12),
               const Text(
@@ -193,12 +211,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                 items: _categoryList ?? {},
                 selectedItems: _selectedCategory,
                 hintText: 'Select category',
-                onSelected: (value) {
-                  _searchList.value = {
-                    ..._searchList.value,
-                    'categoryId': value,
-                  };
-                },
+                onSelected: _onCategoryChanged,
               ),
               const SizedBox(height: 12),
               const Text(
@@ -210,16 +223,10 @@ class _CourseListScreenState extends State<CourseListScreen>
               ),
               const SizedBox(height: 4),
               DropDownField(
-                controller: _levelController,
-                list: _sortList,
-                hintText: 'Sort by level',
-                onSelected: (value) {
-                  _searchList.value = {
-                    ..._searchList.value,
-                    'orderBy': value,
-                  };
-                },
-              ),
+                  controller: _levelController,
+                  list: _sortList,
+                  hintText: 'Sort by level',
+                  onSelected: _onLevelSortChanged),
               const SizedBox(height: 16),
             ],
           ),
@@ -264,7 +271,8 @@ class _CourseListScreenState extends State<CourseListScreen>
                 final searchs = value;
                 return CourseTab(
                   searchs: searchs,
-                  key: ValueKey(searchs), // searchs is updated -> force widget rebuild 
+                  key: ValueKey(searchs),
+                  // searchs is updated -> force widget rebuild
                 );
               },
             ),
@@ -275,7 +283,8 @@ class _CourseListScreenState extends State<CourseListScreen>
                 final searchs = value;
                 return EbookTab(
                   searchs: searchs,
-                  key: ValueKey(searchs), // searchs is updated -> force widget rebuild 
+                  key: ValueKey(searchs),
+                  // searchs is updated -> force widget rebuild
                 );
               },
             ),
