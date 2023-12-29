@@ -22,10 +22,13 @@ class _CourseListScreenState extends State<CourseListScreen>
   Map<String, String>? _categoryList;
   final Map<String, String> _levelList = coursesLevel;
   final Map<String, String> _sortList = coursesLevelSort;
-  
+
+  final TextEditingController _searchController = TextEditingController();
   final List<String> _selectedCategory = [];
   final List<String> _selectedLevel = [];
-  final TextEditingController levelController = TextEditingController();
+  final TextEditingController _levelController = TextEditingController();
+
+  final ValueNotifier<Map<String, dynamic>> _searchList = ValueNotifier({});
 
   @override
   void initState() {
@@ -36,6 +39,12 @@ class _CourseListScreenState extends State<CourseListScreen>
       vsync: this,
     );
     _getContentCategory();
+    _searchList.value = {
+      'search': _searchController.text,
+      'categoryId': _selectedCategory,
+      'level': _selectedLevel,
+      'orderBy': _levelController.text,
+    };
   }
 
   void _getContentCategory() async {
@@ -60,7 +69,9 @@ class _CourseListScreenState extends State<CourseListScreen>
   @override
   void dispose() {
     super.dispose();
+    _searchController.dispose();
     _tabController.dispose();
+    _levelController.dispose();
   }
 
   @override
@@ -104,10 +115,17 @@ class _CourseListScreenState extends State<CourseListScreen>
               ),
               const SizedBox(height: 4),
               TextField(
+                controller: _searchController,
                 style: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
                 ),
+                onChanged: (value) {
+                  _searchList.value = {
+                    ..._searchList.value,
+                    'search': value,
+                  };
+                },
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -155,6 +173,12 @@ class _CourseListScreenState extends State<CourseListScreen>
                 items: _levelList,
                 selectedItems: _selectedLevel,
                 hintText: 'Select level',
+                onSelected: (value) {
+                  _searchList.value = {
+                    ..._searchList.value,
+                    'level': value,
+                  };
+                },
               ),
               const SizedBox(height: 12),
               const Text(
@@ -169,6 +193,12 @@ class _CourseListScreenState extends State<CourseListScreen>
                 items: _categoryList ?? {},
                 selectedItems: _selectedCategory,
                 hintText: 'Select category',
+                onSelected: (value) {
+                  _searchList.value = {
+                    ..._searchList.value,
+                    'categoryId': value,
+                  };
+                },
               ),
               const SizedBox(height: 12),
               const Text(
@@ -180,9 +210,15 @@ class _CourseListScreenState extends State<CourseListScreen>
               ),
               const SizedBox(height: 4),
               DropDownField(
-                controller: levelController,
+                controller: _levelController,
                 list: _sortList,
                 hintText: 'Sort by level',
+                onSelected: (value) {
+                  _searchList.value = {
+                    ..._searchList.value,
+                    'orderBy': value,
+                  };
+                },
               ),
               const SizedBox(height: 16),
             ],
@@ -220,11 +256,29 @@ class _CourseListScreenState extends State<CourseListScreen>
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: TabBarView(
           controller: _tabController,
-          children: const <Widget>[
+          children: <Widget>[
             // first tab
-            CourseTab(),
+            ValueListenableBuilder(
+              valueListenable: _searchList,
+              builder: (context, value, child) {
+                final searchs = value;
+                return CourseTab(
+                  searchs: searchs,
+                  key: ValueKey(searchs), // searchs is updated -> force widget rebuild 
+                );
+              },
+            ),
             // second tab
-            EbookTab(),
+            ValueListenableBuilder(
+              valueListenable: _searchList,
+              builder: (context, value, child) {
+                final searchs = value;
+                return EbookTab(
+                  searchs: searchs,
+                  key: ValueKey(searchs), // searchs is updated -> force widget rebuild 
+                );
+              },
+            ),
           ],
         ),
       ),

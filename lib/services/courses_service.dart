@@ -37,13 +37,24 @@ class CoursesService {
   static void searchCourse({
     required int page,
     required int size,
-    required String search,
+    String? search,
+    List<String>? categoryId,
+    List<String>? level,
+    String? orderBy,
     required Function(List<Course>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
       final response = await _dioService.get(
-        '/course?page=$page&size=$size&q=$search',
+        '/course',
+        params: {
+          'page': page,
+          'size': size,
+          'q': search,
+          'categoryId[]': categoryId,
+          'level[]': level,
+          'order_by[]': orderBy,
+        },
       );
 
       final data = response.data;
@@ -119,13 +130,24 @@ class CoursesService {
   static void searchEbook({
     required int page,
     required int size,
-    required String search,
+    String? search,
+    List<String>? categoryId,
+    List<String>? level,
+    String? orderBy,
     required Function(List<EBook>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
       final response = await _dioService.get(
-        '/e-book?page=$page&size=$size&q=$search',
+        '/e-book',
+        params: {
+          'page': page,
+          'size': size,
+          'q': search,
+          'categoryId[]': categoryId,
+          'level[]': level,
+          'order_by[]': orderBy,
+        },
       );
 
       final data = response.data;

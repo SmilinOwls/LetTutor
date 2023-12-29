@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';

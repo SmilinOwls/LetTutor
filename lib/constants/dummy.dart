@@ -437,8 +437,8 @@ const coursesLevel = {
 };
 
 const coursesLevelSort = {
-  'asc': 'Level ascending',
-  'desc': 'Level aescending',
+  'ASC': 'Level ascending',
+  'DESC': 'Level descending',
 };
 
 const studentOverallLevels = ['Beginner', 'Intermediate', 'Advanced'];

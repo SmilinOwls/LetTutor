@@ -5,7 +5,9 @@ import 'package:lettutor/services/courses_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 
 class CourseTab extends StatefulWidget {
-  const CourseTab({super.key});
+  const CourseTab({super.key, required this.searchs});
+
+  final Map<String, dynamic> searchs;
 
   @override
   State<CourseTab> createState() => _CourseTabState();
@@ -13,17 +15,23 @@ class CourseTab extends StatefulWidget {
 
 class _CourseTabState extends State<CourseTab> {
   Future<List<Course>>? _courses;
+  Map<String, dynamic>? searchList;
 
   @override
   void initState() {
     super.initState();
+    searchList = widget.searchs;
     _getCourseList();
   }
 
   void _getCourseList() {
-    CoursesService.getListCourseWithPagination(
+    CoursesService.searchCourse(
       page: 1,
       size: 100,
+      search: searchList?['search'],
+      categoryId: searchList?['categoryId'],
+      level: searchList?['level'],
+      orderBy: searchList?['orderBy'],
       onSuccess: (courses) {
         _sortCourses(courses);
       },

@@ -7,12 +7,14 @@ class MultiChoiceDropDown extends StatefulWidget {
     super.key,
     required this.items,
     required this.selectedItems,
-    required this.hintText,
+    this.onSelected,
+    this.hintText = '',
     this.validator = false,
   });
 
   final Map<String, String> items;
   final List<String> selectedItems;
+  final void Function(List<String>)? onSelected;
   final String hintText;
   final bool validator;
 
@@ -54,6 +56,11 @@ class _MultiChoiceDropDownState extends State<MultiChoiceDropDown> {
                               ? selectedItems
                                   .remove(items.keys.elementAt(index))
                               : selectedItems.add(items.keys.elementAt(index));
+
+                          if (widget.onSelected != null) {
+                            widget.onSelected!(selectedItems);
+                          }
+
                           menuSetState(() {});
                           state.didChange(selectedItems);
                         },
@@ -87,7 +94,14 @@ class _MultiChoiceDropDownState extends State<MultiChoiceDropDown> {
                   ),
                 ),
               ),
-              hint: Text(widget.hintText),
+              hint: Text(
+                widget.hintText,
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
               onChanged: (value) {},
               buttonStyleData: const ButtonStyleData(
                 padding: EdgeInsets.only(right: 8),
@@ -122,6 +136,9 @@ class _MultiChoiceDropDownState extends State<MultiChoiceDropDown> {
                   side: BorderSide.none,
                   onDeleted: () {
                     selectedItems.remove(selectedItems[index]);
+                    if (widget.onSelected != null) {
+                      widget.onSelected!(selectedItems);
+                    }
                     state.didChange(selectedItems);
                   },
                   deleteIcon: const Icon(

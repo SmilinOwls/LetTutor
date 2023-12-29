@@ -101,7 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _imageData?.value = imageData.path;
       await UserService.uploadImage(
         image: imageData,
-        onSuccess: (user){
+        onSuccess: (user) {
           _imageData?.value = user.avatar;
           context.read<AuthProvider>().setUser(user);
         },
@@ -226,7 +226,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             value ?? '',
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
-                                const Icon(Icons.person_rounded, size: 62),
+                                const Icon(
+                              Icons.person_rounded,
+                              size: 62,
+                            ),
                           ),
                         ),
                       ),
