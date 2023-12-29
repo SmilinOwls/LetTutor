@@ -37,7 +37,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
-  void _updateBookingListAfterCanceling(BookingInfo booking){
+  void _updateBookingListAfterCanceling(BookingInfo booking) {
     setState(() {
       _bookings = _bookings!.then((bookings) {
         bookings.remove(booking);
@@ -45,7 +45,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       });
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -69,8 +69,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 8),
-          const Text('Here is a list of the sessions you have booked\n'
-              'You can track when the meeting starts, join the meeting with one click or can cancel the meeting before 2 hours'),
+          const Text(
+            'Here is a list of the sessions you have booked\n'
+            'You can track when the meeting starts, join the meeting with one click or can cancel the meeting before 2 hours',
+            textAlign: TextAlign.justify,
+          ),
           const SizedBox(height: 4),
           const Divider(height: 1),
           const SizedBox(height: 16),

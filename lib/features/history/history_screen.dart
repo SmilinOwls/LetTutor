@@ -62,8 +62,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
             style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 8),
-          const Text('The following is a list of lessons you have attended\n'
-              'You can review the details of the lessons you have attended'),
+          const Text(
+            'The following is a list of lessons you have attended\n'
+            'You can review the details of the lessons you have attended',
+            textAlign: TextAlign.justify,
+          ),
           const SizedBox(height: 4),
           const Divider(height: 1),
           const SizedBox(height: 16),

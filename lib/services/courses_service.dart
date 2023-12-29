@@ -44,6 +44,13 @@ class CoursesService {
     required Function(List<Course>) onSuccess,
     required Function(String) onError,
   }) async {
+    final Map<String, dynamic> order = {};
+
+    if (orderBy != null && orderBy != '') {
+      order['order[]'] = 'level';
+      order['orderBy[]'] = orderBy;
+    }
+
     try {
       final response = await _dioService.get(
         '/course',
@@ -53,7 +60,7 @@ class CoursesService {
           'q': search,
           'categoryId[]': categoryId,
           'level[]': level,
-          'order_by[]': orderBy,
+          ...order,
         },
       );
 
@@ -137,6 +144,13 @@ class CoursesService {
     required Function(List<EBook>) onSuccess,
     required Function(String) onError,
   }) async {
+    final Map<String, dynamic> order = {};
+
+    if (orderBy != null && orderBy != '') {
+      order['order[]'] = 'level';
+      order['orderBy[]'] = orderBy;
+    }
+
     try {
       final response = await _dioService.get(
         '/e-book',
@@ -146,7 +160,7 @@ class CoursesService {
           'q': search,
           'categoryId[]': categoryId,
           'level[]': level,
-          'order_by[]': orderBy,
+          ...order,
         },
       );
 

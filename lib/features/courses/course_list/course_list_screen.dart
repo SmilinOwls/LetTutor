@@ -108,30 +108,38 @@ class _CourseListScreenState extends State<CourseListScreen>
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
         SliverToBoxAdapter(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              CachedNetworkImage(
-                imageUrl:
-                    'https://sandbox.app.lettutor.com/static/media/course.0bf1bb71.svg',
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-                errorWidget: (context, url, error) => const Icon(
-                  Icons.school_rounded,
-                  size: 62,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Discover Courses',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'LiveTutor has built the most quality, methodical and scientific courses'
-                'in the fields of life for those who are in need of improving their knowledge of the fields.',
+              Column(
+                children: <Widget>[
+                  CachedNetworkImage(
+                    imageUrl:
+                        'https://sandbox.app.lettutor.com/static/media/course.0bf1bb71.svg',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.school_rounded,
+                      size: 62,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Discover Courses',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'LiveTutor has built the most quality, methodical and scientific courses'
+                    'in the fields of life for those who are in need of improving their knowledge of the fields.',
+                    textAlign: TextAlign.justify,
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               const Text(
@@ -215,7 +223,7 @@ class _CourseListScreenState extends State<CourseListScreen>
               ),
               const SizedBox(height: 12),
               const Text(
-                'Level',
+                'Sort',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
