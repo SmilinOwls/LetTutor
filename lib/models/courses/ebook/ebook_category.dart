@@ -18,7 +18,4 @@ class EBookCategory extends CourseCategory {
         );
 
   EBookCategory.fromJson(Map<String, dynamic> json) : super.fromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => super.toJson();
 }
