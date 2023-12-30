@@ -78,20 +78,20 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
         borderRadius: BorderRadius.circular(10),
       ),
       context: context,
-      builder: (context) =>
-          TutorBookingHourDialog(dateSchedules: dateSchedules, onBooked: _updateBookingDateStatus),
+      builder: (context) => TutorBookingHourDialog(
+          dateSchedules: dateSchedules, onBooked: _updateBookingDateStatus),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return _tutorSchedules == null
-        ? const Center(child: CircularProgressIndicator())
-        : Scaffold(
-            appBar: const CustomAppBar(
-              appBarTitle: 'Tutor Booking',
-            ),
-            body: Container(
+    return Scaffold(
+      appBar: const CustomAppBar(
+        appBarTitle: 'Tutor Booking',
+      ),
+      body: _tutorSchedules == null
+          ? const Center(child: CircularProgressIndicator())
+          : Container(
               padding: const EdgeInsets.symmetric(
                 vertical: 16,
                 horizontal: 20,
@@ -160,7 +160,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
                 ],
               ),
             ),
-          );
+    );
   }
 }
 

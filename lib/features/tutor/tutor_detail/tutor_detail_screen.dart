@@ -107,13 +107,13 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _tutor == null
-        ? const Center(child: CircularProgressIndicator())
-        : Scaffold(
-            appBar: const CustomAppBar(
-              appBarTitle: 'Tutor Details',
-            ),
-            body: SingleChildScrollView(
+    return Scaffold(
+      appBar: const CustomAppBar(
+        appBarTitle: 'Tutor Details',
+      ),
+      body: _tutor == null
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 10,
@@ -420,6 +420,6 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                 ),
               ),
             ),
-          );
+    );
   }
 }

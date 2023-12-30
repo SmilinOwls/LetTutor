@@ -67,7 +67,7 @@ class ReviewCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  StarRating(rating: review.rating as double),
+                  StarRating(rating: review.rating?.toDouble() ?? 0),
                   const SizedBox(height: 4),
                   Text(review.content ?? 'null content'),
                 ],

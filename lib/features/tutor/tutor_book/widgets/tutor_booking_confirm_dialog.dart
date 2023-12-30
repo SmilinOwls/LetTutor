@@ -57,7 +57,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthProvider>();
     final balance = authProvider.getUser()?.walletInfo?.amount ?? '0';
-    
+
     return AlertDialog(
       title: Column(
         children: <Widget>[
@@ -72,110 +72,118 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
           const Divider(height: 1),
         ],
       ),
-      content: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.75,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              'Booking time',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 6),
-            Text(
-              '${TimeHelper.convertTimeStampToHour(widget.schedule.startTimestamp ?? 0)}'
-              '-'
-              '${TimeHelper.convertTimeStampToHour(widget.schedule.endTimestamp ?? 0)}',
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.blue[700],
+      content: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.75,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(
+                'Booking time',
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              DateFormat('yyyy-MM-dd').format(
-                  DateTime.fromMillisecondsSinceEpoch(
-                      widget.schedule.startTimestamp!)),
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.blue[700],
+              const SizedBox(height: 6),
+              Text(
+                '${TimeHelper.convertTimeStampToHour(widget.schedule.startTimestamp ?? 0)}'
+                '-'
+                '${TimeHelper.convertTimeStampToHour(widget.schedule.endTimestamp ?? 0)}',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.blue[700],
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'Balance',
-                  style: Theme.of(context).textTheme.bodyLarge,
+              Text(
+                DateFormat('yyyy-MM-dd').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        widget.schedule.startTimestamp!)),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.blue[700],
                 ),
-                Text(
-                  'You have ${int.parse(balance) / 100000} lesson(s) left',
-                  style: const TextStyle(fontSize: 16, color: Colors.blue),
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  'Price',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                const Text(
-                  '1 lesson',
-                  style: TextStyle(fontSize: 16, color: Colors.blue),
-                ),
-              ],
-            ),
-            const SizedBox(height: 6),
-            Text(
-              'Note',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 120,
-              child: TextField(
-                maxLines: null,
-                expands: true,
-                keyboardType: TextInputType.multiline,
-                controller: _requestTextEditingController,
-                onChanged: (value) {},
-                style: const TextStyle(fontWeight: FontWeight.w500),
-                decoration: const InputDecoration(
-                  isCollapsed: true,
-                  contentPadding: EdgeInsets.all(12),
-                  hintText: 'Notes',
-                  hintStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 0.5,
-                      color: Colors.grey,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 6),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Balance',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        'You have ${(int.parse(balance) / 100000).round()} \n'
+                        'lesson(s) left',
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.blue),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(height: 6),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Price',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const Text(
+                    '1 lesson',
+                    style: TextStyle(fontSize: 16, color: Colors.blue),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Note',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 6),
+              SizedBox(
+                height: 120,
+                child: TextField(
+                  maxLines: null,
+                  expands: true,
+                  keyboardType: TextInputType.multiline,
+                  controller: _requestTextEditingController,
+                  onChanged: (value) {},
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                  decoration: const InputDecoration(
+                    isCollapsed: true,
+                    contentPadding: EdgeInsets.all(12),
+                    hintText: 'Notes',
+                    hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 0.5,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 1,
-                      color: Colors.blue,
-                    ),
-                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       actions: [
