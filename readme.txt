@@ -1,4 +1,7 @@
 - Milestone 1. Mock up UI
     - Link Widget Tree: https://drive.google.com/file/d/1eZiXDW1jwxk_VSbtxTRXb-g5SGeuFaiR/view?usp=sharing
 - Milestone 2. Offline App
-    - Link Demo: https://youtu.be/2FhsBaOFjx8)
+    - Link Demo: https://youtu.be/2FhsBaOFjx8
+- Milestone 3. Basic Features
+    - Link Demo P1: https://youtu.be/Do2Huu_aET4
+    - Link Demo P2: https://youtu.be/YPlEcX6EeD4
