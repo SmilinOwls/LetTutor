@@ -22,6 +22,7 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
 
   void _onVideoUploaded(FormFieldState state) async {
     File? path = await pickerVideo(ImageSource.gallery);
+
     _videoFile = path;
     state.didChange(_videoFile);
   }
@@ -113,7 +114,7 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
                 ),
                 if (_videoFile != null)
                   VideoPlayerView(
-                    url: _videoFile!.path,
+                    url: _videoFile?.path ?? '',
                     dataSourceType: DataSourceType.file,
                   ),
               ],
