@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/features/video_call/video_call_screen.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/call_service.dart';
@@ -17,9 +17,11 @@ class HomeHeader extends StatefulWidget {
 
 class _HomeHeaderState extends State<HomeHeader> {
   int? _totalCall;
+  BookingInfo? _bookingInfo;
   ScheduleInfo? _nextLesson;
   Timer? _timer;
   Duration? _currentTime;
+  DateTime _timeStamp = DateTime.now();
 
   @override
   void initState() {
@@ -28,8 +30,21 @@ class _HomeHeaderState extends State<HomeHeader> {
     _getTotalCall();
   }
 
-  void _startTimer(DateTime timeStamp) {
-    _currentTime = timeStamp.difference(DateTime.now());
+  bool _checkLessonStart() {
+    if (_timeStamp.isBefore(DateTime.now())) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  void _startTimer() {
+    final now = DateTime.now();
+
+    _currentTime = _checkLessonStart()
+        ? now.difference(_timeStamp)
+        : _timeStamp.difference(now);
+
     const oneSec = Duration(seconds: 1);
 
     _timer = Timer.periodic(
@@ -41,7 +56,7 @@ class _HomeHeaderState extends State<HomeHeader> {
           });
         } else {
           setState(() {
-            _currentTime = timeStamp.difference(DateTime.now());
+            _currentTime = _timeStamp.difference(DateTime.now());
           });
         }
       },
@@ -51,6 +66,10 @@ class _HomeHeaderState extends State<HomeHeader> {
   void _getMostUpcommingLesson() async {
     await BookingService.getTutorNextBookingList(
       onSuccess: (schedules) {
+        schedules.removeWhere((schedule) => DateTime.fromMillisecondsSinceEpoch(
+                schedule.scheduleDetailInfo?.scheduleInfo?.startTimeStamp ?? 0)
+            .isBefore(DateTime.now()));
+
         schedules.sort((soonSchedule, laterSchedule) {
           final soonScheduleTimeStamp =
               soonSchedule.scheduleDetailInfo?.scheduleInfo?.startTimeStamp ??
@@ -60,13 +79,15 @@ class _HomeHeaderState extends State<HomeHeader> {
                   0;
           return soonScheduleTimeStamp.compareTo(laterScheduleTimeStamp);
         });
+
         setState(() {
+          _bookingInfo = schedules.first;
           _nextLesson = schedules.first.scheduleDetailInfo?.scheduleInfo;
-          _startTimer(
-            DateTime.fromMillisecondsSinceEpoch(
-              _nextLesson?.startTimeStamp ?? 0,
-            ),
+          _timeStamp = DateTime.fromMillisecondsSinceEpoch(
+            _nextLesson?.startTimeStamp ?? 0,
           );
+
+          _startTimer();
         });
       },
       onError: (message) => SnackBarHelper.showErrorSnackBar(
@@ -97,19 +118,18 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   Widget upcomingLessonWidget() {
-     if(_nextLesson == null) return const SizedBox.shrink();
+    if (_nextLesson == null) return const SizedBox.shrink();
 
-     final date = DateFormat.yMMMEd().format(
-      DateTime.fromMillisecondsSinceEpoch(
-        _nextLesson?.startTimeStamp ?? 0,
-      ),
-    );
-    final time = '${TimeHelper.convertTimeStampToHour(_nextLesson?.startTimeStamp ?? 0)}'
+    final date =
+        TimeHelper.convertTimeStampToDay(_nextLesson?.startTimeStamp ?? 0);
+
+    final time =
+        '${TimeHelper.convertTimeStampToHour(_nextLesson?.startTimeStamp ?? 0)}'
         ' - '
         '${TimeHelper.convertTimeStampToHour(_nextLesson?.endTimeStamp ?? 0)}';
 
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 18),
         const Text(
           'Upcomming Lesson',
@@ -128,16 +148,24 @@ class _HomeHeaderState extends State<HomeHeader> {
         ),
         const SizedBox(height: 18),
         Text(
-          '(starts in ${TimeHelper.getRemainingTimer(_currentTime ?? Duration.zero)})',
-          style: const TextStyle(
+          '${_checkLessonStart() ? '(starts in ' : '(is in progress for '}'
+          '${TimeHelper.getRemainingTimer(_currentTime ?? Duration.zero)})',
+          textAlign: TextAlign.center,
+          style: TextStyle(
             fontSize: 18,
-            color: Colors.yellow,
+            color: _checkLessonStart() ? Colors.yellow : Colors.blue.shade300,
           ),
         ),
         const SizedBox(height: 18),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(Routes.videoCall);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => VideoCallScreen(
+                  bookingInfo: _bookingInfo,
+                ),
+              ),
+            );
           },
           style: TextButton.styleFrom(
             backgroundColor: Colors.white,
@@ -166,7 +194,6 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
-   
     final hour = (_totalCall ?? 0) ~/ 60;
     final minute = (_totalCall ?? 0) % 60;
 
