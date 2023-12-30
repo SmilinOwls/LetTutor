@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lettutor/models/courses/course.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/models/courses/course/course.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class CourseTopicScreen extends StatefulWidget {
-  const CourseTopicScreen(
-      {super.key, required this.index, required this.course});
+  const CourseTopicScreen({
+    super.key,
+    required this.index,
+    required this.course,
+  });
 
   final int index;
   final Course course;
@@ -19,6 +23,8 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Course course = widget.course;
+
     return Scaffold(
       appBar: const CustomAppBar(
         appBarTitle: 'Expore Course',
@@ -38,13 +44,12 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
               shadowColor: const Color.fromARGB(255, 132, 132, 132),
               child: Column(
                 children: <Widget>[
-                  Image(
-                    image: AssetImage(widget.course.imageUrl ?? ''),
+                  CachedNetworkImage(
+                    imageUrl: course.imageUrl ?? 'null image url',
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
-                      Icons.error_outline_rounded,
-                      size: 32,
-                      color: Colors.redAccent,
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.error,
+                      size: 62,
                     ),
                   ),
                   Padding(
@@ -56,14 +61,14 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         Text(
-                          widget.course.name ?? 'null name',
+                          course.name ?? 'null name',
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                         const SizedBox(
                           height: 16,
                         ),
                         Text(
-                          widget.course.description ?? 'null description',
+                          course.description ?? 'null description',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -79,7 +84,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                           height: 16,
                         ),
                         ...List<Widget>.generate(
-                          widget.course.topics!.length,
+                          course.topics!.length,
                           (index) => ListTile(
                             onTap: () {
                               setState(() {
@@ -88,14 +93,16 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                             },
                             selected: _selectTopicIndex == index,
                             selectedTileColor: Colors.grey[400],
-                            selectedColor: Theme.of(context).colorScheme.primary,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            selectedColor:
+                                Theme.of(context).colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
                             leading: Text('${index + 1}.'),
                             leadingAndTrailingTextStyle:
                                 Theme.of(context).textTheme.bodyLarge,
                             titleTextStyle:
                                 Theme.of(context).textTheme.bodyLarge,
-                            title: Text('${widget.course.topics![index].name}'),
+                            title: Text('${course.topics![index].name}'),
                           ),
                         ),
                       ],

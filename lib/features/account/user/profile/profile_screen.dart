@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,8 +6,15 @@ import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/account/user/profile/widgets/custom_label.dart';
+import 'package:lettutor/models/misc/learn_topic.dart';
+import 'package:lettutor/models/misc/test_preparation.dart';
+import 'package:lettutor/models/user/user.dart';
+import 'package:lettutor/providers/auth/auth_provider.dart';
+import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/media_picker.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/utils/snack_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,7 +26,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  Uint8List? _imageData;
+  ValueNotifier<String?>? _imageData;
 
   final TextEditingController _nameTextEditingController =
       TextEditingController();
@@ -36,49 +43,84 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _studyScheduleTextEditingController =
       TextEditingController();
 
-  late final List<Map<String, dynamic>> _desiredLearningData;
-  late final List<String> _selectedDesiredLearningItems;
+  late final List<LearnTopic> _learnTopics;
+  late final List<TestPreparation> _testPreparations;
+  List<String> _selectedDesiredLearningItems = [];
+
+  final List<Map<String, dynamic>> _desiredLearningData =
+      <Map<String, dynamic>>[
+    for (final item in desiredLearningContent)
+      for (final value in item.values)
+        if (value is List)
+          for (final listValue in value)
+            {
+              'value': listValue.name!,
+              'isTitled': false,
+            }
+        else
+          {
+            'value': value,
+            'isTitled': true,
+          }
+  ];
+
+  void _getAccountInfo() async {
+    await UserService.getUserInfo(
+      onSuccess: (user) {
+        _imageData = ValueNotifier(user.avatar);
+        _nameTextEditingController.text = user.name ?? '';
+        _emailTextEditingController.text = user.email ?? '';
+        _countryTextEditingController.text = user.country ?? '';
+        _phoneNumberTextEditingController.text = user.phone ?? '';
+        _birthdayTextEditingController.text = user.birthday ?? '';
+        _levelTextEditingController.text = user.level ?? '';
+        _learnTopics = user.learnTopics ?? [];
+        _testPreparations = user.testPreparations ?? [];
+        _selectedDesiredLearningItems = [
+          ..._learnTopics.map((e) => e.name!),
+          ..._testPreparations.map((e) => e.name!),
+        ];
+        _studyScheduleTextEditingController.text = user.studySchedule ?? '';
+      },
+      onError: (message) => SnackBarHelper.showErrorSnackBar(
+        context: context,
+        content: message,
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _nameTextEditingController.text = 'Keegan';
-    _emailTextEditingController.text = 'student@lettutor.com';
-    _countryTextEditingController.text = 'VN';
-    _phoneNumberTextEditingController.text = '842499996508';
-    _birthdayTextEditingController.text = '2023-11-17';
-    _levelTextEditingController.text = 'B2';
-    _selectedDesiredLearningItems = <String>['KET', 'PET'];
-    _studyScheduleTextEditingController.text = '';
-
-    _desiredLearningData = <Map<String, dynamic>>[
-      for (final item in desiredLearningContent)
-        for (final value in item.values)
-          if (value is List)
-            for (final listValue in value)
-              {
-                'value': listValue,
-                'isTitled': false,
-              }
-          else
-            {
-              'value': value,
-              'isTitled': true,
-            }
-    ];
+    _getAccountInfo();
   }
 
-  Future<void> _onAvatarChanged() async {
-    Uint8List? imageData = await pickerImage(ImageSource.gallery);
-    setState(() {
-      _imageData = imageData;
-    });
+  void _onAvatarSubmited() async {
+    File? imageData = await pickerImage(ImageSource.gallery);
+    if (imageData != null) {
+      _imageData?.value = imageData.path;
+      await UserService.uploadImage(
+        image: imageData,
+        onSuccess: (user) {
+          _imageData?.value = user.avatar;
+          context.read<AuthProvider>().setUser(user);
+        },
+        onError: (message) {
+          SnackBarHelper.showErrorSnackBar(
+            context: context,
+            content: message,
+          );
+        },
+      );
+    }
   }
 
   void _onDateChanged(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.parse(_birthdayTextEditingController.text),
+      initialDate: DateTime.parse(_birthdayTextEditingController.text == ''
+          ? DateFormat('yyyy-MM-dd').format(DateTime.now())
+          : _birthdayTextEditingController.text),
       firstDate: DateTime(1950),
       lastDate: DateTime(2050),
     );
@@ -91,8 +133,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void _onProfileChangeSubmited() {
-    if (_formKey.currentState!.validate()) {}
+  void _onProfileChangeSubmited() async {
+    if (_formKey.currentState!.validate()) {
+      await UserService.updateInfo(
+        updateUser: User(
+          name: _nameTextEditingController.text,
+          country: _countryTextEditingController.text,
+          birthday: _birthdayTextEditingController.text,
+          level: _levelTextEditingController.text,
+          learnTopics: subjects
+              .where((learnTopic) =>
+                  _selectedDesiredLearningItems.contains(learnTopic.name))
+              .toList(),
+          testPreparations: testPreparations
+              .where((testPreparation) =>
+                  _selectedDesiredLearningItems.contains(testPreparation.name))
+              .toList(),
+          studySchedule: _studyScheduleTextEditingController.text,
+        ),
+        onSuccess: (user) {
+          context.read<AuthProvider>().setUser(user!);
+          SnackBarHelper.showSuccessSnackBar(
+            context: context,
+            content: 'Your profile has been updated.',
+          );
+        },
+        onError: (message) {
+          SnackBarHelper.showErrorSnackBar(
+            context: context,
+            content: message,
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -109,6 +182,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<AuthProvider>().getUser();
+
     return Scaffold(
       appBar: const CustomAppBar(
         appBarTitle: 'Profile',
@@ -138,35 +213,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Stack(
                     alignment: Alignment.center,
                     children: <Widget>[
-                      Container(
-                        width: 140,
-                        height: 140,
-                        clipBehavior: Clip.hardEdge,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
+                      ValueListenableBuilder<String?>(
+                        valueListenable: _imageData ?? ValueNotifier(''),
+                        builder: (context, value, child) => Container(
+                          width: 140,
+                          height: 140,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Image.network(
+                            value ?? '',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(
+                              Icons.person_rounded,
+                              size: 62,
+                            ),
+                          ),
                         ),
-                        child: _imageData != null
-                            ? Image.memory(
-                                _imageData!,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.person_rounded, size: 62),
-                              )
-                            : Image.asset(
-                                'assets/avatar/user/user_avatar.jpeg',
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.person_rounded, size: 62),
-                              ),
                       ),
                       Positioned(
                         bottom: 0,
                         right: 0,
                         width: 32,
                         child: InkWell(
-                          onTap: () {
-                            _onAvatarChanged();
-                          },
+                          onTap: _onAvatarSubmited,
                           child: CircleAvatar(
                             backgroundColor: Theme.of(context).primaryColor,
                             child: const Icon(
@@ -186,16 +258,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'Keegan',
+                        user?.name ?? '',
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Account ID: f569c202-7bbf-4620-af77-ecc1419a6b28',
+                        'Account ID: ${user?.id ?? ''}',
                         style: TextStyle(
                           color: Colors.grey.shade500,
                           fontWeight: FontWeight.w400,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 6),
                       const Text(
@@ -292,7 +365,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               horizontal: -4,
                             ),
                           ),
-                          value: _countryTextEditingController.text,
+                          value: countryList.keys
+                                  .contains(_countryTextEditingController.text)
+                              ? _countryTextEditingController.text
+                              : null,
                           items: List.generate(
                             countryList.length,
                             (index) => DropdownMenuItem<String>(
@@ -365,7 +441,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         TextFormField(
                           controller: _birthdayTextEditingController,
                           autocorrect: false,
-                          readOnly: true,
                           decoration: customInputDecoration.copyWith(
                             suffixIcon: Icon(
                               Icons.calendar_month_outlined,
@@ -394,7 +469,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               horizontal: -4,
                             ),
                           ),
-                          value: _levelTextEditingController.text,
+                          value: studentLevels.keys
+                                  .contains(_levelTextEditingController.text)
+                              ? _levelTextEditingController.text
+                              : null,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           items: List<DropdownMenuItem<String>>.generate(
                             studentLevels.length,

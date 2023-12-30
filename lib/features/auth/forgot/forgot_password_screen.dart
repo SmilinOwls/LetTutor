@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -22,6 +25,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       return 'The input is not valid E-mail!';
     } else {
       return null;
+    }
+  }
+
+  void _handleForgotPassword() async {
+    setState(() {
+      _emailErrorText = _handleEmailValidate(_emailController.text);
+    });
+    if (_emailErrorText == null) {
+      await AuthService.forgotPassword(
+        email: _emailController.text,
+        onSuccess: () async {
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.of(context).pushReplacementNamed(Routes.login);
+          });
+        },
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        ),
+      );
     }
   }
 
@@ -117,7 +140,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
             const SizedBox(height: 14),
             TextButton(
-              onPressed: () {},
+              onPressed: _handleForgotPassword,
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(56),
                 backgroundColor: Colors.blue[700],

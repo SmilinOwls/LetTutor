@@ -7,6 +7,7 @@ class DropDownField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.list,
+    this.onSelected,
     this.validator,
     this.hintText,
   });
@@ -15,6 +16,7 @@ class DropDownField extends StatelessWidget {
   final Map<String, String> list;
   final String? validator;
   final String? hintText;
+  final void Function(String)? onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,9 @@ class DropDownField extends StatelessWidget {
         hint: Text(
           hintText ?? '',
           style: const TextStyle(
+            color: Colors.grey,
             fontSize: 14,
+            fontWeight: FontWeight.w400,
           ),
         ),
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -58,6 +62,9 @@ class DropDownField extends StatelessWidget {
         },
         onChanged: (value) {
           controller.text = value!;
+          if (onSelected != null) {
+            onSelected!(value);
+          }
         },
         buttonStyleData: const ButtonStyleData(
           padding: EdgeInsets.only(right: 8),

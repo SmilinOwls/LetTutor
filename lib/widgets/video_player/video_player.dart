@@ -19,21 +19,24 @@ class VideoPlayerView extends StatefulWidget {
 }
 
 class _VideoPlayerViewState extends State<VideoPlayerView> {
-  late VideoPlayerController _videoPlayerController;
+  VideoPlayerController? _videoPlayerController;
 
-  late ChewieController _chewieController;
+  ChewieController? _chewieController;
 
   @override
   void initState() {
     super.initState();
+    _initialVideoPlayer();
+  }
 
+  void _initialVideoPlayer() {
     switch (widget.dataSourceType) {
       case DataSourceType.asset:
         _videoPlayerController = VideoPlayerController.asset(widget.url);
         break;
       case DataSourceType.network:
-        _videoPlayerController = VideoPlayerController.networkUrl(Uri(path: widget.url));
-        break;
+        _videoPlayerController =
+            VideoPlayerController.networkUrl(Uri.parse(widget.url));
       case DataSourceType.file:
         _videoPlayerController = VideoPlayerController.file(File(widget.url));
         break;
@@ -43,10 +46,10 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
         break;
     }
 
-    _videoPlayerController.initialize().then(
+    _videoPlayerController?.initialize().then(
           (_) => setState(
             () => _chewieController = ChewieController(
-              videoPlayerController: _videoPlayerController,
+              videoPlayerController: _videoPlayerController!,
               aspectRatio: 16 / 9,
             ),
           ),
@@ -55,8 +58,8 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
-    _chewieController.dispose();
+    _videoPlayerController?.dispose();
+    _chewieController?.dispose();
     super.dispose();
   }
 
@@ -64,15 +67,19 @@ class _VideoPlayerViewState extends State<VideoPlayerView> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
-          widget.dataSourceType.name.toUpperCase(),
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          'Video',
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         const Divider(),
         AspectRatio(
           aspectRatio: 16 / 9,
-          child: Chewie(controller: _chewieController),
+          child: Chewie(
+            controller: _chewieController ??
+                ChewieController(
+                    videoPlayerController: _videoPlayerController!),
+          ),
         ),
       ],
     );

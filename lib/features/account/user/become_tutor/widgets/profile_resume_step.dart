@@ -1,13 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/cerificate_dialog.dart';
-import 'package:lettutor/widgets/drop_down.dart';
-import 'package:lettutor/widgets/headline_text.dart';
-import 'package:lettutor/widgets/helper_text.dart';
-import 'package:lettutor/widgets/text_input.dart';
+import 'package:lettutor/providers/auth/auth_provider.dart';
+import 'package:lettutor/widgets/drop_down/drop_down.dart';
+import 'package:lettutor/widgets/text/headline_text.dart';
+import 'package:lettutor/widgets/text/helper_text.dart';
+import 'package:lettutor/widgets/form_field/text_input.dart';
+import 'package:provider/provider.dart';
 
 class ProfileResumeStep extends StatefulWidget {
   const ProfileResumeStep({
@@ -84,6 +87,8 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = context.watch<AuthProvider>().user;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,12 +148,20 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
-                    child: Image.asset(
-                      'assets/avatar/user/user_avatar.jpeg',
+                    child: CachedNetworkImage(
+                      imageUrl: userProvider?.avatar ?? '',
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.person_rounded, size: 62),
-                    ),
+                      placeholder: (context, url) => const Icon(
+                        Icons.person,
+                        color: Colors.grey,
+                        size: 140,
+                      ),
+                      errorWidget: (context, error, stackTrace) => const Icon(
+                        Icons.error_outline_rounded,
+                        color: Colors.red,
+                        size: 140,
+                      ),
+                    )
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -520,7 +533,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Column(
-                          children: tutorSpecialities
+                          children: specialities.map((e) => e.name!)
                               .map<Widget>(
                                 (specialty) => CheckboxListTile(
                                   controlAffinity:

@@ -1,4 +1,4 @@
-import 'package:lettutor/models/courses/course_topic.dart';
+import 'package:lettutor/constants/dto/courses/course_topic.dart';
 
 class Course {
   const Course(

@@ -10,6 +10,12 @@ Diagram link: [LetTutor Widget Tree](https://drive.google.com/file/d/1eZiXDW1jwx
 
 Link Demo: [LetTutor Offline App](https://youtu.be/2FhsBaOFjx8)
 
+# Milestone 3. Basic Features
+
+Link Demo: 
+- [LetTutor Basic Features P1](https://youtu.be/Do2Huu_aET4)
+- [LetTutor Basic Features P2](https://youtu.be/YPlEcX6EeD4)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.

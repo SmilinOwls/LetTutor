@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -36,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _handlePasswordValidate(value) {
     if (value.isEmpty) {
       return 'Please input your password!';
-    } else if (value.length < 8) {
+    } else if (value.length < 6) {
       return 'Password too short!';
     } else {
       return null;
@@ -46,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _handleRePasswordValidate(value) {
     if (value.isEmpty) {
       return 'Please input your re-password!';
-    } else if (value.length < 8) {
+    } else if (value.length < 6) {
       return 'Re-password too short!';
     } else {
       if (value != _passwordController.text) {
@@ -54,6 +56,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
       } else {
         return null;
       }
+    }
+  }
+
+  void _handleRegister() async {
+    setState(() {
+      _emailErrorText = _handleEmailValidate(_emailController.text);
+      _passwordErrorText = _handlePasswordValidate(_passwordController.text);
+      _rePasswordErrorText =
+          _handleRePasswordValidate(_rePasswordController.text);
+    });
+    if (_emailErrorText == null &&
+        _passwordErrorText == null &&
+        _rePasswordErrorText == null) {
+      await AuthService.registerWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+        onSuccess: () async {
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.of(context).pushReplacementNamed(Routes.login);
+          });
+        },
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        ),
+      );
     }
   }
 
@@ -293,7 +321,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             const SizedBox(height: 18),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                _handleRegister();
+              },
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(56),
                 backgroundColor: Colors.blue[700],

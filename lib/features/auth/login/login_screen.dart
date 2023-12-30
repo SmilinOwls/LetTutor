@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lettutor/constants/routes.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/models/auth/tokens.dart';
+import 'package:lettutor/models/user/user.dart';
+import 'package:lettutor/providers/auth/auth_provider.dart';
+import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/snack_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,10 +43,84 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _handlePasswordValidate(value) {
     if (value.isEmpty) {
       return 'Please input your password!';
-    } else if (value.length < 8) {
+    } else if (value.length < 6) {
       return 'Password too short!';
     } else {
       return null;
+    }
+  }
+
+  void _onSuccessLogin(User user, Tokens tokens) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('refresh_token', tokens.refresh!.token!);
+    await prefs.setString('access_token', tokens.access!.token!);
+
+    if (context.mounted) {
+      Provider.of<AuthProvider>(context, listen: false).setUser(user);
+
+      Future.delayed(const Duration(seconds: 1), () {
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil(Routes.main, (route) => false);
+      });
+    }
+  }
+
+  void _handleLogin() async {
+    setState(() {
+      _emailErrorText = _handleEmailValidate(_emailController.text);
+      _passwordErrorText = _handlePasswordValidate(_passwordController.text);
+    });
+    if (_emailErrorText == null && _passwordErrorText == null) {
+      await AuthService.loginWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+        onSuccess: _onSuccessLogin,
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        ),
+      );
+    }
+  }
+
+  void _handleGoogleLogin() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    ).signIn();
+
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    final String? accessToken = googleAuth?.accessToken;
+
+    if (accessToken != null) {
+      await AuthService.loginByGoogle(
+        accessToken: accessToken,
+        onSuccess: _onSuccessLogin,
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        ),
+      );
+    }
+  }
+
+  void _handleFacebookLogin() async {
+    final result = await FacebookAuth.instance.login();
+
+    if (result.status == LoginStatus.success) {
+      final String accessToken = result.accessToken!.token;
+      await AuthService.loginByFacebook(
+        accessToken: accessToken,
+        onSuccess: _onSuccessLogin,
+        onError: (message) => SnackBarHelper.showErrorSnackBar(
+          context: context,
+          content: message,
+        ),
+      );
     }
   }
 
@@ -217,7 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 14),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed(Routes.main);
+                _handleLogin();
               },
               style: TextButton.styleFrom(
                 minimumSize: const Size.fromHeight(56),
@@ -255,7 +338,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: _handleFacebookLogin,
                       icon: SvgPicture.asset(
                         'assets/logo/facebook_logo.svg',
                         width: 36,
@@ -270,7 +353,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: _handleGoogleLogin,
                       icon: SvgPicture.asset(
                         'assets/logo/google_logo.svg',
                         width: 36,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/models/language/language.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
-import 'package:lettutor/widgets/app_bar.dart';
+import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
 
 class LanguageScreen extends StatefulWidget {

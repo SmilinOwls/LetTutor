@@ -1,15 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:lettutor/models/courses/ebook.dart';
+import 'package:lettutor/constants/dummy.dart';
+import 'package:lettutor/constants/routes.dart';
+import 'package:lettutor/models/courses/course/course.dart';
 
-class EbookCard extends StatelessWidget {
-  const EbookCard({super.key, required this.ebook});
+class CourseCard extends StatelessWidget {
+  const CourseCard({super.key, required this.course});
 
-  final EBook ebook;
+  final Course course;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          Routes.courseDetail,
+          arguments: course.id ?? 'null id',
+        );
+      },
       child: Align(
         alignment: Alignment.center,
         child: SizedBox(
@@ -22,18 +30,18 @@ class EbookCard extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
-            color: Theme.of(context).cardColor,
             margin: const EdgeInsets.symmetric(vertical: 10),
             elevation: 2,
+            color: Theme.of(context).cardColor,
             clipBehavior: Clip.hardEdge,
             borderOnForeground: true,
             shadowColor: const Color.fromARGB(255, 132, 132, 132),
             child: Column(
               children: <Widget>[
-                Image(
-                  image: AssetImage(ebook.imageUrl ?? ''),
+                CachedNetworkImage(
+                  imageUrl: course.imageUrl ?? '',
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
+                  errorWidget: (context, url, error) => const Icon(
                     Icons.error_outline_rounded,
                     size: 32,
                     color: Colors.redAccent,
@@ -48,19 +56,40 @@ class EbookCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        ebook.name ?? 'null name',
+                        course.name ?? 'null name',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
+                      const SizedBox(height: 8),
                       Text(
-                        ebook.description ?? 'null description',
+                        course.description ?? 'null description',
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
                         ),
+                      ),
+                      const SizedBox(height: 14),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              coursesLevel[course.level] ?? 'null level',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            course.topics != null
+                                ? '${course.topics!.length} lessons'
+                                : 'null lesson',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),

@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
-import 'package:lettutor/utils/time_diff.dart';
-import 'package:lettutor/widgets/star_rating.dart';
+import 'package:lettutor/utils/time_helper.dart';
+import 'package:lettutor/widgets/star_rating/star_rating.dart';
 
 class ReviewCard extends StatelessWidget {
   const ReviewCard({super.key, required this.review});
@@ -24,17 +25,16 @@ class ReviewCard extends StatelessWidget {
               child: Container(
                 width: 62,
                 height: 62,
+                clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                 ),
-                child: ClipOval(
-                  child: Image.asset(
-                    'assets/avatar/user/user_avatar.jpeg',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
-                      Icons.person_outline_rounded,
-                      size: 62,
-                    ),
+                child: CachedNetworkImage(
+                  imageUrl: review.firstInfo?.avatar ?? '',
+                  fit: BoxFit.cover,
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.error,
+                    size: 42,
                   ),
                 ),
               ),
@@ -48,7 +48,7 @@ class ReviewCard extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        review.username ?? 'null name',
+                        review.firstInfo?.name ?? 'null name',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -57,7 +57,7 @@ class ReviewCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        TimeDiff.timeAgo(review.createdAt!),
+                        TimeHelper.timeAgo(review.createdAt!),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -67,7 +67,7 @@ class ReviewCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  StarRating(rating: review.rating ?? 0),
+                  StarRating(rating: review.rating?.toDouble() ?? 0),
                   const SizedBox(height: 4),
                   Text(review.content ?? 'null content'),
                 ],

@@ -20,10 +20,10 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-
   @override
   Widget build(BuildContext context) {
-    final LanguageProvider languageProvider = Provider.of<LanguageProvider>(context);
+    final LanguageProvider languageProvider =
+        Provider.of<LanguageProvider>(context);
     final selectedLanguage = languageProvider.getLanguage();
 
     return AppBar(
@@ -33,8 +33,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
             ? Text(
                 widget.appBarTitle!.toUpperCase(),
                 style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontSize: 24,
-                ),
+                      fontSize: 24,
+                    ),
               )
             : IconButton(
                 onPressed: () {
@@ -49,7 +49,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       elevation: 9,
       actions: <Widget>[
         Container(
-          width: 200,
+          width: 190,
           padding: const EdgeInsets.all(6),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2<Language>(

@@ -2,8 +2,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/utils/file_picker.dart';
-import 'package:lettutor/widgets/drop_down.dart';
-import 'package:lettutor/widgets/error_text.dart';
+import 'package:lettutor/widgets/drop_down/drop_down.dart';
+import 'package:lettutor/widgets/text/error_text.dart';
 
 class CerificateDialog extends StatefulWidget {
   const CerificateDialog({super.key, required this.certificates});

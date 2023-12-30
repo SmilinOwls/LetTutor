@@ -1,7 +1,9 @@
-class TimeDiff {
+import 'package:intl/intl.dart';
+
+class TimeHelper {
   static String timeAgo(String createdTime) {
     final DateTime dt = DateTime.tryParse(createdTime) ?? DateTime.now();
-    
+
     Duration diff = DateTime.now().difference(dt);
     if (diff.inDays > 365) {
       return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
@@ -23,5 +25,28 @@ class TimeDiff {
     }
     return "just now";
   }
+
+  static String getRemainingTimer(Duration currentTime) {
+    final String days = currentTime.inDays.toString().padLeft(2, '0');
+    final String hours =
+        currentTime.inHours.remainder(24).toString().padLeft(2, '0');
+    final String minutes =
+        currentTime.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final String seconds =
+        currentTime.inSeconds.remainder(60).toString().padLeft(2, '0');
+
+    return '$days:$hours:$minutes:$seconds';
+  }
+
+  static String convertTimeStampToHour(int timestamp) {
+    final DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    final String hour = DateFormat('HH:mm').format(date);
+    return hour;
+  }
+
+  static String convertTimeStampToDay(int timestamp) {
+    final String day = DateFormat.yMMMEd()
+        .format(DateTime.fromMillisecondsSinceEpoch(timestamp));
+    return day;
+  }
 }
- 

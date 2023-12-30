@@ -1,16 +1,20 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:lettutor/widgets/lesson_dialog.dart';
+import 'package:lettutor/models/schedule/booking_info.dart';
+import 'package:lettutor/services/booking_service.dart';
+import 'package:lettutor/widgets/dialog/lesson_dialog.dart';
 
 class ScheduleCancelingDialog extends StatefulWidget {
-  const ScheduleCancelingDialog({super.key});
+  const ScheduleCancelingDialog({super.key, required this.booking});
+
+  final BookingInfo booking;
 
   @override
   State<ScheduleCancelingDialog> createState() =>
       _ScheduleCancelingDialogState();
 }
 
-const List<String> reasons = [
+const reasons = [
   'Reschedule at another time',
   'Busy at that time',
   'Asked by the tutor',
@@ -20,7 +24,19 @@ const List<String> reasons = [
 class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
   final TextEditingController _noteTextEditingController =
       TextEditingController();
-  String _selectedValue = reasons.first;
+  String _selectedReason = reasons.first;
+
+  Future<bool?> _handleCancelSubmit() async {
+    final response = await BookingService.cancelBooking(
+      cancelReasonId: reasons.indexOf(_selectedReason) + 1,
+      cancelNote: _noteTextEditingController.text.isEmpty
+          ? null
+          : _noteTextEditingController.text,
+      scheduleDetailId: widget.booking.id ?? '',
+    );
+
+    return response;
+  }
 
   @override
   void dispose() {
@@ -31,6 +47,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
   @override
   Widget build(BuildContext context) {
     return LessonDialog(
+      booking: widget.booking,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -70,10 +87,10 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                       ),
                     )
                     .toList(),
-                value: _selectedValue,
+                value: _selectedReason,
                 onChanged: (String? value) {
                   setState(() {
-                    _selectedValue = value!;
+                    _selectedReason = value!;
                   });
                 },
                 buttonStyleData: const ButtonStyleData(
@@ -129,13 +146,20 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                     color: Colors.blue,
                   ),
                 ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1,
+                    color: Colors.red,
+                  ),
+                ),
               ),
             ),
           ),
         ],
       ),
-      onSubmit: () {
-        return 'You deleted booking successfully!';
+      onSubmit: () async {
+        final response = await _handleCancelSubmit();
+        return response.toString();
       },
     );
   }
