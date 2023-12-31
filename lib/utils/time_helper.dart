@@ -49,4 +49,12 @@ class TimeHelper {
         .format(DateTime.fromMillisecondsSinceEpoch(timestamp));
     return day;
   }
+
+  static String getMostRecentWeekRangeFromDate(DateTime date) {
+    final DateTime monday = date.subtract(Duration(days: date.weekday - 1));
+    final DateTime sunday = date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
+    return 'Week: ${DateFormat('dd/MM/yyyy').format(monday)} (Monday)'
+        ' - '
+        '${DateFormat('dd/MM/yyyy').format(sunday)} (Sunday)';
+  }
 }

@@ -4,7 +4,9 @@ import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_hour_di
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
+import 'package:lettutor/utils/time_helper.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:lettutor/widgets/pagination/pagination.dart';
 
 class TutorBookingScreen extends StatefulWidget {
   const TutorBookingScreen({super.key, required this.tutorId});
@@ -17,16 +19,19 @@ class TutorBookingScreen extends StatefulWidget {
 
 class _TutorBookingScreenState extends State<TutorBookingScreen> {
   Map<String, List<Schedule>>? _tutorSchedules;
+  int _currentPage = 1;
+  DateTime _date = DateTime.now();
 
   @override
   void initState() {
     super.initState();
-    getTutorSchedule();
+    _getTutorSchedule();
   }
 
-  void getTutorSchedule() async {
+  void _getTutorSchedule() async {
     await BookingService.getTutorScheduleById(
       tutorId: widget.tutorId,
+      page: _currentPage - 1,
       onSuccess: (schedules) {
         _tutorScheduleHandle(schedules);
       },
@@ -37,7 +42,17 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
     );
   }
 
+  void _onPageChanged(int page) {
+    _date = DateTime.now().add(Duration(days: (page - 1) * 7));
+    setState(() {
+      _currentPage = page;
+    });
+    _getTutorSchedule();
+  }
+
   void _tutorScheduleHandle(List<Schedule> schedules) {
+    _tutorSchedules?.clear();
+
     schedules.removeWhere(
       (schedule) =>
           DateTime.fromMillisecondsSinceEpoch(schedule.startTimestamp ?? 0)
@@ -91,7 +106,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
       ),
       body: _tutorSchedules == null
           ? const Center(child: CircularProgressIndicator())
-          : _tutorSchedules?.isEmpty == true
+          : _tutorSchedules?.isEmpty == true && _currentPage == 1
               ? Center(
                   child: Column(
                     children: [
@@ -124,6 +139,11 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 10),
+                      Text(
+                        TimeHelper.getMostRecentWeekRangeFromDate(_date),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 18),
                       Flexible(
                         fit: FlexFit.tight,
                         child: GridView.builder(
@@ -183,6 +203,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
                               }
                             }),
                       ),
+                      Pagination(onPageChanged: _onPageChanged),
                     ],
                   ),
                 ),

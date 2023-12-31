@@ -194,9 +194,8 @@ class _HistoryCardState extends State<HistoryCard> {
                       title: Text(
                         widget.booking.studentRequest ??
                             'No request for this lesson',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
-                          color: Colors.black.withOpacity(0.8),
                           fontWeight: FontWeight.w400,
                         ),
                       ),

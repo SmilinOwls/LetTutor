@@ -65,8 +65,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
 
   bool _checkAvailableToJoinSchedule(ScheduleInfo? scheduleInfo) {
     final DateTime now = DateTime.now();
-    final DateTime endTime = DateTime.fromMillisecondsSinceEpoch(
-        scheduleInfo?.endTimeStamp ?? 0);
+    final DateTime endTime =
+        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.endTimeStamp ?? 0);
     if (now.isBefore(endTime)) {
       return true;
     } else {
@@ -74,10 +74,10 @@ class _ScheduleCardState extends State<ScheduleCard> {
     }
   }
 
-  bool _checkCancelBeforeLessonStartTwoHours(ScheduleInfo? scheduleInfo){
+  bool _checkCancelBeforeLessonStartTwoHours(ScheduleInfo? scheduleInfo) {
     final DateTime now = DateTime.now();
-    final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(
-        scheduleInfo?.startTimeStamp ?? 0);
+    final DateTime startTime =
+        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.startTimeStamp ?? 0);
     final int diff = startTime.difference(now).inHours;
     if (diff < 2) {
       return false;
@@ -201,9 +201,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
                           widget.booking.studentRequest ??
                               'Currently there are no requests for this class. '
                                   'Please write down any requests for the teacher.',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
-                            color: Colors.black.withOpacity(0.8),
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -217,22 +216,23 @@ class _ScheduleCardState extends State<ScheduleCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                _checkCancelBeforeLessonStartTwoHours(scheduleInfo) ? 
-                  OutlinedButton.icon(
-                  onPressed: () {
-                    _showScheduleCancelingDialog(context);
-                  },
-                  icon: const Icon(Icons.cancel_presentation_outlined),
-                  label: const Text(
-                    'Cancel',
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.red,
-                    side: const BorderSide(color: Colors.red),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                ) : const SizedBox.shrink(),
+                _checkCancelBeforeLessonStartTwoHours(scheduleInfo)
+                    ? OutlinedButton.icon(
+                        onPressed: () {
+                          _showScheduleCancelingDialog(context);
+                        },
+                        icon: const Icon(Icons.cancel_presentation_outlined),
+                        label: const Text(
+                          'Cancel',
+                        ),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.red,
+                          side: const BorderSide(color: Colors.red),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 const SizedBox(width: 8),
                 TextButton(
                   onPressed: _checkAvailableToJoinSchedule(scheduleInfo)

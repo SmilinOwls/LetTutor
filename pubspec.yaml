@@ -53,6 +53,7 @@ dependencies:
   url_launcher: ^6.2.2
   jwt_decoder: ^2.0.1
   jitsi_meet_flutter_sdk: ^0.1.9
+  pager: ^0.0.6
 
 dev_dependencies:
   flutter_test:
