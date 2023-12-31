@@ -95,7 +95,7 @@ class BookingService {
     int inFuture = 1,
     String orderBy = 'meeting',
     String sortBy = 'asc',
-    required Function(List<BookingInfo>) onSuccess,
+    required Function(int, List<BookingInfo>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
@@ -109,12 +109,13 @@ class BookingService {
         throw Exception(data['message']);
       }
 
+      final total = data['data']['count'];
       final bookingInfo = data['data']['rows'];
 
       final bookingList = bookingInfo
           .map<BookingInfo>((booking) => BookingInfo.fromJson(booking))
           .toList();
-      await onSuccess(bookingList);
+      await onSuccess(total, bookingList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }

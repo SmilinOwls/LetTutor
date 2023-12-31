@@ -4,6 +4,7 @@ import 'package:lettutor/features/schedule/widgets/schedule_card.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
+import 'package:pager/pager.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -15,6 +16,10 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleScreenState extends State<ScheduleScreen> {
   Future<List<BookingInfo>>? _bookings;
 
+  int _page = 1;
+  final int _perPage = 20;
+  late int _totalPages;
+
   @override
   void initState() {
     super.initState();
@@ -23,10 +28,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   void _getBookingListByStudent() async {
     await BookingService.getBookingListByStudent(
-      page: 1,
-      perPage: 10,
-      onSuccess: (bookings) {
+      page: _page,
+      perPage: _perPage,
+      onSuccess: (total, bookings) {
         setState(() {
+          _totalPages = (total / _perPage).ceil();
           _bookings = Future.value(bookings);
         });
       },
@@ -44,6 +50,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         return bookings;
       });
     });
+  }
+
+  void _onPageChanged(int page) {
+    setState(() {
+      _page = page;
+      _bookings = null;
+    });
+    _getBookingListByStudent();
   }
 
   @override
@@ -106,13 +120,22 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   );
                 }
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      'Total prescheduled lessons: ${bookings.length}',
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Total prescheduled lessons: ${bookings.length}',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
                     const SizedBox(height: 16),
+                    Pager(
+                      currentItemsPerPage: _perPage,
+                      currentPage: _page,
+                      totalPages: _totalPages,
+                      onPageChanged: _onPageChanged,
+                    ),
+                    const SizedBox(height: 20),
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -123,7 +146,14 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           onCancel: _updateBookingListAfterCanceling,
                         );
                       },
-                    )
+                    ),
+                    const SizedBox(height: 20),
+                    Pager(
+                      currentItemsPerPage: _perPage,
+                      currentPage: _page,
+                      totalPages: _totalPages,
+                      onPageChanged: _onPageChanged,
+                    ),
                   ],
                 );
               }

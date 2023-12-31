@@ -4,6 +4,7 @@ import 'package:lettutor/features/history/widgets/history_card.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
+import 'package:pager/pager.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -15,6 +16,10 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   Future<List<BookingInfo>>? _bookings;
 
+  int _page = 1;
+  final int _perPage = 20;
+  late int _totalPages;
+
   @override
   void initState() {
     super.initState();
@@ -23,12 +28,13 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   void _getBookingListByStudent() async {
     await BookingService.getBookingListByStudent(
-      page: 1,
-      perPage: 10,
+      page: _page,
+      perPage: _perPage,
       inFuture: 0,
       sortBy: 'desc',
-      onSuccess: (bookings) {
+      onSuccess: (total, bookings) {
         setState(() {
+          _totalPages = (total / _perPage).ceil();
           _bookings = Future.value(bookings);
         });
       },
@@ -37,6 +43,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
         content: message,
       ),
     );
+  }
+
+  void _onPageChanged(int page) {
+    setState(() {
+      _page = page;
+      _bookings = null;
+    });
+    _getBookingListByStudent();
   }
 
   @override
@@ -80,7 +94,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 if (bookings.isEmpty) {
                   return Center(
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         const Text(
                           'You have no history',
                           style: TextStyle(
@@ -100,16 +114,34 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   );
                 }
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: bookings.length,
-                  itemBuilder: (context, index) {
-                    return HistoryCard(
-                      booking: bookings[index],
-                      onUpdatedBooking: _getBookingListByStudent,
-                    );
-                  },
+                return Column(
+                  children: [
+                    Pager(
+                      currentItemsPerPage: _perPage,
+                      currentPage: _page,
+                      totalPages: _totalPages,
+                      onPageChanged: _onPageChanged,
+                    ),
+                    const SizedBox(height: 20),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: bookings.length,
+                      itemBuilder: (context, index) {
+                        return HistoryCard(
+                          booking: bookings[index],
+                          onUpdatedBooking: _getBookingListByStudent,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    Pager(
+                      currentItemsPerPage: _perPage,
+                      currentPage: _page,
+                      totalPages: _totalPages,
+                      onPageChanged: _onPageChanged,
+                    ),
+                  ],
                 );
               }
               return const Center(child: CircularProgressIndicator());

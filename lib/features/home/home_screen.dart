@@ -146,8 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
       _selectedTag = 'All';
       _nameEditingController.text = '';
       _nationalityEditingController.text = '';
-      _tutors = _tutors;
     });
+    _handleSearch();
   }
 
   @override
