@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/approval_step.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/profile_resume_step.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/video_introduction_step.dart';
+import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:lettutor/widgets/stepper/horizonal_stepper.dart';
 
 class BecomeTutorScreen extends StatefulWidget {
-  const BecomeTutorScreen({super.key});
+  const BecomeTutorScreen({super.key, this.user});
+
+  final User? user;
 
   @override
   State<BecomeTutorScreen> createState() => _BecomeTutorScreenState();
