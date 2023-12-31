@@ -4,6 +4,7 @@ import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:pager/pager.dart';
 
 class TutorReviewScreen extends StatefulWidget {
   const TutorReviewScreen({super.key, required this.tutorId});
@@ -16,6 +17,9 @@ class TutorReviewScreen extends StatefulWidget {
 
 class _TutorReviewScreenState extends State<TutorReviewScreen> {
   Future<List<TutorFeedback>>? _feedbacks;
+  int _page = 1;
+  final int _perPage = 10;
+  late int _totalPages;
 
   @override
   void initState() {
@@ -25,15 +29,16 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
 
   void _getTutorFeedbacks() async {
     await TutorService.getTutorFeedback(
-      page: 1,
-      perPage: 10,
+      page: _page,
+      perPage: _perPage,
       userId: widget.tutorId,
-      onSuccess: (feedbacks) {
+      onSuccess: (totalItems, feedbacks) {
         feedbacks.toList().sort((TutorFeedback late, TutorFeedback old) {
           return old.createdAt.toString().compareTo(late.createdAt.toString());
         });
 
         setState(() {
+          _totalPages = (totalItems / _perPage).ceil();
           _feedbacks = Future.value(feedbacks);
         });
       },
@@ -42,6 +47,13 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
         content: message,
       ),
     );
+  }
+
+  void _onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
+    _getTutorFeedbacks();
   }
 
   @override
@@ -58,14 +70,24 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
             if (snapshot.hasData) {
               final List<TutorFeedback> feedbacks =
                   snapshot.data as List<TutorFeedback>;
-              return ListView.builder(
-                itemCount: feedbacks.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return ReviewCard(
-                    review: feedbacks[index],
-                  );
-                },
+              return Column(
+                children: <Widget>[
+                  ListView.builder(
+                    itemCount: feedbacks.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ReviewCard(
+                        review: feedbacks[index],
+                      );
+                    },
+                  ),
+                  Pager(
+                    currentItemsPerPage: _perPage,
+                    currentPage: _page,
+                    totalPages: _totalPages,
+                    onPageChanged: _onPageChanged,
+                  )
+                ],
               );
             }
             return const Center(

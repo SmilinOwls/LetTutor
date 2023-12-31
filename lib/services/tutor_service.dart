@@ -150,7 +150,7 @@ class TutorService {
     required int page,
     required int perPage,
     required String userId,
-    required Function(List<TutorFeedback>) onSuccess,
+    required Function(int,List<TutorFeedback>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
@@ -164,13 +164,14 @@ class TutorService {
         throw Exception(data['message']);
       }
 
+      final int totalItems = data['data']['count'];
       final List<dynamic> feedbacks = data['data']['rows'];
 
       final feedbackList = feedbacks
           .map<TutorFeedback>((feedback) => TutorFeedback.fromJson(feedback))
           .toList();
 
-      await onSuccess(feedbackList);
+      await onSuccess(totalItems, feedbackList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
