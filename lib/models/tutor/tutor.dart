@@ -142,7 +142,7 @@ class Tutor {
     isNative = json['isNative'];
     price = json['price'];
     isOnline = json['isOnline'];
-    isFavorite = json['isFavorite'];
+    isFavorite = json['isFavorite'] ?? json['isFavoriteTutor'];
   }
 
   Map<String, dynamic> toJson() {
@@ -192,6 +192,8 @@ class Tutor {
     data['price'] = price;
     data['isOnline'] = isOnline;
     data['isFavorite'] = isFavorite;
+    data['isFavoriteTutor'] = isFavorite;
+    
     return data;
   }
 }

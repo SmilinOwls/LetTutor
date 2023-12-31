@@ -8,7 +8,7 @@ class TutorService {
   static Future<void> getListTutorWithPagination({
     required int page,
     required int perPage,
-    required Function(List<Tutor>, List<Tutor>) onSuccess,
+    required Function(int, List<Tutor>, List<Tutor>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
@@ -24,6 +24,7 @@ class TutorService {
 
       final List<String> tutorIds = [];
 
+      final total = data['tutors']['count'];
       final tutors = data['tutors']['rows'];
       final favoriteTutors = data['favoriteTutor'];
 
@@ -50,7 +51,7 @@ class TutorService {
       final favoriteTutorList = newFavoriteTutors
           .map<Tutor>((tutor) => Tutor.fromJson(tutor))
           .toList();
-      await onSuccess(tutorList, favoriteTutorList);
+      await onSuccess(total, tutorList, favoriteTutorList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -85,7 +86,7 @@ class TutorService {
     String search = '',
     Map<String, bool> nationality = const <String, bool>{},
     List<String> specialties = const <String>[],
-    required Function(List<Tutor>) onSuccess,
+    required Function(int, List<Tutor>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
@@ -108,12 +109,13 @@ class TutorService {
         throw Exception(data['message']);
       }
 
+      final total = data['count'];
       final List<dynamic> tutors = data['rows'];
 
       final tutorList =
           tutors.map<Tutor>((tutor) => Tutor.fromJson(tutor)).toList();
 
-      await onSuccess(tutorList);
+      await onSuccess(total, tutorList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }

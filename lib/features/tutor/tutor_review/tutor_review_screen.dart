@@ -81,12 +81,13 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
                       );
                     },
                   ),
+                  const SizedBox(height: 20),
                   Pager(
                     currentItemsPerPage: _perPage,
                     currentPage: _page,
                     totalPages: _totalPages,
                     onPageChanged: _onPageChanged,
-                  )
+                  ),
                 ],
               );
             }

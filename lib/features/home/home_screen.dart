@@ -6,6 +6,7 @@ import 'package:lettutor/features/home/widgets/tutor_search.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/services/tutor_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
+import 'package:pager/pager.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,32 +24,36 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _nationalityEditingController =
       TextEditingController();
   List<Tutor>? _tutors;
-  List<Tutor>? _filteredTutors;
+
+  int _page = 1;
+  final int _perPage = 12;
+  late int _totalPages;
 
   @override
   void initState() {
     super.initState();
-    _getTutors();
+    _handleSearch();
   }
 
-  void _getTutors() async {
-    await TutorService.getListTutorWithPagination(
-      page: 1,
-      perPage: 10,
-      onSuccess: (tutors, favoriteTutors) {
-        setState(() {
-          sortTutorByRating(tutors);
-          sortTutorByRating(favoriteTutors);
-          _tutors = [...favoriteTutors, ...tutors];
-          _filteredTutors = _tutors;
-        });
-      },
-      onError: (message) => SnackBarHelper.showErrorSnackBar(
-        context: context,
-        content: message,
-      ),
-    );
-  }
+  // void _getTutors() async {
+  //   await TutorService.getListTutorWithPagination(
+  //     page: _page,
+  //     perPage: _perPage,
+  //     onSuccess: (total, tutors, favoriteTutors) {
+  //       setState(() {
+  //         sortTutorByRating(tutors);
+  //         sortTutorByRating(favoriteTutors);
+  //         _tutors = [...favoriteTutors, ...tutors];
+  //         _filteredTutors = _tutors;
+  //         _totalPages = (total / _perPage).ceil();
+  //       });
+  //     },
+  //     onError: (message) => SnackBarHelper.showErrorSnackBar(
+  //       context: context,
+  //       content: message,
+  //     ),
+  //   );
+  // }
 
   void sortTutorByRating(List<Tutor> tutors) {
     tutors = tutors
@@ -105,14 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     await TutorService.searchTutor(
-      page: 1,
-      perPage: 10,
+      page: _page,
+      perPage: _perPage,
       search: _selectedName ?? '',
       specialties: specialityList,
       nationality: nationalityList,
-      onSuccess: (tutors) {
+      onSuccess: (total, tutors) {
         setState(() {
-          _filteredTutors = tutors.toList()
+          _totalPages = (total / _perPage).ceil();
+          _tutors = tutors.toList()
             ..sort((tutorLessRating, tutorMoreRating) {
               if (tutorMoreRating.rating == null ||
                   tutorLessRating.rating == null) return 0;
@@ -127,13 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
+    _handleSearch();
+  }
+
   void _handleFilterReset() {
     setState(() {
       _selectedNationality = null;
       _selectedTag = 'All';
       _nameEditingController.text = '';
       _nationalityEditingController.text = '';
-      _filteredTutors = _tutors;
+      _tutors = _tutors;
     });
   }
 
@@ -178,37 +191,57 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                 ),
-                _filteredTutors!.isNotEmpty
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _filteredTutors!.length,
-                        itemBuilder: (content, index) => TutorCard(
-                          tutor: _filteredTutors![index],
-                        ),
+                _tutors!.isNotEmpty
+                    ? Column(
+                        children: [
+                          Pager(
+                            currentItemsPerPage: _perPage,
+                            currentPage: _page,
+                            totalPages: _totalPages,
+                            onPageChanged: _onPageChanged,
+                          ),
+                          const SizedBox(height: 20),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: _tutors!.length,
+                            itemBuilder: (content, index) => TutorCard(
+                              key: ValueKey(_tutors![index].userId),
+                              tutor: _tutors![index],
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Pager(
+                            currentItemsPerPage: _perPage,
+                            currentPage: _page,
+                            totalPages: _totalPages,
+                            onPageChanged: _onPageChanged,
+                          ),
+                        ],
                       )
                     : const Center(
                         child: Column(
-                        children: <Widget>[
-                          Icon(
-                            Icons.search_off,
-                            size: 100,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(height: 12),
-                          Text(
-                            'No tutor found',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            'Please try again with different filters',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          SizedBox(height: 20),
-                        ],
-                      )),
+                          children: <Widget>[
+                            Icon(
+                              Icons.search_off,
+                              size: 100,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 12),
+                            Text(
+                              'No tutor found',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Please try again with different filters',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
               ],
             ),
           );
