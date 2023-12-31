@@ -72,6 +72,13 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
                   snapshot.data as List<TutorFeedback>;
               return Column(
                 children: <Widget>[
+                  Pager(
+                    currentItemsPerPage: _perPage,
+                    currentPage: _page,
+                    totalPages: _totalPages,
+                    onPageChanged: _onPageChanged,
+                  ),
+                  const SizedBox(height: 20),
                   ListView.builder(
                     itemCount: feedbacks.length,
                     shrinkWrap: true,
