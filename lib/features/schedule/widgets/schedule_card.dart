@@ -12,12 +12,9 @@ import 'package:lettutor/utils/time_helper.dart';
 class ScheduleCard extends StatefulWidget {
   const ScheduleCard({
     super.key,
-    required this.isFirstSchedule,
     required this.booking,
     this.onCancel,
   });
-
-  final bool isFirstSchedule;
   final Function(BookingInfo)? onCancel;
   final BookingInfo booking;
 
@@ -64,6 +61,17 @@ class _ScheduleCardState extends State<ScheduleCard> {
     setState(() {
       widget.booking.studentRequest = request;
     });
+  }
+
+  bool _checkAvailableToJoinSchedule(ScheduleInfo? scheduleInfo) {
+    final DateTime now = DateTime.now();
+    final DateTime endTime = DateTime.fromMillisecondsSinceEpoch(
+        scheduleInfo?.endTimeStamp ?? 0);
+    if (now.isBefore(endTime)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   bool _checkCancelBeforeLessonStartTwoHours(ScheduleInfo? scheduleInfo){
@@ -227,7 +235,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                 ) : const SizedBox.shrink(),
                 const SizedBox(width: 8),
                 TextButton(
-                  onPressed: !widget.isFirstSchedule
+                  onPressed: _checkAvailableToJoinSchedule(scheduleInfo)
                       ? null
                       : () {
                           Navigator.of(context).push(
