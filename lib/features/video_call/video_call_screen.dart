@@ -50,11 +50,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 
   void _startTimer() {
-    final now = DateTime.now();
-
-    _currentTime = _checkLessonStart()
-        ? now.difference(_timeStamp)
-        : _timeStamp.difference(now);
+    _currentTime = _timeStamp.difference(DateTime.now());
 
     const oneSec = Duration(seconds: 1);
 
@@ -67,7 +63,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           });
         } else {
           setState(() {
-            _currentTime = _timeStamp.difference(DateTime.now());
+            _currentTime = _checkLessonStart()
+                ? _timeStamp.difference(DateTime.now())
+                : DateTime.now().difference(_timeStamp);
           });
         }
       },
@@ -141,7 +139,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   child: Text(
                     '${TimeHelper.getRemainingTimer(_currentTime)} '
                     '${_checkLessonStart() ? 'until lesson starts' : 'lesson has started'} '
-                    '(${DateFormat('E, dd MMM yy H:m').format(_timeStamp)})',
+                    '(${DateFormat('E, dd MMM yy').format(_timeStamp)})',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,

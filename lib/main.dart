@@ -9,7 +9,6 @@ import 'package:lettutor/features/navigation/navigation_bar.dart';
 import 'package:lettutor/features/account/user/become_tutor/become_tutor.dart';
 import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
 import 'package:lettutor/features/account/user/profile/profile_screen.dart';
-import 'package:lettutor/features/video_call/video_call_screen.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:lettutor/providers/theme/theme_provider.dart';
@@ -66,7 +65,6 @@ class LetTutor extends StatelessWidget {
           Routes.tutorBecome: (context) => const BecomeTutorScreen(),
           Routes.courseDetail: (context) => const CourseDetailScreen(),
           Routes.userProfile: (context) => const ProfileScreen(),
-          Routes.videoCall: (context) => const VideoCallScreen(),
         });
   }
 }

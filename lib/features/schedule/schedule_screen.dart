@@ -89,6 +89,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   itemCount: bookings.length,
                   itemBuilder: (context, index) {
                     return ScheduleCard(
+                      isFirstSchedule: index == 0,
                       booking: bookings[index],
                       onCancel: _updateBookingListAfterCanceling,
                     );

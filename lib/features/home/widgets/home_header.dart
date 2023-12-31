@@ -39,12 +39,6 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   void _startTimer() {
-    final now = DateTime.now();
-
-    _currentTime = _checkLessonStart()
-        ? now.difference(_timeStamp)
-        : _timeStamp.difference(now);
-
     const oneSec = Duration(seconds: 1);
 
     _timer = Timer.periodic(
@@ -56,7 +50,9 @@ class _HomeHeaderState extends State<HomeHeader> {
           });
         } else {
           setState(() {
-            _currentTime = _timeStamp.difference(DateTime.now());
+            _currentTime = _checkLessonStart()
+                ? _timeStamp.difference(DateTime.now())
+                : DateTime.now().difference(_timeStamp);
           });
         }
       },

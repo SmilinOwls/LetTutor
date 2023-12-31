@@ -3,16 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
+import 'package:lettutor/features/video_call/video_call_screen.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
 
 class ScheduleCard extends StatefulWidget {
-  const ScheduleCard({super.key, required this.booking, this.onCancel});
+  const ScheduleCard({
+    super.key,
+    required this.isFirstSchedule,
+    required this.booking,
+    this.onCancel,
+  });
 
+  final bool isFirstSchedule;
   final Function(BookingInfo)? onCancel;
-
   final BookingInfo booking;
 
   @override
@@ -60,6 +66,18 @@ class _ScheduleCardState extends State<ScheduleCard> {
     });
   }
 
+  bool _checkCancelBeforeLessonStartTwoHours(ScheduleInfo? scheduleInfo){
+    final DateTime now = DateTime.now();
+    final DateTime startTime = DateTime.fromMillisecondsSinceEpoch(
+        scheduleInfo?.startTimeStamp ?? 0);
+    final int diff = startTime.difference(now).inHours;
+    if (diff < 2) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ScheduleInfo? scheduleInfo =
@@ -74,7 +92,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              TimeHelper.convertTimeStampToDay(scheduleInfo?.startTimeStamp ?? 0),
+              TimeHelper.convertTimeStampToDay(
+                  scheduleInfo?.startTimeStamp ?? 0),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
@@ -190,7 +209,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                OutlinedButton.icon(
+                _checkCancelBeforeLessonStartTwoHours(scheduleInfo) ? 
+                  OutlinedButton.icon(
                   onPressed: () {
                     _showScheduleCancelingDialog(context);
                   },
@@ -204,11 +224,23 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                   ),
-                ),
+                ) : const SizedBox.shrink(),
                 const SizedBox(width: 8),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: !widget.isFirstSchedule
+                      ? null
+                      : () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => VideoCallScreen(
+                                bookingInfo: widget.booking,
+                              ),
+                            ),
+                          );
+                        },
                   style: TextButton.styleFrom(
+                    disabledBackgroundColor: Colors.grey,
+                    disabledForegroundColor: Colors.white,
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue[700],
                     shape: RoundedRectangleBorder(
