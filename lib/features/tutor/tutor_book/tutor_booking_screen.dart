@@ -91,75 +91,101 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
       ),
       body: _tutorSchedules == null
           ? const Center(child: CircularProgressIndicator())
-          : Container(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: 20,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    'Choose Learning Date',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: 10),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: GridView.builder(
-                        itemCount: _tutorSchedules?.length ?? 0,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 18,
-                          crossAxisSpacing: 28,
-                          childAspectRatio: 4,
+          : _tutorSchedules?.isEmpty == true
+              ? Center(
+                  child: Column(
+                    children: [
+                      const Text(
+                        'This tutor has no schedule',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                        itemBuilder: (BuildContext context, int index) {
-                          final isFullBookingDate = _tutorSchedules?.entries
-                              .elementAt(index)
-                              .value
-                              .every((schedule) => schedule.isBooked == true);
+                      ),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Book a lesson'),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 20,
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Choose Learning Date',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 10),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: GridView.builder(
+                            itemCount: _tutorSchedules?.length ?? 0,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 18,
+                              crossAxisSpacing: 28,
+                              childAspectRatio: 4,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              final isFullBookingDate = _tutorSchedules?.entries
+                                  .elementAt(index)
+                                  .value
+                                  .every(
+                                      (schedule) => schedule.isBooked == true);
 
-                          if (isFullBookingDate == false) {
-                            return ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue[300],
-                              ),
-                              onPressed: () {
-                                _showTutorBookingTimeDialog(
-                                    _tutorSchedules?.entries.elementAt(index));
-                              },
-                              child: Text(
-                                _tutorSchedules?.keys.elementAt(index) ?? '',
-                                style: const TextStyle(
-                                    fontSize: 16, color: Colors.white),
-                              ),
-                            );
-                          } else {
-                            return ElevatedButton(
-                              style: Theme.of(context)
-                                  .elevatedButtonTheme
-                                  .style
-                                  ?.copyWith(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      Colors.grey[500],
+                              if (isFullBookingDate == false) {
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue[300],
+                                  ),
+                                  onPressed: () {
+                                    _showTutorBookingTimeDialog(_tutorSchedules
+                                        ?.entries
+                                        .elementAt(index));
+                                  },
+                                  child: Text(
+                                    _tutorSchedules?.keys.elementAt(index) ??
+                                        '',
+                                    style: const TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                                );
+                              } else {
+                                return ElevatedButton(
+                                  style: Theme.of(context)
+                                      .elevatedButtonTheme
+                                      .style
+                                      ?.copyWith(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                          Colors.grey[500],
+                                        ),
+                                      ),
+                                  onPressed: () {},
+                                  child: Text(
+                                    _tutorSchedules?.keys.elementAt(index) ??
+                                        '',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
                                     ),
                                   ),
-                              onPressed: () {},
-                              child: Text(
-                                _tutorSchedules?.keys.elementAt(index) ?? '',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            );
-                          }
-                        }),
+                                );
+                              }
+                            }),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
     );
   }
 }

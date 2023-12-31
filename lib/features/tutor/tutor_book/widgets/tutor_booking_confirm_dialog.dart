@@ -55,8 +55,8 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.watch<AuthProvider>();
-    final balance = authProvider.getUser()?.walletInfo?.amount ?? '0';
+    final user = context.watch<AuthProvider>().getUser();
+    final balance = user?.walletInfo?.amount ?? '0';
 
     return AlertDialog(
       title: Column(
@@ -210,13 +210,20 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             Icons.keyboard_double_arrow_right,
             color: Colors.white,
           ),
-          onPressed: _tutorBookingHandle,
+          onPressed: balance == '0'
+              ? null
+              : () {
+                  _tutorBookingHandle();
+                },
           style: TextButton.styleFrom(
-              fixedSize: const Size(100, 38),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              backgroundColor: Colors.blue[700]),
+            fixedSize: const Size(100, 38),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            backgroundColor: Colors.blue[700],
+            disabledBackgroundColor: Colors.grey[500],
+            disabledForegroundColor: Colors.grey[300],
+          ),
           label: const Text(
             'Book',
             style: TextStyle(

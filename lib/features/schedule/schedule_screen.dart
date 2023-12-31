@@ -83,16 +83,48 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               if (snapshot.hasData) {
                 final List<BookingInfo> bookings =
                     snapshot.data as List<BookingInfo>;
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: bookings.length,
-                  itemBuilder: (context, index) {
-                    return ScheduleCard(
-                      booking: bookings[index],
-                      onCancel: _updateBookingListAfterCanceling,
-                    );
-                  },
+                if (bookings.isEmpty) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'There is no lesson schedule yet!',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Book a lesson'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      'Total prescheduled lessons: ${bookings.length}',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    const SizedBox(height: 16),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: bookings.length,
+                      itemBuilder: (context, index) {
+                        return ScheduleCard(
+                          booking: bookings[index],
+                          onCancel: _updateBookingListAfterCanceling,
+                        );
+                      },
+                    )
+                  ],
                 );
               }
               return const Center(child: CircularProgressIndicator());

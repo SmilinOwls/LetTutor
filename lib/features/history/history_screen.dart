@@ -76,6 +76,30 @@ class _HistoryScreenState extends State<HistoryScreen> {
               if (snapshot.hasData) {
                 final List<BookingInfo> bookings =
                     snapshot.data as List<BookingInfo>;
+
+                if (bookings.isEmpty) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'You have no history',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Book a lesson'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
