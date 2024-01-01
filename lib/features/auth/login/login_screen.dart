@@ -114,7 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleFacebookLogin() async {
-    final result = await FacebookAuth.instance.login();
+    final result = await FacebookAuth.instance.login(
+      permissions: ['email', 'public_profile'],
+    );
 
     if (result.status == LoginStatus.success) {
       final String accessToken = result.accessToken!.token;
