@@ -76,6 +76,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Future.delayed(const Duration(seconds: 1), () {
             Navigator.of(context).pushReplacementNamed(Routes.login);
           });
+
+          SnackBarHelper.showSuccessSnackBar(
+            context: context,
+            content: 'Register successfully!',
+          );
         },
         onError: (message) => SnackBarHelper.showErrorSnackBar(
           context: context,

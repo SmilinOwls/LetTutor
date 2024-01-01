@@ -62,6 +62,11 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(context)
             .pushNamedAndRemoveUntil(Routes.main, (route) => false);
       });
+
+      SnackBarHelper.showSuccessSnackBar(
+        context: context,
+        content: 'Login successfully!',
+      );
     }
   }
 

@@ -39,6 +39,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           Future.delayed(const Duration(seconds: 1), () {
             Navigator.of(context).pushReplacementNamed(Routes.login);
           });
+
+          SnackBarHelper.showSuccessSnackBar(
+            context: context,
+            content: 'Please check your email to reset password!',
+          );
         },
         onError: (message) => SnackBarHelper.showErrorSnackBar(
           context: context,
