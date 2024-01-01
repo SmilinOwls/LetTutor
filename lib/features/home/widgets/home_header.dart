@@ -62,6 +62,8 @@ class _HomeHeaderState extends State<HomeHeader> {
   void _getMostUpcommingLesson() async {
     await BookingService.getTutorNextBookingList(
       onSuccess: (schedules) {
+        if (schedules.isEmpty) return;
+        
         schedules.removeWhere((schedule) => DateTime.fromMillisecondsSinceEpoch(
                 schedule.scheduleDetailInfo?.scheduleInfo?.startTimeStamp ?? 0)
             .isBefore(DateTime.now()));
@@ -153,7 +155,6 @@ class _HomeHeaderState extends State<HomeHeader> {
 
     return Column(
       children: <Widget>[
-        const SizedBox(height: 18),
         const Text(
           'Upcomming Lesson',
           style: TextStyle(
@@ -226,10 +227,11 @@ class _HomeHeaderState extends State<HomeHeader> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const SizedBox(height: 18),
           upcomingLessonWidget(),
           const SizedBox(height: 18),
           Text(
-            _totalCall == null
+            _totalCall == 0
                 ? 'Welcome to Lettutor'
                 : 'Total Lesson Time: $hour hours $minute minutes',
             style: const TextStyle(fontSize: 16, color: Colors.white),
