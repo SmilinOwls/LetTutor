@@ -79,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
           SnackBarHelper.showSuccessSnackBar(
             context: context,
-            content: 'Register successfully!',
+            content: 'Register successfully. Please check your email to verify!',
           );
         },
         onError: (message) => SnackBarHelper.showErrorSnackBar(
