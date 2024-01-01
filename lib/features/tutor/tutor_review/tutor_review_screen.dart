@@ -63,7 +63,7 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
         appBarTitle: 'Tutor Reviews',
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(10),
         child: FutureBuilder(
           future: _feedbacks,
           builder: (context, snapshot) {
@@ -82,6 +82,7 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
                   ListView.builder(
                     itemCount: feedbacks.length,
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return ReviewCard(
                         review: feedbacks[index],

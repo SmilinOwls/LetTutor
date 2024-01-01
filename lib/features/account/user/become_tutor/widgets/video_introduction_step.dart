@@ -9,9 +9,16 @@ import 'package:lettutor/widgets/video_player/video_player.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoIntroductionStep extends StatefulWidget {
-  const VideoIntroductionStep({super.key, required this.formKey});
+  const VideoIntroductionStep({
+    super.key,
+    required this.formKey,
+    required this.videoFile,
+    required this.onFileChanged,
+  });
 
   final GlobalKey<FormState> formKey;
+  final File? videoFile;
+  final void Function(File?) onFileChanged;
 
   @override
   State<VideoIntroductionStep> createState() => _VideoIntroductionStepState();
@@ -20,10 +27,17 @@ class VideoIntroductionStep extends StatefulWidget {
 class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
   File? _videoFile;
 
+  @override
+  void initState() {
+    super.initState();
+    _videoFile = widget.videoFile;
+  }
+
   void _onVideoUploaded(FormFieldState state) async {
     File? path = await pickerVideo(ImageSource.gallery);
 
     _videoFile = path;
+    widget.onFileChanged(_videoFile);
     state.didChange(_videoFile);
   }
 
@@ -94,6 +108,12 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
                         },
                         child: const Text('Choose Video'),
                       ),
+                      if (_videoFile != null)
+                        VideoPlayerView(
+                          key: ValueKey(_videoFile!.path),
+                          url: _videoFile!.path,
+                          dataSourceType: DataSourceType.file,
+                        ),
                       if (state.hasError)
                         Text(
                           state.errorText!,
@@ -112,11 +132,6 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
-                if (_videoFile != null)
-                  VideoPlayerView(
-                    url: _videoFile?.path ?? '',
-                    dataSourceType: DataSourceType.file,
-                  ),
               ],
             ),
           ),

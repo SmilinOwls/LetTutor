@@ -24,7 +24,7 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
 
   void _onStepContinue() {
     if (currentStep != widget.steps.length - 1) {
-      if(widget.formKey[currentStep]!.currentState!.validate() == false)
+      if(widget.formKey[currentStep]!.currentState!.validate())
       {
         setState(() => currentStep += 1);
       }

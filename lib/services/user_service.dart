@@ -128,6 +128,7 @@ class UserService {
         data: FormData.fromMap({
           'avatar': await MultipartFile.fromFile(image.path),
         }),
+        
         contentType: 'multipart/form-data',
       );
 

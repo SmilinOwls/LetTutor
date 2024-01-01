@@ -63,7 +63,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
           CachedNetworkImage(
@@ -100,7 +100,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 if (bookings.isEmpty) {
                   return Center(
                     child: Column(
-                      children: [
+                      children: <Widget>[
                         const Text(
                           'There is no lesson schedule yet!',
                           style: TextStyle(

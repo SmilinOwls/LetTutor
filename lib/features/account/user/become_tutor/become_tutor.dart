@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/approval_step.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/profile_resume_step.dart';
@@ -43,6 +45,8 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   final List<String?> _teachingLevel = <String?>[null];
   final List<String> _teachingSpecialities = <String>[];
 
+  File? _videoFile;
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +68,10 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
       ),
       'Video introdution': VideoIntroductionStep(
         formKey: _formKeyStep2,
+        videoFile: _videoFile,
+        onFileChanged: (File? file) {
+          _videoFile = file;
+        },
       ),
       'Approval': const ApprovalStep(),
     };

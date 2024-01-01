@@ -116,18 +116,18 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   Widget welcomeWidget() {
-    return Column(
+    return const Column(
       children: <Widget>[
-        const SizedBox(height: 18),
-        const Text(
+        SizedBox(height: 18),
+        Text(
           'You have ',
           style: TextStyle(
             fontSize: 24,
             color: Colors.white,
           ),
         ),
-        const SizedBox(height: 18),
-        const Text(
+        SizedBox(height: 18),
+        Text(
           'Welcome to Lettutor',
           style: TextStyle(
             fontSize: 24,
@@ -139,11 +139,12 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   Widget upcomingLessonWidget() {
-    if (_nextLesson == null)
+    if (_nextLesson == null) {
       return const Text(
         'You have no upcoming lesson.',
         style: TextStyle(color: Colors.white),
       );
+    }
 
     final date =
         TimeHelper.convertTimeStampToDay(_nextLesson?.startTimeStamp ?? 0);
