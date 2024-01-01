@@ -52,7 +52,8 @@ class _EbookTabState extends State<EbookTab> {
 
   void _sortEbooks(List<EBook> courses) {
     final sortedEbooks = courses
-      ..sort((lowerLevelEbook, upperLevelEbook) => lowerLevelEbook.level!.compareTo(upperLevelEbook.level!));
+      ..sort((lowerLevelEbook, upperLevelEbook) =>
+          lowerLevelEbook.level!.compareTo(upperLevelEbook.level!));
 
     setState(() {
       _ebooks = Future.value(sortedEbooks);
@@ -70,23 +71,25 @@ class _EbookTabState extends State<EbookTab> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _ebooks,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final List<EBook> ebooks = snapshot.data as List<EBook>;
-            return Container(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              child: Column(
-              children: <Widget>[
-                Pager(
-                  currentItemsPerPage: _perPage,
-                  currentPage: _page,
-                  totalPages: _totalPages,
-                  onPageChanged: _onPageChanged,
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: ListView.builder(
+      future: _ebooks,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final List<EBook> ebooks = snapshot.data as List<EBook>;
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context)
+                  .copyWith(scrollbars: false), // hide scrollbar
+              child: ListView(
+                children: <Widget>[
+                  Pager(
+                    currentItemsPerPage: _perPage,
+                    currentPage: _page,
+                    totalPages: _totalPages,
+                    onPageChanged: _onPageChanged,
+                  ),
+                  const SizedBox(height: 20),
+                  ListView.builder(
                     primary: false,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -94,13 +97,21 @@ class _EbookTabState extends State<EbookTab> {
                     itemBuilder: (context, index) =>
                         EbookCard(ebook: ebooks[index]),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Pager(
+                    currentItemsPerPage: _perPage,
+                    currentPage: _page,
+                    totalPages: _totalPages,
+                    onPageChanged: _onPageChanged,
+                  ),
+                ],
+              ),
             ),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        });
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 }

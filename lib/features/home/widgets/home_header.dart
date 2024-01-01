@@ -113,8 +113,35 @@ class _HomeHeaderState extends State<HomeHeader> {
     _timer?.cancel();
   }
 
+  Widget welcomeWidget() {
+    return Column(
+      children: <Widget>[
+        const SizedBox(height: 18),
+        const Text(
+          'You have ',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(height: 18),
+        const Text(
+          'Welcome to Lettutor',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget upcomingLessonWidget() {
-    if (_nextLesson == null) return const SizedBox.shrink();
+    if (_nextLesson == null)
+      return const Text(
+        'You have no upcoming lesson.',
+        style: TextStyle(color: Colors.white),
+      );
 
     final date =
         TimeHelper.convertTimeStampToDay(_nextLesson?.startTimeStamp ?? 0);
@@ -202,7 +229,9 @@ class _HomeHeaderState extends State<HomeHeader> {
           upcomingLessonWidget(),
           const SizedBox(height: 18),
           Text(
-            'Total Lesson Time: $hour hours $minute minutes',
+            _totalCall == null
+                ? 'Welcome to Lettutor'
+                : 'Total Lesson Time: $hour hours $minute minutes',
             style: const TextStyle(fontSize: 16, color: Colors.white),
           ),
           const SizedBox(height: 14),

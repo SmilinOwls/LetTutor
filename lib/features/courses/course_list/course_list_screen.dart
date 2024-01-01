@@ -107,138 +107,146 @@ class _CourseListScreenState extends State<CourseListScreen>
     return NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
         SliverToBoxAdapter(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 12,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  CachedNetworkImage(
-                    imageUrl:
-                        'https://sandbox.app.lettutor.com/static/media/course.0bf1bb71.svg',
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
-                    errorWidget: (context, url, error) => const Icon(
-                      Icons.school_rounded,
-                      size: 62,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    CachedNetworkImage(
+                      imageUrl:
+                          'https://sandbox.app.lettutor.com/static/media/course.0bf1bb71.svg',
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) => const Icon(
+                        Icons.school_rounded,
+                        size: 62,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Discover Courses',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'LiveTutor has built the most quality, methodical and scientific courses'
+                      'in the fields of life for those who are in need of improving their knowledge of the fields.',
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Search',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                TextField(
+                  controller: _searchController,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                  onChanged: _onSearchChanged,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    hintStyle: TextStyle(color: Colors.grey[400]),
+                    hintText: 'Search',
+                    suffixIcon: InkWell(
+                      onTap: () {},
+                      child: const Icon(Icons.search),
+                    ),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 0.5,
+                        color: Colors.blue,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Discover Courses',
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'LiveTutor has built the most quality, methodical and scientific courses'
-                    'in the fields of life for those who are in need of improving their knowledge of the fields.',
-                    textAlign: TextAlign.justify,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                'Search',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
                 ),
-              ),
-              const SizedBox(height: 4),
-              TextField(
-                controller: _searchController,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                ),
-                onChanged: _onSearchChanged,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
-                  hintStyle: TextStyle(color: Colors.grey[400]),
-                  hintText: 'Search',
-                  suffixIcon: InkWell(
-                    onTap: () {},
-                    child: const Icon(Icons.search),
-                  ),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 0.5,
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 0.5,
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 0.5,
-                      color: Colors.blue,
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                const SizedBox(height: 12),
+                const Text(
+                  'Level',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Level',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+                const SizedBox(height: 4),
+                MultiChoiceDropDown(
+                  items: _levelList,
+                  selectedItems: _selectedLevel,
+                  hintText: 'Select level',
+                  onSelected: _onLevelChanged,
                 ),
-              ),
-              const SizedBox(height: 4),
-              MultiChoiceDropDown(
-                items: _levelList,
-                selectedItems: _selectedLevel,
-                hintText: 'Select level',
-                onSelected: _onLevelChanged,
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Category',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+                const SizedBox(height: 12),
+                const Text(
+                  'Category',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              MultiChoiceDropDown(
-                items: _categoryList ?? {},
-                selectedItems: _selectedCategory,
-                hintText: 'Select category',
-                onSelected: _onCategoryChanged,
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Sort',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+                const SizedBox(height: 4),
+                MultiChoiceDropDown(
+                  items: _categoryList ?? {},
+                  selectedItems: _selectedCategory,
+                  hintText: 'Select category',
+                  onSelected: _onCategoryChanged,
                 ),
-              ),
-              const SizedBox(height: 4),
-              DropDownField(
+                const SizedBox(height: 12),
+                const Text(
+                  'Sort',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                DropDownField(
                   controller: _levelController,
                   list: _sortList,
                   hintText: 'Sort by level',
-                  onSelected: _onLevelSortChanged),
-              const SizedBox(height: 16),
-            ],
+                  onSelected: _onLevelSortChanged,
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
-        )),
+        ),
         SliverToBoxAdapter(
           child: TabBar(
             controller: _tabController,

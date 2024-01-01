@@ -87,17 +87,19 @@ class _CourseTabState extends State<CourseTab> {
           final List<Course> courses = snapshot.data as List<Course>;
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Column(
-              children: <Widget>[
-                Pager(
-                  currentItemsPerPage: _perPage,
-                  currentPage: _page,
-                  totalPages: _totalPages,
-                  onPageChanged: _onPageChanged,
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: ListView.builder(
+            child: ScrollConfiguration(
+              behavior:
+                  ScrollConfiguration.of(context).copyWith(scrollbars: false), // hide scrollbar
+              child: ListView(
+                children: <Widget>[
+                  Pager(
+                    currentItemsPerPage: _perPage,
+                    currentPage: _page,
+                    totalPages: _totalPages,
+                    onPageChanged: _onPageChanged,
+                  ),
+                  const SizedBox(height: 20),
+                  ListView.builder(
                     primary: false,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
@@ -105,8 +107,15 @@ class _CourseTabState extends State<CourseTab> {
                     itemBuilder: (context, index) =>
                         CourseCard(course: courses[index]),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Pager(
+                    currentItemsPerPage: _perPage,
+                    currentPage: _page,
+                    totalPages: _totalPages,
+                    onPageChanged: _onPageChanged,
+                  ),
+                ],
+              ),
             ),
           );
         } else {
