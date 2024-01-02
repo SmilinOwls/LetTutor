@@ -4,6 +4,7 @@ import 'package:lettutor/features/courses/course_list/course_list_screen.dart';
 import 'package:lettutor/features/history/history_screen.dart';
 import 'package:lettutor/features/home/home_screen.dart';
 import 'package:lettutor/features/schedule/schedule_screen.dart';
+import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 
 class TabBarNavigator extends StatefulWidget {
@@ -46,6 +47,7 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
 
   @override
   Widget build(BuildContext context) {
+    Localization.initialize(context);
     return Scaffold(
       appBar: CustomAppBar(appBarTitle: _tabList[_activeTab]['label']),
       body: _tabList[_activeTab]['screen'],

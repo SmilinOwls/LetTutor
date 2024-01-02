@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/auth/forgot/forgot_password_screen.dart';
 import 'package:lettutor/features/auth/login/login_screen.dart';
@@ -16,13 +15,10 @@ import 'package:lettutor/services/dio_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  const enviroment =
-      String.fromEnvironment('FLAVOR', defaultValue: 'development');
-  await dotenv.load(fileName: '.env.$enviroment');
 
   DioService();
 
@@ -51,9 +47,13 @@ class LetTutor extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         scaffoldMessengerKey: SnackBarHelper.scaffoldKey,
-        title: 'LetTutor',
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context)!.appTitle,
         theme: Provider.of<ThemeProvider>(context).getThemeMode(),
         debugShowCheckedModeBanner: false,
+        locale: Locale(Provider.of<LanguageProvider>(context).getLanguage().id!),
         home:
             isLoginned == null ? const LoginScreen() : const TabBarNavigator(),
         routes: {

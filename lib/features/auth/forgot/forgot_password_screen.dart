@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/field_validate.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -16,21 +18,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   String? _emailErrorText;
 
-  String? _handleEmailValidate(value) {
-    final emailRegExp = RegExp(
-        r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
-    if (value.isEmpty) {
-      return 'Please input your email!';
-    } else if (!emailRegExp.hasMatch(value)) {
-      return 'The input is not valid E-mail!';
-    } else {
-      return null;
-    }
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   void _handleForgotPassword() async {
     setState(() {
-      _emailErrorText = _handleEmailValidate(_emailController.text);
+      _emailErrorText = FieldValidate.handleEmailValidate(_emailController.text);
     });
     if (_emailErrorText == null) {
       await AuthService.forgotPassword(
@@ -42,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
           SnackBarHelper.showSuccessSnackBar(
             context: context,
-            content: 'Please check your email to reset password!',
+            content: _local.successResetPassword,
           );
         },
         onError: (message) => SnackBarHelper.showErrorSnackBar(
@@ -64,9 +62,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             const SizedBox(height: 18),
-            const Text(
-              'Reset Password',
-              style: TextStyle(
+            Text(
+               _local.titleResetPassword,
+              style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 113, 240),
@@ -74,18 +72,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 14),
-            const Text(
-              'Please enter your email address to search for your account.',
-              style: TextStyle(
+            Text(
+              _local.subTitleResetPassword,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 18),
-            const Text(
-              'Email',
-              style: TextStyle(
+            Text(
+              _local.email,
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,
               ),
@@ -97,7 +95,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               autocorrect: false,
               onChanged: (value) {
                 setState(() {
-                  _emailErrorText = _handleEmailValidate(value);
+                  _emailErrorText = FieldValidate.handleEmailValidate(value);
                 });
               },
               decoration: InputDecoration(
@@ -155,9 +153,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 ),
               ),
-              child: const Text(
-                'Send reset link',
-                style: TextStyle(
+              child: Text(
+                _local.resetPassword,
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
@@ -168,9 +166,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
-                'Back to login',
-                style: TextStyle(fontSize: 16),
+              child: Text(
+                _local.backToLogin,
+                style: const TextStyle(fontSize: 16),
               ),
             ),
           ],
