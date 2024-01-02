@@ -46,15 +46,15 @@ class TimeHelper with Localization {
   }
 
   static String convertTimeStampToDate(int timestamp) {
-    final String date = Localization.local?.upcomingDate(DateTime.fromMillisecondsSinceEpoch(timestamp)) ?? '';
+    final String date =
+        Localization.local!.upcomingDate(DateTime.fromMillisecondsSinceEpoch(timestamp));
     return date;
   }
 
   static String getMostRecentWeekRangeFromDate(DateTime date) {
     final DateTime monday = date.subtract(Duration(days: date.weekday - 1));
-    final DateTime sunday = date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
-    return 'Week: ${DateFormat('dd/MM/yyyy').format(monday)} (Monday)'
-        ' - '
-        '${DateFormat('dd/MM/yyyy').format(sunday)} (Sunday)';
+    final DateTime sunday =
+        date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
+    return Localization.local!.weekRange(monday, sunday);
   }
 }

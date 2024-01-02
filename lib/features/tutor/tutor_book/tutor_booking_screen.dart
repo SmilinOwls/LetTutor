@@ -3,12 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_hour_dialog.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/services/booking_service.dart';
+import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:lettutor/widgets/pagination/pagination.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TutorBookingScreen extends StatefulWidget {
+class TutorBookingScreen extends StatefulWidget with Localization {
   const TutorBookingScreen({super.key, required this.tutorId});
 
   final String tutorId;
@@ -21,11 +23,18 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
   Map<String, List<Schedule>>? _tutorSchedules;
   int _currentPage = 1;
   DateTime _date = DateTime.now();
+  late AppLocalizations local;
 
   @override
   void initState() {
     super.initState();
     _getTutorSchedule();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+   local = Localization.local!;
   }
 
   void _getTutorSchedule() async {
@@ -101,18 +110,18 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Tutor Booking',
+      appBar: CustomAppBar(
+        appBarTitle: local.tutorBooking,
       ),
       body: _tutorSchedules == null
           ? const Center(child: CircularProgressIndicator())
           : _tutorSchedules?.isEmpty == true && _currentPage == 1
               ? Center(
                   child: Column(
-                    children: [
-                      const Text(
-                        'This tutor has no schedule',
-                        style: TextStyle(
+                    children: <Widget>[
+                      Text(
+                        local.noTutorSchedule,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -122,7 +131,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Book a lesson'),
+                        child: Text(local.bookLesson),
                       ),
                     ],
                   ),
@@ -135,7 +144,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
                   child: Column(
                     children: <Widget>[
                       Text(
-                        'Choose Learning Date',
+                        local.chooseLearningDate,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 10),

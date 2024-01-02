@@ -33,13 +33,13 @@
     "resetPassword": "Send reset link",
     "backToLogin": "Back to login",
     "successResetPassword": "Reset password successfully! Please check your email to reset password!",
-    
+
     "home": "Home",
     "schedule": "Schedule",
     "history": "History",
     "courses": "Courses",
     "account": "Account",
-
+   
     "findTutor": "Find a tutor",
     "recommedTutor": "Recommended Tutors",
     "noTutor": "No tutor found!",
@@ -48,7 +48,7 @@
     "selectTutor": "Select tutor",
     "searchTutorNationality": "Search for a tutor nationality..",
     "resetFilter": "Reset filter",
-
+    
     "noUpcomingLesson": "You have no upcoming lesson.",
     "upcomingLesson": "Upcoming lesson",
     "upcomingDate": "{date}",
@@ -93,6 +93,46 @@
     "submit": "Submit",
     "reportReason": "This tutor is annoying meThis profile is pretending be someone or is fake:Inappropriate profile photo",
 
-    "tutorReviews": "Tutor Reviews"
+    "tutorReviews": "Tutor Reviews",
 
+    "tutorBooking": "Tutor Booking",
+    "noTutorSchedule": "This tutor has no schedule",
+    "bookLesson": "Book a lesson",
+    "chooseLearningDate": "Choose learning date",
+    "weekRange": "Week: {startWeek} - {endWeek}",
+    "@weekRange": {
+        "description": "Week range format",
+        "placeholders": {
+            "startWeek": {
+                "type": "DateTime",
+                "format": "yMEd"
+            },
+            "endWeek": {
+                "type": "DateTime",
+                "format": "yMEd"
+            }
+        }
+    },
+
+    "successBookTutor": "Book tutor successfully!",
+    "failBookTutor": "Book tutor failed!",
+    "chooseLearningHour": "Choose learning hour",
+    "onTime": "On {scheduleDate}",
+    
+    "bookTutor": "Book This Tutor",
+    "bookingTime": "Booking time",
+    "balance": "Balance",
+    "balanceDescription": "You have {balance, plural, =0{{balance}\n lesson} =1{{balance}\n lesson} other {{balance}\n lessons}} left",
+    "price": "Price",
+    "priceDescription": "{price} lesson",
+    "@priceDescription": {
+        "description": "Price description",
+        "placeholders": {
+            "price": {
+                "type": "int" 
+            }
+        }
+    },
+    "note": "Note",
+    "noteForTutor": "Note for tutor"
 }

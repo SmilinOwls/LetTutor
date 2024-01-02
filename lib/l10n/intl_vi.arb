@@ -81,5 +81,25 @@
     "submit": "Gửi",
     "reportReason": "Gia sư này làm phiền tôi:Hồ sơ này là giả mạo:Ảnh hồ sơ không phù hợp",
 
-    "tutorReviews": "Đánh giá gia sư"
+    "tutorReviews": "Đánh giá gia sư",
+
+    "tutorBooking": "Đặt gia sư",
+    "noTutorSchedule": "Gia sư chưa cập nhật lịch học!",
+    "bookLesson": "Đặt lịch học",
+    "chooseLearningDate": "Chọn ngày học",
+    "weekRange": "Tuần: {startWeek} - {endWeek}",
+
+    "successBookTutor": "Đặt lịch học thành công!",
+    "failBookTutor": "Đặt lịch học thất bại!",
+    "chooseLearningHour": "Chọn giờ học",
+    "onTime": "Ngày đặt {scheduleDate}",
+
+    "bookTutor": "Đặt gia sư này",
+    "bookingTime": "Chọn giờ học",
+    "balance": "Số dư",
+    "balanceDescription": "Bạn còn {balance}\n buổi học",
+    "price": "Giá",
+    "priceDescription": "{price} buổi học",
+    "note": "Ghi chú",
+    "noteForTutor": "Ghi chú cho gia sư"
 }
