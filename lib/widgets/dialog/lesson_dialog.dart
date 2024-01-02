@@ -79,7 +79,7 @@ class LessonDialog extends StatelessWidget {
                     const Text('Lesson Time', style: TextStyle(fontSize: 16)),
                     const SizedBox(height: 2),
                     Text(
-                      '${TimeHelper.convertTimeStampToDay(scheduleInfo?.startTimeStamp ?? 0)}, '
+                      '${TimeHelper.convertTimeStampToDate(scheduleInfo?.startTimeStamp ?? 0)}, '
                       '${TimeHelper.convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
                       ' - '
                       '${TimeHelper.convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',

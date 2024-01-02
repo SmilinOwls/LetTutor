@@ -99,7 +99,7 @@ class _HistoryCardState extends State<HistoryCard> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              TimeHelper.convertTimeStampToDay(
+              TimeHelper.convertTimeStampToDate(
                 scheduleInfo?.startTimeStamp ?? 0,
               ),
               style: Theme.of(context).textTheme.bodyLarge,

@@ -8,10 +8,12 @@ import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/star_rating/star_rating.dart';
 import 'package:lettutor/widgets/chip/tag_chip.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TutorCard extends StatefulWidget {
-  const TutorCard({super.key, required this.tutor});
+  const TutorCard({super.key, required this.tutor, required this.local});
 
+  final AppLocalizations local;
   final Tutor tutor;
 
   @override
@@ -56,8 +58,8 @@ class _TutorCardState extends State<TutorCard> {
         SnackBarHelper.showSuccessSnackBar(
           context: context,
           content: _isFavorite
-              ? 'Add favorite tutor successfully'
-              : 'Remove favorite tutor successfully',
+              ? widget.local.succesAddFavoriteTutor
+              : widget.local.successRemoveFavoriteTutor,
         );
       },
       onError: (message) => SnackBarHelper.showErrorSnackBar(
@@ -124,15 +126,15 @@ class _TutorCardState extends State<TutorCard> {
                       Text(
                         countryList[widget.tutor.country] ??
                             widget.tutor.country ??
-                            'null country',
+                            widget.local.nullCountry,
                         style: const TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 8),
                       widget.tutor.rating != null
                           ? StarRating(rating: widget.tutor.rating!)
-                          : const Text(
-                              'No reviews yet',
-                              style: TextStyle(
+                          : Text(
+                              widget.local.nullReviews,
+                              style: const TextStyle(
                                 color: Colors.grey,
                                 fontStyle: FontStyle.italic,
                               ),
@@ -158,7 +160,7 @@ class _TutorCardState extends State<TutorCard> {
             TagChip(tags: _tags ?? []),
             const SizedBox(height: 10),
             Text(
-              widget.tutor.bio ?? 'null',
+              widget.tutor.bio ?? widget.local.nullBio,
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
             ),
@@ -170,7 +172,7 @@ class _TutorCardState extends State<TutorCard> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => TutorBookingScreen(
-                        tutorId: widget.tutor.userId ?? 'null id',
+                        tutorId: widget.tutor.userId ?? '',
                       ),
                     ),
                   );
@@ -185,7 +187,7 @@ class _TutorCardState extends State<TutorCard> {
                         color: Theme.of(context).primaryColor),
                     const SizedBox(width: 6),
                     Text(
-                      'Book',
+                      widget.local.book,
                       style: TextStyle(color: Theme.of(context).primaryColor),
                     ),
                   ],

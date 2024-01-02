@@ -1,7 +1,7 @@
 {
     "@@locale": "vi",
     "appTitle": "LetTutor",
-    "welcome": "Chào mừng bạn đến với {appTitle}",
+    "welcome": "Chào mừng bạn đến với LetTutor!",
     "titleLogin": "Đăng nhập",
     "subtitleLogin": "Phát triển kỹ năng tiếng Anh nhanh nhất bằng cách học 1 kèm 1 trực tuyến theo mục tiêu và lộ trình dành cho riêng bạn.",
     "email": "Địa chỉ email",
@@ -28,5 +28,30 @@
     "subTitleResetPassword": "Nhập địa chỉ email của bạn để đặt lại mật khẩu.",
     "resetPassword": "Đặt lại mật khẩu",
     "backToLogin": "Quay lại đăng nhập",
-    "successResetPassword": "Đặt lại mật khẩu thành công! Vui lòng kiểm tra email để lấy mật khẩu mới!"
+    "successResetPassword": "Đặt lại mật khẩu thành công! Vui lòng kiểm tra email để lấy mật khẩu mới!",
+
+    "findTutor": "Tìm gia sư",
+    "recommedTutor": "Gia sư gợi ý",
+    "noTutor": "Không có gia sư nào phù hợp!",
+    "noTutorDescription": "Vui lòng thử lại với bộ lọc khác!",
+    "inputTutorName": "Nhập tên gia sư",
+    "selectTutor": "Chọn gia sư",
+    "searchTutorNationality": "Tìm theo quốc tịch",
+    "resetFilter": "Đặt lại bộ lọc",
+    
+    "noUpcomingLesson": "Không có buổi học nào sắp diễn ra!",
+    "upcomingLesson": "Lịch học sắp diễn ra",
+    "upcomingDate": "{date}",
+    "startsIn": "bắt đầu trong",
+    "inProgress": "đang diễn ra",
+    "enterLessonRoom": "Vào phòng học",
+    "totalLessonTime": "Tổng thời gian học: {hour} giờ {minute} phút",
+   
+    "succesAddFavorite": "Thêm gia sư yêu thích thành công",
+    "successRemoveFavorite": "Xóa gia sư yêu thích thành công",
+    "nullCountry": "Chưa cập nhật",
+    "nullReviews": "Chưa có đánh giá",
+    "nullBio": "Chưa cập nhật",
+    "book": "Đặt lịch"
+
 }

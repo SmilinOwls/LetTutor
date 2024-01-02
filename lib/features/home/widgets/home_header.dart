@@ -7,9 +7,12 @@ import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/call_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeHeader extends StatefulWidget {
-  const HomeHeader({super.key});
+  const HomeHeader({super.key, required this.local});
+
+  final AppLocalizations local;
 
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
@@ -63,7 +66,7 @@ class _HomeHeaderState extends State<HomeHeader> {
     await BookingService.getTutorNextBookingList(
       onSuccess: (schedules) {
         if (schedules.isEmpty) return;
-        
+
         schedules.removeWhere((schedule) => DateTime.fromMillisecondsSinceEpoch(
                 schedule.scheduleDetailInfo?.scheduleInfo?.startTimeStamp ?? 0)
             .isBefore(DateTime.now()));
@@ -115,39 +118,16 @@ class _HomeHeaderState extends State<HomeHeader> {
     _timer?.cancel();
   }
 
-  Widget welcomeWidget() {
-    return const Column(
-      children: <Widget>[
-        SizedBox(height: 18),
-        Text(
-          'You have ',
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-          ),
-        ),
-        SizedBox(height: 18),
-        Text(
-          'Welcome to Lettutor',
-          style: TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget upcomingLessonWidget() {
     if (_nextLesson == null) {
-      return const Text(
-        'You have no upcoming lesson.',
-        style: TextStyle(color: Colors.white),
+      return Text(
+        widget.local.noUpcomingLesson,
+        style: const TextStyle(color: Colors.white),
       );
     }
 
     final date =
-        TimeHelper.convertTimeStampToDay(_nextLesson?.startTimeStamp ?? 0);
+        TimeHelper.convertTimeStampToDate(_nextLesson?.startTimeStamp ?? 0);
 
     final time =
         '${TimeHelper.convertTimeStampToHour(_nextLesson?.startTimeStamp ?? 0)}'
@@ -156,9 +136,9 @@ class _HomeHeaderState extends State<HomeHeader> {
 
     return Column(
       children: <Widget>[
-        const Text(
-          'Upcomming Lesson',
-          style: TextStyle(
+        Text(
+          widget.local.upcomingLesson,
+          style: const TextStyle(
             fontSize: 24,
             color: Colors.white,
           ),
@@ -173,7 +153,7 @@ class _HomeHeaderState extends State<HomeHeader> {
         ),
         const SizedBox(height: 18),
         Text(
-          '${_checkLessonStart() ? '(starts in ' : '(is in progress for '}'
+          '${_checkLessonStart() ? '(${widget.local.startsIn} ' : '(${widget.local.inProgress} '}'
           '${TimeHelper.getRemainingTimer(_currentTime ?? Duration.zero)})',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -204,7 +184,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
               const SizedBox(width: 14),
               Text(
-                'Enter Lesson Room',
+                widget.local.enterLessonRoom,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.blue[500],
@@ -233,8 +213,8 @@ class _HomeHeaderState extends State<HomeHeader> {
           const SizedBox(height: 18),
           Text(
             _totalCall == 0
-                ? 'Welcome to Lettutor'
-                : 'Total Lesson Time: $hour hours $minute minutes',
+                ? widget.local.welcome
+                : widget.local.totalLessonTime(hour, minute),
             style: const TextStyle(fontSize: 16, color: Colors.white),
           ),
           const SizedBox(height: 14),

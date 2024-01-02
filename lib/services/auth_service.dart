@@ -4,6 +4,8 @@ import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class AuthService {
+  static final DioService _dioService = DioService();
+
   static User parseUser(Map<String, dynamic> responseBody) =>
       User.fromJson(responseBody);
 
@@ -14,7 +16,7 @@ class AuthService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/auth/login',
         data: {
           'email': email,
@@ -42,7 +44,7 @@ class AuthService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/auth/google',
         data: {
           'access_token': accessToken,
@@ -68,7 +70,7 @@ class AuthService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/auth/facebook',
         data: {
           'access_token': accessToken,
@@ -95,7 +97,7 @@ class AuthService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/auth/register',
         data: {
           'email': email,
@@ -122,7 +124,7 @@ class AuthService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/user/forgotPassword',
         data: {
           'email': email,

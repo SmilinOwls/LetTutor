@@ -6,6 +6,7 @@ import 'package:lettutor/features/home/home_screen.dart';
 import 'package:lettutor/features/schedule/schedule_screen.dart';
 import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TabBarNavigator extends StatefulWidget {
   const TabBarNavigator({super.key});
@@ -15,42 +16,61 @@ class TabBarNavigator extends StatefulWidget {
 }
 
 class _TabBarNavigatorState extends State<TabBarNavigator> {
-  final List<Map<String, dynamic>> _tabList = [
-    {
-      'label': 'Home',
-      'icon': Icons.home,
-      'screen': const HomeScreen(),
-    },
-    {
-      'label': 'Schedule',
-      'icon': Icons.calendar_month_rounded,
-      'screen': const ScheduleScreen(),
-    },
-    {
-      'label': 'History',
-      'icon': Icons.history_outlined,
-      'screen': const HistoryScreen(),
-    },
-    {
-      'label': 'Courses',
-      'icon': Icons.school,
-      'screen': const CourseListScreen(),
-    },
-    {
-      'label': 'Account',
-      'icon': Icons.person_outlined,
-      'screen': const AccountScreen(),
-    },
-  ];
+  late AppLocalizations _local;
+  late List<Map<String, dynamic>> _tabList;
+  int? _activeTab;
 
-  int _activeTab = 0;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+    _activeTab = 0;
+    _tabList = [
+      {
+        'label': 'Home',
+        'icon': Icons.home,
+        'screen': HomeScreen(
+          local: _local,
+        ),
+      },
+      {
+        'label': 'Schedule',
+        'icon': Icons.calendar_month_rounded,
+        'screen': const ScheduleScreen(),
+      },
+      {
+        'label': 'History',
+        'icon': Icons.history_outlined,
+        'screen': const HistoryScreen(),
+      },
+      {
+        'label': 'Courses',
+        'icon': Icons.school,
+        'screen': const CourseListScreen(),
+      },
+      {
+        'label': 'Account',
+        'icon': Icons.person_outlined,
+        'screen': const AccountScreen(),
+      },
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     Localization.initialize(context);
+
+    if(_activeTab == null) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return Scaffold(
-      appBar: CustomAppBar(appBarTitle: _tabList[_activeTab]['label']),
-      body: _tabList[_activeTab]['screen'],
+      appBar: CustomAppBar(appBarTitle: _tabList[_activeTab!]['label']),
+      body: _tabList[_activeTab!]['screen'],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedLabelStyle: TextStyle(
@@ -64,7 +84,7 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
           });
         },
         elevation: 18,
-        currentIndex: _activeTab,
+        currentIndex: _activeTab!,
         items: _tabList
             .map<BottomNavigationBarItem>(
               (Map tab) => BottomNavigationBarItem(

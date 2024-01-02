@@ -5,6 +5,8 @@ import 'package:lettutor/models/tutor/tutor_info.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class TutorService {
+  static final DioService _dioService = DioService();
+
   static Future<void> getListTutorWithPagination({
     required int page,
     required int perPage,
@@ -12,7 +14,7 @@ class TutorService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/tutor/more?perPage=$perPage&page=$page',
       );
 
@@ -63,7 +65,7 @@ class TutorService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/tutor/$userId',
       );
 
@@ -90,7 +92,7 @@ class TutorService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/tutor/search',
         data: {
           'page': page,
@@ -128,7 +130,7 @@ class TutorService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/report',
         data: {
           'tutorId': userId,
@@ -156,7 +158,7 @@ class TutorService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/feedback/v2/$userId?perPage=$perPage&page=$page',
       );
 

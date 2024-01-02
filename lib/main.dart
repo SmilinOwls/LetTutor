@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/auth/forgot/forgot_password_screen.dart';
 import 'package:lettutor/features/auth/login/login_screen.dart';
@@ -20,6 +21,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+   const enviroment =
+        String.fromEnvironment('FLAVOR', defaultValue: 'development');
+    await dotenv.load(fileName: '.env.$enviroment');
+    
   DioService();
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();

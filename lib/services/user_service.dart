@@ -4,12 +4,14 @@ import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class UserService {
+  static final DioService _dioService = DioService();
+
   static Future<void> getUserInfo({
     required Function(User) onSuccess,
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/user/info',
       );
 
@@ -32,7 +34,7 @@ class UserService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().put(
+      final response = await _dioService.put(
         '/user/info',
         data: {
           'name': updateUser?.name,
@@ -65,7 +67,7 @@ class UserService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/user/manageFavoriteTutor',
         data: {
           'tutorId': userId,
@@ -93,7 +95,7 @@ class UserService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/user/feedbackTutor',
         data: {
           'bookingId': bookingId,
@@ -123,7 +125,7 @@ class UserService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/user/uploadAvatar',
         data: FormData.fromMap({
           'avatar': await MultipartFile.fromFile(image.path),

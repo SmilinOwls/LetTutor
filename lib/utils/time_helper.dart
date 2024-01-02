@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
+import 'package:lettutor/utils/localization.dart';
 
-class TimeHelper {
+class TimeHelper with Localization {
   static String timeAgo(String createdTime) {
     final DateTime dt = DateTime.tryParse(createdTime) ?? DateTime.now();
 
@@ -44,10 +45,9 @@ class TimeHelper {
     return hour;
   }
 
-  static String convertTimeStampToDay(int timestamp) {
-    final String day = DateFormat.yMMMEd()
-        .format(DateTime.fromMillisecondsSinceEpoch(timestamp));
-    return day;
+  static String convertTimeStampToDate(int timestamp) {
+    final String date = Localization.local?.upcomingDate(DateTime.fromMillisecondsSinceEpoch(timestamp)) ?? '';
+    return date;
   }
 
   static String getMostRecentWeekRangeFromDate(DateTime date) {

@@ -100,7 +100,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              TimeHelper.convertTimeStampToDay(
+              TimeHelper.convertTimeStampToDate(
                   scheduleInfo?.startTimeStamp ?? 0),
               style: Theme.of(context).textTheme.bodyLarge,
             ),

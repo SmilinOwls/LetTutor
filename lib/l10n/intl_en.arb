@@ -4,7 +4,7 @@
     "@appTitle": {
         "description": "Title of the application"
     },
-    "welcome": "Welcome to {appTitle}",
+    "welcome": "Welcome to LetTutor",
     "titleLogin": "Say hello to your English tutors",
     "subtitleLogin": "Become fluent faster through one on one video chat lessons tailored to your goals",
     "email": "Email",
@@ -31,5 +31,38 @@
     "subTitleResetPassword": "Please enter your email address to search for your account.",
     "resetPassword": "Send reset link",
     "backToLogin": "Back to login",
-    "successResetPassword": "Reset password successfully! Please check your email to reset password!"
+    "successResetPassword": "Reset password successfully! Please check your email to reset password!",
+    
+    "findTutor": "Find a tutor",
+    "recommedTutor": "Recommended Tutors",
+    "noTutor": "No tutor found!",
+    "noTutorDescription": "Please try again with different filters",
+    "inputTutorName": "Input tutor name",
+    "selectTutor": "Select tutor",
+    "searchTutorNationality": "Search for a tutor nationality..",
+    "resetFilter": "Reset filter",
+
+    "noUpcomingLesson": "You have no upcoming lesson.",
+    "upcomingLesson": "Upcoming lesson",
+    "upcomingDate": "{date}",
+    "@upcomingDate": {
+        "description": "Date format",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMEd"
+            }
+        }
+    },
+    "startsIn": "starts in",
+    "inProgress": "is in progress for",
+    "enterLessonRoom": "Enter lesson room",
+    "totalLessonTime": "Total lesson Time: {hour, plural, =0{{hour} hour} =1{{hour} hour} other {{hour} hours}}  {minute, plural, =0{{minute} minute} =1{{minute} minute} other {{minute} minutes}}",
+
+    "succesAddFavoriteTutor": "Add favorite tutor successfully",
+    "successRemoveFavoriteTutor": "Remove favorite tutor successfully",
+    "nullCountry": "Null country",
+    "nullReviews": "No reviews yet",
+    "nullBio": "No bio yet",
+    "book": "Book"
 }
