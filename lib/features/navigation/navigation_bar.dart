@@ -27,29 +27,29 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
     _activeTab = 0;
     _tabList = [
       {
-        'label': 'Home',
+        'label': _local.home,
         'icon': Icons.home,
         'screen': HomeScreen(
           local: _local,
         ),
       },
       {
-        'label': 'Schedule',
+        'label': _local.schedule,
         'icon': Icons.calendar_month_rounded,
         'screen': const ScheduleScreen(),
       },
       {
-        'label': 'History',
+        'label': _local.history,
         'icon': Icons.history_outlined,
         'screen': const HistoryScreen(),
       },
       {
-        'label': 'Courses',
+        'label':  _local.courses,
         'icon': Icons.school,
         'screen': const CourseListScreen(),
       },
       {
-        'label': 'Account',
+        'label': _local.account,
         'icon': Icons.person_outlined,
         'screen': const AccountScreen(),
       },

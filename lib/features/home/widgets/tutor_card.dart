@@ -183,8 +183,10 @@ class _TutorCardState extends State<TutorCard> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Icon(Icons.edit_calendar,
-                        color: Theme.of(context).primaryColor),
+                    Icon(
+                      Icons.edit_calendar,
+                      color: Theme.of(context).primaryColor,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       widget.local.book,

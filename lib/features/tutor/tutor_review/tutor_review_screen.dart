@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/features/tutor/tutor_review/widgets/review_card.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/services/tutor_service.dart';
+import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:pager/pager.dart';
 
-class TutorReviewScreen extends StatefulWidget {
+class TutorReviewScreen extends StatefulWidget with Localization {
   const TutorReviewScreen({super.key, required this.tutorId});
 
   final String tutorId;
@@ -59,8 +60,8 @@ class _TutorReviewScreenState extends State<TutorReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Tutor Reviews',
+      appBar: CustomAppBar(
+        appBarTitle: Localization.local?.tutorReviews,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10),

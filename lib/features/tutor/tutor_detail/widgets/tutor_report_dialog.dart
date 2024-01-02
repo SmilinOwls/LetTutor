@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/services/tutor_service.dart';
+import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 
-class TutorReportDialog extends StatefulWidget {
-  const TutorReportDialog({super.key, required this.tutorId});
+class TutorReportDialog extends StatefulWidget with Localization {
+  const TutorReportDialog({
+    super.key,
+    required this.tutorId,
+  });
 
   final String tutorId;
 
@@ -13,11 +17,22 @@ class TutorReportDialog extends StatefulWidget {
 
 class _TutorReportDialogState extends State<TutorReportDialog> {
   final _reportTextEditingController = TextEditingController();
-  final Map<String, bool> _reports = {
-    'This tutor is annoying me': false,
-    'This profile is pretending be someone or is fake': false,
-    'Inappropriate profile photo': false
-  };
+  late final Map<String, bool> _reports;
+
+  @override
+  void initState() {
+    super.initState();
+    _getReportList();
+  }
+
+  void _getReportList() async {
+    final reports = Localization.local?.reportReason.split(':');
+    if (reports != null) {
+      _reports = _reports = {
+        for (var report in reports) report.toString().trim(): false
+      };
+    }
+  }
 
   void _trackReport() {
     _reports.updateAll((key, value) => false);
@@ -57,12 +72,14 @@ class _TutorReportDialogState extends State<TutorReportDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final local = Localization.local!;
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       title: Column(
         children: <Widget>[
           Text(
-            'Report tutor',
+            local.reportTutor,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 6),
@@ -79,9 +96,9 @@ class _TutorReportDialogState extends State<TutorReportDialog> {
                 children: <Widget>[
                   Icon(Icons.report_rounded, color: Colors.blue[700]),
                   const SizedBox(width: 4),
-                  const Text(
-                    "Help us understand what's happening",
-                    style: TextStyle(
+                  Text(
+                    local.reportTutorDescription,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -137,21 +154,21 @@ class _TutorReportDialogState extends State<TutorReportDialog> {
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                   ),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     isCollapsed: true,
-                    contentPadding: EdgeInsets.all(12),
-                    enabledBorder: OutlineInputBorder(
+                    contentPadding: const EdgeInsets.all(12),
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0.5,
                         color: Colors.grey,
                       ),
                     ),
-                    hintText: 'Please let us know details about your problems',
-                    hintStyle: TextStyle(
+                    hintText: local.reportTutorHint,
+                    hintStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         color: Colors.grey),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
                         color: Colors.blue,
@@ -179,7 +196,7 @@ class _TutorReportDialogState extends State<TutorReportDialog> {
             ),
           ),
           child: Text(
-            'Cancel',
+            local.cancel,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -196,9 +213,9 @@ class _TutorReportDialogState extends State<TutorReportDialog> {
             ),
             backgroundColor: Colors.blue[700],
           ),
-          child: const Text(
-            'Submit',
-            style: TextStyle(
+          child: Text(
+            local.submit,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: Colors.white,

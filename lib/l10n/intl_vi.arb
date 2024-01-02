@@ -2,6 +2,7 @@
     "@@locale": "vi",
     "appTitle": "LetTutor",
     "welcome": "Chào mừng bạn đến với LetTutor!",
+    
     "titleLogin": "Đăng nhập",
     "subtitleLogin": "Phát triển kỹ năng tiếng Anh nhanh nhất bằng cách học 1 kèm 1 trực tuyến theo mục tiêu và lộ trình dành cho riêng bạn.",
     "email": "Địa chỉ email",
@@ -29,9 +30,9 @@
     "resetPassword": "Đặt lại mật khẩu",
     "backToLogin": "Quay lại đăng nhập",
     "successResetPassword": "Đặt lại mật khẩu thành công! Vui lòng kiểm tra email để lấy mật khẩu mới!",
-
+    
     "findTutor": "Tìm gia sư",
-    "recommedTutor": "Gia sư gợi ý",
+    "recommedTutor": "Gia sư được đề xuất",
     "noTutor": "Không có gia sư nào phù hợp!",
     "noTutorDescription": "Vui lòng thử lại với bộ lọc khác!",
     "inputTutorName": "Nhập tên gia sư",
@@ -39,6 +40,12 @@
     "searchTutorNationality": "Tìm theo quốc tịch",
     "resetFilter": "Đặt lại bộ lọc",
     
+    "home": "Trang chủ",
+    "schedule": "Lịch học",
+    "history": "Lịch sử",
+    "courses": "Khóa học",
+    "account": "Tài khoản",
+
     "noUpcomingLesson": "Không có buổi học nào sắp diễn ra!",
     "upcomingLesson": "Lịch học sắp diễn ra",
     "upcomingDate": "{date}",
@@ -52,6 +59,27 @@
     "nullCountry": "Chưa cập nhật",
     "nullReviews": "Chưa có đánh giá",
     "nullBio": "Chưa cập nhật",
-    "book": "Đặt lịch"
+    "book": "Đặt lịch",
 
+    "tutorDetail": "Thông tin gia sư",
+    "favorite": "Yêu thích",
+    "report": "Báo cáo",
+    "reviews": "Đánh giá",
+    "education": "Học vấn",
+    "languages": "Ngôn ngữ",
+    "specialties": "Chuyên ngành",
+    "suggestedCourses": "Khóa học tham khảo",
+    "link": "Tìm hiểu",
+    "interests": "Sở thích",
+    "teachingExperience": "Kinh nghiệm giảng dạy",
+    "bookNow": "Đặt lịch ngay",
+
+    "reportTutor": "Báo cáo gia sư",
+    "reportTutorDescription": "Bạn gặp phải vấn đề gì",
+    "reportTutorHint": "Vui lòng điền thông tin chi tiết vấn đề bạn gặp phải",
+    "cancel": "Hủy",
+    "submit": "Gửi",
+    "reportReason": "Gia sư này làm phiền tôi:Hồ sơ này là giả mạo:Ảnh hồ sơ không phù hợp",
+
+    "tutorReviews": "Đánh giá gia sư"
 }

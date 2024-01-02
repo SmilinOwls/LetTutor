@@ -5,6 +5,7 @@
         "description": "Title of the application"
     },
     "welcome": "Welcome to LetTutor",
+    
     "titleLogin": "Say hello to your English tutors",
     "subtitleLogin": "Become fluent faster through one on one video chat lessons tailored to your goals",
     "email": "Email",
@@ -33,6 +34,12 @@
     "backToLogin": "Back to login",
     "successResetPassword": "Reset password successfully! Please check your email to reset password!",
     
+    "home": "Home",
+    "schedule": "Schedule",
+    "history": "History",
+    "courses": "Courses",
+    "account": "Account",
+
     "findTutor": "Find a tutor",
     "recommedTutor": "Recommended Tutors",
     "noTutor": "No tutor found!",
@@ -64,5 +71,28 @@
     "nullCountry": "Null country",
     "nullReviews": "No reviews yet",
     "nullBio": "No bio yet",
-    "book": "Book"
+    "book": "Book",
+
+    "tutorDetail": "Tutor details",
+    "favorite": "Favorite",
+    "report": "Report",
+    "reviews": "Reviews",
+    "education": "Education",
+    "languages": "Languages",
+    "specialties": "Specialties",
+    "suggestedCourses": "Suggested Courses",
+    "link": "Link",
+    "interests": "Interests",
+    "teachingExperience": "Teaching Experience",
+    "bookNow": "Book Now",
+
+    "reportTutor": "Report tutor",
+    "reportTutorDescription": "Help us understand what's happening",
+    "reportTutorHint": "Please let us know details about your problems",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "reportReason": "This tutor is annoying meThis profile is pretending be someone or is fake:Inappropriate profile photo",
+
+    "tutorReviews": "Tutor Reviews"
+
 }

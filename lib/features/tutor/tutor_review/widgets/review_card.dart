@@ -48,7 +48,7 @@ class ReviewCard extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       Text(
-                        review.firstInfo?.name ?? 'null name',
+                        review.firstInfo?.name ?? '',
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -69,7 +69,7 @@ class ReviewCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   StarRating(rating: review.rating?.toDouble() ?? 0),
                   const SizedBox(height: 4),
-                  Text(review.content ?? 'null content'),
+                  Text(review.content ?? ''),
                 ],
               ),
             ),
