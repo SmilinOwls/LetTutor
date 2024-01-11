@@ -4,12 +4,11 @@ import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/user_service.dart';
-import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/utils/time_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class TutorBookingConfirmDialog extends StatefulWidget with Localization {
+class TutorBookingConfirmDialog extends StatefulWidget {
   const TutorBookingConfirmDialog({super.key, required this.schedule});
 
   final Schedule schedule;
@@ -25,9 +24,9 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
   late AppLocalizations local;
 
   @override
-  void initState() {
-    super.initState();
-    local = Localization.local!;
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    local = AppLocalizations.of(context)!;
   }
 
   void _tutorBookingHandle() async {

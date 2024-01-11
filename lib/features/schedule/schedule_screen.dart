@@ -5,6 +5,7 @@ import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:pager/pager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -15,6 +16,7 @@ class ScheduleScreen extends StatefulWidget {
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
   Future<List<BookingInfo>>? _bookings;
+  late AppLocalizations _local;
 
   int _page = 1;
   final int _perPage = 20;
@@ -24,6 +26,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   void initState() {
     super.initState();
     _getBookingListByStudent();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   void _getBookingListByStudent() async {
@@ -79,13 +87,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Schedule',
+            _local.schedule,
             style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Here is a list of the sessions you have booked\n'
-            'You can track when the meeting starts, join the meeting with one click or can cancel the meeting before 2 hours',
+          Text(
+            _local.scheduleDescription,
             textAlign: TextAlign.justify,
           ),
           const SizedBox(height: 4),
@@ -101,9 +108,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   return Center(
                     child: Column(
                       children: <Widget>[
-                        const Text(
-                          'There is no lesson schedule yet!',
-                          style: TextStyle(
+                        Text(
+                          _local.noLessonSchedule,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -113,7 +120,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: const Text('Book a lesson'),
+                          child: Text(_local.bookLesson),
                         ),
                       ],
                     ),
@@ -124,7 +131,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Total prescheduled lessons: ${bookings.length}',
+                        _local.totalPrescheduledLessons(bookings.length),
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ),

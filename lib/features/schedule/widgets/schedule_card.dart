@@ -8,6 +8,7 @@ import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScheduleCard extends StatefulWidget {
   const ScheduleCard({
@@ -23,6 +24,14 @@ class ScheduleCard extends StatefulWidget {
 }
 
 class _ScheduleCardState extends State<ScheduleCard> {
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+  }
+
   Future<void> _showScheduleCancelingDialog(BuildContext context) async {
     await showDialog(
         context: context,
@@ -33,14 +42,10 @@ class _ScheduleCardState extends State<ScheduleCard> {
         if (value.toLowerCase() == 'true') {
           widget.onCancel?.call(widget.booking);
           SnackBarHelper.showSuccessSnackBar(
-            context: context,
-            content: 'You deleted booking successfully!',
-          );
+              context: context, content: _local.successCancelLesson);
         } else {
           SnackBarHelper.showErrorSnackBar(
-            context: context,
-            content: 'You failed to cancel booking!',
-          );
+              context: context, content: _local.failCancelLesson);
         }
       }
     });
@@ -105,7 +110,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
-            const Text('1 lesson'),
+            Text(_local.numberOfLessons(1)),
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
@@ -168,9 +173,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   ),
                   const SizedBox(height: 12),
                   ExpansionTile(
-                    title: const Text(
-                      'Request for lesson',
-                      style: TextStyle(
+                    title: Text(
+                      _local.requestForLesson,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -179,9 +184,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       onTap: () {
                         _showScheduleRequestingDialog(context);
                       },
-                      child: const Text(
-                        'Edit request',
-                        style: TextStyle(
+                      child: Text(
+                        _local.editRequest,
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.blue,
                         ),
@@ -199,8 +204,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       ListTile(
                         title: Text(
                           widget.booking.studentRequest ??
-                              'Currently there are no requests for this class. '
-                                  'Please write down any requests for the teacher.',
+                              _local.noRequestForClass,
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -222,8 +226,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
                           _showScheduleCancelingDialog(context);
                         },
                         icon: const Icon(Icons.cancel_presentation_outlined),
-                        label: const Text(
-                          'Cancel',
+                        label: Text(
+                          _local.cancel
                         ),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.red,
@@ -254,9 +258,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                   ),
-                  child: const Text(
-                    'Go to meeting',
-                    style: TextStyle(fontSize: 16),
+                  child: Text(
+                    _local.goToMeeting,
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ),
               ],

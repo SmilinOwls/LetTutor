@@ -101,5 +101,17 @@
     "price": "Giá",
     "priceDescription": "{price} buổi học",
     "note": "Ghi chú",
-    "noteForTutor": "Ghi chú cho gia sư"
+    "noteForTutor": "Ghi chú cho gia sư",
+
+    "scheduleDescription": "Đây là danh sách những khung giờ bạn đã đặt\nBạn có thể theo dõi khi nào buổi học bắt đầu, tham gia buổi học bằng một cú nhấp chuột hoặc có thể hủy buổi học trước 2 tiếng.",
+    "noLessonSchedule": "Bạn chưa có lịch học nào!",
+    "totalPrescheduledLessons": "Tổng số buổi học đã đặt trước: {totalLesson}",
+
+    "successCancelLesson": "Hủy buổi học thành công!",
+    "failCancelLesson": "Hủy buổi học thất bại!",
+    "numberOfLessons": "{numberLesson} buổi học",
+    "requestForLesson": "Yêu cầu buổi học",
+    "editRequest": "Sửa yêu cầu",
+    "noRequestForClass": "Hiện tại không có yêu cầu cho lớp học này. Xin vui lòng viết ra bất kỳ yêu cầu nào cho giáo viên nếu có.",
+    "goToMeeting": "Vào buổi học"
 }

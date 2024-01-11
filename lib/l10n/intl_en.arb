@@ -134,5 +134,25 @@
         }
     },
     "note": "Note",
-    "noteForTutor": "Note for tutor"
+    "noteForTutor": "Note for tutor",
+
+    "scheduleDescription": "Here is a list of the sessions you have booked\nYou can track when the meeting starts, join the meeting with one click or can cancel the meeting before 2 hours",
+    "noLessonSchedule": "There is no lesson schedule yet!",
+    "totalPrescheduledLessons": "Total prescheduled lessons: {totalLesson}",
+    "@totalPrescheduledLessons": {
+        "description": "Total prescheduled lessons",
+        "placeholders": {
+            "totalLesson": {
+                "type": "int"
+            }
+        }
+    },
+
+    "successCancelLesson": "Cancel lesson successfully!",
+    "failCancelLesson": "Cancel lesson failed!",
+    "numberOfLessons": "{numberLesson, plural, =0{{numberLesson} lesson} =1{{numberLesson} lesson} other {{numberLesson} lessons}}",
+    "requestForLesson": "Request for lesson",
+    "editRequest": "Edit request",
+    "noRequestForClass": "Currently there are no requests for this class. Please write down any requests for the teacher.",
+    "goToMeeting": "Go to meeting"
 }
