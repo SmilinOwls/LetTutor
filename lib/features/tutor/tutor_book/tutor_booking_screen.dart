@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_hour_dialog.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/services/booking_service.dart';
@@ -34,7 +35,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-   local = Localization.local!;
+    local = Localization.local!;
   }
 
   void _getTutorSchedule() async {
@@ -60,7 +61,12 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
   }
 
   void _tutorScheduleHandle(List<Schedule> schedules) {
-    _tutorSchedules?.clear();
+    if (schedules.isEmpty) {
+      setState(() {
+        _tutorSchedules = {};
+      });
+      return;
+    }
 
     schedules.removeWhere(
       (schedule) =>
@@ -115,10 +121,11 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
       ),
       body: _tutorSchedules == null
           ? const Center(child: CircularProgressIndicator())
-          : _tutorSchedules?.isEmpty == true && _currentPage == 1
+          : _tutorSchedules?.isEmpty == true
               ? Center(
                   child: Column(
                     children: <Widget>[
+                      const SizedBox(height: 18),
                       Text(
                         local.noTutorSchedule,
                         style: const TextStyle(
@@ -129,9 +136,9 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
                       const SizedBox(height: 10),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pushNamed(Routes.main);
                         },
-                        child: Text(local.bookLesson),
+                        child: Text(local.bookAnotherTutor),
                       ),
                     ],
                   ),

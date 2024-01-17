@@ -120,6 +120,7 @@
     "onTime": "On {scheduleDate}",
     
     "bookTutor": "Book This Tutor",
+    "bookAnotherTutor": "Book Another Tutor",
     "bookingTime": "Booking time",
     "balance": "Balance",
     "balanceDescription": "You have {balance, plural, =0{{balance}\n lesson} =1{{balance}\n lesson} other {{balance}\n lessons}} left",
@@ -155,4 +156,5 @@
     "editRequest": "Edit request",
     "noRequestForClass": "Currently there are no requests for this class. Please write down any requests for the teacher.",
     "goToMeeting": "Go to meeting"
+    
 }

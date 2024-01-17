@@ -122,7 +122,10 @@ class _HomeHeaderState extends State<HomeHeader> {
     if (_nextLesson == null) {
       return Text(
         widget.local.noUpcomingLesson,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(
+          fontSize: 18,
+          color: Colors.white,
+        ),
       );
     }
 

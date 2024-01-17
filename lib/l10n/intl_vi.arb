@@ -95,6 +95,7 @@
     "onTime": "Ngày đặt {scheduleDate}",
 
     "bookTutor": "Đặt gia sư này",
+    "bookAnotherTutor": "Đặt gia sư khác",
     "bookingTime": "Chọn giờ học",
     "balance": "Số dư",
     "balanceDescription": "Bạn còn {balance}\n buổi học",

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_card.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
@@ -118,7 +119,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         const SizedBox(height: 10),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Navigator.of(context).pushNamed(Routes.main);
                           },
                           child: Text(_local.bookLesson),
                         ),
