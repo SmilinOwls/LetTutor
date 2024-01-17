@@ -7,6 +7,7 @@ import 'package:lettutor/services/misc_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/drop_down/drop_down.dart';
 import 'package:lettutor/widgets/drop_down/multi_choice_drop_down.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CourseListScreen extends StatefulWidget {
   const CourseListScreen({super.key});
@@ -29,6 +30,7 @@ class _CourseListScreenState extends State<CourseListScreen>
   final TextEditingController _levelController = TextEditingController();
 
   final ValueNotifier<Map<String, dynamic>> _searchList = ValueNotifier({});
+  late AppLocalizations _local;
 
   @override
   void initState() {
@@ -45,6 +47,12 @@ class _CourseListScreenState extends State<CourseListScreen>
       'level': _selectedLevel,
       'orderBy': _levelController.text,
     };
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   void _getContentCategory() async {
@@ -130,21 +138,20 @@ class _CourseListScreenState extends State<CourseListScreen>
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Discover Courses',
+                      _local.discoverCourses,
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'LiveTutor has built the most quality, methodical and scientific courses'
-                      'in the fields of life for those who are in need of improving their knowledge of the fields.',
+                    Text(
+                      _local.coursesDescription,
                       textAlign: TextAlign.justify,
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Search',
-                  style: TextStyle(
+                Text(
+                  _local.searchCourses,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -163,7 +170,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                       vertical: 6,
                     ),
                     hintStyle: TextStyle(color: Colors.grey[400]),
-                    hintText: 'Search',
+                    hintText: _local.searchCourses,
                     suffixIcon: InkWell(
                       onTap: () {},
                       child: const Icon(Icons.search),
@@ -198,9 +205,9 @@ class _CourseListScreenState extends State<CourseListScreen>
                   ),
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Level',
-                  style: TextStyle(
+                Text(
+                  _local.level,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -209,13 +216,13 @@ class _CourseListScreenState extends State<CourseListScreen>
                 MultiChoiceDropDown(
                   items: _levelList,
                   selectedItems: _selectedLevel,
-                  hintText: 'Select level',
+                  hintText: _local.levelSelectHint,
                   onSelected: _onLevelChanged,
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Category',
-                  style: TextStyle(
+                Text(
+                  _local.category,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -224,13 +231,13 @@ class _CourseListScreenState extends State<CourseListScreen>
                 MultiChoiceDropDown(
                   items: _categoryList ?? {},
                   selectedItems: _selectedCategory,
-                  hintText: 'Select category',
+                  hintText: _local.categorySelectHint,
                   onSelected: _onCategoryChanged,
                 ),
                 const SizedBox(height: 12),
-                const Text(
-                  'Sort',
-                  style: TextStyle(
+                Text(
+                  _local.sort,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -239,7 +246,7 @@ class _CourseListScreenState extends State<CourseListScreen>
                 DropDownField(
                   controller: _levelController,
                   list: _sortList,
-                  hintText: 'Sort by level',
+                  hintText: _local.sortSelectHint,
                   onSelected: _onLevelSortChanged,
                 ),
                 const SizedBox(height: 16),
@@ -252,11 +259,11 @@ class _CourseListScreenState extends State<CourseListScreen>
             controller: _tabController,
             labelColor: Colors.blue,
             indicatorColor: Colors.blue[500],
-            tabs: const <Widget>[
+            tabs: <Widget>[
               Tab(
                 child: Text(
-                  'Course',
-                  style: TextStyle(
+                  _local.courses,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
@@ -264,8 +271,8 @@ class _CourseListScreenState extends State<CourseListScreen>
               ),
               Tab(
                 child: Text(
-                  'E-Book',
-                  style: TextStyle(
+                  _local.eBook,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),

@@ -250,5 +250,20 @@
     "tutorNotReviewYet": "Tutor has not reviewed yet",
     "rating": "Rating",
     "edit": "Edit",
-    "addARating": "Add a rating"
+    "addARating": "Add a rating",
+
+    "discoverCourses": "Discover Courses",
+    "coursesDescription": "LiveTutor has built the most quality, methodical and scientific courses in the fields of life for those who are in need of improving their knowledge of the fields.",
+    "searchCourses": "Search for courses",
+    "noCourse": "No course found!",
+    "noCourseDescription": "Please try again with different filters",
+    "level": "Level",
+    "levelSelectHint": "Select level",
+    "category": "Category",
+    "categorySelectHint": "Select category",
+    "sort": "Sort",
+    "sortSelectHint": "Sort by",
+    "levelAsc": "Level ascending",
+    "levelDesc": "Level descending",
+    "eBook": "E-book"
 }

@@ -151,5 +151,20 @@
     "tutorNotReviewYet": "Gia sư chưa đánh giá",
     "rating": "Đánh giá",
     "edit": "Sửa",
-    "addARating": "Thêm đánh giá"
+    "addARating": "Thêm đánh giá",
+
+    "discoverCourses": "Khám phá khóa học",
+    "coursesDescription": "LiveTutor đã xây dựng nên các khóa học của các lĩnh vực trong cuộc sống chất lượng, bài bản và khoa học nhất cho những người đang có nhu cầu trau dồi thêm kiến thức về các lĩnh vực.",
+    "searchCourses": "Tìm khóa học",
+    "noCourse": "Không có khóa học nào phù hợp!",
+    "noCourseDescription": "Vui lòng thử lại với bộ lọc khác!",
+    "level": "Cấp độ",
+    "levelSelectHint": "Chọn cấp độ",
+    "category": "Danh mục",
+    "categorySelectHint": "Chọn danh mục",
+    "sort": "Sắp xếp",
+    "sortSelectHint": "Sắp xếp theo",
+    "levelAsc": "Cấp độ tăng dần",
+    "levelDesc": "Cấp độ giảm dần",
+    "eBook": "Sách điện tử"
 }
