@@ -8,6 +8,7 @@ import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
 import 'package:lettutor/widgets/star_rating/star_rating.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryCard extends StatefulWidget {
   const HistoryCard(
@@ -30,10 +31,18 @@ class _HistoryCardState extends State<HistoryCard> {
   // ];
 
   double? _rating;
+  late AppLocalizations _local;
+
   @override
   void initState() {
     super.initState();
     _rating = widget.booking.feedbacks?.lastOrNull?.rating?.toDouble();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   Future<void> _showHistoryReportDialog(BuildContext context) async {
@@ -161,9 +170,9 @@ class _HistoryCardState extends State<HistoryCard> {
             Container(
               padding: const EdgeInsets.all(12),
               child: Text(
-                'Lesson Time: '
+                '${_local.lessonTime}: '
                 '${TimeHelper.convertTimeStampToHour(scheduleInfo?.startTimeStamp ?? 0)}'
-                ' - '
+                '-'
                 '${TimeHelper.convertTimeStampToHour(scheduleInfo?.endTimeStamp ?? 0)}',
                 style: const TextStyle(
                   fontSize: 18,
@@ -181,9 +190,9 @@ class _HistoryCardState extends State<HistoryCard> {
                     left: 8,
                     bottom: 10,
                   ),
-                  title: const Text(
-                    'Request for lesson',
-                    style: TextStyle(
+                  title: Text(
+                    _local.requestForLesson,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -193,7 +202,7 @@ class _HistoryCardState extends State<HistoryCard> {
                     ListTile(
                       title: Text(
                         widget.booking.studentRequest ??
-                            'No request for this lesson',
+                            _local.noRequestForClass,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -209,9 +218,9 @@ class _HistoryCardState extends State<HistoryCard> {
                     left: 8,
                     bottom: 10,
                   ),
-                  title: const Text(
-                    'Review from tutor',
-                    style: TextStyle(
+                  title: Text(
+                    _local.reviewFromTutor,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
@@ -233,8 +242,7 @@ class _HistoryCardState extends State<HistoryCard> {
                     // const Text('Overall comment: Good'),
                     ListTile(
                       title: Text(
-                        widget.booking.tutorReview ??
-                            'Tutor has not reviewed yet',
+                        widget.booking.tutorReview ?? _local.tutorNotReviewYet,
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black.withOpacity(0.8),
@@ -257,11 +265,8 @@ class _HistoryCardState extends State<HistoryCard> {
                         child: _rating != null
                             ? Row(
                                 children: <Widget>[
-                                  const Text('Rating: '),
-                                  StarRating(
-                                    rating: _rating!,
-                                    onRatingChanged: (value) {},
-                                  ),
+                                  Text('${_local.rating}: '),
+                                  StarRating(rating: _rating!),
                                 ],
                               )
                             : const SizedBox.shrink(),
@@ -271,7 +276,7 @@ class _HistoryCardState extends State<HistoryCard> {
                           _showHistoryRatingDialog(context);
                         },
                         child: Text(
-                          _rating != null ? 'Edit' : 'Add a rating',
+                          _rating != null ? _local.edit : _local.addARating,
                           style: const TextStyle(color: Colors.blue),
                         ),
                       ),
@@ -280,9 +285,9 @@ class _HistoryCardState extends State<HistoryCard> {
                         onTap: () {
                           _showHistoryReportDialog(context);
                         },
-                        child: const Text(
-                          'Report',
-                          style: TextStyle(color: Colors.blue),
+                        child: Text(
+                          _local.report,
+                          style: const TextStyle(color: Colors.blue),
                         ),
                       ),
                     ],

@@ -114,5 +114,42 @@
     "requestForLesson": "Yêu cầu buổi học",
     "editRequest": "Sửa yêu cầu",
     "noRequestForClass": "Hiện tại không có yêu cầu cho lớp học này. Xin vui lòng viết ra bất kỳ yêu cầu nào cho giáo viên nếu có.",
-    "goToMeeting": "Vào buổi học"
+    "goToMeeting": "Vào buổi học",
+
+    "specialRequest": "Yêu cầu đặc biệt",
+    "invalidEmptyReason": "Lý do không được để trống!",
+    "wishTopic": "Chủ đề mong muốn (không bắt buộc)",
+    "requestInputHint": "Bạn có thể viết bằng tiếng Việt hoặc tiếng Anh (Tối đa 200 ký tự)",
+
+    "yearAgo": "{year} năm trước",
+    "monthAgo": "{month} tháng trước",
+    "weekAgo": "{week} tuần trước",
+    "dayAgo": "{day} ngày trước",
+    "hourAgo": "{hour} giờ trước",
+    "minuteAgo": "{minute} phút trước",
+    "secondAgo": "{second} giây trước",
+    "justNow": "Vừa xong",
+
+    "reasonCancelLesson": "Lý do bạn hủy buổi học này là gì?",
+    "lessonCancelingReasons": "Hẹn lại buổi học:Không có thời gian:Theo yêu cầu của gia sư:Khác",
+
+    "historyDescription": "Đây là danh sách các bài học bạn đã tham gia\nBạn có thể xem lại thông tin chi tiết về các buổi học đã tham gia đã tham gia",
+    "noLessonHistory": "Bạn chưa có lịch sử học nào!",
+
+    "reportLessonTitle": "Lý do bạn báo cáo bài học này là gì?",
+    "selectReason": "Chọn lý do",
+    "additionalNote": "Ghi chú thêm",
+    "lessonReportingReasons": "Gia sư trễ giờ học:Gia sư vắng mặt:Kết nối không ổn định:Khác",
+
+    "lessonTime": "Thời gian học",
+    "later": "Hẹn lại",
+
+    "tutorRatingTitle": "Bạn đánh giá gì cho {tutorName}?",
+    "contentReviewHint": "Nội dung đánh giá",
+
+    "reviewFromTutor": "Đánh giá từ gia sư",
+    "tutorNotReviewYet": "Gia sư chưa đánh giá",
+    "rating": "Đánh giá",
+    "edit": "Sửa",
+    "addARating": "Thêm đánh giá"
 }

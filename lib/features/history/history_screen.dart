@@ -5,6 +5,7 @@ import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:pager/pager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -15,6 +16,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   Future<List<BookingInfo>>? _bookings;
+  late AppLocalizations _local;
 
   int _page = 1;
   final int _perPage = 20;
@@ -24,6 +26,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
   void initState() {
     super.initState();
     _getBookingListByStudent();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   void _getBookingListByStudent() async {
@@ -72,13 +80,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'History',
+            _local.history,
             style: Theme.of(context).textTheme.displaySmall,
           ),
           const SizedBox(height: 8),
-          const Text(
-            'The following is a list of lessons you have attended\n'
-            'You can review the details of the lessons you have attended',
+          Text(
+            _local.historyDescription,
             textAlign: TextAlign.justify,
           ),
           const SizedBox(height: 4),
@@ -95,9 +102,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   return Center(
                     child: Column(
                       children: <Widget>[
-                        const Text(
-                          'You have no history',
-                          style: TextStyle(
+                        Text(
+                          _local.noLessonHistory,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -107,7 +114,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: const Text('Book a lesson'),
+                          child: Text(_local.bookLesson),
                         ),
                       ],
                     ),

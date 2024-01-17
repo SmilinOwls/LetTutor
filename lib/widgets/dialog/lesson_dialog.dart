@@ -2,9 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
+import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/utils/time_helper.dart';
 
-class LessonDialog extends StatelessWidget {
+class LessonDialog extends StatelessWidget with Localization {
   const LessonDialog({super.key, this.booking, this.child, this.onSubmit});
 
   final BookingInfo? booking;
@@ -76,7 +77,10 @@ class LessonDialog extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     const SizedBox(height: 8),
-                    const Text('Lesson Time', style: TextStyle(fontSize: 16)),
+                    Text(
+                      Localization.local!.lessonTime,
+                      style: const TextStyle(fontSize: 16),
+                    ),
                     const SizedBox(height: 2),
                     Text(
                       '${TimeHelper.convertTimeStampToDate(scheduleInfo?.startTimeStamp ?? 0)}, '
@@ -105,8 +109,8 @@ class LessonDialog extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           ),
-          child: const Text(
-            'Later',
+          child: Text(
+            Localization.local!.later,
           ),
         ),
         TextButton(
@@ -119,9 +123,9 @@ class LessonDialog extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           ),
-          child: const Text(
-            'Submit',
-            style: TextStyle(fontSize: 16),
+          child: Text(
+            Localization.local!.submit,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
       ],

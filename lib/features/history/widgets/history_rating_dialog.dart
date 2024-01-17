@@ -5,6 +5,7 @@ import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/dialog/lesson_dialog.dart';
 import 'package:lettutor/widgets/star_rating/star_rating.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryRatingDialog extends StatefulWidget {
   const HistoryRatingDialog({super.key, required this.booking, this.feedback});
@@ -22,13 +23,20 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
   double? _rating;
 
   late final BookingInfo booking;
-
+  late AppLocalizations _local;
+  
   @override
   void initState() {
     super.initState();
     booking = widget.booking;
     _rating = widget.feedback?.rating?.toDouble();
     _reviewTextEditingController.text = widget.feedback?.content ?? '';
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   Future<String?> _handleRatingSubmit() async {
@@ -65,7 +73,7 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            'What is your rating for ${booking.scheduleDetailInfo?.scheduleInfo?.tutorInfo?.name}?',
+            _local.tutorRatingTitle(booking.scheduleDetailInfo?.scheduleInfo?.tutorInfo?.name ?? ''),
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 14),
@@ -88,28 +96,28 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
               ),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 isCollapsed: true,
-                contentPadding: EdgeInsets.all(12),
-                enabledBorder: OutlineInputBorder(
+                contentPadding: const EdgeInsets.all(12),
+                enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
                     color: Colors.grey,
                   ),
                 ),
-                hintText: 'Content Review',
-                hintStyle: TextStyle(
+                hintText: _local.contentReviewHint,
+                hintStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: Colors.grey,
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
                     color: Colors.grey,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 1,
                     color: Colors.blue,

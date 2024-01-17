@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/widgets/dialog/lesson_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScheduleCancelingDialog extends StatefulWidget {
   const ScheduleCancelingDialog({super.key, required this.booking});
@@ -14,21 +15,24 @@ class ScheduleCancelingDialog extends StatefulWidget {
       _ScheduleCancelingDialogState();
 }
 
-const reasons = [
-  'Reschedule at another time',
-  'Busy at that time',
-  'Asked by the tutor',
-  'Other'
-];
-
 class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
   final TextEditingController _noteTextEditingController =
       TextEditingController();
-  String _selectedReason = reasons.first;
+  late AppLocalizations _local;
+  late final List<String> _reasons;
+  late String _selectedValue;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+    _reasons = _local.lessonCancelingReasons.split(':');
+    _selectedValue = _reasons.first;
+  }
 
   Future<bool?> _handleCancelSubmit() async {
     final response = await BookingService.cancelBooking(
-      cancelReasonId: reasons.indexOf(_selectedReason) + 1,
+      cancelReasonId: _reasons.indexOf(_selectedValue) + 1,
       cancelNote: _noteTextEditingController.text.isEmpty
           ? null
           : _noteTextEditingController.text,
@@ -68,13 +72,13 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
               child: DropdownButton2<String>(
                 isExpanded: true,
                 hint: Text(
-                  'Select Item',
+                  'Select Reason',
                   style: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).hintColor,
                   ),
                 ),
-                items: reasons
+                items: _reasons
                     .map(
                       (String item) => DropdownMenuItem<String>(
                         value: item,
@@ -87,10 +91,10 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
                       ),
                     )
                     .toList(),
-                value: _selectedReason,
+                value: _selectedValue,
                 onChanged: (String? value) {
                   setState(() {
-                    _selectedReason = value!;
+                    _selectedValue = value!;
                   });
                 },
                 buttonStyleData: const ButtonStyleData(

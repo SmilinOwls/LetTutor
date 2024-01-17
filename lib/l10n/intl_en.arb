@@ -155,6 +155,100 @@
     "requestForLesson": "Request for lesson",
     "editRequest": "Edit request",
     "noRequestForClass": "Currently there are no requests for this class. Please write down any requests for the teacher.",
-    "goToMeeting": "Go to meeting"
+    "goToMeeting": "Go to meeting",
+
+    "specialRequest": "Special request",
+    "invalidEmptyReason": "The reason cannot be empty!",
+    "wishTopic": "Wish topic (optional)",
+    "requestInputHint": "You can write in English or Vietnamese (Maximum 200 letters)", 
+
+    "yearAgo": "{year, plural, =1{{year} year ago} other {{year} years ago}}",
+    "@yearAgo": {
+        "description": "Year difference",
+        "placeholders": {
+            "year": {
+                "type": "int"
+            }
+        }
+    },
+    "monthAgo": "{month, plural, =1{{month} month ago} other {{month} months ago}}",
+    "@monthAgo": {
+        "description": "Month difference",
+        "placeholders": {
+            "month": {
+                "type": "int"
+            }
+        }
+    },
+    "weekAgo": "{week, plural, =1{{week} week ago} other {{week} weeks ago}}",
+    "@weekAgo": {
+        "description": "Week difference",
+        "placeholders": {
+            "week": {
+                "type": "int"
+            }
+        }
+    },
+    "dayAgo": "{day, plural, =1{{day} day ago} other {{day} days ago}}",
+    "@dayAgo": {
+        "description": "Day difference",
+        "placeholders": {
+            "day": {
+                "type": "int"
+            }
+        }
+    },
+    "hourAgo": "{hour, plural, =1{{hour} hour ago} other {{hour} hours ago}}",
+    "@hourAgo": {
+        "description": "Hour difference",
+        "placeholders": {
+            "hour": {
+                "type": "int"
+            }
+        }
+    },
+    "minuteAgo": "{minute, plural, =1{{minute} minute ago} other {{minute} minutes ago}}",
+    "@minuteAgo": {
+        "description": "Minute difference",
+        "placeholders": {
+            "minute": {
+                "type": "int"
+            }
+        }
+    },
+    "secondAgo": "{second, plural, =1{{second} second ago} other {{second} seconds ago}}",
+    "@secondAgo": {
+        "description": "Second difference",
+        "placeholders": {
+            "second": {
+                "type": "int"
+            }
+        }
+    },
+    "justNow": "Just now",
+
+    "reasonCancelLesson": "What was the reason you canceled this booking?",
+    "lessonCancelingReasons": "Reschedule at another time:Busy at that time:Asked by the tutor:Other",
+
+    "historyDescription": "The following is a list of lessons you have attended\n You can review the details of the lessons you have attended",
+    "noLessonHistory": "You have no history",
     
+    "reportLessonTitle": "What was the reason you reported this booking?",
+    "selectReason": "Select Reason",
+    "additionalNote": "Additional note",
+    "lessonReportingReasons": "Reschedule at another time:Busy at that time:Asked by the tutor:Other",
+    "sentLessonReport": "The report has been sent.",
+
+    "lessonTime": "Lesson time",
+    "later": "Later",
+
+    "tutorRatingTitle": "What is your rating for {tutorName}?",
+    "contentReviewHint": "Content review",
+    
+
+    "reviewFromTutor": "Review from tutor",
+    "tutorNotReviewYet": "Tutor has not reviewed yet",
+    "rating": "Rating",
+    "edit": "Edit",
+    "addARating": "Add a rating"
 }

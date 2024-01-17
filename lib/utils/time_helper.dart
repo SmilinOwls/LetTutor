@@ -7,24 +7,24 @@ class TimeHelper with Localization {
 
     Duration diff = DateTime.now().difference(dt);
     if (diff.inDays > 365) {
-      return "${(diff.inDays / 365).floor()} ${(diff.inDays / 365).floor() == 1 ? "year" : "years"} ago";
+      return Localization.local!.yearAgo((diff.inDays / 365).floor());
     }
     if (diff.inDays > 30) {
-      return "${(diff.inDays / 30).floor()} ${(diff.inDays / 30).floor() == 1 ? "month" : "months"} ago";
+      return Localization.local!.monthAgo((diff.inDays / 30).floor());
     }
     if (diff.inDays > 7) {
-      return "${(diff.inDays / 7).floor()} ${(diff.inDays / 7).floor() == 1 ? "week" : "weeks"} ago";
+      return Localization.local!.weekAgo((diff.inDays / 7).floor());
     }
     if (diff.inDays > 0) {
-      return "${diff.inDays} ${diff.inDays == 1 ? "day" : "days"} ago";
+      return Localization.local!.dayAgo(diff.inDays);
     }
     if (diff.inHours > 0) {
-      return "${diff.inHours} ${diff.inHours == 1 ? "hour" : "hours"} ago";
+      return Localization.local!.hourAgo(diff.inHours);
     }
     if (diff.inMinutes > 0) {
-      return "${diff.inMinutes} ${diff.inMinutes == 1 ? "minute" : "minutes"} ago";
+      return Localization.local!.minuteAgo(diff.inMinutes);
     }
-    return "just now";
+    return Localization.local!.justNow;
   }
 
   static String getRemainingTimer(Duration currentTime) {
@@ -46,8 +46,8 @@ class TimeHelper with Localization {
   }
 
   static String convertTimeStampToDate(int timestamp) {
-    final String date =
-        Localization.local!.upcomingDate(DateTime.fromMillisecondsSinceEpoch(timestamp));
+    final String date = Localization.local!
+        .upcomingDate(DateTime.fromMillisecondsSinceEpoch(timestamp));
     return date;
   }
 
