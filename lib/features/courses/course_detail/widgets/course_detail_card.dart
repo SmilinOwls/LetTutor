@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/courses/course_topic/course_topic_screen.dart';
 import 'package:lettutor/models/courses/course/course.dart';
+import 'package:lettutor/utils/localization.dart';
 
-class CourseDetailCard extends StatelessWidget {
+class CourseDetailCard extends StatelessWidget with Localization {
   const CourseDetailCard({super.key, required this.course});
 
   final Course course;
@@ -27,7 +28,7 @@ class CourseDetailCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           CachedNetworkImage(
-            imageUrl: course.imageUrl ?? 'null image url',
+            imageUrl: course.imageUrl ?? '',
             fit: BoxFit.cover,
             errorWidget: (context, url, error) => const Icon(
               Icons.error,
@@ -43,14 +44,14 @@ class CourseDetailCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Text(
-                  course.name ?? 'null name',
+                  course.name ?? '',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 Text(
-                  course.description ?? 'null description',
+                  course.description ?? '',
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -73,9 +74,9 @@ class CourseDetailCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       backgroundColor: Colors.blue[700],
                       foregroundColor: Colors.white),
-                  child: const Text(
-                    'Discover',
-                    style: TextStyle(fontSize: 16),
+                  child: Text(
+                    Localization.local!.discover,
+                    style: const TextStyle(fontSize: 16),
                   ),
                 )
               ],

@@ -265,5 +265,20 @@
     "sortSelectHint": "Sort by",
     "levelAsc": "Level ascending",
     "levelDesc": "Level descending",
-    "eBook": "E-book"
+    "eBook": "E-book",
+
+    "courseDetails": "Courses Details",
+    "discover": "Discover",
+    "overview": "Overview",
+    "overviewOne": "Why take this course",
+    "overviewTwo": "What will you be able to do",
+    "experienceLevel": "Experience Level",
+    "courseLength": "Course Length",
+    "numberOfTopics": "{numberTopic, plural, =0{{numberTopic} topic} =1{{numberTopic} topic} other {{numberTopic} topics}}",
+    "listTopics": "List Topics",
+    "suggestedTutors": "Suggested Tutors",
+    "moreInfo": "More info",
+
+    "exploreCourse": "Explore Course"
+
 }

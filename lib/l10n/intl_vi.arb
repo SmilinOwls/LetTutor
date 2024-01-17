@@ -166,5 +166,19 @@
     "sortSelectHint": "Sắp xếp theo",
     "levelAsc": "Cấp độ tăng dần",
     "levelDesc": "Cấp độ giảm dần",
-    "eBook": "Sách điện tử"
+    "eBook": "Sách điện tử",
+
+    "courseDetails": "Chi tiết khoá học",
+    "discover": "Khám phá",
+    "overview": "Tổng quan",
+    "overviewOne": "Tại sao bạn nên học khóa học này",
+    "overviewTwo": "Bạn có thể làm gì",
+    "experienceLevel": "Trình độ yêu cầu",
+    "courseLength": "Thời lượng khóa học",
+    "numberOfTopics": "{numberTopic} chủ đề",
+    "listTopics": "Danh sách chủ đề",
+    "suggestedTutors": "Gợi ý gia sư",
+    "moreInfo": "Xem thêm",
+
+    "exploreCourse": "Khám phá khoá học"
 }

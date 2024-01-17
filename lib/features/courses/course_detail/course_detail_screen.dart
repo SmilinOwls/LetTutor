@@ -8,6 +8,7 @@ import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/text/headline_text.dart';
 import 'package:lettutor/features/courses/course_detail/widgets/topic_card.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CourseDetailScreen extends StatefulWidget {
   const CourseDetailScreen({super.key});
@@ -18,6 +19,7 @@ class CourseDetailScreen extends StatefulWidget {
 
 class _CourseDetailScreenState extends State<CourseDetailScreen> {
   Future<Course>? _courseDetail;
+  late AppLocalizations _local;
 
   @override
   void initState() {
@@ -25,6 +27,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     Future.delayed(Duration.zero, () {
       _getCourseDetail();
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   void _getCourseDetail() async {
@@ -47,8 +55,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Course Details',
+      appBar: CustomAppBar(
+        appBarTitle: _local.courseDetails,
       ),
       body: FutureBuilder(
         future: _courseDetail,
@@ -65,21 +73,21 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                   children: <Widget>[
                     CourseDetailCard(course: course),
                     const SizedBox(height: 20),
-                    const HeadlineText(textHeadline: 'Overview'),
+                    HeadlineText(textHeadline: _local.overview),
                     const SizedBox(height: 14),
                     Row(
                       children: <Widget>[
                         Icon(Icons.help_outline, color: Colors.red[300]),
                         const SizedBox(width: 8),
                         Text(
-                          'Why take this course',
+                          _local.overviewOne,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8, left: 30),
-                      child: Text(course.reason ?? 'No reason available'),
+                      child: Text(course.reason ?? ''),
                     ),
                     const SizedBox(height: 14),
                     Row(
@@ -87,16 +95,16 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                         Icon(Icons.help_outline, color: Colors.red[300]),
                         const SizedBox(width: 8),
                         Text(
-                          'What will you be able to do',
+                          _local.overviewTwo,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8, left: 30),
-                      child: Text(course.purpose ?? 'No purpose available'),
+                      child: Text(course.purpose ?? ''),
                     ),
-                    const HeadlineText(textHeadline: 'Experience Level'),
+                    HeadlineText(textHeadline: _local.experienceLevel),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 14,
@@ -110,13 +118,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            coursesLevel[course.level] ?? 'No level available',
+                            coursesLevel[course.level] ?? '',
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ],
                       ),
                     ),
-                    const HeadlineText(textHeadline: 'Course Length'),
+                    HeadlineText(textHeadline: _local.courseLength),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 14,
@@ -130,13 +138,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            '${course.topics!.length} topics',
+                            _local.numberOfTopics(course.topics!.length),
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ],
                       ),
                     ),
-                    const HeadlineText(textHeadline: 'List Topics'),
+                    HeadlineText(textHeadline: _local.listTopics),
                     ...List<Widget>.generate(
                       course.topics?.length ?? 0,
                       (index) => CourseTopicCard(
@@ -144,7 +152,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                         course: course,
                       ),
                     ),
-                    const HeadlineText(textHeadline: 'Suggested Tutors'),
+                    HeadlineText(textHeadline: _local.suggestedTutors),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 14,
@@ -157,7 +165,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                 textBaseline: TextBaseline.alphabetic,
                                 children: <Widget>[
                                   Text(
-                                    user.name ?? 'No name available',
+                                    user.name ?? '',
                                     style:
                                         Theme.of(context).textTheme.bodyLarge,
                                   ),
@@ -170,9 +178,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                         arguments: user.id,
                                       );
                                     },
-                                    child: const Text(
-                                      'More info',
-                                      style: TextStyle(
+                                    child: Text(
+                                      _local.moreInfo,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         color: Colors.blue,
                                       ),
