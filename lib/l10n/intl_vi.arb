@@ -282,5 +282,14 @@
     "helpfulTips": "Một số mẹo hữu dụng: \n\t 1. Tìm một không gian trong lành và yên tĩnh \n\t 2. Cười thật tự nhiên, nhìn vào camera \n\t 3. Ăn mặc lịch sự \n\t 4. Nói trong 1-3 phút \n\t 5. Hãy thể hiện bản thân và tận hưởng niềm vui!\n",
 
     "allStepsDone": "Tất cả các bước đã hoàn thành",
-    "waitForApproval": "Vui lòng chờ chúng tôi xác nhận hồ sơ của bạn. Bạn sẽ nhận được email thông báo khi hồ sơ của bạn được duyệt."
+    "waitForApproval": "Vui lòng chờ chúng tôi xác nhận hồ sơ của bạn. Bạn sẽ nhận được email thông báo khi hồ sơ của bạn được duyệt.",
+
+    "back": "Trở lại",
+    "next": "Tiếp theo",
+    "backToHome": "Trở về trang chủ",
+
+    "videoCall": "Cuộc gọi video",
+    "untilLessonStarts": "cho đến khi buổi học bắt đầu",
+    "lessonHasStarted": "buổi học đã bắt đầu",
+    "joinMeeting": "Vào buổi học"
 }

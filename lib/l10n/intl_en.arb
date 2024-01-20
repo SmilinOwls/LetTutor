@@ -383,5 +383,14 @@
     "helpfulTips": "A few helpful tips: \n\t 1. Find a clean and quiet space \n\t 2. Smile and look at the camera \n\t 3. Dress smart \n\t 4. Speak for 1-3 minutes \n\t 5. Brand yourself and have fun!\n",
 
     "allStepsDone": "You have done all the steps",
-    "waitForApproval": "Please, wait for the operator's approval"
+    "waitForApproval": "Please, wait for the operator's approval",
+
+    "back": "Back",
+    "next": "Next",
+    "backToHome": "Back to home",
+
+    "videoCall": "Video call",
+    "untilLessonStarts": "until lesson starts",
+    "lessonHasStarted": "lesson has started",
+    "joinMeeting": "Join meeting"
 }

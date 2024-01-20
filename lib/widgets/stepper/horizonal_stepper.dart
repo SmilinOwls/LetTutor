@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/routes.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HorizontalStepper extends StatefulWidget {
-  const HorizontalStepper({super.key, required this.steps, required this.formKey});
+  const HorizontalStepper(
+      {super.key, required this.steps, required this.formKey});
 
   final Map<String, Widget> steps;
   final List<GlobalKey<FormState>?> formKey;
@@ -13,6 +15,13 @@ class HorizontalStepper extends StatefulWidget {
 
 class _HorizontalStepperState extends State<HorizontalStepper> {
   int currentStep = 0;
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+  }
 
   StepState _getStepState(int index) {
     if (currentStep > index) {
@@ -24,8 +33,7 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
 
   void _onStepContinue() {
     if (currentStep != widget.steps.length - 1) {
-      if(widget.formKey[currentStep]!.currentState!.validate())
-      {
+      if (widget.formKey[currentStep]!.currentState!.validate()) {
         setState(() => currentStep += 1);
       }
     } else {
@@ -64,16 +72,18 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: details.onStepCancel,
-                  child: const Text('Back'),
+                  child: Text(_local.back),
                 ),
               ),
             const SizedBox(width: 12),
             Expanded(
-              child: ElevatedButton(   
+              child: ElevatedButton(
                 onPressed: details.onStepContinue,
-                child: Text(currentStep != widget.steps.length - 1
-                    ? 'Next'
-                    : 'Back home'),
+                child: Text(
+                  currentStep != widget.steps.length - 1
+                      ? _local.next
+                      : _local.backToHome,
+                ),
               ),
             ),
           ],
