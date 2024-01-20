@@ -15,6 +15,7 @@ import 'package:lettutor/utils/media_picker.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -65,10 +66,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
   ];
 
+  late AppLocalizations _local;
+
   @override
   void initState() {
     super.initState();
     _getAccountInfo();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
   }
 
   void _getAccountInfo() async {
@@ -159,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           context.read<AuthProvider>().setUser(user!);
           SnackBarHelper.showSuccessSnackBar(
             context: context,
-            content: 'Your profile has been updated.',
+            content: _local.successSaveProfile,
           );
         },
         onError: (message) {
@@ -182,6 +191,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _birthdayTextEditingController.dispose();
     _levelTextEditingController.dispose();
     _studyScheduleTextEditingController.dispose();
+  }
+
+  Widget _buildActivedPhone(User? user) {
+    return user?.isPhoneActivated ?? false
+        ? Chip(
+            label: Text(_local.verified),
+            labelStyle: const TextStyle(color: Colors.green),
+            side: BorderSide(
+              color: Colors.green.shade200.withOpacity(0.8),
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            backgroundColor: Colors.green.shade100.withOpacity(0.2),
+          )
+        : Chip(
+            label: Text(_local.unverified),
+            labelStyle: const TextStyle(color: Colors.red),
+            side: BorderSide(
+              color: Colors.red.shade200.withOpacity(0.8),
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            backgroundColor: Colors.red.shade100.withOpacity(0.2),
+          );
   }
 
   Widget _buildProfileForm(User? user) {
@@ -260,7 +295,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Account ID: ${user?.id ?? ''}',
+                      '${_local.accountID} ${user?.id ?? ''}',
                       style: TextStyle(
                         color: Colors.grey.shade500,
                         fontWeight: FontWeight.w400,
@@ -268,17 +303,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 6),
-                    const Text(
-                      'Others review you',
-                      style: TextStyle(
+                    Text(
+                      _local.othersReview,
+                      style: const TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const Text(
-                      'Change password',
-                      style: TextStyle(
+                    Text(
+                      _local.changePassword,
+                      style: const TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.w400,
                       ),
@@ -301,9 +336,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   color: Colors.grey.shade300.withOpacity(0.3),
                 ),
-                child: const Text(
-                  'Account',
-                  style: TextStyle(
+                child: Text(
+                  _local.account,
+                  style: const TextStyle(
                     fontSize: 16,
                   ),
                 ),
@@ -319,17 +354,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       const SizedBox(height: 16),
-                      const CustomLabel(label: 'Name'),
+                      CustomLabel(label: _local.name),
                       TextFormField(
                         controller: _nameTextEditingController,
                         autocorrect: false,
                         keyboardType: TextInputType.name,
                         decoration: customInputDecoration.copyWith(
-                          hintText: 'Enter your name',
+                          hintText: _local.nameInputHint,
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please input your name';
+                            return _local.nameEmptyValidator;
                           }
                           return null;
                         },
@@ -337,8 +372,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(height: 20),
-                      const CustomLabel(
-                        label: 'Email Address',
+                      CustomLabel(
+                        label: _local.emailAddress,
                         isRequired: false,
                       ),
                       TextFormField(
@@ -353,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(height: 20),
-                      const CustomLabel(label: 'Country'),
+                      CustomLabel(label: _local.country),
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
                         decoration: customInputDecoration.copyWith(
@@ -380,7 +415,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         validator: (value) {
                           if (value == null) {
-                            return 'Please select a country';
+                            return _local.countryEmptyValidator;
                           }
                           return null;
                         },
@@ -408,7 +443,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const CustomLabel(label: 'Phone Number'),
+                      CustomLabel(label: _local.phoneNumber),
                       TextFormField(
                         controller: _phoneNumberTextEditingController,
                         autocorrect: false,
@@ -421,19 +456,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(height: 8),
-                      Chip(
-                        label: const Text('Verified'),
-                        labelStyle: const TextStyle(color: Colors.green),
-                        side: BorderSide(
-                          color: Colors.green.shade200.withOpacity(0.8),
-                        ),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                        backgroundColor: Colors.green.shade100.withOpacity(0.2),
-                      ),
+                      _buildActivedPhone(user),
                       const SizedBox(height: 20),
-                      const CustomLabel(label: 'Birthday'),
+                      CustomLabel(label: _local.birthday),
                       TextFormField(
                         controller: _birthdayTextEditingController,
                         autocorrect: false,
@@ -449,14 +474,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         validator: (value) {
                           if (value == null) {
-                            return 'Please select your birthday';
+                            return _local.birthdayEmptyValidator;
                           }
                           return null;
                         },
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       const SizedBox(height: 20),
-                      const CustomLabel(label: 'My level'),
+                      CustomLabel(label: _local.myLevel),
                       DropdownButtonFormField2<String>(
                         isExpanded: true,
                         decoration: customInputDecoration.copyWith(
@@ -484,7 +509,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         validator: (value) {
                           if (value == null) {
-                            return 'Please select your level';
+                            return _local.myLevelEmptyValidator;
                           }
                           return null;
                         },
@@ -511,7 +536,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const CustomLabel(label: 'Want to learn'),
+                      CustomLabel(label: _local.wantToLearn),
                       DropdownButtonFormField2(
                         isExpanded: true,
                         decoration: customInputDecoration.copyWith(
@@ -592,7 +617,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         validator: (value) {
                           if (value == null) {
-                            return 'Please select at least one subject.';
+                            return _local.wantToLearnEmptyValidator;
                           }
                           return null;
                         },
@@ -652,8 +677,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const CustomLabel(
-                        label: 'Study Schedule',
+                      CustomLabel(
+                        label: _local.studySchedule,
                         isRequired: false,
                       ),
                       SizedBox(
@@ -665,8 +690,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           autocorrect: false,
                           textAlignVertical: TextAlignVertical.top,
                           decoration: customInputDecoration.copyWith(
-                            hintText:
-                                'Note the time of the week you want to study on LetTutor',
+                            hintText: _local.studyScheduleHint,
                           ),
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
@@ -687,9 +711,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               horizontal: 20,
                             ),
                           ),
-                          child: const Text(
-                            'Save changes',
-                          ),
+                          child: Text(_local.saveChanges),
                         ),
                       ),
                     ],
@@ -706,9 +728,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Profile',
-      ),
+      appBar: CustomAppBar(appBarTitle: _local.profile),
       body: user == null
           ? const Center(child: CircularProgressIndicator())
           : _buildProfileForm(user),

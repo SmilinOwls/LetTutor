@@ -279,6 +279,47 @@
     "suggestedTutors": "Suggested Tutors",
     "moreInfo": "More info",
 
-    "exploreCourse": "Explore Course"
+    "exploreCourse": "Explore Course",
 
+
+    "aboutMe": "About me",
+    "becomeATutor": "Become a tutor",
+    "settings": "Settings",
+    "helpAndSupport": "Help & Support",
+    "display": "Display",
+    "giveAFeeback": "Give a feedback",
+    "logout": "Log out",
+
+    "on": "On",
+    "off": "Off",
+    "darkMode": "Dark mode",
+    "displayScreenDescription": "Adjust the appearance of LetTutor to reduce glare and give your eyes a break.",
+
+    "languageSettings": "Language settings",
+    "languageSettingsDescription": "Choose a language to display for your LetTutor app experience. You can change the language back at any time.",
+    "languageName": "{language, select, en {English} vi {Vietnamese} other {}}",
+
+    "profile": "Profile",
+    "accountID": "Account ID",
+    "othersReview": "Others review you",
+    "changePassword": "Change password",
+    "name": "Name",
+    "nameInputHint": "Enter your name",
+    "nameEmptyValidator": "Please input your name",
+    "emailAddress": "Email address",
+    "country": "Country",
+    "countryEmptyValidator": "Please select a country",
+    "phoneNumber": "Phone number",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "birthday": "Birthday",
+    "birthdayEmptyValidator": "Please select your birthday",
+    "myLevel": "My level",
+    "myLevelEmptyValidator": "Please select your level",
+    "wantToLearn": "Want to learn",
+    "wantToLearnEmptyValidator": "Please select at least one subject",
+    "studySchedule": "Study schedule",
+    "studyScheduleHint": "Note the time of the week you want to study on LetTutor",
+    "saveChanges": "Save changes",
+    "successSaveProfile": "Your profile has been updated"
 }

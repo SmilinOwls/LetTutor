@@ -4,6 +4,7 @@ import 'package:lettutor/models/language/language.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({super.key});
@@ -13,14 +14,17 @@ class LanguageScreen extends StatefulWidget {
 }
 
 class _LanguageScreenState extends State<LanguageScreen> {
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+  }
+
   void _switchLanguage(Language? value) async {
     Provider.of<LanguageProvider>(context, listen: false)
         .switchLanguage(value!);
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -29,9 +33,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
         Provider.of<LanguageProvider>(context).getLanguage();
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Language',
-      ),
+      appBar: CustomAppBar(appBarTitle: _local.languages),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -49,13 +51,13 @@ class _LanguageScreenState extends State<LanguageScreen> {
                   color: Theme.of(context).iconTheme.color,
                 ),
               ),
-              title: const Text(
-                'Language Settings',
-                style: TextStyle(fontSize: 18),
+              title: Text(
+                _local.languageSettings,
+                style: const TextStyle(fontSize: 18),
               ),
-              subtitle: const Text(
-                'Choose a language to display for your LetTutor app experience. You can change the language back at any time.',
-                style: TextStyle(fontSize: 14),
+              subtitle: Text(
+                _local.languageSettingsDescription,
+                style: const TextStyle(fontSize: 14),
               ),
             ),
             Padding(
@@ -73,7 +75,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           activeColor: Colors.blue,
                         ),
                         title: Text(
-                          language.name!,
+                          _local.languageName(language.id!),
                           style: const TextStyle(fontSize: 18),
                         ),
                       ),

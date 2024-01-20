@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/providers/theme/theme_provider.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DisplayScreen extends StatefulWidget {
   const DisplayScreen({super.key});
@@ -11,27 +12,28 @@ class DisplayScreen extends StatefulWidget {
 }
 
 class _DisplayScreenState extends State<DisplayScreen> {
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+  }
+
   void _toggleTheme(bool? value) async {
     Provider.of<ThemeProvider>(context, listen: false).toggleTheme(value!);
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final Map<String, bool> themeOptions = <String, bool>{
-      'On': true,
-      'Off': false,
+      _local.on: true,
+      _local.off: false,
     };
 
     bool isDark = Provider.of<ThemeProvider>(context, listen: false).isDark();
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Display',
-      ),
+      appBar: CustomAppBar(appBarTitle: _local.display),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -49,13 +51,13 @@ class _DisplayScreenState extends State<DisplayScreen> {
                   color: Theme.of(context).iconTheme.color,
                 ),
               ),
-              title: const Text(
-                'Dark Mode',
-                style: TextStyle(fontSize: 18),
+              title:  Text(
+                _local.darkMode,
+                style: const TextStyle(fontSize: 18),
               ),
-              subtitle: const Text(
-                'Adjust the appearance of LetTutor to reduce glare and give your eyes a break.',
-                style: TextStyle(fontSize: 14),
+              subtitle: Text(
+                _local.displayScreenDescription,
+                style: const TextStyle(fontSize: 14),
               ),
             ),
             Padding(
