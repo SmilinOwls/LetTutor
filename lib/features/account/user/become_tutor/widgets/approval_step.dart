@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lettutor/utils/localization.dart';
 
-class ApprovalStep extends StatelessWidget {
+class ApprovalStep extends StatelessWidget with Localization {
   const ApprovalStep({super.key});
 
   @override
@@ -13,9 +14,9 @@ class ApprovalStep extends StatelessWidget {
           size: 100,
         ),
         const SizedBox(height: 16),
-        const Text('You have done all the steps'),
+        Text(Localization.local!.allStepsDone),
         const SizedBox(height: 8),
-        const Text('Please, wait for the operator\'s approval'),
+        Text(Localization.local!.waitForApproval),
       ],
     );
   }

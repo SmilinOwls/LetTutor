@@ -12,6 +12,7 @@ import 'package:lettutor/widgets/drop_down/drop_down.dart';
 import 'package:lettutor/widgets/text/headline_text.dart';
 import 'package:lettutor/widgets/text/helper_text.dart';
 import 'package:lettutor/widgets/form_field/text_input.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileResumeStep extends StatefulWidget {
   const ProfileResumeStep({
@@ -51,13 +52,20 @@ class ProfileResumeStep extends StatefulWidget {
 
 class _ProfileResumeStepState extends State<ProfileResumeStep> {
   User? user;
+  late AppLocalizations _local;
 
   @override
   void initState() {
     super.initState();
     _getUser();
   }
-  
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+  }
+
   void _getUser() async {
     UserService.getUserInfo(
       onSuccess: (user) {
@@ -135,21 +143,16 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            'Set up your tutor profile',
+                            _local.setUpTutorProfile,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyLarge
                                 ?.copyWith(fontSize: 24),
                           ),
                           const SizedBox(height: 8),
-                          const Text(
-                            'Your tutor profile is your chance to market yourself to students on Tutoring. '
-                            'You can make edits later on your profile settings page.',
-                          ),
+                          Text(_local.setUpTutorProfileDescription),
                           const SizedBox(height: 8),
-                          const Text(
-                              'New students may browse tutor profiles to find a tutor that fits their learning goals and personality. '
-                              'Returning students may use the tutor profiles to find tutors they\'ve had great experiences with already.'),
+                          Text(_local.setUpTutorProfileSubDescription),
                         ],
                       ),
                     ),
@@ -161,7 +164,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const HeadlineText(textHeadline: 'Basic Info'),
+                      HeadlineText(textHeadline: _local.basicInfo),
                       Align(
                         alignment: Alignment.center,
                         child: Container(
@@ -188,83 +191,67 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                             )),
                       ),
                       const SizedBox(height: 12),
-                      const HelperText(
-                        text:
-                            'Please upload a professional photo. See guildlines.',
-                      ),
+                      HelperText(text: _local.imageUploadHint),
                       const SizedBox(height: 12),
-                      const Text('Tutoring name'),
+                      Text(_local.tutoringName),
                       TextInput(
                         controller: widget.nameTextEditingController,
-                        validator: 'Please input your name!',
+                        validator: _local.tutoringNameInputValidator,
                       ),
-                      const Text('I\'m from'),
+                      Text(_local.imFrom),
                       DropDownField(
                         controller: widget.countryTextEditingController,
                         list: countryList,
-                        validator: 'Please input your country!',
+                        validator: _local.countryInputValidator,
                       ),
-                      const Text('Date of Birth'),
+                      Text(_local.dateOfBirth),
                       TextInput(
-                        controller: widget.birthdayTextEditingController,
-                        isReadOnly: true,
-                        inputDecoration: InputDecoration(
-                          suffixIcon: Icon(
-                            Icons.calendar_month_outlined,
-                            size: 20,
-                            color: Colors.grey.shade300,
+                          controller: widget.birthdayTextEditingController,
+                          isReadOnly: true,
+                          inputDecoration: InputDecoration(
+                            suffixIcon: Icon(
+                              Icons.calendar_month_outlined,
+                              size: 20,
+                              color: Colors.grey.shade300,
+                            ),
                           ),
-                        ),
-                        onTap: () {
-                          _onDateChanged(context);
-                        },
-                        validator: 'Please input your birthday!',
-                      ),
-                      const HeadlineText(textHeadline: 'CV'),
+                          onTap: () {
+                            _onDateChanged(context);
+                          },
+                          validator: _local.dateOfBirthInputValidator),
+                      HeadlineText(textHeadline: _local.cv),
                       const SizedBox(height: 12),
-                      const Text(
-                        'Students will view this information on your profile to decide '
-                        'if you\'re a good fit for them.',
-                      ),
+                      Text(_local.cvDescription),
                       const SizedBox(height: 12),
-                      const HelperText(
-                        text: 'In order to protect your privacy, '
-                            'please do not share your personal information '
-                            '(email, phone number, social email, skype, etc) in your profile.',
-                      ),
+                      HelperText(text: _local.cvInputHint),
                       const SizedBox(height: 12),
-                      const Text('Interests'),
+                      Text(_local.interests),
                       TextInput(
                         controller: widget.interestsTextEditingController,
                         isTextArea: true,
-                        hintText:
-                            'Interests, hobbies, memorable life experiences, or anything '
-                            'else you\'d like to share!',
-                        validator: 'Please input your interests!',
+                        hintText: _local.interestsInputHint,
+                        validator: _local.interestsInputValidator,
                       ),
-                      const Text('Education'),
+                      Text(_local.education),
                       TextInput(
                         controller: widget.educationTextEditingController,
                         isTextArea: true,
-                        hintText:
-                            'Example: "Bachelor of Arts in English from Cambly University; '
-                            'Certified yoga instructor, Second Language Acquisition and Teaching '
-                            '(SLAT) certificate from Cambly University"',
-                        validator: 'Please input your interests!',
+                        hintText: _local.educationInputHint,
+                        validator: _local.educationInputValidator,
                       ),
-                      const Text('Experience'),
+                      Text(_local.experience),
                       TextInput(
                         controller: widget.experienceTextEditingController,
                         isTextArea: true,
-                        validator: 'Please input your experience!',
+                        validator: _local.experienceInputValidator,
                       ),
-                      const Text('Current or Previous Pression'),
+                      Text(_local.profession),
                       TextInput(
                         controller: widget.professionTextEditingController,
                         isTextArea: true,
-                        validator: 'Please input your profession!',
+                        validator: _local.professionInputValidator,
                       ),
-                      const Text('Certificate'),
+                      Text(_local.certificate),
                       const SizedBox(height: 12),
                       FormField(
                         builder: (FormFieldState state) => Column(
@@ -275,15 +262,15 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                 _addCertificate(context);
                                 state.didChange(widget.certificateList);
                               },
-                              child: const Text('Add new certificate'),
+                              child: Text(_local.addCertificate),
                             ),
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: DataTable(
                                 columns: [
-                                  'Certificate Type',
-                                  'Certificate',
-                                  'Action'
+                                  _local.certificateType,
+                                  _local.certificate,
+                                  _local.action,
                                 ]
                                     .map(
                                       (label) => DataColumn(
@@ -343,15 +330,15 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         ),
                         validator: (value) {
                           if (widget.certificateList.isEmpty) {
-                            return 'Please input at least one certificate!';
+                            return _local.certificateInputValidator;
                           }
                           return null;
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
-                      const HeadlineText(textHeadline: 'Languages I speak'),
+                      HeadlineText(textHeadline: _local.languagesISpeak),
                       const SizedBox(height: 12),
-                      const Text('Languages'),
+                      Text(_local.languages),
                       const SizedBox(height: 8),
                       FormField(
                         builder: (FormFieldState state) {
@@ -423,7 +410,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                     ),
                                   ),
                                 ),
-                                hint: const Text('Select languages'),
+                                hint: Text(_local.selectLanguages),
                                 onChanged: (value) {},
                                 buttonStyleData: const ButtonStyleData(
                                   padding: EdgeInsets.only(right: 8),
@@ -489,30 +476,23 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         },
                         validator: (value) {
                           if (widget.languages.isEmpty) {
-                            return 'Please input at least one language!';
+                            return _local.selectLanguagesInputValidator;
                           }
                           return null;
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
-                      const HeadlineText(textHeadline: 'Who I teach'),
+                      HeadlineText(textHeadline: _local.whoITeach),
                       const SizedBox(height: 12),
-                      const HelperText(
-                        text: 'This is the first thing students '
-                            'will see when looking for tutors.',
-                      ),
+                      HelperText(text: _local.whoITeachInputHint),
                       const SizedBox(height: 12),
-                      const Text('Introduction'),
+                      Text(_local.introduction),
                       TextInput(
-                        controller: widget.introductionTextEditingController,
-                        isTextArea: true,
-                        hintText:
-                            'Example: "I was a doctor for 35 years and can help you practice '
-                            'business or medical English. I also enjoy teaching beginners '
-                            'as I am very patient and always speak slowly and clearly."',
-                        validator: 'Please input your introduction!',
-                      ),
-                      const Text('I am best at teaching students who are'),
+                          controller: widget.introductionTextEditingController,
+                          isTextArea: true,
+                          hintText: _local.introductionInputHint,
+                          validator: _local.introductionInputValidator),
+                      Text(_local.teachingLevel),
                       FormField(
                         builder: (FormFieldState state) {
                           return Column(
@@ -556,14 +536,14 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         },
                         validator: (value) {
                           if (widget.teachingLevel.isEmpty) {
-                            return 'Please input your teaching level!';
+                            return _local.teachingLevelInputValidator;
                           }
                           return null;
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
                       const SizedBox(height: 12),
-                      const Text('My specialties are'),
+                      Text(_local.mySpecialties),
                       FormField(
                         builder: (FormFieldState state) {
                           return Column(
@@ -617,7 +597,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         },
                         validator: (value) {
                           if (widget.teachingSpecialities.isEmpty) {
-                            return 'Please input your target specialties!';
+                            return _local.teachingLevelInputValidator;
                           }
                           return null;
                         },
