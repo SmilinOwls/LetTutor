@@ -70,9 +70,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
 
   bool _checkAvailableToJoinSchedule(ScheduleInfo? scheduleInfo) {
     final DateTime now = DateTime.now();
-    final DateTime endTime =
-        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.endTimeStamp ?? 0);
-    if (now.isBefore(endTime)) {
+    final DateTime startTime =
+        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.startTimeStamp ?? 0);
+    if (now.isBefore(startTime)) {
       return true;
     } else {
       return false;
@@ -226,9 +226,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                           _showScheduleCancelingDialog(context);
                         },
                         icon: const Icon(Icons.cancel_presentation_outlined),
-                        label: Text(
-                          _local.cancel
-                        ),
+                        label: Text(_local.cancel),
                         style: OutlinedButton.styleFrom(
                           foregroundColor: Colors.red,
                           side: const BorderSide(color: Colors.red),
@@ -240,8 +238,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
                 const SizedBox(width: 8),
                 TextButton(
                   onPressed: _checkAvailableToJoinSchedule(scheduleInfo)
-                      ? null
-                      : () {
+                      ? () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => VideoCallScreen(
@@ -249,7 +246,8 @@ class _ScheduleCardState extends State<ScheduleCard> {
                               ),
                             ),
                           );
-                        },
+                        }
+                      : null,
                   style: TextButton.styleFrom(
                     disabledBackgroundColor: Colors.grey,
                     disabledForegroundColor: Colors.white,
