@@ -71,7 +71,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
   bool _checkAvailableToJoinSchedule(ScheduleInfo? scheduleInfo) {
     final DateTime now = DateTime.now();
     final DateTime startTime =
-        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.startTimeStamp ?? 0);
+        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.endTimeStamp ?? 0);
     if (now.isBefore(startTime)) {
       return true;
     } else {

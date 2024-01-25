@@ -67,9 +67,12 @@ class _HomeHeaderState extends State<HomeHeader> {
       onSuccess: (schedules) {
         if (schedules.isEmpty) return;
 
-        schedules.removeWhere((schedule) => DateTime.fromMillisecondsSinceEpoch(
-                schedule.scheduleDetailInfo?.scheduleInfo?.startTimeStamp ?? 0)
-            .isBefore(DateTime.now()));
+        schedules.removeWhere(
+          (schedule) => DateTime.fromMillisecondsSinceEpoch(
+                  schedule.scheduleDetailInfo?.scheduleInfo?.endTimeStamp ??
+                      0)
+              .isBefore(DateTime.now()),
+        );
 
         schedules.sort((soonSchedule, laterSchedule) {
           final soonScheduleTimeStamp =
@@ -161,7 +164,7 @@ class _HomeHeaderState extends State<HomeHeader> {
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 18,
-            color: _checkLessonStart() ? Colors.yellow : Colors.blue.shade300,
+            color: _checkLessonStart() ? Colors.yellow : Colors.green.shade300,
           ),
         ),
         const SizedBox(height: 18),
