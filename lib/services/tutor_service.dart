@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/models/tutor/tutor_info.dart';
+import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class TutorService {
@@ -154,7 +155,7 @@ class TutorService {
     required int page,
     required int perPage,
     required String userId,
-    required Function(int,List<TutorFeedback>) onSuccess,
+    required Function(int, List<TutorFeedback>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
@@ -176,6 +177,30 @@ class TutorService {
           .toList();
 
       await onSuccess(totalItems, feedbackList);
+    } on DioException catch (e) {
+      onError(e.response?.data['message']);
+    }
+  }
+
+  static Future<void> becomeATutor({
+    required Map<String, dynamic> info,
+    required Function(User) onSuccess,
+    required Function(String) onError,
+  }) async {
+    try {
+      final response = await _dioService.post(
+        '/tutor/register',
+        data: FormData.fromMap(info),
+        contentType: 'multipart/form-data',
+      );
+
+      final data = response.data;
+
+      if (response.statusCode != 200) {
+        throw Exception(data['message']);
+      }
+
+      await onSuccess(data);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }

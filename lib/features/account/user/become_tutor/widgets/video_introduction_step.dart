@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lettutor/models/injection/injection.dart';
+import 'package:lettutor/models/tutor/tutor_become.dart';
 import 'package:lettutor/utils/media_picker.dart';
 import 'package:lettutor/widgets/text/headline_text.dart';
 import 'package:lettutor/widgets/text/helper_text.dart';
@@ -28,6 +30,7 @@ class VideoIntroductionStep extends StatefulWidget {
 class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
   File? _videoFile;
   late AppLocalizations _local;
+  TutorBecome tutorBecome = getIt.get<TutorBecome>();
 
   @override
   void initState() {
@@ -45,6 +48,7 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
     File? path = await pickerVideo(ImageSource.gallery);
 
     _videoFile = path;
+    tutorBecome.video = path;
     widget.onFileChanged(_videoFile);
     state.didChange(_videoFile);
   }

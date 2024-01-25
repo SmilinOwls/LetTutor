@@ -9,6 +9,7 @@ class DropDownField extends StatelessWidget {
     required this.list,
     this.onSelected,
     this.validator,
+    this.value,
     this.hintText,
   });
 
@@ -16,6 +17,7 @@ class DropDownField extends StatelessWidget {
   final Map<String, String> list;
   final String? validator;
   final String? hintText;
+  final String? value;
   final void Function(String)? onSelected;
 
   @override
@@ -41,6 +43,7 @@ class DropDownField extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
         ),
+        value: value,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         items: List<DropdownMenuItem<String>>.generate(
           list.length,

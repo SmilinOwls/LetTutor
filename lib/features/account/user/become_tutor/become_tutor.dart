@@ -21,7 +21,8 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   final GlobalKey<FormState> _formKeyStep1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKeyStep2 = GlobalKey<FormState>();
 
-  Map<String, Widget>? steps;
+  List<String>? stepHeaders;
+  List<Widget>? stepWidgets;
 
   final TextEditingController _nameTextEditingController =
       TextEditingController();
@@ -49,11 +50,11 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   late AppLocalizations _local;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
-    steps = <String, Widget>{
-      _local.completeProfile: ProfileResumeStep(
+  @override
+  void initState() {
+    super.initState();
+    stepWidgets = <Widget>[
+      ProfileResumeStep(
         formKey: _formKeyStep1,
         nameTextEditingController: _nameTextEditingController,
         birthdayTextEditingController: _birthdayTextEditingController,
@@ -68,15 +69,26 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
         teachingLevel: _teachingLevel,
         teachingSpecialities: _teachingSpecialities,
       ),
-      _local.videoIntroduction: VideoIntroductionStep(
+      VideoIntroductionStep(
         formKey: _formKeyStep2,
         videoFile: _videoFile,
         onFileChanged: (File? file) {
           _videoFile = file;
         },
       ),
-      _local.approval: const ApprovalStep(),
-    };
+      const ApprovalStep(),
+    ];
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context)!;
+    stepHeaders = <String>[
+      _local.completeProfile,
+      _local.videoIntroduction,
+      _local.approval,
+    ];
   }
 
   @override
@@ -106,7 +118,8 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
         child: SizedBox(
           width: double.infinity,
           child: HorizontalStepper(
-            steps: steps ?? <String, Widget>{},
+            stepHeaders: stepHeaders ?? <String>[],
+            stepWidgets: stepWidgets ?? <Widget>[],
             formKey: [
               _formKeyStep1,
               _formKeyStep2,

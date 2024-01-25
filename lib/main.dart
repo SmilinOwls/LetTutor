@@ -9,6 +9,7 @@ import 'package:lettutor/features/navigation/navigation_bar.dart';
 import 'package:lettutor/features/account/user/become_tutor/become_tutor.dart';
 import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
 import 'package:lettutor/features/account/user/profile/profile_screen.dart';
+import 'package:lettutor/models/injection/injection.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:lettutor/providers/theme/theme_provider.dart';
@@ -30,6 +31,8 @@ void main() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String? isLoginned = prefs.getString('access_token');
 
+  configureDependencies();
+  
   runApp(
     MultiProvider(
       providers: [

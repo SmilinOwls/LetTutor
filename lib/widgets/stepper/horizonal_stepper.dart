@@ -3,10 +3,15 @@ import 'package:lettutor/constants/routes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HorizontalStepper extends StatefulWidget {
-  const HorizontalStepper(
-      {super.key, required this.steps, required this.formKey});
+  const HorizontalStepper({
+    super.key,
+    required this.stepHeaders,
+    required this.stepWidgets,
+    required this.formKey,
+  });
 
-  final Map<String, Widget> steps;
+  final List<String> stepHeaders;
+  final List<Widget> stepWidgets;
   final List<GlobalKey<FormState>?> formKey;
 
   @override
@@ -32,7 +37,7 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
   }
 
   void _onStepContinue() {
-    if (currentStep != widget.steps.length - 1) {
+    if (currentStep != widget.stepWidgets.length - 1) {
       if (widget.formKey[currentStep]!.currentState!.validate()) {
         setState(() => currentStep += 1);
       }
@@ -50,17 +55,17 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
     return Stepper(
       type: StepperType.horizontal,
       steps: List<Step>.generate(
-        widget.steps.length,
+        widget.stepWidgets.length,
         (int index) {
           return Step(
             isActive: currentStep >= index,
             label: Text(
-              widget.steps.keys.elementAt(index),
+              widget.stepHeaders[index],
               style: const TextStyle(fontSize: 12),
             ),
             state: _getStepState(index),
             title: const Text(''),
-            content: widget.steps.values.elementAt(index),
+            content: widget.stepWidgets[index],
           );
         },
       ),
@@ -68,7 +73,7 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
         padding: const EdgeInsets.only(top: 16),
         child: Row(
           children: <Widget>[
-            if (currentStep != 0 && currentStep != widget.steps.length - 1)
+            if (currentStep != 0 && currentStep != widget.stepWidgets.length - 1)
               Expanded(
                 child: OutlinedButton(
                   onPressed: details.onStepCancel,
@@ -80,7 +85,7 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
               child: ElevatedButton(
                 onPressed: details.onStepContinue,
                 child: Text(
-                  currentStep != widget.steps.length - 1
+                  currentStep != widget.stepWidgets.length - 1
                       ? _local.next
                       : _local.backToHome,
                 ),

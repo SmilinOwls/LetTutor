@@ -384,7 +384,9 @@
 
     "allStepsDone": "You have done all the steps",
     "waitForApproval": "Please, wait for the operator's approval",
-
+    "registerTutor": "Register to become tutor",
+    "tryAgain": "Try again",
+    
     "back": "Back",
     "next": "Next",
     "backToHome": "Back to home",

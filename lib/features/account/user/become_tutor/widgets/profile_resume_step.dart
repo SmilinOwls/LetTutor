@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:lettutor/constants/custom/input_decoration.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/cerificate_dialog.dart';
+import 'package:lettutor/models/injection/injection.dart';
+import 'package:lettutor/models/tutor/tutor_become.dart';
 import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
@@ -53,6 +57,7 @@ class ProfileResumeStep extends StatefulWidget {
 class _ProfileResumeStepState extends State<ProfileResumeStep> {
   User? user;
   late AppLocalizations _local;
+  TutorBecome tutorBecome = getIt.get<TutorBecome>();
 
   @override
   void initState() {
@@ -71,6 +76,14 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
       onSuccess: (user) {
         setState(() {
           this.user = user;
+          widget.nameTextEditingController.text = user.name ?? '';
+          widget.countryTextEditingController.text = user.country ?? '';
+          widget.birthdayTextEditingController.text = user.birthday ?? '';
+
+          tutorBecome.name = user.name ?? '';
+          tutorBecome.avatar = File(user.avatar ?? '');
+          tutorBecome.country = user.country ?? '';
+          tutorBecome.birthday = user.birthday ?? '';
         });
       },
       onError: (message) => SnackBarHelper.showErrorSnackBar(
@@ -197,28 +210,39 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                       TextInput(
                         controller: widget.nameTextEditingController,
                         validator: _local.tutoringNameInputValidator,
+                        onChanged: (value) {
+                          tutorBecome.name = value;
+                        },
                       ),
                       Text(_local.imFrom),
                       DropDownField(
                         controller: widget.countryTextEditingController,
                         list: countryList,
                         validator: _local.countryInputValidator,
+                        onSelected: (value) {
+                          tutorBecome.country = value;
+                        },
+                        value: user?.country ?? '',
                       ),
                       Text(_local.dateOfBirth),
                       TextInput(
-                          controller: widget.birthdayTextEditingController,
-                          isReadOnly: true,
-                          inputDecoration: InputDecoration(
-                            suffixIcon: Icon(
-                              Icons.calendar_month_outlined,
-                              size: 20,
-                              color: Colors.grey.shade300,
-                            ),
+                        controller: widget.birthdayTextEditingController,
+                        isReadOnly: true,
+                        inputDecoration: InputDecoration(
+                          suffixIcon: Icon(
+                            Icons.calendar_month_outlined,
+                            size: 20,
+                            color: Colors.grey.shade300,
                           ),
-                          onTap: () {
-                            _onDateChanged(context);
-                          },
-                          validator: _local.dateOfBirthInputValidator),
+                        ),
+                        onTap: () {
+                          _onDateChanged(context);
+                          tutorBecome.birthday = widget
+                              .birthdayTextEditingController.text
+                              .toString();
+                        },
+                        validator: _local.dateOfBirthInputValidator,
+                      ),
                       HeadlineText(textHeadline: _local.cv),
                       const SizedBox(height: 12),
                       Text(_local.cvDescription),
@@ -231,6 +255,9 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         isTextArea: true,
                         hintText: _local.interestsInputHint,
                         validator: _local.interestsInputValidator,
+                        onChanged: (value) {
+                          tutorBecome.interests = value;
+                        },
                       ),
                       Text(_local.education),
                       TextInput(
@@ -238,96 +265,124 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                         isTextArea: true,
                         hintText: _local.educationInputHint,
                         validator: _local.educationInputValidator,
+                        onChanged: (value) {
+                          tutorBecome.education = value;
+                        },
                       ),
                       Text(_local.experience),
                       TextInput(
                         controller: widget.experienceTextEditingController,
                         isTextArea: true,
                         validator: _local.experienceInputValidator,
+                        onChanged: (value) {
+                          tutorBecome.experience = value;
+                        },
                       ),
                       Text(_local.profession),
                       TextInput(
                         controller: widget.professionTextEditingController,
                         isTextArea: true,
                         validator: _local.professionInputValidator,
+                        onChanged: (value) {
+                          tutorBecome.profession = value;
+                        },
                       ),
                       Text(_local.certificate),
                       const SizedBox(height: 12),
                       FormField(
-                        builder: (FormFieldState state) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            OutlinedButton(
-                              onPressed: () {
-                                _addCertificate(context);
-                                state.didChange(widget.certificateList);
-                              },
-                              child: Text(_local.addCertificate),
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: DataTable(
-                                columns: [
-                                  _local.certificateType,
-                                  _local.certificate,
-                                  _local.action,
-                                ]
-                                    .map(
-                                      (label) => DataColumn(
-                                        label: Text(
-                                          label,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                                rows: widget.certificateList
-                                    .map<DataRow>(
-                                      (certificate) => DataRow(
-                                        cells: <DataCell>[
-                                          DataCell(
-                                            Text(certificate[
-                                                    'certificateType'] ??
-                                                ''),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              certificate['certificateFile']
-                                                      ?.name ??
-                                                  '',
-                                              overflow: TextOverflow.ellipsis,
+                        builder: (FormFieldState state) {
+                          tutorBecome.certificateMapping = widget
+                              .certificateList
+                              .map<Map<String, String>>((certificate) => {
+                                    "certificateType":
+                                        certificate['certificateType'],
+                                    "certificateFileName":
+                                        certificate['certificateFile']?.name,
+                                  })
+                              .toList();
+                          // tutorBecome.certificate = widget.certificateList
+                          //     .map<File>((certificate) =>
+                          //         File(certificate['certificateFile'].path))
+                          //     .toList();
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                OutlinedButton(
+                                  onPressed: () {
+                                    _addCertificate(context);
+                                    state.didChange(widget.certificateList);
+                                  },
+                                  child: Text(_local.addCertificate),
+                                ),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: DataTable(
+                                    columns: [
+                                      _local.certificateType,
+                                      _local.certificate,
+                                      _local.action,
+                                    ]
+                                        .map(
+                                          (label) => DataColumn(
+                                            label: Text(
+                                              label,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
-                                          DataCell(
-                                            IconButton(
-                                              onPressed: () {
-                                                _removeCertificate(certificate);
-                                                state.didChange(certificate);
-                                              },
-                                              icon: const Icon(Icons.delete),
-                                            ),
+                                        )
+                                        .toList(),
+                                    rows: widget.certificateList
+                                        .map<DataRow>(
+                                          (certificate) => DataRow(
+                                            cells: <DataCell>[
+                                              DataCell(
+                                                Text(certificate[
+                                                        'certificateType'] ??
+                                                    ''),
+                                              ),
+                                              DataCell(
+                                                Text(
+                                                  certificate['certificateFile']
+                                                          ?.name ??
+                                                      '',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              DataCell(
+                                                IconButton(
+                                                  onPressed: () {
+                                                    _removeCertificate(
+                                                        certificate);
+                                                    state
+                                                        .didChange(certificate);
+                                                  },
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
-                            ),
-                            if (state.hasError)
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12),
-                                child: Text(
-                                  state.errorText!,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Theme.of(context).colorScheme.error,
+                                        )
+                                        .toList(),
                                   ),
                                 ),
-                              ),
-                          ],
-                        ),
+                                if (state.hasError)
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 12),
+                                    child: Text(
+                                      state.errorText!,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color:
+                                            Theme.of(context).colorScheme.error,
+                                      ),
+                                    ),
+                                  ),
+                              ]);
+                        },
                         validator: (value) {
                           if (widget.certificateList.isEmpty) {
                             return _local.certificateInputValidator;
@@ -360,6 +415,8 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                     value: worldLanguages.keys.elementAt(index),
                                     child: StatefulBuilder(
                                       builder: (context, menuSetState) {
+                                        tutorBecome.languages =
+                                            widget.languages.join(',');
                                         final isSelected = widget.languages
                                             .contains(worldLanguages.keys
                                                 .elementAt(index));
@@ -488,10 +545,14 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                       const SizedBox(height: 12),
                       Text(_local.introduction),
                       TextInput(
-                          controller: widget.introductionTextEditingController,
-                          isTextArea: true,
-                          hintText: _local.introductionInputHint,
-                          validator: _local.introductionInputValidator),
+                        controller: widget.introductionTextEditingController,
+                        isTextArea: true,
+                        hintText: _local.introductionInputHint,
+                        validator: _local.introductionInputValidator,
+                        onChanged: (value) {
+                          tutorBecome.bio = value;
+                        },
+                      ),
                       Text(_local.teachingLevel),
                       FormField(
                         builder: (FormFieldState state) {
@@ -507,6 +568,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                                         onChanged: (value) {
                                           widget.teachingLevel[0] = value!;
                                           state.didChange(value);
+                                          tutorBecome.targetStudent = value;
                                         },
                                         title: Text(
                                           level,
@@ -546,6 +608,13 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
                       Text(_local.mySpecialties),
                       FormField(
                         builder: (FormFieldState state) {
+                          tutorBecome.specialities = widget.teachingSpecialities
+                              .map((speciality) => specialities
+                                  .firstWhere(
+                                      (element) => element.name == speciality)
+                                  .key
+                                  .toString())
+                              .join(',');
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
