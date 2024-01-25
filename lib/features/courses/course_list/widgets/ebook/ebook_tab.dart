@@ -76,7 +76,10 @@ class _EbookTabState extends State<EbookTab> {
         if (snapshot.hasData) {
           final List<EBook> ebooks = snapshot.data as List<EBook>;
           return Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 4,
+            ),
             child: ScrollConfiguration(
               behavior: ScrollConfiguration.of(context)
                   .copyWith(scrollbars: false), // hide scrollbar

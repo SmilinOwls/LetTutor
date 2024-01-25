@@ -86,10 +86,13 @@ class _CourseTabState extends State<CourseTab> {
         if (snapshot.hasData) {
           final List<Course> courses = snapshot.data as List<Course>;
           return Container(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
+              horizontal: 4,
+            ),
             child: ScrollConfiguration(
-              behavior:
-                  ScrollConfiguration.of(context).copyWith(scrollbars: false), // hide scrollbar
+              behavior: ScrollConfiguration.of(context)
+                  .copyWith(scrollbars: false), // hide scrollbar
               child: ListView(
                 children: <Widget>[
                   Pager(
