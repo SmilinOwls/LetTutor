@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_hour_dialog.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/services/booking_service.dart';
@@ -121,29 +120,7 @@ class _TutorBookingScreenState extends State<TutorBookingScreen> {
       ),
       body: _tutorSchedules == null
           ? const Center(child: CircularProgressIndicator())
-          : _tutorSchedules?.isEmpty == true
-              ? Center(
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(height: 18),
-                      Text(
-                        local.noTutorSchedule,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(Routes.main);
-                        },
-                        child: Text(local.bookAnotherTutor),
-                      ),
-                    ],
-                  ),
-                )
-              : Container(
+          : Container(
                   padding: const EdgeInsets.symmetric(
                     vertical: 16,
                     horizontal: 20,
