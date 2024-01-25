@@ -68,7 +68,7 @@ class _ProfileResumeStepState extends State<ProfileResumeStep> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _getUser() async {

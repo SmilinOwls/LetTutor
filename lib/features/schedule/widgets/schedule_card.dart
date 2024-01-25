@@ -29,7 +29,7 @@ class _ScheduleCardState extends State<ScheduleCard> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   Future<void> _showScheduleCancelingDialog(BuildContext context) async {

@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
 
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       SnackBarHelper.showSuccessSnackBar(
         context: context,
-        content: AppLocalizations.of(context)!.successLogin,
+        content: AppLocalizations.of(context).successLogin,
       );
     }
   }

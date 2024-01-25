@@ -42,7 +42,7 @@ class _HistoryCardState extends State<HistoryCard> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   Future<void> _showHistoryReportDialog(BuildContext context) async {

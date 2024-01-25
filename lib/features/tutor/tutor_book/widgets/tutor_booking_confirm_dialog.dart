@@ -26,7 +26,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    local = AppLocalizations.of(context)!;
+    local = AppLocalizations.of(context);
   }
 
   void _tutorBookingHandle() async {

@@ -25,7 +25,7 @@ class _ScheduleCancelingDialogState extends State<ScheduleCancelingDialog> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
     _reasons = _local.lessonCancelingReasons.split(':');
     _selectedValue = _reasons.first;
   }

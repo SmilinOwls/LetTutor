@@ -26,7 +26,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   @override

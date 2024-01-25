@@ -60,7 +60,7 @@ class LetTutor extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         onGenerateTitle: (BuildContext context) =>
-            AppLocalizations.of(context)!.appTitle,
+            AppLocalizations.of(context).appTitle,
         theme: Provider.of<ThemeProvider>(context).getThemeMode(),
         debugShowCheckedModeBanner: false,
         locale: Locale(Provider.of<LanguageProvider>(context).getLanguage().id!),

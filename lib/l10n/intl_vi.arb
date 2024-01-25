@@ -24,7 +24,7 @@
     "invalidPassword": "Mật khẩu quá ngắn, ít nhất 6 ký tự!",
     "emptyRePassword": "Vui lòng nhập lại mật khẩu!",
     "invalidRePassword": "Mật khẩu quá ngắn, ít nhất 6 ký tự!",
-    "notMatchPassword": "Mật khẩu không khớp!",
+    "notMatchRePassword": "Mật khẩu không khớp!",
     "titleResetPassword": "Đặt lại mật khẩu",
     "subTitleResetPassword": "Nhập địa chỉ email để đặt lại mật khẩu.",
     "resetPassword": "Đặt lại mật khẩu",
@@ -54,8 +54,8 @@
     "enterLessonRoom": "Vào phòng học",
     "totalLessonTime": "Tổng thời gian học: {hour} giờ {minute} phút",
    
-    "succesAddFavorite": "Thêm gia sư yêu thích thành công",
-    "successRemoveFavorite": "Xóa gia sư yêu thích thành công",
+    "succesAddFavoriteTutor": "Thêm gia sư yêu thích thành công!",
+    "successRemoveFavoriteTutor": "Xóa gia sư yêu thích thành công",
     "nullCountry": "Chưa cập nhật",
     "nullReviews": "Chưa có đánh giá",
     "nullBio": "Chưa cập nhật",
@@ -140,6 +140,7 @@
     "selectReason": "Chọn lý do",
     "additionalNote": "Ghi chú thêm",
     "lessonReportingReasons": "Gia sư trễ giờ học:Gia sư vắng mặt:Kết nối không ổn định:Khác",
+    "sentLessonReport": "Gửi báo cáo thành công!",
 
     "lessonTime": "Thời gian học",
     "later": "Hẹn lại",

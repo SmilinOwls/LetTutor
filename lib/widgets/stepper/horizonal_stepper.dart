@@ -25,7 +25,7 @@ class _HorizontalStepperState extends State<HorizontalStepper> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   StepState _getStepState(int index) {

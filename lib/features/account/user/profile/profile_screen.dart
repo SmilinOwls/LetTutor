@@ -77,7 +77,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _getAccountInfo() async {

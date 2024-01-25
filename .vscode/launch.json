@@ -22,13 +22,13 @@
     // }
 
     {
-      "preLaunchTask": "replace-env-sandbox",
+      "preLaunchTask": "Build APK sandbox",
       "name": "SANDBOX",
       "request": "launch",
       "type": "dart"
     },
     {
-      "preLaunchTask": "replace-env-prod",
+      "preLaunchTask": "Build APK prod",
       "name": "PRODUCTION",
       "request": "launch",
       "type": "dart"

@@ -36,7 +36,7 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   Future<String?> _handleRatingSubmit() async {

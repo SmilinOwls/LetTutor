@@ -21,7 +21,7 @@ class _ApprovalStepState extends State<ApprovalStep> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _registerTutor() async {

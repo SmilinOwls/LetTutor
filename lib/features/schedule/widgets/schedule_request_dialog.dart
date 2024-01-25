@@ -33,7 +33,7 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _handleRequestSubmit() async {

@@ -19,7 +19,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _switchLanguage(Language? value) async {

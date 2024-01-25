@@ -23,7 +23,7 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
     _activeTab = 0;
     _tabList = [
       {

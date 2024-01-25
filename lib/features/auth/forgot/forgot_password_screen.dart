@@ -23,7 +23,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _handleForgotPassword() async {

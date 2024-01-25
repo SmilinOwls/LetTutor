@@ -32,7 +32,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _getCourseDetail() async {

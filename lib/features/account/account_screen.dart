@@ -22,7 +22,7 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   @override

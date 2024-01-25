@@ -41,7 +41,7 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   void _onVideoUploaded(FormFieldState state) async {

@@ -22,7 +22,7 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _local = AppLocalizations.of(context)!;
+    _local = AppLocalizations.of(context);
   }
 
   Future<void> _showTutorBookingConfirmDialog(Schedule detailSchedule) async {
