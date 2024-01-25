@@ -22,10 +22,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-   const enviroment =
-        String.fromEnvironment('FLAVOR', defaultValue: 'development');
-    await dotenv.load(fileName: '.env.$enviroment');
-    
+  //  const enviroment =
+  //       String.fromEnvironment('FLAVOR', defaultValue: 'development');
+  //   await dotenv.load(fileName: 'env/.env.$enviroment');
+  
+  await dotenv.load(fileName: 'env/.env');
+  
   DioService();
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();

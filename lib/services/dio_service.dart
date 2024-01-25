@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:lettutor/config/env.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DioService {
   late Dio _dio;
+  final IAppEnv _appEnv = appEnv;
   static final DioService _singleton = DioService._internal();
 
   factory DioService() {
@@ -15,13 +16,13 @@ class DioService {
   }
 
   Future<void> initializeDio() async {
-    const enviroment =
-        String.fromEnvironment('FLAVOR', defaultValue: 'development');
-    await dotenv.load(fileName: '.env.$enviroment');
+    //  const enviroment =
+    //       String.fromEnvironment('FLAVOR', defaultValue: 'development');
+    //   await dotenv.load(fileName: '.env.$enviroment');
 
     _dio = Dio(
       BaseOptions(
-        baseUrl: dotenv.env['BASE_URL']!,
+        baseUrl: _appEnv.baseUrl!,
         connectTimeout: const Duration(seconds: 5000),
         receiveTimeout: const Duration(seconds: 3000),
         contentType: 'application/json',
