@@ -25,6 +25,7 @@ Link Demo:
 - [LetTutor Basic Features P2](https://youtu.be/YPlEcX6EeD4)
 
 ## Milestone 4. Advanced Features
+- [LetTutor Advanced Features P1](https://youtu.be/rVMYyTRZeuQ)
 
 # Getting Started
 
