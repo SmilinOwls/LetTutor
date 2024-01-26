@@ -332,7 +332,14 @@
     "languageSettings": "Language settings",
     "languageSettingsDescription": "Choose a language to display for your LetTutor app experience. You can change the language back at any time.",
     "languageName": "{language, select, en {English} vi {Vietnamese} other {}}",
-
+    "@languageName": {
+        "description": "Language name",
+        "placeholders": {
+            "language": {
+                "type": "String"
+            }
+        }
+    },
     "profile": "Profile",
     "accountID": "Account ID",
     "othersReview": "Others review you",
