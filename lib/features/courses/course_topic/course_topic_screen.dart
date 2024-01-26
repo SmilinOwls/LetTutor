@@ -22,6 +22,13 @@ class CourseTopicScreen extends StatefulWidget {
 class _CourseTopicScreenState extends State<CourseTopicScreen> {
   int _selectTopicIndex = 0;
   late AppLocalizations _local;
+  Course get course => widget.course;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectTopicIndex = widget.index;
+  }
 
   @override
   void didChangeDependencies() {
@@ -31,8 +38,6 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Course course = widget.course;
-
     return Scaffold(
       appBar: CustomAppBar(
         appBarTitle: _local.exploreCourse,

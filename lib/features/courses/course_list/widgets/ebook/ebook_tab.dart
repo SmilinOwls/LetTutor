@@ -75,6 +75,11 @@ class _EbookTabState extends State<EbookTab> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<EBook> ebooks = snapshot.data as List<EBook>;
+          if (ebooks.isEmpty) {
+            return const Center(
+              child: Text('No ebooks found'),
+            );
+          }
           return Container(
             padding: const EdgeInsets.symmetric(
               vertical: 8,
