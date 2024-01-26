@@ -2,6 +2,10 @@
 
 A new Flutter project.
 
+# Self-Assessment Checklist
+
+Checklist: [LetTutor 2023 CheckList](https://docs.google.com/document/d/1sLcDNZBsAOYGJyBaCv34302veoZTIplV/edit?usp=sharing&ouid=104898531593431198536&rtpof=true&sd=true)
+
 # Milestone 1. Mock-up UI
 
 Diagram link: [LetTutor Widget Tree](https://drive.google.com/file/d/1eZiXDW1jwxk_VSbtxTRXb-g5SGeuFaiR/view?usp=sharing)
@@ -15,6 +19,8 @@ Link Demo: [LetTutor Offline App](https://youtu.be/2FhsBaOFjx8)
 Link Demo: 
 - [LetTutor Basic Features P1](https://youtu.be/Do2Huu_aET4)
 - [LetTutor Basic Features P2](https://youtu.be/YPlEcX6EeD4)
+
+# Milestone 4. Advanced Features
 
 ## Getting Started
 

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:lettutor/constants/routes.dart';
@@ -9,6 +10,7 @@ import 'package:lettutor/features/navigation/navigation_bar.dart';
 import 'package:lettutor/features/account/user/become_tutor/become_tutor.dart';
 import 'package:lettutor/features/tutor/tutor_detail/tutor_detail_screen.dart';
 import 'package:lettutor/features/account/user/profile/profile_screen.dart';
+import 'package:lettutor/firebase_options.dart';
 import 'package:lettutor/models/injection/injection.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
@@ -25,16 +27,24 @@ void main() async {
   //  const enviroment =
   //       String.fromEnvironment('FLAVOR', defaultValue: 'development');
   //   await dotenv.load(fileName: 'env/.env.$enviroment');
-  
+
+  // load .env file
   await dotenv.load(fileName: 'env/.env');
-  
+
+  // initialise dio service to call API
   DioService();
 
+  // check if user is logined
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String? isLoginned = prefs.getString('access_token');
 
+  // configure dependencies to support dependency injection
   configureDependencies();
-  
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     MultiProvider(
       providers: [
@@ -63,9 +73,13 @@ class LetTutor extends StatelessWidget {
             AppLocalizations.of(context).appTitle,
         theme: Provider.of<ThemeProvider>(context).getThemeMode(),
         debugShowCheckedModeBanner: false,
-        locale: Locale(Provider.of<LanguageProvider>(context).getLanguage().id!),
+        locale:
+            Locale(Provider.of<LanguageProvider>(context).getLanguage().id!),
         home:
             isLoginned == null ? const LoginScreen() : const TabBarNavigator(),
+        navigatorObservers: const [
+          // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics()),
+        ],
         routes: {
           Routes.login: (context) => const LoginScreen(),
           Routes.register: (context) => const RegisterScreen(),

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/account/account_screen.dart';
 import 'package:lettutor/features/courses/course_list/course_list_screen.dart';
@@ -19,6 +20,13 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
   late AppLocalizations _local;
   late List<Map<String, dynamic>> _tabList;
   int? _activeTab;
+  final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _analytics.setAnalyticsCollectionEnabled(true);
+  }
 
   @override
   void didChangeDependencies() {
@@ -44,7 +52,7 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
         'screen': const HistoryScreen(),
       },
       {
-        'label':  _local.courses,
+        'label': _local.courses,
         'icon': Icons.school,
         'screen': const CourseListScreen(),
       },
@@ -56,11 +64,21 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
     ];
   }
 
+  void firebaseAnalyticsForPage() async {
+    await _analytics.logEvent(
+      name: 'page_tracked',
+      parameters: <String, dynamic>{
+        'page_name': _tabList[_activeTab!]['label'],
+        'page_index': _activeTab.toString(),
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Localization.initialize(context);
 
-    if(_activeTab == null) {
+    if (_activeTab == null) {
       return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
@@ -78,10 +96,11 @@ class _TabBarNavigatorState extends State<TabBarNavigator> {
           color: Theme.of(context).primaryColor,
         ),
         selectedItemColor: Theme.of(context).primaryColor,
-        onTap: (value) {
+        onTap: (value) async {
           setState(() {
             _activeTab = value;
           });
+          firebaseAnalyticsForPage();
         },
         elevation: 18,
         currentIndex: _activeTab!,

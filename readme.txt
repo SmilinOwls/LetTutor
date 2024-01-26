@@ -5,3 +5,4 @@
 - Milestone 3. Basic Features
     - Link Demo P1: https://youtu.be/Do2Huu_aET4
     - Link Demo P2: https://youtu.be/YPlEcX6EeD4
+- Self-assessment checklist: https://docs.google.com/document/d/1sLcDNZBsAOYGJyBaCv34302veoZTIplV/edit?usp=sharing&ouid=104898531593431198536&rtpof=true&sd=true 
