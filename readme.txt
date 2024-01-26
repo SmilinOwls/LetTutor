@@ -1,3 +1,5 @@
+- Self-assessment checklist: https://docs.google.com/document/d/1sLcDNZBsAOYGJyBaCv34302veoZTIplV/edit?usp=sharing&ouid=104898531593431198536&rtpof=true&sd=true
+- All demo video playlist: https://www.youtube.com/playlist?list=PLYXxHUrVAxOVDIMLXaGZ51S_xsFhQ4LiM
 - Milestone 1. Mock up UI
     - Link Widget Tree: https://drive.google.com/file/d/1eZiXDW1jwxk_VSbtxTRXb-g5SGeuFaiR/view?usp=sharing
 - Milestone 2. Offline App
@@ -5,4 +7,5 @@
 - Milestone 3. Basic Features
     - Link Demo P1: https://youtu.be/Do2Huu_aET4
     - Link Demo P2: https://youtu.be/YPlEcX6EeD4
-- Self-assessment checklist: https://docs.google.com/document/d/1sLcDNZBsAOYGJyBaCv34302veoZTIplV/edit?usp=sharing&ouid=104898531593431198536&rtpof=true&sd=true 
+- Milestone 4. Advanced Features
+    - Link Demo: 
