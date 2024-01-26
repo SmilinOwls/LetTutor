@@ -65,7 +65,17 @@
     "inProgress": "is in progress for",
     "enterLessonRoom": "Enter lesson room",
     "totalLessonTime": "Total lesson Time: {hour, plural, =0{{hour} hour} =1{{hour} hour} other {{hour} hours}}  {minute, plural, =0{{minute} minute} =1{{minute} minute} other {{minute} minutes}}",
-
+    "@totalLessonTime": {
+        "description": "Total lesson time",
+        "placeholders": {
+            "hour": {
+                "type": "int"
+            },
+            "minute": {
+                "type": "int"
+            }
+        }
+    },
     "succesAddFavoriteTutor": "Add favorite tutor successfully",
     "successRemoveFavoriteTutor": "Remove favorite tutor successfully",
     "nullCountry": "Null country",
@@ -124,6 +134,14 @@
     "bookingTime": "Booking time",
     "balance": "Balance",
     "balanceDescription": "You have {balance, plural, =0{{balance}\n lesson} =1{{balance}\n lesson} other {{balance}\n lessons}} left",
+    "@balanceDescription": {
+        "description": "Balance description",
+        "placeholders": {
+            "balance": {
+                "type": "int"
+            }
+        }
+    },
     "price": "Price",
     "priceDescription": "{price} lesson",
     "@priceDescription": {
@@ -152,6 +170,14 @@
     "successCancelLesson": "Cancel lesson successfully!",
     "failCancelLesson": "Cancel lesson failed!",
     "numberOfLessons": "{numberLesson, plural, =0{{numberLesson} lesson} =1{{numberLesson} lesson} other {{numberLesson} lessons}}",
+    "@numberOfLessons": {
+        "description": "Number of lessons",
+        "placeholders": {
+            "numberLesson": {
+                "type": "int"
+            }
+        }
+    },
     "requestForLesson": "Request for lesson",
     "editRequest": "Edit request",
     "noRequestForClass": "Currently there are no requests for this class. Please write down any requests for the teacher.",
@@ -275,6 +301,14 @@
     "experienceLevel": "Experience Level",
     "courseLength": "Course Length",
     "numberOfTopics": "{numberTopic, plural, =0{{numberTopic} topic} =1{{numberTopic} topic} other {{numberTopic} topics}}",
+    "@numberOfTopics": {
+        "description": "Number of topics",
+        "placeholders": {
+            "numberTopic": {
+                "type": "int"
+            }
+        }
+    },
     "listTopics": "List Topics",
     "suggestedTutors": "Suggested Tutors",
     "moreInfo": "More info",
