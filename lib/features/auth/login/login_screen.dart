@@ -82,7 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final GoogleSignInAccount? googleUser = await GoogleSignIn(
       scopes: [
         'email',
-        'https://www.googleapis.com/auth/contacts.readonly',
       ],
     ).signIn();
 

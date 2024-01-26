@@ -43,7 +43,7 @@ class _HistoryRatingDialogState extends State<HistoryRatingDialog> {
     final response = await UserService.feedbackTutor(
       bookingId: booking.id ?? '',
       userId: booking.userId ?? '',
-      rating: _rating as int,
+      rating: _rating?.toInt() ?? 0,
       content: _reviewTextEditingController.text,
       onSuccess: () {
         return _rating.toString();

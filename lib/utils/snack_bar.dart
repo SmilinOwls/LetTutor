@@ -50,6 +50,8 @@ class SnackBarHelper {
         ),
       ),
     );
+
+    throw FormatException(content);
   }
 
   static void showInfoSnackBar({
