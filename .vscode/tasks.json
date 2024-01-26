@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "replace-env-sandbox",
+      "command": "./scripts/replace-env.sh",
+      "args": ["sandbox"],
+      "type": "shell"
+    },
+    {
+      "label": "prepare-env-prod",
+      "command": "./scripts/replace-env.sh",
+      "args": ["prod"],
+      "type": "shell"
+    },
+    {
+      "label": "build-sandbox-apk",
+      "command": "flutter",
+      "args": ["build", "apk"],
+      "type": "shell"
+    },
+    {
+      "label": "build-prod-apk",
+      "command": "flutter",
+      "args": ["build", "apk", "--release"],
+      "type": "shell"
+    },
+    {
+      "label": "open-apk-path",
+      "command": "open",
+      "args": ["build/app/outputs/flutter-apk/"],
+      "type": "shell"
+    },
+    {
+      "label": "Build APK sandbox",
+      "dependsOrder": "sequence",
+      "dependsOn": ["replace-env-sandbox", "build-sandbox-apk", "open-apk-path"]
+    },
+    {
+      "label": "Build APK prod",
+      "dependsOrder": "sequence",
+      "dependsOn": ["replace-env-prod", "build-prod-apk", "open-apk-path"]
+    }
+  ]
+}

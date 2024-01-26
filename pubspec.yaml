@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dropdown_button2: ^2.3.9
   flutter_svg: ^2.0.7
-  intl: ^0.18.1
+  intl: any
   syncfusion_flutter_pdfviewer: ^23.1.43
   provider: ^6.1.1
   image_picker: ^1.0.4
@@ -53,10 +53,18 @@ dependencies:
   url_launcher: ^6.2.2
   jwt_decoder: ^2.0.1
   jitsi_meet_flutter_sdk: ^0.1.9
+  pager: ^0.0.6
+  flutter_localizations:
+    sdk: flutter
+  collection: ^1.17.2
+  get_it: ^7.6.7
+  firebase_analytics: ^10.8.0
+  firebase_core: ^2.24.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -65,12 +73,22 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+flutter_launcher_icons:
+  image_path: "assets/logo/lettutor_logo.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: "assets/logo/lettutor_logo.png"
+  adaptive_icon_background: "#ffffff"
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -85,8 +103,9 @@ flutter:
     - assets/background/
     - assets/language/
     - assets/misc/
-    - .env.development
-    - .env.production
+    - env/prod.env
+    - env/sandbox.env
+    - env/.env
 
   # To add assets to your application, add an assets section, like this:
   # assets:

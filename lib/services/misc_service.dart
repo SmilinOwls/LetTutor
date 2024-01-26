@@ -5,12 +5,14 @@ import 'package:lettutor/models/misc/test_preparation.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class MiscService {
+  static final DioService _dioService = DioService();
+
   static Future<void> getTestPreparation({
     required Function(List<TestPreparation>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/test-preparation',
       );
 
@@ -36,7 +38,7 @@ class MiscService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/learn-topic',
       );
 
@@ -61,7 +63,7 @@ class MiscService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/content-category',
       );
 

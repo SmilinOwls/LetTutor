@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/field_validate.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -23,48 +25,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? _passwordErrorText;
   String? _rePasswordErrorText;
 
-  String? _handleEmailValidate(value) {
-    final emailRegExp = RegExp(
-        r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
-    if (value.isEmpty) {
-      return 'Please input your email!';
-    } else if (!emailRegExp.hasMatch(value)) {
-      return 'The input is not valid E-mail!';
-    } else {
-      return null;
-    }
-  }
+   late AppLocalizations _local;
 
-  String? _handlePasswordValidate(value) {
-    if (value.isEmpty) {
-      return 'Please input your password!';
-    } else if (value.length < 6) {
-      return 'Password too short!';
-    } else {
-      return null;
-    }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
   }
-
-  String? _handleRePasswordValidate(value) {
-    if (value.isEmpty) {
-      return 'Please input your re-password!';
-    } else if (value.length < 6) {
-      return 'Re-password too short!';
-    } else {
-      if (value != _passwordController.text) {
-        return 'Re-password not match with password!';
-      } else {
-        return null;
-      }
-    }
-  }
-
+  
   void _handleRegister() async {
     setState(() {
-      _emailErrorText = _handleEmailValidate(_emailController.text);
-      _passwordErrorText = _handlePasswordValidate(_passwordController.text);
+      _emailErrorText = FieldValidate.handleEmailValidate(_emailController.text);
+      _passwordErrorText = FieldValidate.handlePasswordValidate(_passwordController.text);
       _rePasswordErrorText =
-          _handleRePasswordValidate(_rePasswordController.text);
+         FieldValidate.handleRePasswordValidate(_rePasswordController.text, _passwordController.text);
     });
     if (_emailErrorText == null &&
         _passwordErrorText == null &&
@@ -76,6 +50,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Future.delayed(const Duration(seconds: 1), () {
             Navigator.of(context).pushReplacementNamed(Routes.login);
           });
+
+          SnackBarHelper.showSuccessSnackBar(
+            context: context,
+            content: _local.successSignUp,
+          );
         },
         onError: (message) => SnackBarHelper.showErrorSnackBar(
           context: context,
@@ -97,9 +76,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: <Widget>[
             Image.asset('assets/background/login_background.png'),
             const SizedBox(height: 18),
-            const Text(
-              'Start learning with LetTutor',
-              style: TextStyle(
+            Text(
+              _local.titleSignUp,
+              style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 113, 240),
@@ -107,9 +86,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 14),
-            const Text(
-              'Become fluent faster through one on one video chat lessons tailored to your goals.',
-              style: TextStyle(
+            Text(
+              _local.subTitleSignUp,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 42, 52, 83),
@@ -117,9 +96,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 18),
-            const Text(
-              'EMAIL',
-              style: TextStyle(
+            Text(
+              _local.email.toUpperCase(),
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
@@ -131,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               autocorrect: false,
               onChanged: (value) {
                 setState(() {
-                  _emailErrorText = _handleEmailValidate(value);
+                  _emailErrorText = FieldValidate.handleEmailValidate(value);
                 });
               },
               decoration: InputDecoration(
@@ -178,9 +157,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 28),
-            const Text(
-              'PASSWORD',
-              style: TextStyle(
+            Text(
+              _local.password.toUpperCase(),
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
@@ -193,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               autocorrect: false,
               onChanged: (value) {
                 setState(() {
-                  _passwordErrorText = _handlePasswordValidate(value);
+                  _passwordErrorText = FieldValidate.handlePasswordValidate(value);
                 });
               },
               decoration: InputDecoration(
@@ -249,9 +228,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 14),
-            const Text(
-              'CONFIRM PASSWORD',
-              style: TextStyle(
+            Text(
+              _local.rePassword.toUpperCase(),
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
@@ -264,7 +243,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               autocorrect: false,
               onChanged: (value) {
                 setState(() {
-                  _rePasswordErrorText = _handleRePasswordValidate(value);
+                  _rePasswordErrorText =FieldValidate.handleRePasswordValidate(value, _passwordController.text);
                 });
               },
               decoration: InputDecoration(
@@ -333,19 +312,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
-              child: const Text(
-                'SIGN UP',
-                style: TextStyle(
+              child: Text(
+                _local.signUp.toUpperCase(),
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+             Text(
+              _local.alreadyAMember,
               textAlign: TextAlign.center,
-              'Or continue with',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -393,9 +372,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text(
-                  'Already have an account?',
-                  style: TextStyle(fontSize: 16),
+                Text(
+                  _local.alreadyAMember,
+                  style: const TextStyle(fontSize: 16),
                 ),
                 TextButton(
                   onPressed: () {
@@ -404,9 +383,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Routes.login,
                     );
                   },
-                  child: const Text(
-                    'Log in',
-                    style: TextStyle(
+                  child: Text(
+                    _local.signUp.toUpperCase(),
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.blue,
                     ),

@@ -7,6 +7,7 @@ import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/providers/language/language_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -16,6 +17,14 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = context.watch<AuthProvider>().getUser();
@@ -56,7 +65,7 @@ class _AccountScreenState extends State<AccountScreen> {
           const SizedBox(height: 20),
           CustomListTile(
             leadingIcon: Icons.person_rounded,
-            titleText: 'About me',
+            titleText: _local.aboutMe,
             onTap: () {
               Navigator.of(context).pushNamed(Routes.userProfile);
             },
@@ -64,7 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           CustomListTile(
             leadingIcon: Icons.school_rounded,
-            titleText: 'Become a tutor',
+            titleText: _local.becomeATutor,
             onTap: () {
               Navigator.of(context).pushNamed(Routes.tutorBecome);
             },
@@ -76,15 +85,15 @@ class _AccountScreenState extends State<AccountScreen> {
               horizontal: 12,
             ),
             child: Text(
-              'Settings',
+              _local.settings,
               style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
           CustomListTile(
             leadingIcon: Icons.language_rounded,
-            titleText: 'Languages',
-            subTitleText:
-                Provider.of<LanguageProvider>(context).getLanguage().name,
+            titleText: _local.languages,
+            subTitleText: _local.languageName(
+                Provider.of<LanguageProvider>(context).getLanguage().id!),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const LanguageScreen(),
@@ -94,13 +103,13 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           CustomListTile(
             leadingIcon: Icons.help_rounded,
-            titleText: 'Help & Support',
+            titleText: _local.helpAndSupport,
             onTap: () {},
             isTrailing: true,
           ),
           CustomListTile(
             leadingIcon: Icons.dark_mode_rounded,
-            titleText: 'Display',
+            titleText: _local.display,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => const DisplayScreen(),
@@ -110,13 +119,13 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
           CustomListTile(
             leadingIcon: Icons.feedback_rounded,
-            titleText: 'Give a feedback',
+            titleText: _local.giveAFeeback,
             onTap: () {},
             isTrailing: false,
           ),
           CustomListTile(
             leadingIcon: Icons.logout_rounded,
-            titleText: 'Log out',
+            titleText: _local.logout,
             onTap: () async {
               Navigator.of(context).pushNamedAndRemoveUntil(
                 Routes.login,

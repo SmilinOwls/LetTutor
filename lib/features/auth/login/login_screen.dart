@@ -7,10 +7,13 @@ import 'package:lettutor/models/auth/tokens.dart';
 import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
 import 'package:lettutor/services/auth_service.dart';
+import 'package:lettutor/utils/field_validate.dart';
+import 'package:lettutor/utils/localization.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,27 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _emailErrorText;
   String? _passwordErrorText;
 
-  String? _handleEmailValidate(value) {
-    final emailRegExp = RegExp(
-        r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
-    if (value.isEmpty) {
-      return 'Please input your email!';
-    } else if (!emailRegExp.hasMatch(value)) {
-      return 'The input is not valid E-mail!';
-    } else {
-      return null;
-    }
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
   }
 
-  String? _handlePasswordValidate(value) {
-    if (value.isEmpty) {
-      return 'Please input your password!';
-    } else if (value.length < 6) {
-      return 'Password too short!';
-    } else {
-      return null;
-    }
-  }
 
   void _onSuccessLogin(User user, Tokens tokens) async {
     final prefs = await SharedPreferences.getInstance();
@@ -62,13 +52,18 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.of(context)
             .pushNamedAndRemoveUntil(Routes.main, (route) => false);
       });
+
+      SnackBarHelper.showSuccessSnackBar(
+        context: context,
+        content: AppLocalizations.of(context).successLogin,
+      );
     }
   }
 
   void _handleLogin() async {
     setState(() {
-      _emailErrorText = _handleEmailValidate(_emailController.text);
-      _passwordErrorText = _handlePasswordValidate(_passwordController.text);
+      _emailErrorText = FieldValidate.handleEmailValidate(_emailController.text);
+      _passwordErrorText = FieldValidate.handlePasswordValidate(_passwordController.text);
     });
     if (_emailErrorText == null && _passwordErrorText == null) {
       await AuthService.loginWithEmailAndPassword(
@@ -109,7 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleFacebookLogin() async {
-    final result = await FacebookAuth.instance.login();
+    final result = await FacebookAuth.instance.login(
+      permissions: ['email', 'public_profile'],
+    );
 
     if (result.status == LoginStatus.success) {
       final String accessToken = result.accessToken!.token;
@@ -125,7 +122,15 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Localization.initialize(context);
     return Scaffold(
       appBar: const CustomAppBar(),
       body: SingleChildScrollView(
@@ -136,9 +141,9 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Image.asset('assets/background/login_background.png'),
             const SizedBox(height: 18),
-            const Text(
-              'Say hello to your English tutors',
-              style: TextStyle(
+            Text(
+              _local.titleLogin,
+              style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 113, 240),
@@ -146,18 +151,18 @@ class _LoginScreenState extends State<LoginScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 14),
-            const Text(
-              'Become fluent faster through one on one video chat lessons tailored to your goals.',
-              style: TextStyle(
+            Text(
+              _local.subtitleLogin,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 18),
-            const Text(
-              'EMAIL',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+            Text(
+              _local.email.toUpperCase(),
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 10),
             TextField(
@@ -166,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
               autocorrect: false,
               onChanged: (value) {
                 setState(() {
-                  _emailErrorText = _handleEmailValidate(value);
+                  _emailErrorText = FieldValidate.handleEmailValidate(value);
                 });
               },
               decoration: InputDecoration(
@@ -210,9 +215,9 @@ class _LoginScreenState extends State<LoginScreen> {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 28),
-            const Text(
-              'PASSWORD',
-              style: TextStyle(
+            Text(
+              _local.password.toUpperCase(),
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
@@ -225,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
               autocorrect: false,
               onChanged: (value) {
                 setState(() {
-                  _passwordErrorText = _handlePasswordValidate(value);
+                  _passwordErrorText = FieldValidate.handlePasswordValidate(value);
                 });
               },
               decoration: InputDecoration(
@@ -288,9 +293,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Routes.forgotPassword,
                 );
               },
-              child: const Text(
-                'Forgot Password?',
-                style: TextStyle(
+              child: Text(
+                _local.forgotPassword,
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.blue,
                 ),
@@ -311,19 +316,19 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              child: const Text(
-                'LOG IN',
-                style: TextStyle(
+              child: Text(
+                _local.login.toUpperCase(),
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+            Text(
+              _local.loginWithThirdParty,
               textAlign: TextAlign.center,
-              'Or continue with',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 20),
             Padding(
@@ -368,17 +373,17 @@ class _LoginScreenState extends State<LoginScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text(
-                  'Not a member yet?',
-                  style: TextStyle(fontSize: 16),
+                Text(
+                  _local.notAMemberYet,
+                  style: const TextStyle(fontSize: 16),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, Routes.register);
                   },
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
+                  child: Text(
+                    _local.signUp,
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.blue,
                     ),

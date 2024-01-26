@@ -2,12 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class CallService {
+  static final DioService _dioService = DioService();
+
   static Future<void> getTotalCall({
     required Function(int) onSuccess,
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/call/total',
       );
 

@@ -3,9 +3,11 @@ import 'package:lettutor/features/tutor/tutor_book/widgets/tutor_booking_confirm
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TutorBookingHourDialog extends StatefulWidget {
-  const TutorBookingHourDialog({super.key, this.dateSchedules, required this.onBooked});
+  const TutorBookingHourDialog(
+      {super.key, this.dateSchedules, required this.onBooked});
 
   final MapEntry<String, List<Schedule>>? dateSchedules;
   final void Function(String, Schedule) onBooked;
@@ -15,6 +17,14 @@ class TutorBookingHourDialog extends StatefulWidget {
 }
 
 class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
+  late AppLocalizations _local;
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
+
   Future<void> _showTutorBookingConfirmDialog(Schedule detailSchedule) async {
     await showDialog(
       context: context,
@@ -24,12 +34,13 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
         widget.onBooked(widget.dateSchedules?.key ?? '', detailSchedule);
         SnackBarHelper.showSuccessSnackBar(
           context: context,
-          content: 'You booked this tutor successfully!',
+          content: _local.successBookTutor,
         );
-      } if(value == false) {
+      }
+      if (value == false) {
         SnackBarHelper.showErrorSnackBar(
           context: context,
-          content: 'You failed to book this tutor!',
+          content: _local.failBookTutor,
         );
       }
     });
@@ -51,12 +62,12 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
       child: Column(
         children: <Widget>[
           Text(
-            'Choose Learning Hour',
+            _local.bookingTime,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 6),
           Text(
-            'On $tutorDateSchedule',
+            _local.onTime(tutorDateSchedule),
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -77,40 +88,42 @@ class _TutorBookingHourDialogState extends State<TutorBookingHourDialog> {
               itemBuilder: (BuildContext context, int index) {
                 if (tutorDetailSchedule[index].isBooked == false) {
                   return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[300],
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[300],
+                    ),
+                    onPressed: () {
+                      _showTutorBookingConfirmDialog(
+                          tutorDetailSchedule[index]);
+                    },
+                    child: Text(
+                      '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
+                      '-'
+                      '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
                       ),
-                      onPressed: () {
-                        _showTutorBookingConfirmDialog(
-                            tutorDetailSchedule[index]);
-                      },
-                      child: Text(
-                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
-                        '-'
-                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ));
+                    ),
+                  );
                 } else {
                   return ElevatedButton(
-                      style:
-                          Theme.of(context).elevatedButtonTheme.style?.copyWith(
-                                backgroundColor: MaterialStateProperty.all(
-                                  Colors.grey[500],
-                                ),
+                    style:
+                        Theme.of(context).elevatedButtonTheme.style?.copyWith(
+                              backgroundColor: MaterialStateProperty.all(
+                                Colors.grey[500],
                               ),
-                      onPressed: null,
-                      child: Text(
-                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
-                        '-'
-                        '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ));
+                            ),
+                    onPressed: null,
+                    child: Text(
+                      '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].startTimestamp ?? 0)}'
+                      '-'
+                      '${TimeHelper.convertTimeStampToHour(tutorDetailSchedule[index].endTimestamp ?? 0)}',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
                 }
               },
             ),

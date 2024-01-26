@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SchduleRequestDialog extends StatefulWidget {
   const SchduleRequestDialog({
@@ -21,11 +22,18 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
   final TextEditingController _requestTextEditingController =
       TextEditingController();
   bool _validate = false;
+  late AppLocalizations _local;
 
   @override
   void initState() {
     super.initState();
     _requestTextEditingController.text = widget.booking.studentRequest ?? '';
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
   }
 
   void _handleRequestSubmit() async {
@@ -58,7 +66,7 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       title: Text(
-        'Special Request',
+        _local.specialRequest,
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       titlePadding: const EdgeInsets.only(
@@ -74,9 +82,9 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
             children: <Widget>[
               const Divider(height: 1),
               const SizedBox(height: 16),
-              const Text(
-                'Note',
-                style: TextStyle(
+              Text(
+                _local.note,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
@@ -114,7 +122,7 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                         color: Colors.grey,
                       ),
                     ),
-                    errorText: _validate ? "The reason cannot be empty!" : null,
+                    errorText: _validate ? _local.invalidEmptyReason : null,
                     errorBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
@@ -127,7 +135,7 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                         color: Colors.red,
                       ),
                     ),
-                    hintText: 'Wish topic (optional)',
+                    hintText: _local.wishTopic,
                     hintStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
@@ -143,9 +151,9 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'You can write in English or Vietnamese (Maximum 200 letters)',
-                style: TextStyle(
+              Text(
+                _local.requestInputHint,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Colors.grey,
@@ -167,8 +175,9 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
               borderRadius: BorderRadius.circular(5),
             ),
           ),
-          child: const Text(
-            'Cancel',
+          child: Text(
+            _local.cancel,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
         TextButton(
@@ -180,9 +189,9 @@ class _SchduleRequestDialogState extends State<SchduleRequestDialog> {
               borderRadius: BorderRadius.circular(5),
             ),
           ),
-          child: const Text(
-            'Submit',
-            style: TextStyle(fontSize: 16),
+          child: Text(
+            _local.submit,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
       ],

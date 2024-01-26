@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/widgets/dialog/lesson_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HistoryReportDialog extends StatefulWidget {
   const HistoryReportDialog({super.key, required this.booking});
@@ -12,17 +13,21 @@ class HistoryReportDialog extends StatefulWidget {
   State<HistoryReportDialog> createState() => _HistoryReportDialogState();
 }
 
-const List<String> reasons = [
-  'Tutor was late',
-  'Tutor was absent',
-  'Network unstable',
-  'Other'
-];
-
 class _HistoryReportDialogState extends State<HistoryReportDialog> {
   final TextEditingController _noteTextEditingController =
       TextEditingController();
-  String _selectedValue = reasons.first;
+
+  late AppLocalizations _local;
+  late final List<String> _reasons;
+  late String _selectedValue;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+    _reasons = _local.lessonReportingReasons.split(':');
+    _selectedValue = _reasons.first;
+  }
 
   @override
   void dispose() {
@@ -38,7 +43,7 @@ class _HistoryReportDialogState extends State<HistoryReportDialog> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Text(
-            'What was the reason you cancel this booking?',
+            _local.reportLessonTitle,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const SizedBox(height: 14),
@@ -54,13 +59,13 @@ class _HistoryReportDialogState extends State<HistoryReportDialog> {
               child: DropdownButton2<String>(
                 isExpanded: true,
                 hint: Text(
-                  'Select Reason',
+                  _local.selectReason,
                   style: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).hintColor,
                   ),
                 ),
-                items: reasons
+                items: _reasons
                     .map(
                       (String item) => DropdownMenuItem<String>(
                         value: item,
@@ -105,28 +110,28 @@ class _HistoryReportDialogState extends State<HistoryReportDialog> {
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
               ),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 isCollapsed: true,
-                contentPadding: EdgeInsets.all(12),
-                enabledBorder: OutlineInputBorder(
+                contentPadding: const EdgeInsets.all(12),
+                enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
                     color: Colors.grey,
                   ),
                 ),
-                hintText: 'Additional Notes',
-                hintStyle: TextStyle(
+                hintText: _local.additionalNote,
+                hintStyle: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                   color: Colors.grey,
                 ),
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
                     color: Colors.grey,
                   ),
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 1,
                     color: Colors.blue,
@@ -138,7 +143,7 @@ class _HistoryReportDialogState extends State<HistoryReportDialog> {
         ],
       ),
       onSubmit: () async {
-        return await Future<String>.value('The report has been sent.');
+        return await Future<String>.value(_local.sentLessonReport);
       },
     );
   }

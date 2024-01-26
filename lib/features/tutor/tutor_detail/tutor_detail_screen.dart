@@ -14,6 +14,7 @@ import 'package:lettutor/widgets/star_rating/star_rating.dart';
 import 'package:lettutor/widgets/chip/tag_chip.dart';
 import 'package:lettutor/widgets/video_player/video_player.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TutorDetailScreen extends StatefulWidget {
   const TutorDetailScreen({super.key});
@@ -30,6 +31,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
     'specialities': [],
   };
 
+  late AppLocalizations _local;
+
   @override
   void initState() {
     super.initState();
@@ -38,10 +41,16 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
+
   void _getTutorInfo() async {
     final arguments = ModalRoute.of(context)!.settings.arguments as String?;
 
-    final String userId = arguments ?? 'null id';
+    final String userId = arguments ?? '';
 
     await TutorService.getTutorInfoById(
       userId: userId,
@@ -66,8 +75,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
         SnackBarHelper.showSuccessSnackBar(
           context: context,
           content: _isFavorite
-              ? 'Add favorite tutor successfully'
-              : 'Remove favorite tutor successfully',
+              ? _local.succesAddFavoriteTutor
+              : _local.successRemoveFavoriteTutor,
         );
       },
       onError: (message) => SnackBarHelper.showErrorSnackBar(
@@ -100,7 +109,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
     await showDialog(
       context: context,
       builder: (context) => TutorReportDialog(
-        tutorId: _tutor?.user?.id ?? 'null id',
+        tutorId: _tutor?.user?.id ?? '',
       ),
     );
   }
@@ -108,8 +117,8 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Tutor Details',
+      appBar: CustomAppBar(
+        appBarTitle: _local.tutorDetail,
       ),
       body: _tutor == null
           ? const Center(child: CircularProgressIndicator())
@@ -153,7 +162,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              _tutor?.user?.name ?? 'null name',
+                              _tutor?.user?.name ?? '',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             const SizedBox(height: 4),
@@ -173,9 +182,9 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                         ),
                                       ],
                                     )
-                                  : const Text(
-                                      'No reviews yet',
-                                      style: TextStyle(
+                                  : Text(
+                                      _local.nullReviews,
+                                      style: const TextStyle(
                                         color: Colors.grey,
                                         fontStyle: FontStyle.italic,
                                       ),
@@ -185,7 +194,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                             Text(
                               countryList[_tutor?.user?.country] ??
                                   _tutor?.user?.country ??
-                                  'null country',
+                                  _local.nullCountry,
                               style: const TextStyle(fontSize: 16),
                             ),
                           ],
@@ -194,7 +203,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      _tutor?.bio ?? 'null bio',
+                      _tutor?.bio ?? _local.nullBio,
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 12),
@@ -204,7 +213,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                           fit: FlexFit.tight,
                           child: TextButton(
                             onPressed: () {
-                              _handleFavorite(_tutor?.user?.id ?? 'null id');
+                              _handleFavorite(_tutor?.user?.id ?? '');
                             },
                             child: Column(
                               children: <Widget>[
@@ -219,7 +228,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                       ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Favorite',
+                                  _local.favorite,
                                   style: TextStyle(
                                     color:
                                         _isFavorite ? Colors.red : Colors.blue,
@@ -233,13 +242,13 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                           fit: FlexFit.tight,
                           child: TextButton(
                             onPressed: _showReportDialog,
-                            child: const Column(
+                            child: Column(
                               children: <Widget>[
-                                Icon(Icons.report_outlined, color: Colors.blue),
-                                SizedBox(height: 4),
+                                const Icon(Icons.report_outlined, color: Colors.blue),
+                                const SizedBox(height: 4),
                                 Text(
-                                  'Report',
-                                  style: TextStyle(color: Colors.blue),
+                                  _local.report,
+                                  style: const TextStyle(color: Colors.blue),
                                 )
                               ],
                             ),
@@ -257,16 +266,16 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                 ),
                               );
                             },
-                            child: const Column(
+                            child:  Column(
                               children: <Widget>[
-                                Icon(
+                                const Icon(
                                   Icons.reviews_outlined,
                                   color: Colors.blue,
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
-                                  'Reviews',
-                                  style: TextStyle(color: Colors.blue),
+                                  _local.reviews,
+                                  style: const TextStyle(color: Colors.blue),
                                 )
                               ],
                             ),
@@ -281,7 +290,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Education',
+                      _local.education,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Padding(
@@ -290,13 +299,13 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         horizontal: 8,
                       ),
                       child: Text(
-                        _tutor?.education ?? 'No education',
+                        _tutor?.education ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Languages',
+                      _local.languages,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Padding(
@@ -308,7 +317,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Specialties',
+                      _local.specialties,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Padding(
@@ -319,8 +328,10 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                       child: TagChip(tags: _tags['specialities'] ?? []),
                     ),
                     const SizedBox(height: 8),
-                    Text('Suggested Courses',
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    Text(
+                      _local.suggestedCourses,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         vertical: 8,
@@ -346,10 +357,10 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                                               arguments: course.id,
                                             );
                                           },
-                                          child: const Text(
-                                            'Link',
-                                            style:
-                                                TextStyle(color: Colors.blue),
+                                          child: Text(
+                                            _local.link,
+                                            style: const TextStyle(
+                                                color: Colors.blue),
                                           ),
                                         )
                                       ],
@@ -362,7 +373,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Interests',
+                      _local.interests,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Padding(
@@ -371,13 +382,13 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         horizontal: 8,
                       ),
                       child: Text(
-                        _tutor?.interests ?? 'No interests',
+                        _tutor?.interests ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Teaching experience',
+                      _local.teachingExperience,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Padding(
@@ -386,7 +397,7 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                         horizontal: 8,
                       ),
                       child: Text(
-                        _tutor?.experience ?? 'No teaching experiences',
+                        _tutor?.experience ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -405,14 +416,17 @@ class _TutorDetailScreenState extends State<TutorDetailScreen> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => TutorBookingScreen(
-                                tutorId: _tutor?.user?.id ?? 'null id',
+                                tutorId: _tutor?.user?.id ?? '',
                               ),
                             ),
                           );
                         },
-                        child: const Text(
-                          'Book Now',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        child: Text(
+                          _local.bookNow,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

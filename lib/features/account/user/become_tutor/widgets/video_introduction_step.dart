@@ -2,16 +2,26 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lettutor/models/injection/injection.dart';
+import 'package:lettutor/models/tutor/tutor_become.dart';
 import 'package:lettutor/utils/media_picker.dart';
 import 'package:lettutor/widgets/text/headline_text.dart';
 import 'package:lettutor/widgets/text/helper_text.dart';
 import 'package:lettutor/widgets/video_player/video_player.dart';
 import 'package:video_player/video_player.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VideoIntroductionStep extends StatefulWidget {
-  const VideoIntroductionStep({super.key, required this.formKey});
+  const VideoIntroductionStep({
+    super.key,
+    required this.formKey,
+    required this.videoFile,
+    required this.onFileChanged,
+  });
 
   final GlobalKey<FormState> formKey;
+  final File? videoFile;
+  final void Function(File?) onFileChanged;
 
   @override
   State<VideoIntroductionStep> createState() => _VideoIntroductionStepState();
@@ -19,11 +29,27 @@ class VideoIntroductionStep extends StatefulWidget {
 
 class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
   File? _videoFile;
+  late AppLocalizations _local;
+  TutorBecome tutorBecome = getIt.get<TutorBecome>();
+
+  @override
+  void initState() {
+    super.initState();
+    _videoFile = widget.videoFile;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
 
   void _onVideoUploaded(FormFieldState state) async {
     File? path = await pickerVideo(ImageSource.gallery);
 
     _videoFile = path;
+    tutorBecome.video = path;
+    widget.onFileChanged(_videoFile);
     state.didChange(_videoFile);
   }
 
@@ -50,19 +76,14 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Introduce yourself',
+                      _local.introduceYourself,
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(fontSize: 24),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Let students know what they can expect from a lesson with you '
-                      'by recording a video highlighting your teaching style, expertise and personality. '
-                      'Students can be nervous to speak with a foreigner, so it really helps to have a friendly '
-                      'video that introduces yourself and invites students to call you.',
-                    ),
+                    Text(_local.introduceYourselfDescription),
                   ],
                 ),
               ),
@@ -72,17 +93,11 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
             key: widget.formKey,
             child: Column(
               children: <Widget>[
-                const HeadlineText(textHeadline: 'Introduction video'),
+                HeadlineText(textHeadline: _local.videoIntroduction),
                 const SizedBox(height: 12),
-                const HelperText(
-                  text: 'A few helpful tips: \n'
-                      '\t 1. Find a clean and quiet space \n'
-                      '\t 2. Smile and look at the camera \n'
-                      '\t 3. Dress smart \n'
-                      '\t 4. Speak for 1-3 minutes \n'
-                      '\t 5. Brand yourself and have fun!\n',
-                  warningText:
-                      'Note: We only support uploading video file that is less than 64 MB in size.',
+                HelperText(
+                  text: _local.helpfulTips,
+                  warningText: _local.introVideoWarning,
                 ),
                 const SizedBox(height: 12),
                 FormField(
@@ -92,8 +107,14 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
                         onPressed: () {
                           _onVideoUploaded(state);
                         },
-                        child: const Text('Choose Video'),
+                        child: Text(_local.chooseVideo),
                       ),
+                      if (_videoFile != null)
+                        VideoPlayerView(
+                          key: ValueKey(_videoFile!.path),
+                          url: _videoFile!.path,
+                          dataSourceType: DataSourceType.file,
+                        ),
                       if (state.hasError)
                         Text(
                           state.errorText!,
@@ -106,17 +127,12 @@ class _VideoIntroductionStepState extends State<VideoIntroductionStep> {
                   ),
                   validator: (value) {
                     if (_videoFile == null) {
-                      return 'Please input your video';
+                      return _local.chooseVideoValidator;
                     }
                     return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
-                if (_videoFile != null)
-                  VideoPlayerView(
-                    url: _videoFile?.path ?? '',
-                    dataSourceType: DataSourceType.file,
-                  ),
               ],
             ),
           ),

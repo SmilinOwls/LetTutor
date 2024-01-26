@@ -7,9 +7,12 @@ import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/call_service.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeHeader extends StatefulWidget {
-  const HomeHeader({super.key});
+  const HomeHeader({super.key, required this.local});
+
+  final AppLocalizations local;
 
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
@@ -39,12 +42,6 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   void _startTimer() {
-    final now = DateTime.now();
-
-    _currentTime = _checkLessonStart()
-        ? now.difference(_timeStamp)
-        : _timeStamp.difference(now);
-
     const oneSec = Duration(seconds: 1);
 
     _timer = Timer.periodic(
@@ -56,7 +53,9 @@ class _HomeHeaderState extends State<HomeHeader> {
           });
         } else {
           setState(() {
-            _currentTime = _timeStamp.difference(DateTime.now());
+            _currentTime = _checkLessonStart()
+                ? _timeStamp.difference(DateTime.now())
+                : DateTime.now().difference(_timeStamp);
           });
         }
       },
@@ -66,9 +65,14 @@ class _HomeHeaderState extends State<HomeHeader> {
   void _getMostUpcommingLesson() async {
     await BookingService.getTutorNextBookingList(
       onSuccess: (schedules) {
-        schedules.removeWhere((schedule) => DateTime.fromMillisecondsSinceEpoch(
-                schedule.scheduleDetailInfo?.scheduleInfo?.startTimeStamp ?? 0)
-            .isBefore(DateTime.now()));
+        if (schedules.isEmpty) return;
+
+        schedules.removeWhere(
+          (schedule) => DateTime.fromMillisecondsSinceEpoch(
+                  schedule.scheduleDetailInfo?.scheduleInfo?.endTimeStamp ??
+                      0)
+              .isBefore(DateTime.now()),
+        );
 
         schedules.sort((soonSchedule, laterSchedule) {
           final soonScheduleTimeStamp =
@@ -118,10 +122,18 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   Widget upcomingLessonWidget() {
-    if (_nextLesson == null) return const SizedBox.shrink();
+    if (_nextLesson == null) {
+      return Text(
+        widget.local.noUpcomingLesson,
+        style: const TextStyle(
+          fontSize: 18,
+          color: Colors.white,
+        ),
+      );
+    }
 
     final date =
-        TimeHelper.convertTimeStampToDay(_nextLesson?.startTimeStamp ?? 0);
+        TimeHelper.convertTimeStampToDate(_nextLesson?.startTimeStamp ?? 0);
 
     final time =
         '${TimeHelper.convertTimeStampToHour(_nextLesson?.startTimeStamp ?? 0)}'
@@ -130,10 +142,9 @@ class _HomeHeaderState extends State<HomeHeader> {
 
     return Column(
       children: <Widget>[
-        const SizedBox(height: 18),
-        const Text(
-          'Upcomming Lesson',
-          style: TextStyle(
+        Text(
+          widget.local.upcomingLesson,
+          style: const TextStyle(
             fontSize: 24,
             color: Colors.white,
           ),
@@ -148,12 +159,12 @@ class _HomeHeaderState extends State<HomeHeader> {
         ),
         const SizedBox(height: 18),
         Text(
-          '${_checkLessonStart() ? '(starts in ' : '(is in progress for '}'
+          '${_checkLessonStart() ? '(${widget.local.startsIn} ' : '(${widget.local.inProgress} '}'
           '${TimeHelper.getRemainingTimer(_currentTime ?? Duration.zero)})',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 18,
-            color: _checkLessonStart() ? Colors.yellow : Colors.blue.shade300,
+            color: _checkLessonStart() ? Colors.yellow : Colors.green.shade300,
           ),
         ),
         const SizedBox(height: 18),
@@ -179,7 +190,7 @@ class _HomeHeaderState extends State<HomeHeader> {
               ),
               const SizedBox(width: 14),
               Text(
-                'Enter Lesson Room',
+                widget.local.enterLessonRoom,
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.blue[500],
@@ -203,10 +214,13 @@ class _HomeHeaderState extends State<HomeHeader> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+          const SizedBox(height: 18),
           upcomingLessonWidget(),
           const SizedBox(height: 18),
           Text(
-            'Total Lesson Time: $hour hours $minute minutes',
+            _totalCall == 0
+                ? widget.local.welcome
+                : widget.local.totalLessonTime(hour, minute),
             style: const TextStyle(fontSize: 16, color: Colors.white),
           ),
           const SizedBox(height: 14),

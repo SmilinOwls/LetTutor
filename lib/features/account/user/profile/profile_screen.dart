@@ -15,6 +15,7 @@ import 'package:lettutor/utils/media_picker.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -26,6 +27,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  User? user;
   ValueNotifier<String?>? _imageData;
 
   final TextEditingController _nameTextEditingController =
@@ -64,6 +66,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
   ];
 
+  late AppLocalizations _local;
+
+  @override
+  void initState() {
+    super.initState();
+    _getAccountInfo();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
+
   void _getAccountInfo() async {
     await UserService.getUserInfo(
       onSuccess: (user) {
@@ -81,18 +97,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ..._testPreparations.map((e) => e.name!),
         ];
         _studyScheduleTextEditingController.text = user.studySchedule ?? '';
+        setState(() {
+          this.user = user;
+        });
       },
       onError: (message) => SnackBarHelper.showErrorSnackBar(
         context: context,
         content: message,
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getAccountInfo();
   }
 
   void _onAvatarSubmited() async {
@@ -155,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           context.read<AuthProvider>().setUser(user!);
           SnackBarHelper.showSuccessSnackBar(
             context: context,
-            content: 'Your profile has been updated.',
+            content: _local.successSaveProfile,
           );
         },
         onError: (message) {
@@ -180,535 +193,545 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _studyScheduleTextEditingController.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final user = context.watch<AuthProvider>().getUser();
+  Widget _buildActivedPhone(User? user) {
+    return user?.isPhoneActivated ?? false
+        ? Chip(
+            label: Text(_local.verified),
+            labelStyle: const TextStyle(color: Colors.green),
+            side: BorderSide(
+              color: Colors.green.shade200.withOpacity(0.8),
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            backgroundColor: Colors.green.shade100.withOpacity(0.2),
+          )
+        : Chip(
+            label: Text(_local.unverified),
+            labelStyle: const TextStyle(color: Colors.red),
+            side: BorderSide(
+              color: Colors.red.shade200.withOpacity(0.8),
+            ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
+            backgroundColor: Colors.red.shade100.withOpacity(0.2),
+          );
+  }
 
-    return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Profile',
-      ),
-      body: SingleChildScrollView(
-        child: Card(
-          elevation: 6,
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          clipBehavior: Clip.hardEdge,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border(
-              top: BorderSide(
-                color: Colors.blue.shade800,
-                width: 4,
+  Widget _buildProfileForm(User? user) {
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 6,
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border(
+            top: BorderSide(
+              color: Colors.blue.shade800,
+              width: 4,
+            ),
+          )),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Align(
+                alignment: Alignment.center,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    ValueListenableBuilder<String?>(
+                      valueListenable: _imageData ?? ValueNotifier(''),
+                      builder: (context, value, child) => Container(
+                        width: 140,
+                        height: 140,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.network(
+                          value ?? '',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(
+                            Icons.person_rounded,
+                            size: 62,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      width: 32,
+                      child: InkWell(
+                        onTap: _onAvatarSubmited,
+                        child: CircleAvatar(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          child: const Icon(
+                            Icons.edit_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            )),
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      ValueListenableBuilder<String?>(
-                        valueListenable: _imageData ?? ValueNotifier(''),
-                        builder: (context, value, child) => Container(
-                          width: 140,
-                          height: 140,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.network(
-                            value ?? '',
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                                const Icon(
-                              Icons.person_rounded,
-                              size: 62,
-                            ),
-                          ),
-                        ),
+              const SizedBox(height: 12),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      user?.name ?? '',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      '${_local.accountID} ${user?.id ?? ''}',
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontWeight: FontWeight.w400,
                       ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        width: 32,
-                        child: InkWell(
-                          onTap: _onAvatarSubmited,
-                          child: CircleAvatar(
-                            backgroundColor: Theme.of(context).primaryColor,
-                            child: const Icon(
-                              Icons.edit_rounded,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      _local.othersReview,
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w400,
                       ),
-                    ],
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      _local.changePassword,
+                      style: const TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 8,
+                ),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.grey.shade600.withOpacity(0.8),
+                      width: 0.3,
+                    ),
+                  ),
+                  color: Colors.grey.shade300.withOpacity(0.3),
+                ),
+                child: Text(
+                  _local.account,
+                  style: const TextStyle(
+                    fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 12),
-                Align(
-                  alignment: Alignment.center,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 14,
+                ),
+                child: Form(
+                  key: _formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        user?.name ?? '',
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        'Account ID: ${user?.id ?? ''}',
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontWeight: FontWeight.w400,
+                      const SizedBox(height: 16),
+                      CustomLabel(label: _local.name),
+                      TextFormField(
+                        controller: _nameTextEditingController,
+                        autocorrect: false,
+                        keyboardType: TextInputType.name,
+                        decoration: customInputDecoration.copyWith(
+                          hintText: _local.nameInputHint,
                         ),
-                        textAlign: TextAlign.center,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return _local.nameEmptyValidator;
+                          }
+                          return null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const SizedBox(height: 6),
-                      const Text(
-                        'Others review you',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w400,
+                      const SizedBox(height: 20),
+                      CustomLabel(
+                        label: _local.emailAddress,
+                        isRequired: false,
+                      ),
+                      TextFormField(
+                        controller: _emailTextEditingController,
+                        autocorrect: false,
+                        keyboardType: TextInputType.emailAddress,
+                        readOnly: true,
+                        decoration: customInputDecoration.copyWith(
+                          filled: true,
+                          fillColor: Colors.grey.shade300.withOpacity(0.3),
                         ),
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const SizedBox(height: 6),
-                      const Text(
-                        'Change password',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.grey.shade600.withOpacity(0.8),
-                        width: 0.3,
-                      ),
-                    ),
-                    color: Colors.grey.shade300.withOpacity(0.3),
-                  ),
-                  child: const Text(
-                    'Account',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 14,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const SizedBox(height: 16),
-                        const CustomLabel(label: 'Name'),
-                        TextFormField(
-                          controller: _nameTextEditingController,
-                          autocorrect: false,
-                          keyboardType: TextInputType.name,
-                          decoration: customInputDecoration.copyWith(
-                            hintText: 'Enter your name',
+                      const SizedBox(height: 20),
+                      CustomLabel(label: _local.country),
+                      DropdownButtonFormField2<String>(
+                        isExpanded: true,
+                        decoration: customInputDecoration.copyWith(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: -4,
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please input your name';
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        const SizedBox(height: 20),
-                        const CustomLabel(
-                          label: 'Email Address',
-                          isRequired: false,
-                        ),
-                        TextFormField(
-                          controller: _emailTextEditingController,
-                          autocorrect: false,
-                          keyboardType: TextInputType.emailAddress,
-                          readOnly: true,
-                          decoration: customInputDecoration.copyWith(
-                            filled: true,
-                            fillColor: Colors.grey.shade300.withOpacity(0.3),
-                          ),
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        const SizedBox(height: 20),
-                        const CustomLabel(label: 'Country'),
-                        DropdownButtonFormField2<String>(
-                          isExpanded: true,
-                          decoration: customInputDecoration.copyWith(
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 4,
-                              horizontal: -4,
-                            ),
-                          ),
-                          value: countryList.keys
-                                  .contains(_countryTextEditingController.text)
-                              ? _countryTextEditingController.text
-                              : null,
-                          items: List.generate(
-                            countryList.length,
-                            (index) => DropdownMenuItem<String>(
-                              value: countryList.keys.elementAt(index),
-                              child: Text(
-                                countryList.values.elementAt(index),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
+                        value: countryList.keys
+                                .contains(_countryTextEditingController.text)
+                            ? _countryTextEditingController.text
+                            : null,
+                        items: List.generate(
+                          countryList.length,
+                          (index) => DropdownMenuItem<String>(
+                            value: countryList.keys.elementAt(index),
+                            child: Text(
+                              countryList.values.elementAt(index),
+                              style: const TextStyle(
+                                fontSize: 14,
                               ),
                             ),
                           ),
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select a country';
-                            }
-                            return null;
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onChanged: (value) {
-                            _countryTextEditingController.text = value!;
-                          },
-                          buttonStyleData: const ButtonStyleData(
-                            padding: EdgeInsets.only(right: 8),
+                        ),
+                        validator: (value) {
+                          if (value == null) {
+                            return _local.countryEmptyValidator;
+                          }
+                          return null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        onChanged: (value) {
+                          _countryTextEditingController.text = value!;
+                        },
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.only(right: 8),
+                        ),
+                        iconStyleData: IconStyleData(
+                          icon: Icon(
+                            Icons.arrow_drop_down_outlined,
+                            color: Colors.grey.shade300,
                           ),
-                          iconStyleData: IconStyleData(
-                            icon: Icon(
-                              Icons.arrow_drop_down_outlined,
-                              color: Colors.grey.shade300,
-                            ),
-                            iconSize: 24,
-                          ),
-                          dropdownStyleData: DropdownStyleData(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          menuItemStyleData: const MenuItemStyleData(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                          iconSize: 24,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        const CustomLabel(label: 'Phone Number'),
-                        TextFormField(
-                          controller: _phoneNumberTextEditingController,
-                          autocorrect: false,
-                          readOnly: true,
-                          keyboardType: TextInputType.phone,
-                          decoration: customInputDecoration.copyWith(
-                            filled: true,
-                            fillColor: Colors.grey.shade300.withOpacity(0.3),
-                          ),
-                          style: Theme.of(context).textTheme.bodySmall,
+                        menuItemStyleData: const MenuItemStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
                         ),
-                        const SizedBox(height: 8),
-                        Chip(
-                          label: const Text('Verified'),
-                          labelStyle: const TextStyle(color: Colors.green),
-                          side: BorderSide(
-                            color: Colors.green.shade200.withOpacity(0.8),
-                          ),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                          ),
-                          backgroundColor:
-                              Colors.green.shade100.withOpacity(0.2),
+                      ),
+                      const SizedBox(height: 20),
+                      CustomLabel(label: _local.phoneNumber),
+                      TextFormField(
+                        controller: _phoneNumberTextEditingController,
+                        autocorrect: false,
+                        readOnly: true,
+                        keyboardType: TextInputType.phone,
+                        decoration: customInputDecoration.copyWith(
+                          filled: true,
+                          fillColor: Colors.grey.shade300.withOpacity(0.3),
                         ),
-                        const SizedBox(height: 20),
-                        const CustomLabel(label: 'Birthday'),
-                        TextFormField(
-                          controller: _birthdayTextEditingController,
-                          autocorrect: false,
-                          decoration: customInputDecoration.copyWith(
-                            suffixIcon: Icon(
-                              Icons.calendar_month_outlined,
-                              size: 20,
-                              color: Colors.grey.shade300,
-                            ),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 8),
+                      _buildActivedPhone(user),
+                      const SizedBox(height: 20),
+                      CustomLabel(label: _local.birthday),
+                      TextFormField(
+                        controller: _birthdayTextEditingController,
+                        autocorrect: false,
+                        decoration: customInputDecoration.copyWith(
+                          suffixIcon: Icon(
+                            Icons.calendar_month_outlined,
+                            size: 20,
+                            color: Colors.grey.shade300,
                           ),
-                          onTap: () {
-                            _onDateChanged(context);
-                          },
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select your birthday';
-                            }
-                            return null;
-                          },
-                          style: Theme.of(context).textTheme.bodySmall,
                         ),
-                        const SizedBox(height: 20),
-                        const CustomLabel(label: 'My level'),
-                        DropdownButtonFormField2<String>(
-                          isExpanded: true,
-                          decoration: customInputDecoration.copyWith(
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 4,
-                              horizontal: -4,
-                            ),
+                        onTap: () {
+                          _onDateChanged(context);
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return _local.birthdayEmptyValidator;
+                          }
+                          return null;
+                        },
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(height: 20),
+                      CustomLabel(label: _local.myLevel),
+                      DropdownButtonFormField2<String>(
+                        isExpanded: true,
+                        decoration: customInputDecoration.copyWith(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: -4,
                           ),
-                          value: studentLevels.keys
-                                  .contains(_levelTextEditingController.text)
-                              ? _levelTextEditingController.text
-                              : null,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          items: List<DropdownMenuItem<String>>.generate(
-                            studentLevels.length,
-                            (index) => DropdownMenuItem<String>(
-                              value: studentLevels.keys.elementAt(index),
-                              child: Text(
-                                studentLevels.values.elementAt(index),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                ),
+                        ),
+                        value: studentLevels.keys
+                                .contains(_levelTextEditingController.text)
+                            ? _levelTextEditingController.text
+                            : null,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        items: List<DropdownMenuItem<String>>.generate(
+                          studentLevels.length,
+                          (index) => DropdownMenuItem<String>(
+                            value: studentLevels.keys.elementAt(index),
+                            child: Text(
+                              studentLevels.values.elementAt(index),
+                              style: const TextStyle(
+                                fontSize: 14,
                               ),
                             ),
                           ),
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select your level';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            _levelTextEditingController.text = value!;
-                          },
-                          buttonStyleData: const ButtonStyleData(
-                            padding: EdgeInsets.only(right: 8),
+                        ),
+                        validator: (value) {
+                          if (value == null) {
+                            return _local.myLevelEmptyValidator;
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          _levelTextEditingController.text = value!;
+                        },
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.only(right: 8),
+                        ),
+                        iconStyleData: IconStyleData(
+                          icon: Icon(
+                            Icons.arrow_drop_down_outlined,
+                            color: Colors.grey.shade300,
                           ),
-                          iconStyleData: IconStyleData(
-                            icon: Icon(
-                              Icons.arrow_drop_down_outlined,
-                              color: Colors.grey.shade300,
-                            ),
-                            iconSize: 24,
-                          ),
-                          dropdownStyleData: DropdownStyleData(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          menuItemStyleData: const MenuItemStyleData(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
+                          iconSize: 24,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        const CustomLabel(label: 'Want to learn'),
-                        DropdownButtonFormField2(
-                          isExpanded: true,
-                          decoration: customInputDecoration.copyWith(
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 4,
-                              horizontal: -4,
-                            ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      CustomLabel(label: _local.wantToLearn),
+                      DropdownButtonFormField2(
+                        isExpanded: true,
+                        decoration: customInputDecoration.copyWith(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: -4,
                           ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          items: List<DropdownMenuItem>.generate(
-                            _desiredLearningData.length,
-                            (index) => _desiredLearningData[index]['isTitled']
-                                ? DropdownMenuItem(
-                                    enabled: false,
-                                    value: _desiredLearningData[index]['value'],
-                                    child: Text(
-                                      _desiredLearningData[index]['value'],
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        items: List<DropdownMenuItem>.generate(
+                          _desiredLearningData.length,
+                          (index) => _desiredLearningData[index]['isTitled']
+                              ? DropdownMenuItem(
+                                  enabled: false,
+                                  value: _desiredLearningData[index]['value'],
+                                  child: Text(
+                                    _desiredLearningData[index]['value'],
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400,
                                     ),
-                                  )
-                                : DropdownMenuItem(
-                                    enabled: false,
-                                    value: _desiredLearningData[index]['value'],
-                                    child: StatefulBuilder(
-                                      builder: (context, menuSetState) {
-                                        final isSelected =
-                                            _selectedDesiredLearningItems
-                                                .contains(
-                                                    _desiredLearningData[index]
-                                                        ['value']);
-                                        return InkWell(
-                                          onTap: () {
-                                            isSelected
-                                                ? _selectedDesiredLearningItems
-                                                    .remove(
-                                                        _desiredLearningData[
-                                                            index]['value'])
-                                                : _selectedDesiredLearningItems
-                                                    .add(_desiredLearningData[
-                                                        index]['value']);
-                                            setState(() {});
-                                            menuSetState(() {});
-                                          },
-                                          child: isSelected
-                                              ? ListTile(
-                                                  title: Text(
-                                                    _desiredLearningData[index]
-                                                        ['value'],
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                  tileColor: Colors
-                                                      .blue.shade100
-                                                      .withOpacity(0.4),
-                                                  trailing: Icon(
-                                                    Icons.check_rounded,
-                                                    color: Colors.blue.shade300,
-                                                  ),
-                                                )
-                                              : ListTile(
-                                                  title: Text(
-                                                    _desiredLearningData[index]
-                                                        ['value'],
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
+                                  ),
+                                )
+                              : DropdownMenuItem(
+                                  enabled: false,
+                                  value: _desiredLearningData[index]['value'],
+                                  child: StatefulBuilder(
+                                    builder: (context, menuSetState) {
+                                      final isSelected =
+                                          _selectedDesiredLearningItems
+                                              .contains(
+                                                  _desiredLearningData[index]
+                                                      ['value']);
+                                      return InkWell(
+                                        onTap: () {
+                                          isSelected
+                                              ? _selectedDesiredLearningItems
+                                                  .remove(_desiredLearningData[
+                                                      index]['value'])
+                                              : _selectedDesiredLearningItems
+                                                  .add(_desiredLearningData[
+                                                      index]['value']);
+                                          setState(() {});
+                                          menuSetState(() {});
+                                        },
+                                        child: isSelected
+                                            ? ListTile(
+                                                title: Text(
+                                                  _desiredLearningData[index]
+                                                      ['value'],
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                          ),
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please select at least one subject.';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {},
-                          value: _selectedDesiredLearningItems.isEmpty
-                              ? null
-                              : _selectedDesiredLearningItems.last,
-                          selectedItemBuilder: (context) => _desiredLearningData
-                              .map<Widget>(
-                                (item) => Wrap(
-                                  spacing: 4,
-                                  runSpacing: 8,
-                                  children: List<Widget>.generate(
-                                    _selectedDesiredLearningItems.length,
-                                    (index) => Chip(
-                                      label: Text(
-                                          _selectedDesiredLearningItems[index]),
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.zero,
-                                      ),
-                                      side: BorderSide.none,
-                                      onDeleted: () {
-                                        setState(() {
-                                          _selectedDesiredLearningItems
-                                              .remove(item['value']);
-                                        });
-                                      },
-                                      deleteIcon: const Icon(
-                                        Icons.cancel_rounded,
-                                        size: 18,
-                                      ),
-                                      backgroundColor:
-                                          Colors.grey.shade300.withOpacity(0.4),
-                                    ),
+                                                tileColor: Colors.blue.shade100
+                                                    .withOpacity(0.4),
+                                                trailing: Icon(
+                                                  Icons.check_rounded,
+                                                  color: Colors.blue.shade300,
+                                                ),
+                                              )
+                                            : ListTile(
+                                                title: Text(
+                                                  _desiredLearningData[index]
+                                                      ['value'],
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                      );
+                                    },
                                   ),
                                 ),
-                              )
-                              .toList(),
-                          buttonStyleData: const ButtonStyleData(
-                            padding: EdgeInsets.only(right: 8),
-                            height: 180,
-                          ),
-                          iconStyleData: IconStyleData(
-                            icon: Icon(
-                              Icons.arrow_drop_down_outlined,
-                              color: Colors.grey.shade300,
-                            ),
-                            iconSize: 24,
-                          ),
-                          dropdownStyleData: DropdownStyleData(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          menuItemStyleData: const MenuItemStyleData(
-                            padding: EdgeInsets.symmetric(horizontal: 16),
-                          ),
                         ),
-                        const SizedBox(height: 20),
-                        const CustomLabel(
-                          label: 'Study Schedule',
-                          isRequired: false,
-                        ),
-                        SizedBox(
-                          height: 150,
-                          child: TextFormField(
-                            controller: _studyScheduleTextEditingController,
-                            expands: true,
-                            maxLines: null,
-                            autocorrect: false,
-                            textAlignVertical: TextAlignVertical.top,
-                            decoration: customInputDecoration.copyWith(
-                              hintText:
-                                  'Note the time of the week you want to study on LetTutor',
-                            ),
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ),
-                        const SizedBox(height: 28),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: _onProfileChangeSubmited,
-                            style: TextButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                        validator: (value) {
+                          if (value == null) {
+                            return _local.wantToLearnEmptyValidator;
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {},
+                        value: _selectedDesiredLearningItems.isEmpty
+                            ? null
+                            : _selectedDesiredLearningItems.last,
+                        selectedItemBuilder: (context) => _desiredLearningData
+                            .map<Widget>(
+                              (item) => Wrap(
+                                spacing: 4,
+                                runSpacing: 8,
+                                children: List<Widget>.generate(
+                                  _selectedDesiredLearningItems.length,
+                                  (index) => Chip(
+                                    label: Text(
+                                        _selectedDesiredLearningItems[index]),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.zero,
+                                    ),
+                                    side: BorderSide.none,
+                                    onDeleted: () {
+                                      setState(() {
+                                        _selectedDesiredLearningItems
+                                            .remove(item['value']);
+                                      });
+                                    },
+                                    deleteIcon: const Icon(
+                                      Icons.cancel_rounded,
+                                      size: 18,
+                                    ),
+                                    backgroundColor:
+                                        Colors.grey.shade300.withOpacity(0.4),
+                                  ),
+                                ),
                               ),
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.blue.shade700,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 18,
-                                horizontal: 20,
-                              ),
-                            ),
-                            child: const Text(
-                              'Save changes',
-                            ),
+                            )
+                            .toList(),
+                        buttonStyleData: const ButtonStyleData(
+                          padding: EdgeInsets.only(right: 8),
+                          height: 180,
+                        ),
+                        iconStyleData: IconStyleData(
+                          icon: Icon(
+                            Icons.arrow_drop_down_outlined,
+                            color: Colors.grey.shade300,
+                          ),
+                          iconSize: 24,
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                      ],
-                    ),
+                        menuItemStyleData: const MenuItemStyleData(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      CustomLabel(
+                        label: _local.studySchedule,
+                        isRequired: false,
+                      ),
+                      SizedBox(
+                        height: 150,
+                        child: TextFormField(
+                          controller: _studyScheduleTextEditingController,
+                          expands: true,
+                          maxLines: null,
+                          autocorrect: false,
+                          textAlignVertical: TextAlignVertical.top,
+                          decoration: customInputDecoration.copyWith(
+                            hintText: _local.studyScheduleHint,
+                          ),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      ),
+                      const SizedBox(height: 28),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: _onProfileChangeSubmited,
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blue.shade700,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 18,
+                              horizontal: 20,
+                            ),
+                          ),
+                          child: Text(_local.saveChanges),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(appBarTitle: _local.profile),
+      body: user == null
+          ? const Center(child: CircularProgressIndicator())
+          : _buildProfileForm(user),
     );
   }
 }

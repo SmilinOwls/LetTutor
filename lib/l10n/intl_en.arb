@@ -1,0 +1,398 @@
+{
+    "@@locale": "en",
+    "appTitle": "LetTutor",
+    "@appTitle": {
+        "description": "Title of the application"
+    },
+    "welcome": "Welcome to LetTutor",
+    
+    "titleLogin": "Say hello to your English tutors",
+    "subtitleLogin": "Become fluent faster through one on one video chat lessons tailored to your goals",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "rePassword": "Re-password",
+    "login": "Log in",
+    "loginWithThirdParty": "Or continue with",
+    "notAMemberYet": "Not a member yet?",
+    "successLogin": "Login successfully!",
+    "signUp": "Sign up",
+    "titleSignUp": "Start learning with LetTutor",
+    "subTitleSignUp": "Become fluent faster through one on one video chat lessons tailored to your goals",
+    "alreadyAMember": "Already have an account?",
+    "successSignUp": "Sign up successfully! Please check your email to verify!",
+    "emptyEmail": "Please input your email!",
+    "invalidEmail": "The input is not valid E-mail!",
+    "emptyPassword": "Please input your password!",
+    "invalidPassword": "Password too short! Please input at least 6 characters!",
+    "emptyRePassword": "Please input your re-password!",
+    "invalidRePassword": "Re-password too short! Please input at least 6 characters!",
+    "notMatchRePassword": "Re-password does not match!",
+    "titleResetPassword": "Reset password",
+    "subTitleResetPassword": "Please enter your email address to search for your account.",
+    "resetPassword": "Send reset link",
+    "backToLogin": "Back to login",
+    "successResetPassword": "Reset password successfully! Please check your email to reset password!",
+
+    "home": "Home",
+    "schedule": "Schedule",
+    "history": "History",
+    "courses": "Courses",
+    "account": "Account",
+   
+    "findTutor": "Find a tutor",
+    "recommedTutor": "Recommended Tutors",
+    "noTutor": "No tutor found!",
+    "noTutorDescription": "Please try again with different filters",
+    "inputTutorName": "Input tutor name",
+    "selectTutor": "Select tutor",
+    "searchTutorNationality": "Search for a tutor nationality..",
+    "resetFilter": "Reset filter",
+    
+    "noUpcomingLesson": "You have no upcoming lesson.",
+    "upcomingLesson": "Upcoming lesson",
+    "upcomingDate": "{date}",
+    "@upcomingDate": {
+        "description": "Date format",
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMMMEd"
+            }
+        }
+    },
+    "startsIn": "starts in",
+    "inProgress": "is in progress for",
+    "enterLessonRoom": "Enter lesson room",
+    "totalLessonTime": "Total lesson Time: {hour, plural, =0{{hour} hour} =1{{hour} hour} other {{hour} hours}}  {minute, plural, =0{{minute} minute} =1{{minute} minute} other {{minute} minutes}}",
+
+    "succesAddFavoriteTutor": "Add favorite tutor successfully",
+    "successRemoveFavoriteTutor": "Remove favorite tutor successfully",
+    "nullCountry": "Null country",
+    "nullReviews": "No reviews yet",
+    "nullBio": "No bio yet",
+    "book": "Book",
+
+    "tutorDetail": "Tutor details",
+    "favorite": "Favorite",
+    "report": "Report",
+    "reviews": "Reviews",
+    "education": "Education",
+    "languages": "Languages",
+    "specialties": "Specialties",
+    "suggestedCourses": "Suggested Courses",
+    "link": "Link",
+    "interests": "Interests",
+    "teachingExperience": "Teaching Experience",
+    "bookNow": "Book Now",
+
+    "reportTutor": "Report tutor",
+    "reportTutorDescription": "Help us understand what's happening",
+    "reportTutorHint": "Please let us know details about your problems",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "reportReason": "This tutor is annoying meThis profile is pretending be someone or is fake:Inappropriate profile photo",
+
+    "tutorReviews": "Tutor Reviews",
+
+    "tutorBooking": "Tutor Booking",
+    "noTutorSchedule": "This tutor has no schedule",
+    "bookLesson": "Book a lesson",
+    "chooseLearningDate": "Choose learning date",
+    "weekRange": "Week: {startWeek} - {endWeek}",
+    "@weekRange": {
+        "description": "Week range format",
+        "placeholders": {
+            "startWeek": {
+                "type": "DateTime",
+                "format": "yMEd"
+            },
+            "endWeek": {
+                "type": "DateTime",
+                "format": "yMEd"
+            }
+        }
+    },
+
+    "successBookTutor": "Book tutor successfully!",
+    "failBookTutor": "Book tutor failed!",
+    "chooseLearningHour": "Choose learning hour",
+    "onTime": "On {scheduleDate}",
+    
+    "bookTutor": "Book This Tutor",
+    "bookAnotherTutor": "Book Another Tutor",
+    "bookingTime": "Booking time",
+    "balance": "Balance",
+    "balanceDescription": "You have {balance, plural, =0{{balance}\n lesson} =1{{balance}\n lesson} other {{balance}\n lessons}} left",
+    "price": "Price",
+    "priceDescription": "{price} lesson",
+    "@priceDescription": {
+        "description": "Price description",
+        "placeholders": {
+            "price": {
+                "type": "int" 
+            }
+        }
+    },
+    "note": "Note",
+    "noteForTutor": "Note for tutor",
+
+    "scheduleDescription": "Here is a list of the sessions you have booked\nYou can track when the meeting starts, join the meeting with one click or can cancel the meeting before 2 hours",
+    "noLessonSchedule": "There is no lesson schedule yet!",
+    "totalPrescheduledLessons": "Total prescheduled lessons: {totalLesson}",
+    "@totalPrescheduledLessons": {
+        "description": "Total prescheduled lessons",
+        "placeholders": {
+            "totalLesson": {
+                "type": "int"
+            }
+        }
+    },
+
+    "successCancelLesson": "Cancel lesson successfully!",
+    "failCancelLesson": "Cancel lesson failed!",
+    "numberOfLessons": "{numberLesson, plural, =0{{numberLesson} lesson} =1{{numberLesson} lesson} other {{numberLesson} lessons}}",
+    "requestForLesson": "Request for lesson",
+    "editRequest": "Edit request",
+    "noRequestForClass": "Currently there are no requests for this class. Please write down any requests for the teacher.",
+    "goToMeeting": "Go to meeting",
+
+    "specialRequest": "Special request",
+    "invalidEmptyReason": "The reason cannot be empty!",
+    "wishTopic": "Wish topic (optional)",
+    "requestInputHint": "You can write in English or Vietnamese (Maximum 200 letters)", 
+
+    "yearAgo": "{year, plural, =1{{year} year ago} other {{year} years ago}}",
+    "@yearAgo": {
+        "description": "Year difference",
+        "placeholders": {
+            "year": {
+                "type": "int"
+            }
+        }
+    },
+    "monthAgo": "{month, plural, =1{{month} month ago} other {{month} months ago}}",
+    "@monthAgo": {
+        "description": "Month difference",
+        "placeholders": {
+            "month": {
+                "type": "int"
+            }
+        }
+    },
+    "weekAgo": "{week, plural, =1{{week} week ago} other {{week} weeks ago}}",
+    "@weekAgo": {
+        "description": "Week difference",
+        "placeholders": {
+            "week": {
+                "type": "int"
+            }
+        }
+    },
+    "dayAgo": "{day, plural, =1{{day} day ago} other {{day} days ago}}",
+    "@dayAgo": {
+        "description": "Day difference",
+        "placeholders": {
+            "day": {
+                "type": "int"
+            }
+        }
+    },
+    "hourAgo": "{hour, plural, =1{{hour} hour ago} other {{hour} hours ago}}",
+    "@hourAgo": {
+        "description": "Hour difference",
+        "placeholders": {
+            "hour": {
+                "type": "int"
+            }
+        }
+    },
+    "minuteAgo": "{minute, plural, =1{{minute} minute ago} other {{minute} minutes ago}}",
+    "@minuteAgo": {
+        "description": "Minute difference",
+        "placeholders": {
+            "minute": {
+                "type": "int"
+            }
+        }
+    },
+    "secondAgo": "{second, plural, =1{{second} second ago} other {{second} seconds ago}}",
+    "@secondAgo": {
+        "description": "Second difference",
+        "placeholders": {
+            "second": {
+                "type": "int"
+            }
+        }
+    },
+    "justNow": "Just now",
+
+    "reasonCancelLesson": "What was the reason you canceled this booking?",
+    "lessonCancelingReasons": "Reschedule at another time:Busy at that time:Asked by the tutor:Other",
+
+    "historyDescription": "The following is a list of lessons you have attended\n You can review the details of the lessons you have attended",
+    "noLessonHistory": "You have no history",
+    
+    "reportLessonTitle": "What was the reason you reported this booking?",
+    "selectReason": "Select Reason",
+    "additionalNote": "Additional note",
+    "lessonReportingReasons": "Reschedule at another time:Busy at that time:Asked by the tutor:Other",
+    "sentLessonReport": "The report has been sent.",
+
+    "lessonTime": "Lesson time",
+    "later": "Later",
+
+    "tutorRatingTitle": "What is your rating for {tutorName}?",
+    "contentReviewHint": "Content review",
+    
+
+    "reviewFromTutor": "Review from tutor",
+    "tutorNotReviewYet": "Tutor has not reviewed yet",
+    "rating": "Rating",
+    "edit": "Edit",
+    "addARating": "Add a rating",
+
+    "discoverCourses": "Discover Courses",
+    "coursesDescription": "LiveTutor has built the most quality, methodical and scientific courses in the fields of life for those who are in need of improving their knowledge of the fields.",
+    "searchCourses": "Search for courses",
+    "noCourse": "No course found!",
+    "noCourseDescription": "Please try again with different filters",
+    "level": "Level",
+    "levelSelectHint": "Select level",
+    "category": "Category",
+    "categorySelectHint": "Select category",
+    "sort": "Sort",
+    "sortSelectHint": "Sort by",
+    "levelAsc": "Level ascending",
+    "levelDesc": "Level descending",
+    "eBook": "E-book",
+
+    "courseDetails": "Courses Details",
+    "discover": "Discover",
+    "overview": "Overview",
+    "overviewOne": "Why take this course",
+    "overviewTwo": "What will you be able to do",
+    "experienceLevel": "Experience Level",
+    "courseLength": "Course Length",
+    "numberOfTopics": "{numberTopic, plural, =0{{numberTopic} topic} =1{{numberTopic} topic} other {{numberTopic} topics}}",
+    "listTopics": "List Topics",
+    "suggestedTutors": "Suggested Tutors",
+    "moreInfo": "More info",
+
+    "exploreCourse": "Explore Course",
+
+
+    "aboutMe": "About me",
+    "becomeATutor": "Become a tutor",
+    "settings": "Settings",
+    "helpAndSupport": "Help & Support",
+    "display": "Display",
+    "giveAFeeback": "Give a feedback",
+    "logout": "Log out",
+
+    "on": "On",
+    "off": "Off",
+    "darkMode": "Dark mode",
+    "displayScreenDescription": "Adjust the appearance of LetTutor to reduce glare and give your eyes a break.",
+
+    "languageSettings": "Language settings",
+    "languageSettingsDescription": "Choose a language to display for your LetTutor app experience. You can change the language back at any time.",
+    "languageName": "{language, select, en {English} vi {Vietnamese} other {}}",
+
+    "profile": "Profile",
+    "accountID": "Account ID",
+    "othersReview": "Others review you",
+    "changePassword": "Change password",
+    "name": "Name",
+    "nameInputHint": "Enter your name",
+    "nameEmptyValidator": "Please input your name",
+    "emailAddress": "Email address",
+    "country": "Country",
+    "countryEmptyValidator": "Please select a country",
+    "phoneNumber": "Phone number",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "birthday": "Birthday",
+    "birthdayEmptyValidator": "Please select your birthday",
+    "myLevel": "My level",
+    "myLevelEmptyValidator": "Please select your level",
+    "wantToLearn": "Want to learn",
+    "wantToLearnEmptyValidator": "Please select at least one subject",
+    "studySchedule": "Study schedule",
+    "studyScheduleHint": "Note the time of the week you want to study on LetTutor",
+    "saveChanges": "Save changes",
+    "successSaveProfile": "Your profile has been updated",
+
+    "completeProfile": "Complete profile",
+    "videoIntroduction": "Video introduction",
+    "approval": "Approval",
+
+    "setUpTutorProfile": "Set up your tutor profile",
+    "setUpTutorProfileDescription":"Your tutor profile is your chance to market yourself to students on Tutoring.\nYou can make edits later on your profile settings page.",
+    "setUpTutorProfileSubDescription":"New students may browse tutor profiles to find a tutor that fits their learning goals and personality.\nReturning students may use the tutor profiles to find tutors they've had great experiences with already",
+    "basicInfo": "Basic Info",
+    "imageUploadHint": "Please upload a professional photo. See guildlines.",
+    "tutoringName": "Tutoring name",
+    "tutoringNameInputValidator": "Please input your tutoring name!",
+    "imFrom": "I'm from",
+    "countryInputValidator": "Please select your country!",
+    "dateOfBirth": "Date of birth",
+    "dateOfBirthInputValidator": "Please input your birthday",
+    "cv": "CV",
+    "cvDescription": "Students will view this information on your profile to decide if you're a good fit for them.",
+    "cvInputHint": "In order to protect your privacy, please do not share your personal information (email, phone number, social email, skype, etc) in your profile.",
+    "interestsInputHint": "Interests, hobbies, memorable life experiences, or anything else you'd like to share!",
+    "interestsInputValidator": "Please input your interests!",
+    "educationInputHint": "Example: \"Bachelor of Arts in English from Cambly University; Certified yoga instructor, Second Language Acquisition and Teaching '(SLAT) certificate from Cambly University\"",
+    "educationInputValidator": "Please input your education!",
+    "experience": "Experience",
+    "experienceInputValidator": "Please input your experience!",
+    "profession": "Current or Previous Pression",
+    "professionInputValidator": "Please input your profession!",
+    "certificate": "Certificate",
+    "addCertificate": "Add new certificate",
+    "certificateType": "Certificate Type",
+    "action": "Action",
+    "certificateInputValidator": "Please input at least one certificate!",
+    "languagesISpeak": "Languages I speak",
+    "selectLanguages": "Select languages",
+    "selectLanguagesInputValidator": "Please select at least one language!",
+    "whoITeach": "Who I teach",
+    "whoITeachInputHint": "This is the first thing students will see when looking for tutors.",
+    "introduction": "Introduction",
+    "introductionInputHint": "Example: \"I was a doctor for 35 years and can help you practice business or medical English. I also enjoy teaching beginners as I am very patient and always speak slowly and clearly.\"",
+    "introductionInputValidator": "Please input your introduction!",
+    "teachingLevel": "I am best at teaching students who are",
+    "teachingLevelInputValidator": "Please select one level!",
+    "mySpecialties": "My specialties are",
+    "mySpecialtiesInputValidator": "Please select at least one specialty!",
+
+    "certificateTypeInputValidator": "Please input a certificate type!",
+    "certificateTypeInputHint": "Select a certificate type",
+    "emptyCertificateFileError": "Certificate file must not be empty!",
+    "emptyCertificateTypeError": "Certificate type must not be empty!",
+    "duplicateCertificateTypeError": "This certificate file has been uploaded. Please choose another file.",
+    "clickToUpload": "Click to upload",
+    "save": "Save",
+
+    "introduceYourself": "Introduce yourself",
+    "introduceYourselfDescription": "Let students know what they can expect from a lesson with you by recording a video highlighting your teaching style, expertise and personality. Students can be nervous to speak with a foreigner, so it really helps to have a friendly video that introduces yourself and invites students to call you.",
+    "introVideoWarning": "Note: We only support uploading video file that is less than 64 MB in size.",
+    "chooseVideo": "Choose video",
+    "chooseVideoValidator": "Please choose a video!",
+    "helpfulTips": "A few helpful tips: \n\t 1. Find a clean and quiet space \n\t 2. Smile and look at the camera \n\t 3. Dress smart \n\t 4. Speak for 1-3 minutes \n\t 5. Brand yourself and have fun!\n",
+
+    "allStepsDone": "You have done all the steps",
+    "waitForApproval": "Please, wait for the operator's approval",
+    "registerTutor": "Register to become tutor",
+    "tryAgain": "Try again",
+    
+    "back": "Back",
+    "next": "Next",
+    "backToHome": "Back to home",
+
+    "videoCall": "Video call",
+    "untilLessonStarts": "until lesson starts",
+    "lessonHasStarted": "lesson has started",
+    "joinMeeting": "Join meeting"
+}

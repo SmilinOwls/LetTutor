@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_cancel_dialog.dart';
 import 'package:lettutor/features/schedule/widgets/schedule_request_dialog.dart';
+import 'package:lettutor/features/video_call/video_call_screen.dart';
 import 'package:lettutor/models/schedule/booking_info.dart';
 import 'package:lettutor/models/schedule/schedule_info.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/utils/time_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScheduleCard extends StatefulWidget {
-  const ScheduleCard({super.key, required this.booking, this.onCancel});
-
+  const ScheduleCard({
+    super.key,
+    required this.booking,
+    this.onCancel,
+  });
   final Function(BookingInfo)? onCancel;
-
   final BookingInfo booking;
 
   @override
@@ -20,6 +24,14 @@ class ScheduleCard extends StatefulWidget {
 }
 
 class _ScheduleCardState extends State<ScheduleCard> {
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
+
   Future<void> _showScheduleCancelingDialog(BuildContext context) async {
     await showDialog(
         context: context,
@@ -30,14 +42,10 @@ class _ScheduleCardState extends State<ScheduleCard> {
         if (value.toLowerCase() == 'true') {
           widget.onCancel?.call(widget.booking);
           SnackBarHelper.showSuccessSnackBar(
-            context: context,
-            content: 'You deleted booking successfully!',
-          );
+              context: context, content: _local.successCancelLesson);
         } else {
           SnackBarHelper.showErrorSnackBar(
-            context: context,
-            content: 'You failed to cancel booking!',
-          );
+              context: context, content: _local.failCancelLesson);
         }
       }
     });
@@ -60,6 +68,29 @@ class _ScheduleCardState extends State<ScheduleCard> {
     });
   }
 
+  bool _checkAvailableToJoinSchedule(ScheduleInfo? scheduleInfo) {
+    final DateTime now = DateTime.now();
+    final DateTime startTime =
+        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.endTimeStamp ?? 0);
+    if (now.isBefore(startTime)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  bool _checkCancelBeforeLessonStartTwoHours(ScheduleInfo? scheduleInfo) {
+    final DateTime now = DateTime.now();
+    final DateTime startTime =
+        DateTime.fromMillisecondsSinceEpoch(scheduleInfo?.startTimeStamp ?? 0);
+    final int diff = startTime.difference(now).inHours;
+    if (diff < 2) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final ScheduleInfo? scheduleInfo =
@@ -74,11 +105,12 @@ class _ScheduleCardState extends State<ScheduleCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              TimeHelper.convertTimeStampToDay(scheduleInfo?.startTimeStamp ?? 0),
+              TimeHelper.convertTimeStampToDate(
+                  scheduleInfo?.startTimeStamp ?? 0),
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: 4),
-            const Text('1 lesson'),
+            Text(_local.numberOfLessons(1)),
             const SizedBox(height: 16),
             Container(
               padding: const EdgeInsets.all(12),
@@ -141,9 +173,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                   ),
                   const SizedBox(height: 12),
                   ExpansionTile(
-                    title: const Text(
-                      'Request for lesson',
-                      style: TextStyle(
+                    title: Text(
+                      _local.requestForLesson,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
@@ -152,9 +184,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       onTap: () {
                         _showScheduleRequestingDialog(context);
                       },
-                      child: const Text(
-                        'Edit request',
-                        style: TextStyle(
+                      child: Text(
+                        _local.editRequest,
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.blue,
                         ),
@@ -172,11 +204,9 @@ class _ScheduleCardState extends State<ScheduleCard> {
                       ListTile(
                         title: Text(
                           widget.booking.studentRequest ??
-                              'Currently there are no requests for this class. '
-                                  'Please write down any requests for the teacher.',
-                          style: TextStyle(
+                              _local.noRequestForClass,
+                          style: const TextStyle(
                             fontSize: 14,
-                            color: Colors.black.withOpacity(0.8),
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -190,33 +220,45 @@ class _ScheduleCardState extends State<ScheduleCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                OutlinedButton.icon(
-                  onPressed: () {
-                    _showScheduleCancelingDialog(context);
-                  },
-                  icon: const Icon(Icons.cancel_presentation_outlined),
-                  label: const Text(
-                    'Cancel',
-                  ),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.red,
-                    side: const BorderSide(color: Colors.red),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                ),
+                _checkCancelBeforeLessonStartTwoHours(scheduleInfo)
+                    ? OutlinedButton.icon(
+                        onPressed: () {
+                          _showScheduleCancelingDialog(context);
+                        },
+                        icon: const Icon(Icons.cancel_presentation_outlined),
+                        label: Text(_local.cancel),
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.red,
+                          side: const BorderSide(color: Colors.red),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
                 const SizedBox(width: 8),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: _checkAvailableToJoinSchedule(scheduleInfo)
+                      ? () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => VideoCallScreen(
+                                bookingInfo: widget.booking,
+                              ),
+                            ),
+                          );
+                        }
+                      : null,
                   style: TextButton.styleFrom(
+                    disabledBackgroundColor: Colors.grey,
+                    disabledForegroundColor: Colors.white,
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.blue[700],
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                   ),
-                  child: const Text(
-                    'Go to meeting',
-                    style: TextStyle(fontSize: 16),
+                  child: Text(
+                    _local.goToMeeting,
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ),
               ],

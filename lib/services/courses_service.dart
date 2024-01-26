@@ -41,7 +41,7 @@ class CoursesService {
     List<String>? categoryId,
     List<String>? level,
     String? orderBy,
-    required Function(List<Course>) onSuccess,
+    required Function(int, List<Course>) onSuccess,
     required Function(String) onError,
   }) async {
     final Map<String, dynamic> order = {};
@@ -70,12 +70,13 @@ class CoursesService {
         throw Exception(data['message']);
       }
 
+      final total = data['data']['count'];
       final courses = data['data']['rows'];
 
       final courseList =
           courses.map<Course>((course) => Course.fromJson(course)).toList();
 
-      await onSuccess(courseList);
+      await onSuccess(total, courseList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -141,7 +142,7 @@ class CoursesService {
     List<String>? categoryId,
     List<String>? level,
     String? orderBy,
-    required Function(List<EBook>) onSuccess,
+    required Function(int, List<EBook>) onSuccess,
     required Function(String) onError,
   }) async {
     final Map<String, dynamic> order = {};
@@ -170,12 +171,13 @@ class CoursesService {
         throw Exception(data['message']);
       }
 
+      final total = data['data']['count'];
       final courses = data['data']['rows'];
 
       final courseList =
           courses.map<EBook>((course) => EBook.fromJson(course)).toList();
 
-      await onSuccess(courseList);
+      await onSuccess(total, courseList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }

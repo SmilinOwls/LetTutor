@@ -2,17 +2,20 @@ import 'package:dio/dio.dart';
 import 'package:lettutor/models/tutor/tutor.dart';
 import 'package:lettutor/models/tutor/tutor_feedback.dart';
 import 'package:lettutor/models/tutor/tutor_info.dart';
+import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/services/dio_service.dart';
 
 class TutorService {
+  static final DioService _dioService = DioService();
+
   static Future<void> getListTutorWithPagination({
     required int page,
     required int perPage,
-    required Function(List<Tutor>, List<Tutor>) onSuccess,
+    required Function(int, List<Tutor>, List<Tutor>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/tutor/more?perPage=$perPage&page=$page',
       );
 
@@ -24,6 +27,7 @@ class TutorService {
 
       final List<String> tutorIds = [];
 
+      final total = data['tutors']['count'];
       final tutors = data['tutors']['rows'];
       final favoriteTutors = data['favoriteTutor'];
 
@@ -50,7 +54,7 @@ class TutorService {
       final favoriteTutorList = newFavoriteTutors
           .map<Tutor>((tutor) => Tutor.fromJson(tutor))
           .toList();
-      await onSuccess(tutorList, favoriteTutorList);
+      await onSuccess(total, tutorList, favoriteTutorList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -62,7 +66,7 @@ class TutorService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/tutor/$userId',
       );
 
@@ -85,11 +89,11 @@ class TutorService {
     String search = '',
     Map<String, bool> nationality = const <String, bool>{},
     List<String> specialties = const <String>[],
-    required Function(List<Tutor>) onSuccess,
+    required Function(int, List<Tutor>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/tutor/search',
         data: {
           'page': page,
@@ -108,12 +112,13 @@ class TutorService {
         throw Exception(data['message']);
       }
 
+      final total = data['count'];
       final List<dynamic> tutors = data['rows'];
 
       final tutorList =
           tutors.map<Tutor>((tutor) => Tutor.fromJson(tutor)).toList();
 
-      await onSuccess(tutorList);
+      await onSuccess(total, tutorList);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }
@@ -126,7 +131,7 @@ class TutorService {
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().post(
+      final response = await _dioService.post(
         '/report',
         data: {
           'tutorId': userId,
@@ -150,11 +155,11 @@ class TutorService {
     required int page,
     required int perPage,
     required String userId,
-    required Function(List<TutorFeedback>) onSuccess,
+    required Function(int, List<TutorFeedback>) onSuccess,
     required Function(String) onError,
   }) async {
     try {
-      final response = await DioService().get(
+      final response = await _dioService.get(
         '/feedback/v2/$userId?perPage=$perPage&page=$page',
       );
 
@@ -164,13 +169,38 @@ class TutorService {
         throw Exception(data['message']);
       }
 
+      final int totalItems = data['data']['count'];
       final List<dynamic> feedbacks = data['data']['rows'];
 
       final feedbackList = feedbacks
           .map<TutorFeedback>((feedback) => TutorFeedback.fromJson(feedback))
           .toList();
 
-      await onSuccess(feedbackList);
+      await onSuccess(totalItems, feedbackList);
+    } on DioException catch (e) {
+      onError(e.response?.data['message']);
+    }
+  }
+
+  static Future<void> becomeATutor({
+    required Map<String, dynamic> info,
+    required Function(User) onSuccess,
+    required Function(String) onError,
+  }) async {
+    try {
+      final response = await _dioService.post(
+        '/tutor/register',
+        data: FormData.fromMap(info),
+        contentType: 'multipart/form-data',
+      );
+
+      final data = response.data;
+
+      if (response.statusCode != 200) {
+        throw Exception(data['message']);
+      }
+
+      await onSuccess(data);
     } on DioException catch (e) {
       onError(e.response?.data['message']);
     }

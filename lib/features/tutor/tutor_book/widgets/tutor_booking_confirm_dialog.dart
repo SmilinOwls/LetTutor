@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:lettutor/models/schedule/schedule.dart';
 import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/providers/auth/auth_provider.dart';
@@ -7,6 +6,7 @@ import 'package:lettutor/services/booking_service.dart';
 import 'package:lettutor/services/user_service.dart';
 import 'package:lettutor/utils/time_helper.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TutorBookingConfirmDialog extends StatefulWidget {
   const TutorBookingConfirmDialog({super.key, required this.schedule});
@@ -21,6 +21,13 @@ class TutorBookingConfirmDialog extends StatefulWidget {
 class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
   final TextEditingController _requestTextEditingController =
       TextEditingController();
+  late AppLocalizations local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    local = AppLocalizations.of(context);
+  }
 
   void _tutorBookingHandle() async {
     await BookingService.bookClass(
@@ -55,14 +62,14 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.watch<AuthProvider>();
-    final balance = authProvider.getUser()?.walletInfo?.amount ?? '0';
+    final user = context.watch<AuthProvider>().getUser();
+    final balance = user?.walletInfo?.amount ?? '0';
 
     return AlertDialog(
       title: Column(
         children: <Widget>[
           Text(
-            'Book This Tutor',
+            local.tutorBooking,
             style: Theme.of(context).textTheme.displaySmall,
             textAlign: TextAlign.center,
           ),
@@ -80,7 +87,7 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Text(
-                'Booking time',
+                local.bookingTime,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 6),
@@ -95,9 +102,8 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                 textAlign: TextAlign.center,
               ),
               Text(
-                DateFormat('yyyy-MM-dd').format(
-                    DateTime.fromMillisecondsSinceEpoch(
-                        widget.schedule.startTimestamp!)),
+                TimeHelper.convertTimeStampToDate(
+                    widget.schedule.startTimestamp!),
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.blue[700],
@@ -109,14 +115,13 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Balance',
+                    local.balance,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Column(
                     children: <Widget>[
                       Text(
-                        'You have ${(int.parse(balance) / 100000).round()} \n'
-                        'lesson(s) left',
+                        local.balanceDescription((int.parse(balance) / 100000).round()),
                         style:
                             const TextStyle(fontSize: 16, color: Colors.blue),
                       ),
@@ -129,18 +134,18 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    'Price',
+                    local.price,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  const Text(
-                    '1 lesson',
-                    style: TextStyle(fontSize: 16, color: Colors.blue),
+                  Text(
+                    local.priceDescription(1),
+                    style: const TextStyle(fontSize: 16, color: Colors.blue),
                   ),
                 ],
               ),
               const SizedBox(height: 6),
               Text(
-                'Note',
+                local.note,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 6),
@@ -153,27 +158,27 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
                   controller: _requestTextEditingController,
                   onChanged: (value) {},
                   style: const TextStyle(fontWeight: FontWeight.w500),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     isCollapsed: true,
-                    contentPadding: EdgeInsets.all(12),
-                    hintText: 'Notes',
-                    hintStyle: TextStyle(
+                    contentPadding: const EdgeInsets.all(12),
+                    hintText: local.noteForTutor,
+                    hintStyle: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         color: Colors.grey),
-                    border: OutlineInputBorder(
+                    border: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0.5,
                         color: Colors.grey,
                       ),
                     ),
-                    enabledBorder: OutlineInputBorder(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 0.5,
                         color: Colors.grey,
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
+                    focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
                         color: Colors.blue,
@@ -186,18 +191,18 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
           ),
         ),
       ),
-      actions: [
+      actions: <Widget>[
         OutlinedButton(
           onPressed: () {
             Navigator.pop(context);
           },
           style: OutlinedButton.styleFrom(
-              fixedSize: const Size(100, 38),
+              fixedSize: const Size(120, 38),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)),
               side: BorderSide(width: 1.5, color: Colors.blue[700]!)),
           child: Text(
-            'Cancel',
+            local.cancel,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
@@ -210,16 +215,23 @@ class _TutorBookingConfirmDialogState extends State<TutorBookingConfirmDialog> {
             Icons.keyboard_double_arrow_right,
             color: Colors.white,
           ),
-          onPressed: _tutorBookingHandle,
+          onPressed: balance == '0'
+              ? null
+              : () {
+                  _tutorBookingHandle();
+                },
           style: TextButton.styleFrom(
-              fixedSize: const Size(100, 38),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              backgroundColor: Colors.blue[700]),
-          label: const Text(
-            'Book',
-            style: TextStyle(
+            fixedSize: const Size(120, 38),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            backgroundColor: Colors.blue[700],
+            disabledBackgroundColor: Colors.grey[500],
+            disabledForegroundColor: Colors.grey[300],
+          ),
+          label: Text(
+            local.book,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
               color: Colors.white,

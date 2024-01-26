@@ -13,6 +13,7 @@ class TextInput extends StatelessWidget {
     this.isTextArea,
     this.inputDecoration,
     this.onTap,
+    this.onChanged,
   });
 
   final TextEditingController controller;
@@ -23,6 +24,7 @@ class TextInput extends StatelessWidget {
   final bool? isTextArea;
   final InputDecoration? inputDecoration;
   final void Function()? onTap;
+  final void Function(String? value)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,7 @@ class TextInput extends StatelessWidget {
           return null;
         },
         onTap: onTap,
+        onChanged: onChanged,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         style: Theme.of(context).textTheme.bodySmall,
       ),

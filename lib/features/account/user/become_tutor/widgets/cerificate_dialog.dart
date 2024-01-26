@@ -4,6 +4,7 @@ import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/utils/file_picker.dart';
 import 'package:lettutor/widgets/drop_down/drop_down.dart';
 import 'package:lettutor/widgets/text/error_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CerificateDialog extends StatefulWidget {
   const CerificateDialog({super.key, required this.certificates});
@@ -19,6 +20,13 @@ class _CerificateDialogState extends State<CerificateDialog> {
       TextEditingController();
   PlatformFile? _certificateFile;
   String? errorText;
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
 
   void _onCertificateTypeSelected() async {
     PlatformFile? fileData = await pickFile();
@@ -30,12 +38,12 @@ class _CerificateDialogState extends State<CerificateDialog> {
   void _onCertificateSaved() {
     if (_certificateTypeTextEditingController.text.isEmpty) {
       setState(() {
-        errorText = 'Certificate type must not be empty';
+        errorText = _local.emptyCertificateTypeError;
       });
       return;
     } else if (_certificateFile == null) {
       setState(() {
-        errorText = 'Certificate file must not be empty';
+        errorText = _local.emptyCertificateFileError;
       });
       return;
     } else if (widget.certificates
@@ -46,8 +54,7 @@ class _CerificateDialogState extends State<CerificateDialog> {
                 _certificateFile?.identifier)
         .isNotEmpty) {
       setState(() {
-        errorText =
-            'This certificate file has been uploaded. Please choose another file.';
+        errorText = _local.duplicateCertificateTypeError;
       });
       return;
     }
@@ -71,7 +78,7 @@ class _CerificateDialogState extends State<CerificateDialog> {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       title: Text(
-        'Add certificate',
+        _local.addCertificate,
         style: Theme.of(context).textTheme.bodyLarge,
       ),
       titlePadding: const EdgeInsets.only(
@@ -93,8 +100,8 @@ class _CerificateDialogState extends State<CerificateDialog> {
                   DropDownField(
                     controller: _certificateTypeTextEditingController,
                     list: certificateLevels,
-                    validator: 'Please input a certificate type',
-                    hintText: 'Select a certificate type',
+                    validator: _local.certificateTypeInputValidator,
+                    hintText: _local.certificateTypeInputHint,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,9 +119,9 @@ class _CerificateDialogState extends State<CerificateDialog> {
                             Icons.upload_file,
                             color: Colors.grey,
                           ),
-                          label: const Text(
-                            'Click to Upload',
-                            style: TextStyle(
+                          label: Text(
+                            _local.clickToUpload,
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Colors.grey,
                             ),
@@ -153,8 +160,9 @@ class _CerificateDialogState extends State<CerificateDialog> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           ),
-          child: const Text(
-            'Cancel',
+          child: Text(
+            _local.cancel,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
         ElevatedButton(
@@ -165,9 +173,9 @@ class _CerificateDialogState extends State<CerificateDialog> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           ),
-          child: const Text(
-            'Save',
-            style: TextStyle(fontSize: 16),
+          child: Text(
+            _local.save,
+            style: const TextStyle(fontSize: 16),
           ),
         ),
       ],

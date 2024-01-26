@@ -16,6 +16,7 @@ Future<File?> pickerVideo(ImageSource source) async {
     source: source,
     maxDuration: const Duration(seconds: 90),
   );
+  
   if (pickedFile != null) {
     return File(pickedFile.path);
   }

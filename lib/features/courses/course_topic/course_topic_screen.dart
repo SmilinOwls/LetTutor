@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/models/courses/course/course.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CourseTopicScreen extends StatefulWidget {
   const CourseTopicScreen({
@@ -20,14 +21,21 @@ class CourseTopicScreen extends StatefulWidget {
 
 class _CourseTopicScreenState extends State<CourseTopicScreen> {
   int _selectTopicIndex = 0;
+  late AppLocalizations _local;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     final Course course = widget.course;
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Expore Course',
+      appBar: CustomAppBar(
+        appBarTitle: _local.exploreCourse,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
@@ -45,7 +53,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
               child: Column(
                 children: <Widget>[
                   CachedNetworkImage(
-                    imageUrl: course.imageUrl ?? 'null image url',
+                    imageUrl: course.imageUrl ?? '',
                     fit: BoxFit.cover,
                     errorWidget: (context, url, error) => const Icon(
                       Icons.error,
@@ -61,14 +69,14 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         Text(
-                          course.name ?? 'null name',
+                          course.name ?? '',
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                         const SizedBox(
                           height: 16,
                         ),
                         Text(
-                          course.description ?? 'null description',
+                          course.description ?? '',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -77,7 +85,7 @@ class _CourseTopicScreenState extends State<CourseTopicScreen> {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          'List Topics',
+                          _local.listTopics,
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                         const SizedBox(

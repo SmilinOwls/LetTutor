@@ -1,6 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TuTorSearch extends StatelessWidget {
   const TuTorSearch({
@@ -13,10 +14,11 @@ class TuTorSearch extends StatelessWidget {
     required this.onNationalityChange,
     required this.onTagChange,
     required this.onFilterReset,
+    required this.local,
   });
 
+  
   final TextEditingController nameEditingController;
-
   final TextEditingController nationalityEditingController;
   final String? selectedNationality;
   final String selectedTag;
@@ -24,6 +26,7 @@ class TuTorSearch extends StatelessWidget {
   final void Function(String?) onNationalityChange;
   final void Function(String) onTagChange;
   final void Function() onFilterReset;
+  final AppLocalizations local;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,7 @@ class TuTorSearch extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    hintText: 'Enter tutor name',
+                    hintText: local.inputTutorName,
                     hintStyle: TextStyle(
                       color: Theme.of(context).hintColor,
                     ),
@@ -80,7 +83,7 @@ class TuTorSearch extends StatelessWidget {
                       isExpanded: true,
                       alignment: Alignment.centerLeft,
                       hint: Text(
-                        'Select tutor',
+                        local.selectTutor,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -127,7 +130,7 @@ class TuTorSearch extends StatelessWidget {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding: const EdgeInsets.all(12),
-                              hintText: 'Search for a tutor nationality...',
+                              hintText: local.searchTutorNationality,
                               hintStyle: const TextStyle(fontSize: 14),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -191,7 +194,7 @@ class TuTorSearch extends StatelessWidget {
             side: BorderSide(color: Theme.of(context).primaryColor),
           ),
           child: Text(
-            'Reset Filters',
+            local.resetFilter,
             style: TextStyle(
               color: Theme.of(context).primaryColor,
             ),

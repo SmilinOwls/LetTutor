@@ -16,7 +16,4 @@ class Routes {
 
   // user
   static const userProfile = '/profile';
-
-  // video meeting call
-  static const videoCall = '/call';
 }

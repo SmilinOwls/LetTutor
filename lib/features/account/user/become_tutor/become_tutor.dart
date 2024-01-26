@@ -1,12 +1,17 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/approval_step.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/profile_resume_step.dart';
 import 'package:lettutor/features/account/user/become_tutor/widgets/video_introduction_step.dart';
+import 'package:lettutor/models/user/user.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
 import 'package:lettutor/widgets/stepper/horizonal_stepper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BecomeTutorScreen extends StatefulWidget {
-  const BecomeTutorScreen({super.key});
+  const BecomeTutorScreen({super.key, this.user});
+
+  final User? user;
 
   @override
   State<BecomeTutorScreen> createState() => _BecomeTutorScreenState();
@@ -16,7 +21,8 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   final GlobalKey<FormState> _formKeyStep1 = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKeyStep2 = GlobalKey<FormState>();
 
-  late final Map<String, Widget> steps;
+  List<String>? stepHeaders;
+  List<Widget>? stepWidgets;
 
   final TextEditingController _nameTextEditingController =
       TextEditingController();
@@ -40,11 +46,15 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   final List<String?> _teachingLevel = <String?>[null];
   final List<String> _teachingSpecialities = <String>[];
 
+  File? _videoFile;
+  late AppLocalizations _local;
+
+  @override
   @override
   void initState() {
     super.initState();
-    steps = <String, Widget>{
-      'Complete profile': ProfileResumeStep(
+    stepWidgets = <Widget>[
+      ProfileResumeStep(
         formKey: _formKeyStep1,
         nameTextEditingController: _nameTextEditingController,
         birthdayTextEditingController: _birthdayTextEditingController,
@@ -59,11 +69,26 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
         teachingLevel: _teachingLevel,
         teachingSpecialities: _teachingSpecialities,
       ),
-      'Video introdution': VideoIntroductionStep(
+      VideoIntroductionStep(
         formKey: _formKeyStep2,
+        videoFile: _videoFile,
+        onFileChanged: (File? file) {
+          _videoFile = file;
+        },
       ),
-      'Approval': const ApprovalStep(),
-    };
+      const ApprovalStep(),
+    ];
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
+    stepHeaders = <String>[
+      _local.completeProfile,
+      _local.videoIntroduction,
+      _local.approval,
+    ];
   }
 
   @override
@@ -82,9 +107,7 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        appBarTitle: 'Become a Tutor',
-      ),
+      appBar: CustomAppBar(appBarTitle: _local.becomeATutor),
       body: Theme(
         data: Theme.of(context).copyWith(
           colorScheme: Theme.of(context).colorScheme.copyWith(
@@ -95,7 +118,8 @@ class _BecomeTutorScreenState extends State<BecomeTutorScreen> {
         child: SizedBox(
           width: double.infinity,
           child: HorizontalStepper(
-            steps: steps,
+            stepHeaders: stepHeaders ?? <String>[],
+            stepWidgets: stepWidgets ?? <Widget>[],
             formKey: [
               _formKeyStep1,
               _formKeyStep2,

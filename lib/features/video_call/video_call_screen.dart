@@ -8,6 +8,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:jitsi_meet_flutter_sdk/jitsi_meet_flutter_sdk.dart';
 import 'package:lettutor/utils/snack_bar.dart';
 import 'package:lettutor/widgets/bar/app_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VideoCallScreen extends StatefulWidget {
   const VideoCallScreen({super.key, this.bookingInfo});
@@ -23,6 +24,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   // bool _isHover = false;
   late Timer _timer;
   late Duration _currentTime;
+  late AppLocalizations _local;
 
   String? _studentMeetingLink;
   final _jitsiMeetPlugin = JitsiMeet();
@@ -32,6 +34,12 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     super.initState();
     _getStudentMeetingLink();
     _startTimer();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _local = AppLocalizations.of(context);
   }
 
   void _getStudentMeetingLink() async {
@@ -50,11 +58,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 
   void _startTimer() {
-    final now = DateTime.now();
-
-    _currentTime = _checkLessonStart()
-        ? now.difference(_timeStamp)
-        : _timeStamp.difference(now);
+    _currentTime = _timeStamp.difference(DateTime.now());
 
     const oneSec = Duration(seconds: 1);
 
@@ -67,7 +71,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           });
         } else {
           setState(() {
-            _currentTime = _timeStamp.difference(DateTime.now());
+            _currentTime = _checkLessonStart()
+                ? _timeStamp.difference(DateTime.now())
+                : DateTime.now().difference(_timeStamp);
           });
         }
       },
@@ -118,7 +124,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: const CustomAppBar(appBarTitle: 'Video Call'),
+        appBar: CustomAppBar(appBarTitle: _local.videoCall),
         body: MouseRegion(
           // onEnter: (PointerEvent e) => setState(() => _isHover = true),
           // onExit: (PointerEvent e) => setState(() {
@@ -140,8 +146,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   ),
                   child: Text(
                     '${TimeHelper.getRemainingTimer(_currentTime)} '
-                    '${_checkLessonStart() ? 'until lesson starts' : 'lesson has started'} '
-                    '(${DateFormat('E, dd MMM yy H:m').format(_timeStamp)})',
+                    '${_checkLessonStart() ? _local.untilLessonStarts : _local.lessonHasStarted} '
+                    '(${DateFormat('E, dd MMM yy').format(_timeStamp)})',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -166,18 +172,18 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(24)),
                       color: Colors.green,
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.video_call,
                           color: Colors.white,
                           size: 48,
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
-                          'Join Meeting',
-                          style: TextStyle(
+                          _local.joinMeeting,
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.white,
                           ),

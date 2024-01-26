@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:lettutor/constants/dummy.dart';
 import 'package:lettutor/constants/routes.dart';
 import 'package:lettutor/models/courses/course/course.dart';
+import 'package:lettutor/utils/localization.dart';
 
-class CourseCard extends StatelessWidget {
+class CourseCard extends StatelessWidget with Localization {
   const CourseCard({super.key, required this.course});
 
   final Course course;
@@ -15,7 +16,7 @@ class CourseCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
           Routes.courseDetail,
-          arguments: course.id ?? 'null id',
+          arguments: course.id ?? '',
         );
       },
       child: Align(
@@ -56,12 +57,12 @@ class CourseCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        course.name ?? 'null name',
+                        course.name ?? '',
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        course.description ?? 'null description',
+                        course.description ?? '',
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
@@ -73,7 +74,7 @@ class CourseCard extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: Text(
-                              coursesLevel[course.level] ?? 'null level',
+                              coursesLevel[course.level] ?? '',
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
@@ -82,8 +83,9 @@ class CourseCard extends StatelessWidget {
                           ),
                           Text(
                             course.topics != null
-                                ? '${course.topics!.length} lessons'
-                                : 'null lesson',
+                                ? Localization.local!
+                                    .numberOfLessons(course.topics!.length)
+                                : '',
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
