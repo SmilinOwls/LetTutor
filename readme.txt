@@ -9,4 +9,4 @@
     - Link Demo P2: https://youtu.be/YPlEcX6EeD4
 - Milestone 4. Advanced Features
     - Link Demo P1: https://youtu.be/rVMYyTRZeuQ
-    - Link Demo P2: 
+    - Link Demo P2: https://youtu.be/viSPRJ30hgg

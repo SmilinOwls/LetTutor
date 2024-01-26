@@ -85,6 +85,11 @@ class _CourseTabState extends State<CourseTab> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Course> courses = snapshot.data as List<Course>;
+          if (courses.isEmpty) {
+            return const Center(
+              child: Text('No course found'),
+            );
+          }
           return Container(
             padding: const EdgeInsets.symmetric(
               vertical: 8,
