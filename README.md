@@ -6,7 +6,7 @@ A new Flutter project.
 
 Checklist: [LetTutor 2023 CheckList](https://docs.google.com/document/d/1sLcDNZBsAOYGJyBaCv34302veoZTIplV/edit?usp=sharing&ouid=104898531593431198536&rtpof=true&sd=true)
 
-# Demo video playlist (All milestone)
+# Demo video playlist (All milestones)
 
 Playlist: [LetTutor 2023 Demo](https://www.youtube.com/playlist?list=PLYXxHUrVAxOVDIMLXaGZ51S_xsFhQ4LiM)
 
@@ -26,6 +26,7 @@ Link Demo:
 
 ## Milestone 4. Advanced Features
 - [LetTutor Advanced Features P1](https://youtu.be/rVMYyTRZeuQ)
+- [LetTutor Advanced Features P2](https://youtu.be/viSPRJ30hgg)
 
 # Getting Started
 
