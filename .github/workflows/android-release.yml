@@ -55,7 +55,7 @@ jobs:
 
       - name: Start Android Release Build
         run: flutter build appbundle --build-name=1.0.${{ github.run_number }} --build-number=${{ github.run_number }}
-
+      
       - name: Upload Android Release
         uses: actions/upload-artifact@v2
         with:
@@ -80,3 +80,10 @@ jobs:
     #     releaseFiles: app-release.aab
     #     track: internal #alpha
     #     status: draft  #completed
+    - name: Push to Releases
+      uses: ncipollo/release-action@v1
+        with:
+          artifacts: "**/*.aab"
+          tag: v1.0.${{ github.run_number }}
+          name: Release v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
