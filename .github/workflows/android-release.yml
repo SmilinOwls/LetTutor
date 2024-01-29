@@ -79,7 +79,7 @@ jobs:
           artifacts: "app-release.aab"
           tag: v1.0.${{ github.run_number }}
           name: Release v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.SECRET_TOKEN }}
     
     # - name: Release Build to internal track
     #   uses: r0adkll/upload-google-play@v1
