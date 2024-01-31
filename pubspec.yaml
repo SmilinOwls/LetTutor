@@ -40,7 +40,7 @@ dependencies:
   intl: any
   syncfusion_flutter_pdfviewer: ^23.1.43
   provider: ^6.1.1
-  image_picker: ^1.0.4
+  image_picker: ^1.0.7
   shared_preferences: ^2.2.2
   file_picker: ^6.1.1
   video_player: ^2.8.1
