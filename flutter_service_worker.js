@@ -39,8 +39,8 @@ const RESOURCES = {"assets/assets/ebook/storyfun_ebook.jpeg": "1a2524ca18769bc18
 "assets/packages/wakelock_plus/assets/no_sleep.js": "7748a45cd593f33280669b29c2c8919a",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "f2163b9d4e6f1ea52063f498c8878bb9",
 "manifest.json": "0bf4b4f11534d144ab31774abf09beee",
-"index.html": "ae5bdc8d81fa0bf1cd9ce242266d8b3f",
-"/": "ae5bdc8d81fa0bf1cd9ce242266d8b3f",
+"index.html": "021a09420158e85f1b0509c037304c7c",
+"/": "021a09420158e85f1b0509c037304c7c",
 "canvaskit/chromium/canvaskit.wasm": "be0e3b33510f5b7b0cc76cc4d3e50048",
 "canvaskit/chromium/canvaskit.js": "96ae916cd2d1b7320fff853ee22aebb0",
 "canvaskit/skwasm.wasm": "1a074e8452fe5e0d02b112e22cdcf455",
@@ -53,7 +53,7 @@ const RESOURCES = {"assets/assets/ebook/storyfun_ebook.jpeg": "1a2524ca18769bc18
 "icons/Icon-512.png": "b3f6c41e8c7043168af33d6e96f8653b",
 "icons/Icon-maskable-192.png": "a46035ec1500ef923a4afc8c6b639cd3",
 "favicon.png": "a9084f1783cfa1a5732b6c9390f11b96",
-"main.dart.js": "3452fbd55f3a85a6ec72c504fb16b07f",
+"main.dart.js": "93976bed825c2581c34a998433615e01",
 "flutter.js": "6fef97aeca90b426343ba6c5c9dc5d4a",
 "version.json": "ef998308e3efb82c22483d194f687467"};
 // The application shell files that are downloaded before a service worker can
