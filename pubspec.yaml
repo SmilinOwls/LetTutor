@@ -52,7 +52,7 @@ dependencies:
   cached_network_image: ^3.3.1
   url_launcher: ^6.2.4
   jwt_decoder: ^2.0.1
-  jitsi_meet_flutter_sdk: ^0.1.9
+  jitsi_meet_flutter_sdk: ^0.2.0
   pager: ^0.0.6
   flutter_localizations:
     sdk: flutter
